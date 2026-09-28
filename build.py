@@ -23,7 +23,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, "src", "pages")
 OUT = os.path.join(ROOT, "public")
 
-DOMAIN = "https://toolnest.com"  # Change once the real domain is bought.
+DOMAIN = "https://vintayz.com"
 BRAND = "ToolNest"
 TODAY = "2026-09-28"
 
