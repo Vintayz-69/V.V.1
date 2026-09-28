@@ -1,0 +1,116 @@
+  <section class="calculator" aria-label="Emergency fund calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="personal">Essential personal costs a month<span class="hint">Rent, food, bills, insurance, debt payments</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="personal" type="text" inputmode="decimal" value="3000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="business">Essential business costs a month<span class="hint">Software, phone, insurance you can't pause</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="business" type="text" inputmode="decimal" value="500" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="months">Months of cover you want<span class="hint">Freelancers often aim for 6–12 months</span></label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="decimal" value="6" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter a number from 1 to 24.</span>
+      </div>
+
+      <div class="field">
+        <label for="saved">Already saved<span class="hint">Cash you could use today</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="saved" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="save">You can save each month</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="save" type="text" inputmode="decimal" value="800" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your emergency fund target</h2>
+      <div class="result-main"><span id="out-target">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Time to reach it</span><span id="out-time">—</span></li>
+        <li><span>Still to save</span><span id="out-gap">—</span></li>
+        <li><span>Your savings cover now</span><span id="out-covers">—</span></li>
+        <li><span>Essential costs a month</span><span id="out-monthly">—</span></li>
+      </ul>
+      <p class="result-note">Keep this money somewhere safe and easy to reach, separate from the money you set aside for tax.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How much cover is right for you?</h2>
+    <p>This table uses your numbers above to compare different amounts of cover.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cover</th><th class="num">Target</th><th class="num">Time to reach</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Add up your essential personal costs</strong> for a month: the bills you'd still have to pay if work stopped.</li>
+      <li><strong>Add business costs you can't pause</strong>, such as insurance or software your clients rely on.</li>
+      <li><strong>Choose how many months of cover you want.</strong> Irregular income usually needs more than a salary does.</li>
+      <li><strong>Enter what you've saved and what you can add each month</strong> to see how long it will take.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Monthly essentials  = personal costs + business costs
+Target fund         = monthly essentials × months of cover
+Still to save       = target fund − already saved
+Time to reach it    = still to save ÷ monthly saving (rounded up)
+Cover you have now  = already saved ÷ monthly essentials</div>
+
+    <h2>Worked example</h2>
+    <p>Dana is a freelance photographer. Her essential personal costs are $3,000 a month and her business costs are $500. She wants 6 months of cover, has $5,000 saved and can put away $800 a month.</p>
+    <div class="formula">Monthly essentials  = 3,000 + 500     = 3,500
+Target fund         = 3,500 × 6       = $21,000
+Still to save       = 21,000 − 5,000  = $16,000
+Time to reach it    = 16,000 ÷ 800    = 20 months
+Cover you have now  = 5,000 ÷ 3,500   ≈ 1.4 months</div>
+    <p>Dana needs <strong>$21,000</strong> and will get there in <strong>20 months</strong>. Her $5,000 already covers about six weeks without work.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> don't count money you've set aside for tax as part of your emergency fund. That money already belongs to the tax authority.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why do freelancers need a bigger emergency fund?</summary>
+        <p>Freelance income goes up and down, clients can pay late or disappear, and there's no sick pay or redundancy pay. A bigger fund lets you ride out quiet months without panic or debt.</p>
+      </details>
+      <details>
+        <summary>Where should I keep my emergency fund?</summary>
+        <p>Somewhere safe that you can reach within a few days, such as an easy-access savings account, kept separate from your everyday account so you're not tempted to spend it. It's not money to invest in anything that can fall in value.</p>
+      </details>
+      <details>
+        <summary>Should I pay off debt or build an emergency fund first?</summary>
+        <p>Many people build a small starter fund of a month or so first, so a surprise bill doesn't create new debt, then focus on expensive debt, then finish the full fund. A financial adviser can help with your situation.</p>
+      </details>
+    </div>
+  </div>

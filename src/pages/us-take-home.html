@@ -1,0 +1,113 @@
+  <section class="calculator" aria-label="Freelancer take-home pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="profit">Net profit for 2026<span class="hint">Freelance income minus business expenses</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="profit" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="stateRate">State income tax rate<span class="hint">Optional flat estimate; 0 if none</span></label>
+        <div class="input-wrap"><input id="stateRate" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 15.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your take-home pay</h2>
+      <div class="result-main"><span id="out-take">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Per month</span><span id="out-monthly">—</span></li>
+        <li><span>Total tax</span><span id="out-total">—</span></li>
+        <li><span>Federal income tax</span><span id="out-income">—</span></li>
+        <li><span>Self-employment tax</span><span id="out-se">—</span></li>
+        <li><span>Additional Medicare Tax</span><span id="out-addl">—</span></li>
+        <li><span>State tax (your estimate)</span><span id="out-state">—</span></li>
+        <li><span>Effective tax rate</span><span id="out-rate">—</span></li>
+        <li><span>Federal tax bracket</span><span id="out-bracket">—</span></li>
+      </ul>
+      <p class="result-note" id="qbi-note" hidden>Your income is above the 2026 QBI threshold, so the 20% qualified business income deduction may be reduced or unavailable. We've left it out, so your tax may be overstated. Ask a tax professional.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Take-home pay at different profit levels</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Net profit</th><th class="num">Total tax</th><th class="num">Take-home</th><th class="num">Effective rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your expected net profit</strong> for 2026: income minus business expenses.</li>
+      <li><strong>Choose your filing status.</strong></li>
+      <li><strong>Optionally add a state tax rate.</strong> State rules vary a lot, so this is a simple flat estimate. Nine states have no tax on wages and earned income; check your own state's revenue department.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Self-employment tax  = see our self-employment tax calculator
+Adjusted gross income = profit − half of self-employment tax
+Taxable (before QBI) = AGI − standard deduction
+QBI deduction        = 20% × the smaller of (profit − half SE tax) and taxable income
+                       (only below the 2026 threshold)
+Taxable income       = taxable before QBI − QBI deduction
+Federal income tax   = 2026 tax brackets applied to taxable income
+Take-home            = profit − income tax − SE tax − Additional Medicare − state tax</div>
+    <p>2026 standard deduction: $16,100 single or married filing separately, $32,200 married filing jointly, $24,150 head of household.</p>
+
+    <h2>Worked example</h2>
+    <p>Jamie is single with $80,000 net profit and lives in a state with no income tax.</p>
+    <div class="formula">Self-employment tax  = 11,303.64 (half = 5,651.82)
+AGI                  = 80,000 − 5,651.82          = 74,348.18
+Taxable before QBI   = 74,348.18 − 16,100         = 58,248.18
+QBI deduction        = 20% × 58,248.18            = 11,649.64
+Taxable income       = 58,248.18 − 11,649.64      = 46,598.54
+Income tax           = 1,240 + 12% × (46,598.54 − 12,400) = 5,343.83
+Total tax            = 11,303.64 + 5,343.83       = 16,647.47
+Take-home            = 80,000 − 16,647.47         = $63,352.53</div>
+    <p>Jamie keeps <strong>$63,352.53</strong>, about <strong>$5,279 a month</strong>. Total federal tax is 20.8% of profit, even though Jamie is in the 12% bracket, because self-employment tax applies from the first dollar.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Other income (W-2 wages, investments), itemized deductions and tax credits such as the Child Tax Credit.</li>
+      <li>The QBI deduction above the 2026 threshold, and the self-employed health insurance and retirement deductions.</li>
+      <li>Exact state and local taxes. The state figure is a simple flat estimate.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How much should I set aside for taxes as a freelancer?</summary>
+        <p>Use the effective tax rate this calculator shows, plus your state tax. Many freelancers set aside 25–30% of every payment and adjust once they know their numbers.</p>
+      </details>
+      <details>
+        <summary>What is the QBI deduction?</summary>
+        <p>The qualified business income deduction lets many self-employed people deduct up to 20% of their business income. Below the 2026 threshold ($201,750, or $403,500 married filing jointly) the calculation is simple, and this calculator includes it.</p>
+      </details>
+      <details>
+        <summary>Why is my effective rate higher than my tax bracket?</summary>
+        <p>Your bracket is for income tax only. Self-employment tax of about 15.3% is added on top, from your first dollar of profit.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" rel="noopener">IRS 2026 inflation adjustments</a>, <a href="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf" rel="noopener">Rev. Proc. 2025-32</a>, <a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" rel="noopener">IRS self-employment tax</a>.</p>
+  </div>

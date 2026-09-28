@@ -1,0 +1,128 @@
+  <section class="calculator" aria-label="Retirement savings calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="age">Your age now</label>
+        <div class="input-wrap"><input id="age" type="text" inputmode="decimal" value="30" autocomplete="off"><span class="affix">years</span></div>
+        <span class="error-msg">Enter an age from 16 to 90.</span>
+      </div>
+
+      <div class="field">
+        <label for="retireAge">Age you want to retire</label>
+        <div class="input-wrap"><input id="retireAge" type="text" inputmode="decimal" value="65" autocomplete="off"><span class="affix">years</span></div>
+        <span class="error-msg">Enter an age from 17 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="current">Retirement savings now</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="current" type="text" inputmode="decimal" value="10000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="monthly">You'll add each month</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="monthly" type="text" inputmode="decimal" value="500" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="returnPct">Yearly growth after inflation<span class="hint">An assumption, not a promise</span></label>
+        <div class="input-wrap"><input id="returnPct" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 15.</span>
+      </div>
+
+      <div class="field">
+        <label for="withdrawPct">Yearly withdrawal in retirement<span class="hint">Share of the pot you take each year</span></label>
+        <div class="input-wrap"><input id="withdrawPct" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 1 to 10.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated pot at retirement</h2>
+      <div class="result-main"><span id="out-pot">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Could give you each month</span><span id="out-monthly">—</span></li>
+        <li><span>Could give you each year</span><span id="out-yearly">—</span></li>
+        <li><span>Total you put in</span><span id="out-contributed">—</span></li>
+        <li><span>Growth on your savings</span><span id="out-growth">—</span></li>
+      </ul>
+      <p class="result-note">In today's money, before tax. Investments can fall as well as rise, so the real result could be higher or lower.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What saving more each month could do</h2>
+    <p>This table uses your other numbers above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Monthly saving</th><th class="num">Pot at retirement</th><th class="num">Monthly income</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your age now and when you'd like to retire.</strong></li>
+      <li><strong>Add what you've saved for retirement so far</strong> and what you plan to add each month.</li>
+      <li><strong>Choose a growth rate after inflation.</strong> Using a rate after inflation keeps the result in today's money, so it's easier to compare with your costs now.</li>
+      <li><strong>Pick a withdrawal rate</strong> to turn the pot into a rough yearly income.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Months to save   = (retirement age − age now) × 12
+Monthly growth   = (1 + yearly growth)^(1/12) − 1
+Pot              = savings now × (1 + monthly growth)^months
+                 + monthly saving × ((1 + monthly growth)^months − 1) ÷ monthly growth
+Yearly income    = pot × withdrawal rate</div>
+    <p>Monthly savings are added at the end of each month. Fees and taxes aren't included, and real returns change from year to year.</p>
+
+    <h2>Worked example</h2>
+    <p>Leo is 30, has $10,000 saved for retirement and adds $500 a month. He assumes 5% growth a year after inflation and plans to retire at 65.</p>
+    <div class="formula">Months to save   = (65 − 30) × 12                 = 420
+Monthly growth   = 1.05^(1/12) − 1                ≈ 0.4074%
+Savings now grow = 10,000 × 5.5160               ≈ 55,160
+Monthly savings  = 500 × (5.5160 − 1) ÷ 0.004074  ≈ 554,232
+Pot              = 55,160 + 554,232               ≈ $609,392
+Yearly income    = 609,392 × 4%                   ≈ $24,376</div>
+    <p>Leo could have about <strong>$609,000</strong> in today's money. He only paid in $220,000; the rest is growth over 35 years. Taking 4% a year would give about <strong>$2,031 a month</strong>.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> self-employed people usually have to arrange their own pension. Tax-advantaged accounts include the SEP IRA and Solo 401(k) in the US, a personal pension or SIPP in the UK, an RRSP in Canada, and super in Australia. Rules and limits change, so check the official guidance for your country.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What growth rate should I use?</summary>
+        <p>No one knows future returns. Many people try a cautious rate after inflation, such as 3–5%, and compare it with a lower rate to see a worse case. The result is an estimate, not a forecast.</p>
+      </details>
+      <details>
+        <summary>What is a withdrawal rate?</summary>
+        <p>It's the share of your pot you take out each year in retirement. A lower rate makes the money more likely to last. 4% is a widely used starting point for planning, but it isn't a guarantee.</p>
+      </details>
+      <details>
+        <summary>Does this include state pensions or Social Security?</summary>
+        <p>No. It only shows your own savings. Any state pension, Social Security, CPP or Age Pension would be on top. Check your official statement or forecast for those amounts.</p>
+      </details>
+      <details>
+        <summary>Is this financial advice?</summary>
+        <p>No. It's a planning estimate. For advice on where to invest or which pension to choose, speak to a regulated financial adviser.</p>
+      </details>
+    </div>
+  </div>

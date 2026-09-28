@@ -1,0 +1,98 @@
+  <section class="calculator" aria-label="Canada employee vs contractor calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="salary">Employee salary offered<span class="hint">Yearly, before tax</span></label>
+        <div class="input-wrap"><span class="affix">C$</span><input id="salary" type="text" inputmode="decimal" value="75000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="benefits">Value of employee benefits<span class="hint">Health and dental plan, RRSP match, etc. per year</span></label>
+        <div class="input-wrap"><span class="affix">C$</span><input id="benefits" type="text" inputmode="decimal" value="8000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="rate">Contract hourly rate offered</label>
+        <div class="input-wrap"><span class="affix">C$</span><input id="rate" type="text" inputmode="decimal" value="55" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Paid hours per week as a contractor</label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="37.5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 1 to 80.</span>
+      </div>
+
+      <div class="field">
+        <label for="weeks">Paid weeks per year as a contractor<span class="hint">No paid vacation or statutory holidays</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="decimal" value="46" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a number from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Break-even contract rate</h2>
+      <div class="result-main"><span id="out-breakeven">—</span> <small>/ hour</small></div>
+      <ul class="result-list">
+        <li class="key"><span>At the rate offered</span><span id="out-verdict">—</span></li>
+        <li><span>Employee package value</span><span id="out-package">—</span></li>
+        <li><span>Employer CPP included</span><span id="out-cpp">—</span></li>
+        <li><span>Contract yearly income</span><span id="out-gross">—</span></li>
+        <li><span>EI premiums you'd no longer pay</span><span id="out-ei">—</span></li>
+      </ul>
+      <p class="result-note">As a contractor you'd stop paying EI premiums, but you'd also lose EI cover if the work dries up.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the salary and benefits</strong> you'd get as an employee.</li>
+      <li><strong>Enter the contract rate</strong> you've been offered.</li>
+      <li><strong>Be realistic about contract hours and weeks.</strong> Contractors aren't paid for vacation or statutory holidays.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Employer CPP      = 5.95% × (salary up to $74,600 − $3,500)
+                  + 4% × (salary between $74,600 and $85,000)
+Employee package  = salary + benefits + employer CPP
+Contract hours    = hours per week × weeks per year
+Break-even rate   = employee package ÷ contract hours</div>
+    <p>We add the employer's CPP because as a contractor you pay both halves yourself.</p>
+
+    <h2>Worked example</h2>
+    <p>Sanjay is offered a job at $75,000 with benefits worth $8,000, or a contract at $55 an hour for 37.5 hours a week, 46 weeks a year.</p>
+    <div class="formula">Employer CPP     = 71,100 × 5.95% + 400 × 4%   = 4,246.45
+Employee package = 75,000 + 8,000 + 4,246.45   = 87,246.45
+Contract hours   = 37.5 × 46                   = 1,725
+Break-even rate  = 87,246.45 ÷ 1,725           = $50.58/hour
+Contract income  = 55 × 1,725                  = 94,875</div>
+    <p>The contract needs at least <strong>$50.58 an hour</strong>. At $55 it's worth about <strong>$7,629 more</strong> a year, before business costs and the loss of EI cover.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Business expenses and the deductions they bring as a contractor.</li>
+      <li>Quebec (QPP and different EI rates).</li>
+      <li>Whether you'd really be an independent contractor. The CRA looks at control, tools, profit and risk, not the job title.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How much more should a contractor charge?</summary>
+        <p>Enough to cover benefits, both halves of CPP, unpaid time off, business costs and gaps between contracts. That's often 20–40% more than the equivalent employee hourly pay.</p>
+      </details>
+      <details>
+        <summary>Do contractors charge GST/HST?</summary>
+        <p>If your taxable sales are over $30,000 in four consecutive calendar quarters, you generally have to register and charge GST/HST. Our <a href="{{root}}canada/gst-hst-calculator/">GST/HST calculator</a> works out the amounts.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026):</strong> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/canada-pension-plan-cpp/cpp-contribution-rates-maximums-exemptions.html" rel="noopener">CPP rates</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/employment-insurance-ei/ei-premium-rates-maximums.html" rel="noopener">EI premium rates</a>.</p>
+  </div>

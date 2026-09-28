@@ -1,0 +1,120 @@
+  <section class="calculator" aria-label="Sole trader vs limited company calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="profit">Business profit per year<span class="hint">Before paying yourself or any tax</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="profit" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="region">Where you live</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="salary">Director's salary (company)<span class="hint">£12,570 is a common choice</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="salary" type="text" inputmode="decimal" value="12570" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="companyCosts">Extra cost of running a company<span class="hint">Accountant, software, etc. per year</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="companyCosts" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Better take-home</h2>
+      <div class="result-main"><span id="out-diff">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Sole trader take-home</span><span id="out-sole">—</span></li>
+        <li class="key"><span>Limited company take-home</span><span id="out-ltd">—</span></li>
+        <li><span>Sole trader tax and NI</span><span id="out-sole-tax">—</span></li>
+        <li><span>Company: all taxes</span><span id="out-ltd-tax">—</span></li>
+        <li><span>Corporation Tax</span><span id="out-ct">—</span></li>
+        <li><span>Dividends paid out</span><span id="out-div">—</span></li>
+      </ul>
+      <p class="result-note">Assumes the company pays out all profit after tax as dividends, and that you're the only employee (so no Employment Allowance).</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Comparison at different profit levels</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Profit</th><th class="num">Sole trader</th><th class="num">Limited company</th><th class="num">Better by</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+    <p>From April 2026, dividend tax rose to 10.75% (basic rate) and 35.75% (higher rate), and employer National Insurance is 15% above £5,000. This has made a limited company less attractive for many people on modest profits than it used to be.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your yearly business profit</strong> before paying yourself.</li>
+      <li><strong>Choose a director's salary.</strong> Many directors take £12,570, the Personal Allowance.</li>
+      <li><strong>Add the extra cost of running a company</strong>, such as higher accountancy fees, for a fair comparison.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Sole trader:  Income Tax + Class 4 NI on the whole profit
+Company:
+  Employer NI       = 15% × (salary − £5,000)
+  Employee NI       = 8% × (salary − £12,570), 2% above £50,270
+  Company profit    = profit − salary − employer NI − running costs
+  Corporation Tax   = 19% up to £50,000, 25% from £250,000,
+                      marginal relief in between (3/200 fraction)
+  Dividends         = company profit − Corporation Tax
+  Dividend tax      = £500 allowance, then 10.75% / 35.75% / 39.35%
+  Take-home         = salary − employee NI − Income Tax + dividends − dividend tax</div>
+
+    <h2>Worked example</h2>
+    <p>Sam in England makes £60,000 profit, and would take a £12,570 salary if they set up a company.</p>
+    <div class="formula">Sole trader
+  Income Tax   = 37,700 × 20% + 9,730 × 40%   = 11,432.00
+  Class 4 NI   = 37,700 × 6% + 9,730 × 2%     = 2,456.60
+  Take-home    = 60,000 − 13,888.60           = £46,111.40
+Limited company
+  Employer NI  = (12,570 − 5,000) × 15%       = 1,135.50
+  Company profit = 60,000 − 12,570 − 1,135.50 = 46,294.50
+  Corporation Tax = 46,294.50 × 19%           = 8,795.96
+  Dividends    = 46,294.50 − 8,795.96         = 37,498.55
+  Dividend tax = (37,498.55 − 500) × 10.75%   = 3,977.34
+  Take-home    = 12,570 + 37,498.55 − 3,977.34 ≈ £46,091.20</div>
+    <p>At £60,000 the two are almost level: the sole trader comes out <strong>£20</strong> ahead, before the extra costs of running a company. A company can still help at higher profits, or if you keep money in the business rather than paying it all out.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Keeping profit in the company, pension contributions from the company, or paying a spouse.</li>
+      <li>IR35, other income, student loans and the High Income Child Benefit Charge.</li>
+      <li>Non-tax reasons for a company, such as limited liability or how clients see you.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why do directors take a £12,570 salary?</summary>
+        <p>It uses the Personal Allowance, so there's no Income Tax on it, and it's below the employee NI threshold. The employer NI it costs is a deductible expense for the company. Some directors choose a lower salary; try different amounts above.</p>
+      </details>
+      <details>
+        <summary>Is a limited company always better?</summary>
+        <p>No. At many profit levels the difference is small, and running a company costs more in accountancy and admin. Talk to an accountant before changing your business structure.</p>
+      </details>
+      <details>
+        <summary>Can I claim the Employment Allowance?</summary>
+        <p>Not if you're a one-director company where the director is the only employee paid above the secondary threshold. That's why this calculator doesn't include it.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026 to 2027):</strong> <a href="https://www.gov.uk/tax-on-dividends" rel="noopener">tax on dividends</a>, <a href="https://www.gov.uk/government/publications/rates-and-allowances-corporation-tax/rates-and-allowances-corporation-tax" rel="noopener">Corporation Tax rates</a>, <a href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" rel="noopener">employer rates and thresholds</a>, <a href="https://www.gov.uk/claim-employment-allowance/eligibility" rel="noopener">Employment Allowance eligibility</a>.</p>
+  </div>

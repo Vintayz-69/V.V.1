@@ -1,0 +1,128 @@
+  <section class="calculator" aria-label="Contractor day rate calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="income">Yearly take-home goal<span class="hint">What you want to keep after tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="income" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Yearly business expenses<span class="hint">Insurance, accountant, equipment, etc.</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="expenses" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="tax">Estimated total tax rate<span class="hint">All income taxes combined</span></label>
+        <div class="input-wrap"><input id="tax" type="text" inputmode="decimal" value="30" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 90.</span>
+      </div>
+
+      <div class="field">
+        <label for="daysOff">Days off per year<span class="hint">Vacation, public holidays, sick days</span></label>
+        <div class="input-wrap"><input id="daysOff" type="text" inputmode="decimal" value="33" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter a number from 0 to 200.</span>
+      </div>
+
+      <div class="field">
+        <label for="benchWeeks">Gaps between contracts<span class="hint">Unpaid weeks finding the next role</span></label>
+        <div class="input-wrap"><input id="benchWeeks" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a number from 0 to 40.</span>
+      </div>
+
+      <div class="field">
+        <label for="hoursPerDay">Hours in a working day<span class="hint">Used for the hourly equivalent</span></label>
+        <div class="input-wrap"><input id="hoursPerDay" type="text" inputmode="decimal" value="7.5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 1 to 16.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your minimum day rate</h2>
+      <div class="result-main"><span id="out-day">—</span> <small>/ day</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Hourly equivalent</span><span id="out-hourly">—</span></li>
+        <li><span>Weekly (5 days)</span><span id="out-weekly">—</span></li>
+        <li><span>Monthly revenue target</span><span id="out-monthly">—</span></li>
+        <li><span>Yearly revenue needed</span><span id="out-revenue">—</span></li>
+        <li><span>Billable days per year</span><span id="out-days">—</span></li>
+      </ul>
+      <p class="result-note">This is the least you should charge to reach your goal. Rates for your skills and location may be higher, so check the market before you quote.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What gaps between contracts do to your day rate</h2>
+    <p>Contractors are only paid while they're on a contract. Every week spent looking for the next role has to be paid for by the days you do work. This table uses your numbers above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Weeks between contracts</th><th class="num">Billable days / year</th><th class="num">Day rate needed</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your take-home goal and yearly costs</strong>, such as insurance, accountancy fees and equipment.</li>
+      <li><strong>Add your tax rate.</strong> Use your combined rate for all income taxes. An accountant can confirm it.</li>
+      <li><strong>Count your days off.</strong> Include vacation, public holidays and a few sick days.</li>
+      <li><strong>Be realistic about gaps.</strong> Most contractors spend some weeks each year between contracts.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Working days      = 260 − days off − (weeks between contracts × 5)
+Pre-tax profit    = take-home goal ÷ (1 − tax rate)
+Revenue needed    = pre-tax profit + business expenses
+Day rate          = revenue needed ÷ working days
+Hourly equivalent = day rate ÷ hours in a working day</div>
+    <p>There are 260 weekdays in a typical year (52 weeks × 5 days). Expenses are added after the tax step because business costs are usually tax-deductible.</p>
+
+    <h2>Worked example</h2>
+    <p>Priya is an IT contractor in the UK who wants to take home £60,000 a year. She has £5,000 of business costs, estimates 30% total tax, takes 33 days off (25 days of holiday plus 8 bank holidays) and expects 4 weeks between contracts. Her working day is 7.5 hours.</p>
+    <div class="formula">Working days      = 260 − 33 − (4 × 5)   = 207
+Pre-tax profit    = 60,000 ÷ 0.70        = 85,714.29
+Revenue needed    = 85,714.29 + 5,000    = 90,714.29
+Day rate          = 90,714.29 ÷ 207      ≈ £438.23
+Hourly equivalent = 438.23 ÷ 7.5         ≈ £58.43</div>
+    <p>Priya needs at least <strong>£438.23 a day</strong>. With no gaps between contracts she could charge £399.62, so those 4 weeks add about £39 to every day she works.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> public holidays differ by country. England and Wales have 8 bank holidays a year, and the US has 11 federal holidays. Check your own region and add them to your days off.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What's the difference between a day rate and an hourly rate?</summary>
+        <p>A day rate is a fixed price for a working day, whatever the exact hours. It's common for contractors, especially in the UK. An hourly rate charges for each hour worked. This calculator shows both so you can compare.</p>
+      </details>
+      <details>
+        <summary>How many weeks between contracts should I allow?</summary>
+        <p>It depends on your field and the job market. Many contractors plan for 4 to 8 weeks a year. If you're new to contracting or your market is quiet, allow more.</p>
+      </details>
+      <details>
+        <summary>Does this include IR35 for UK contractors?</summary>
+        <p>No. If a UK contract is "inside IR35", you're taxed much like an employee, which changes your take-home pay. Use HMRC's Check Employment Status for Tax (CEST) tool and speak to an accountant about any contract you're unsure of.</p>
+      </details>
+      <details>
+        <summary>Should my day rate include pension or retirement savings?</summary>
+        <p>Yes, if you want to save for retirement. Add what you plan to save each year to your take-home goal, or to your business expenses if you pay into a pension through your business.</p>
+      </details>
+    </div>
+  </div>

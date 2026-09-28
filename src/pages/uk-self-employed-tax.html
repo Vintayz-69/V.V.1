@@ -1,0 +1,108 @@
+  <section class="calculator" aria-label="Self-employed tax and National Insurance calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="profit">Your profit for 2026 to 2027<span class="hint">Self-employed income minus allowable expenses</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="profit" type="text" inputmode="decimal" value="45000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="region">Where you live</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your take-home pay</h2>
+      <div class="result-main"><span id="out-take">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Per month</span><span id="out-monthly">—</span></li>
+        <li><span>Total tax and NI</span><span id="out-total">—</span></li>
+        <li><span>Income Tax</span><span id="out-it">—</span></li>
+        <li><span>Class 4 National Insurance</span><span id="out-ni">—</span></li>
+        <li><span>Personal Allowance</span><span id="out-pa">—</span></li>
+        <li><span>Effective rate</span><span id="out-rate">—</span></li>
+      </ul>
+      <p class="result-note" id="class2-note">Class 2 National Insurance is treated as paid if your profits are £7,105 or more.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Tax and take-home at different profits</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Profit</th><th class="num">Tax and NI</th><th class="num">Take-home</th><th class="num">Effective rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your profit</strong>: what you earned from self-employment in the tax year, minus allowable business expenses.</li>
+      <li><strong>Choose where you live.</strong> Scotland has its own Income Tax bands; National Insurance is the same across the UK.</li>
+    </ol>
+
+    <h2>2026 to 2027 rates used</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Item</th><th>England, Wales, NI</th><th>Scotland</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Item">Personal Allowance</td><td data-label="England, Wales, NI">£12,570 (reduced by £1 for every £2 over £100,000)</td><td data-label="Scotland">Same</td></tr>
+          <tr><td data-label="Item">Income Tax</td><td data-label="England, Wales, NI">20% to £50,270; 40% to £125,140; 45% above</td><td data-label="Scotland">19%, 20%, 21%, 42%, 45%, 48% (six bands)</td></tr>
+          <tr><td data-label="Item">Class 4 NI</td><td data-label="England, Wales, NI">6% on profits £12,570 to £50,270; 2% above</td><td data-label="Scotland">Same</td></tr>
+          <tr><td data-label="Item">Class 2 NI</td><td data-label="England, Wales, NI">Treated as paid at £7,105+ profit; voluntary £3.65 a week below</td><td data-label="Scotland">Same</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Personal Allowance  = £12,570, less £1 for every £2 of profit over £100,000
+Taxable income      = profit − Personal Allowance
+Income Tax          = taxable income through the 2026 to 2027 bands
+Class 4 NI          = 6% × (profit between £12,570 and £50,270)
+                    + 2% × (profit above £50,270)
+Take-home           = profit − Income Tax − Class 4 NI</div>
+
+    <h2>Worked example</h2>
+    <p>Priya is a self-employed designer in England with £45,000 profit in 2026 to 2027.</p>
+    <div class="formula">Taxable income  = 45,000 − 12,570          = 32,430
+Income Tax      = 32,430 × 20%              = 6,486.00
+Class 4 NI      = (45,000 − 12,570) × 6%    = 1,945.80
+Take-home       = 45,000 − 6,486 − 1,945.80 = £36,568.20</div>
+    <p>Priya keeps <strong>£36,568.20</strong>, about £3,047 a month. If she lived in Scotland, her Income Tax would be £6,882.05 and her take-home £36,172.15.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Other income, such as a salary, savings interest, rental income or dividends.</li>
+      <li>Pension contributions, Gift Aid, Marriage Allowance and student loan repayments.</li>
+      <li>Tax years other than 2026 to 2027.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>When do I pay this tax?</summary>
+        <p>Through Self Assessment. The tax for 2026 to 2027 is due by 31 January 2028, and you may also have to make payments on account towards it. Our <a href="{{root}}uk/payments-on-account-calculator/">payments on account calculator</a> shows the dates and amounts.</p>
+      </details>
+      <details>
+        <summary>Do I still pay Class 2 National Insurance?</summary>
+        <p>Not usually. Since April 2024, self-employed people with profits of £7,105 or more (for 2026 to 2027) get Class 2 treated as paid. Below that, you can pay it voluntarily to protect your State Pension.</p>
+      </details>
+      <details>
+        <summary>How much should I put aside for tax?</summary>
+        <p>Use the effective rate above for this year's tax. In your first year, also plan for payments on account, which can mean paying up to one and a half years' tax in the same January.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026 to 2027):</strong> <a href="https://www.gov.uk/income-tax-rates" rel="noopener">Income Tax rates</a>, <a href="https://www.gov.uk/scottish-income-tax" rel="noopener">Scottish Income Tax</a>, <a href="https://www.gov.uk/self-employed-national-insurance-rates" rel="noopener">self-employed National Insurance</a>.</p>
+  </div>

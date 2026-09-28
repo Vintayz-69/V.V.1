@@ -1,0 +1,105 @@
+  <section class="calculator" aria-label="Payments on account calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="lastBill">Your 2025 to 2026 Self Assessment bill<span class="hint">Income Tax and Class 4 NI due through Self Assessment for last year</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="lastBill" type="text" inputmode="decimal" value="8000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="paidOnAccount">Already paid on account for 2025 to 2026<span class="hint">Enter 0 in your first year</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="paidOnAccount" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="atSource">Tax taken at source in 2025 to 2026<span class="hint">For example PAYE from a job. Enter 0 if none.</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="atSource" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="nextBill">Estimated 2026 to 2027 bill<span class="hint">Optional: to see your January 2028 balancing payment</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="nextBill" type="text" inputmode="decimal" value="9000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount, or leave blank.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Due by 31 January 2027</h2>
+      <div class="result-main"><span id="out-jan">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Due by 31 July 2027</span><span id="out-jul">—</span></li>
+        <li><span>Each payment on account</span><span id="out-each">—</span></li>
+        <li><span>Balancing payment for 2025 to 2026</span><span id="out-balance">—</span></li>
+        <li><span>Balancing payment, 31 January 2028</span><span id="out-next">—</span></li>
+        <li><span>Payments on account needed?</span><span id="out-status">—</span></li>
+      </ul>
+      <p class="result-note">If you expect your 2026 to 2027 bill to be lower, you can ask HMRC to reduce your payments on account. If it turns out higher, you pay the difference in January 2028.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your payment timeline</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Due date</th><th>What it's for</th><th class="num">Amount</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your Self Assessment bill for 2025 to 2026</strong>: the Income Tax and Class 4 National Insurance you owe through your tax return.</li>
+      <li><strong>Enter any payments on account you've already made</strong> for that year. In your first year this is 0.</li>
+      <li><strong>Enter tax taken at source</strong>, such as PAYE, which decides whether you need payments on account at all.</li>
+      <li><strong>Optionally estimate this year's bill</strong> to see what's due in January 2028.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Payments on account needed if:
+    last year's bill is £1,000 or more, AND
+    80% or less of last year's tax was taken at source
+Each payment on account = last year's bill ÷ 2
+31 January 2027 = (last year's bill − payments already made) + 1st payment on account
+31 July 2027    = 2nd payment on account
+31 January 2028 = this year's bill − both payments on account (+ next year's 1st payment)</div>
+
+    <h2>Worked example: the first-year shock</h2>
+    <p>Tom started freelancing in 2025 to 2026 and his first Self Assessment bill is £8,000. He hasn't made any payments on account, and he expects to owe £9,000 for 2026 to 2027.</p>
+    <div class="formula">Each payment on account  = 8,000 ÷ 2          = 4,000
+31 January 2027          = 8,000 + 4,000      = £12,000
+31 July 2027             = £4,000
+31 January 2028          = 9,000 − 8,000      = £1,000 (+ next year's first payment)</div>
+    <p>Tom must pay <strong>£12,000 in January 2027</strong>, one and a half times his first year's bill, so it pays to start saving early.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Student loan repayments and Capital Gains Tax, which aren't included in payments on account.</li>
+      <li>Interest or penalties on late payments.</li>
+      <li>Reducing payments on account, which you do through your HMRC online account or form SA303.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What are payments on account?</summary>
+        <p>Advance payments towards your next tax bill, each worth half of last year's bill. They're due by 31 January and 31 July, and include Class 4 National Insurance if you're self-employed.</p>
+      </details>
+      <details>
+        <summary>Do I have to make payments on account?</summary>
+        <p>Not if your last Self Assessment bill was under £1,000, or if more than 80% of the tax you owed was already taken at source, for example through PAYE.</p>
+      </details>
+      <details>
+        <summary>Can I reduce them?</summary>
+        <p>Yes, if you expect to earn less this year. But if you reduce them too far, HMRC charges interest on the difference.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Source:</strong> <a href="https://www.gov.uk/understand-self-assessment-bill/payments-on-account" rel="noopener">GOV.UK: payments on account</a>.</p>
+  </div>

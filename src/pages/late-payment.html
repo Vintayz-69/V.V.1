@@ -1,0 +1,149 @@
+  <section class="calculator" aria-label="Late payment interest calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="mode">Type of interest</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="uk">UK statutory interest (business to business)</option>
+            <option value="custom">Rate from my contract or invoice</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2" id="currency-field" hidden>
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="amount">Invoice amount<span class="hint">The unpaid amount, including any VAT you charged</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>£</span><input id="amount" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount greater than 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="dueDate">Payment was due on</label>
+        <div class="input-wrap"><input id="dueDate" type="date" required></div>
+        <span class="error-msg">Enter the date the invoice was due.</span>
+      </div>
+
+      <div class="field">
+        <label for="paidDate">Paid on (or today)</label>
+        <div class="input-wrap"><input id="paidDate" type="date" required></div>
+        <span class="error-msg">Enter the date it was paid, or today's date.</span>
+      </div>
+
+      <div class="field uk-only">
+        <label for="baseRate">Bank of England base rate<span class="hint" id="base-hint">Filled in from official figures</span></label>
+        <div class="input-wrap"><input id="baseRate" type="text" inputmode="decimal" value="3.75" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter the base rate, from 0 to 20.</span>
+      </div>
+
+      <div class="field uk-only check-field">
+        <label class="check"><input id="includeComp" type="checkbox" checked><span>Include fixed compensation<span class="hint">£40, £70 or £100 depending on the debt</span></span></label>
+      </div>
+
+      <div class="field custom-only" hidden>
+        <label for="customRate">Yearly interest rate<span class="hint">1.5% a month = 18% a year</span></label>
+        <div class="input-wrap"><input id="customRate" type="text" inputmode="decimal" value="10" autocomplete="off"><span class="affix">% / year</span></div>
+        <span class="error-msg">Enter a rate from 0 to 100.</span>
+      </div>
+
+      <div class="field custom-only" hidden>
+        <label for="fee">Late fee in your contract<span class="hint">Enter 0 if none</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="fee" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>You can claim</h2>
+      <div class="result-main"><span id="out-claim">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Total now owed</span><span id="out-total">—</span></li>
+        <li><span>Interest</span><span id="out-interest">—</span></li>
+        <li><span id="out-comp-label">Fixed compensation</span><span id="out-comp">—</span></li>
+        <li><span>Interest rate used</span><span id="out-rate">—</span></li>
+        <li><span>Days late</span><span id="out-days">—</span></li>
+        <li><span>Interest per day</span><span id="out-daily">—</span></li>
+      </ul>
+      <p class="result-note" id="out-note">UK statutory interest applies to business-to-business debts where your contract doesn't set a different rate.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Which rules apply to you?</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Your situation</th><th>What you can usually claim</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Your situation"><strong>UK business invoicing another business, no interest rate in the contract</strong></td><td data-label="What you can usually claim">Statutory interest of 8% plus the Bank of England base rate, plus fixed compensation of £40, £70 or £100 per invoice, and reasonable extra recovery costs.</td></tr>
+          <tr><td data-label="Your situation"><strong>Your contract or invoice terms set an interest rate</strong></td><td data-label="What you can usually claim">The rate in your contract. Choose "Rate from my contract or invoice" above.</td></tr>
+          <tr><td data-label="Your situation"><strong>US freelancer</strong></td><td data-label="What you can usually claim">There's no single national rule. You can usually charge the late fee or interest agreed in your contract, but state laws limit how much. Check your state's rules before charging.</td></tr>
+          <tr><td data-label="Your situation"><strong>Invoicing a private individual (a consumer)</strong></td><td data-label="What you can usually claim">UK statutory interest doesn't apply. You can only charge what your agreement with them says, within consumer law.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose the type of interest.</strong> Pick UK statutory interest for business customers in the UK, or enter the rate from your contract.</li>
+      <li><strong>Enter the invoice amount</strong> that's still unpaid.</li>
+      <li><strong>Enter the due date and the payment date.</strong> If it's still unpaid, use today's date.</li>
+      <li><strong>Check the base rate.</strong> We fill it in from official Bank of England figures for your due date. You can change it.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Days late         = payment date − due date
+Yearly rate       = 8% + base rate (UK statutory) or your contract rate
+Interest per day  = invoice amount × yearly rate ÷ 365
+Interest          = interest per day × days late
+You can claim     = interest + fixed compensation (or contract late fee)</div>
+    <p>For UK statutory interest, the base rate is fixed for six months at a time. If your invoice became late between 1 January and 30 June, use the base rate on the 31 December before. If it became late between 1 July and 31 December, use the rate on 30 June. The calculator does this for you.</p>
+    <p>The fixed compensation is £40 for debts under £1,000, £70 for £1,000 to £9,999.99, and £100 for £10,000 or more. It can be claimed once per invoice. Sources: <a href="https://www.gov.uk/late-commercial-payments-interest-debt-recovery" rel="noopener">GOV.UK late commercial payments guidance</a> and <a href="https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp" rel="noopener">Bank of England Bank Rate history</a>.</p>
+
+    <h2>Worked example</h2>
+    <p>Chris runs a small design studio in the UK. A business client had an invoice for £5,000 due on 1 August 2026 and paid it on 30 September 2026, 60 days late. Their contract didn't mention interest.</p>
+    <div class="formula">Base rate on 30 June 2026  = 3.75%
+Yearly rate                = 8% + 3.75%            = 11.75%
+Interest per day           = 5,000 × 0.1175 ÷ 365  = £1.61
+Interest                   = 1.6096 × 60            = £96.58
+Fixed compensation         = £70 (debt £1,000–£9,999.99)
+Chris can claim            = 96.58 + 70            = £166.58</div>
+    <p>Chris can claim <strong>£166.58</strong> on top of the £5,000 invoice.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> put your payment terms, and the fact that you'll charge statutory interest on late payments, on every invoice. Clients who see it upfront tend to pay on time.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>When does an invoice count as late in the UK?</summary>
+        <p>If you agreed a payment date, it's late the day after that date. Business customers can usually agree up to 60 days, and public authorities 30 days. If no date was agreed, the law says payment is late 30 days after the customer gets the invoice or you deliver the goods or service, whichever is later.</p>
+      </details>
+      <details>
+        <summary>Can I charge statutory interest to individual customers?</summary>
+        <p>No. UK statutory interest only covers debts between businesses, including public sector bodies. For private individuals, you can only charge interest if your agreement with them allows it.</p>
+      </details>
+      <details>
+        <summary>Can I charge late fees in the US?</summary>
+        <p>Usually yes, if the fee or interest rate was agreed in your contract or invoice terms before the work. Many states cap interest rates and some limit late fees, so check your state's rules and keep the amount reasonable.</p>
+      </details>
+      <details>
+        <summary>Do I have to claim interest?</summary>
+        <p>No. It's your right, not a requirement. Some freelancers mention it as a reminder and waive it if the client pays quickly. What matters is that your terms are clear before the work starts.</p>
+      </details>
+    </div>
+  </div>

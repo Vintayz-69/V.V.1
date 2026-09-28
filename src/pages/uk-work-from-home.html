@@ -1,0 +1,102 @@
+  <section class="calculator" aria-label="Working from home expenses calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="hours">Hours worked at home per month<span class="hint">Average for a typical month</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="120" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number of hours, 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="months">Months you worked from home<span class="hint">In the tax year</span></label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="decimal" value="12" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter a number from 1 to 12.</span>
+      </div>
+
+      <div class="field">
+        <label for="bills">Yearly household bills<span class="hint">Heating, electricity, water (not phone or internet)</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="bills" type="text" inputmode="decimal" value="3000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="share">Business share of those bills<span class="hint">e.g. 1 of 5 rooms, half the time ≈ 10%</span></label>
+        <div class="input-wrap"><input id="share" type="text" inputmode="decimal" value="10" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from 0 to 100.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Best amount to claim</h2>
+      <div class="result-main"><span id="out-best">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Best method</span><span id="out-method">—</span></li>
+        <li><span>Simplified flat rate</span><span id="out-simple">—</span></li>
+        <li><span>Share of actual bills</span><span id="out-actual">—</span></li>
+        <li><span>Flat rate per month</span><span id="out-month">—</span></li>
+      </ul>
+      <p class="result-note">Phone and internet aren't in the flat rate. Claim the business share of those separately.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Simplified flat rates for working from home</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Hours worked at home in the month</th><th class="num">Flat rate per month</th></tr></thead>
+        <tbody>
+          <tr><td>Under 25</td><td class="num">Can't use flat rate</td></tr>
+          <tr><td>25 to 50</td><td class="num">£10</td></tr>
+          <tr><td>51 to 100</td><td class="num">£18</td></tr>
+          <tr><td>101 or more</td><td class="num">£26</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the hours you work at home</strong> in a typical month, and how many months.</li>
+      <li><strong>Add your yearly household bills</strong> such as heating, electricity and water.</li>
+      <li><strong>Estimate the business share.</strong> A common method: divide by the number of rooms, then by the share of time the room is used for work.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Simplified   = flat rate for your monthly hours × months
+Actual costs = yearly household bills × business share %
+Best         = whichever is higher</div>
+
+    <h2>Worked example</h2>
+    <p>Ella is a self-employed copywriter who works about 120 hours a month from home, all year. Her household bills are £3,000 a year, and she uses one of five rooms for work about half the time (10%).</p>
+    <div class="formula">Simplified   = £26 × 12        = £312
+Actual costs = £3,000 × 10%    = £300</div>
+    <p>The flat rate gives Ella <strong>£312</strong> and needs no bills or sums at tax time. With higher bills or a dedicated office, actual costs could come out ahead.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Rent, mortgage interest and council tax. These can sometimes be claimed in part, but rules are strict and may affect Capital Gains Tax when you sell your home.</li>
+      <li>Employees claiming tax relief for working from home, which uses different rules.</li>
+      <li>Living at your business premises, such as a guest house.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Who can use the flat rate?</summary>
+        <p>Self-employed sole traders and partnerships (with individual partners) who work at least 25 hours a month from home.</p>
+      </details>
+      <details>
+        <summary>Can I claim phone and internet too?</summary>
+        <p>Yes, separately. Work out the business share of your phone and internet bills and claim that on top of the flat rate.</p>
+      </details>
+      <details>
+        <summary>What if my hours change month to month?</summary>
+        <p>The flat rate is worked out month by month. This calculator uses an average; for the exact figure, add up the rate for each month.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Source:</strong> <a href="https://www.gov.uk/simpler-income-tax-simplified-expenses/working-from-home" rel="noopener">GOV.UK simplified expenses: working from home</a>.</p>
+  </div>

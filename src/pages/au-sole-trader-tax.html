@@ -1,0 +1,101 @@
+  <section class="calculator" aria-label="Sole trader tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="income">Taxable income for 2026–27<span class="hint">Business income minus deductions, with no other income</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="income" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="eligible" type="checkbox" checked><span>Claim the small business income tax offset<span class="hint">Sole traders with turnover under $5 million</span></span></label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your take-home pay</h2>
+      <div class="result-main"><span id="out-take">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Per month</span><span id="out-monthly">—</span></li>
+        <li><span>Total tax</span><span id="out-total">—</span></li>
+        <li><span>Income tax after offsets</span><span id="out-tax">—</span></li>
+        <li><span>Medicare levy (2%)</span><span id="out-medicare">—</span></li>
+        <li><span>Low income tax offset</span><span id="out-lito">—</span></li>
+        <li><span>Small business income tax offset</span><span id="out-sbito">—</span></li>
+        <li><span>Effective rate</span><span id="out-rate">—</span></li>
+      </ul>
+      <p class="result-note">Set aside money for tax as you go: sole traders don't have tax withheld, and the ATO may put you on PAYG instalments.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Tax at different incomes</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Taxable income</th><th class="num">Total tax</th><th class="num">Take-home</th><th class="num">Effective rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>2026–27 resident tax rates</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Taxable income</th><th class="num">Rate</th></tr></thead>
+        <tbody>
+          <tr><td>$0 – $18,200</td><td class="num">Nil</td></tr>
+          <tr><td>$18,201 – $45,000</td><td class="num">15% (was 16%)</td></tr>
+          <tr><td>$45,001 – $135,000</td><td class="num">30%</td></tr>
+          <tr><td>$135,001 – $190,000</td><td class="num">37%</td></tr>
+          <tr><td>$190,001 and over</td><td class="num">45%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Plus the 2% Medicare levy. The 16% rate fell to 15% on 1 July 2026 and is legislated to fall to 14% from 1 July 2027.</p>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Basic tax       = 2026–27 rates on taxable income
+Low income offset = $700, reduced above $37,500 (to $0 at $66,667)
+Small business offset = 16% × basic tax on business income (max $1,000)
+Income tax      = basic tax − offsets (not below $0)
+Medicare levy   = 2% × taxable income
+Take-home       = taxable income − income tax − Medicare levy</div>
+
+    <h2>Worked example</h2>
+    <p>Chloe is a sole trader graphic designer with $80,000 taxable income in 2026–27 and no other income.</p>
+    <div class="formula">Basic tax       = 26,800 × 15% + 35,000 × 30%   = 14,520
+Low income offset = $0 (income over $66,667)
+Small business offset = 16% × 14,520 = 2,323 → capped at $1,000
+Income tax      = 14,520 − 1,000               = 13,520
+Medicare levy   = 80,000 × 2%                  = 1,600
+Take-home       = 80,000 − 13,520 − 1,600      = $64,880</div>
+    <p>Chloe keeps <strong>$64,880</strong>, about $5,407 a month. The small business offset saves her $1,000.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Reduced or no Medicare levy for low incomes, and the Medicare levy surcharge for higher earners without private hospital cover.</li>
+      <li>HELP/study loan repayments, other income, and other offsets.</li>
+      <li>Foreign residents and working holiday makers, who have different rates.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do sole traders pay tax differently from employees?</summary>
+        <p>The rates are the same, but no one withholds tax from your income. You pay when you lodge your return, and the ATO may ask you to pay quarterly PAYG instalments.</p>
+      </details>
+      <details>
+        <summary>Who can claim the small business income tax offset?</summary>
+        <p>Sole traders, and people with a share of small business income from a partnership or trust, where the business's aggregated turnover is under $5 million. It's worked out automatically when you lodge.</p>
+      </details>
+      <details>
+        <summary>Do I need to pay super for myself?</summary>
+        <p>No, sole traders don't have to pay super for themselves, but it's worth doing. Our <a href="{{root}}australia/voluntary-super-contribution-calculator/">voluntary super calculator</a> shows the tax you can save.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026–27):</strong> <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents" rel="noopener">ATO resident tax rates</a>, <a href="https://treasury.gov.au/policy-topics/taxation/budget2026-27" rel="noopener">Treasury: 2026–27 tax changes</a>, <a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/low-income-tax-offset" rel="noopener">low income tax offset</a>, <a href="https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/income-and-deductions-for-business/concessions-offsets-and-rebates/small-business-income-tax-offset" rel="noopener">small business income tax offset</a>.</p>
+  </div>

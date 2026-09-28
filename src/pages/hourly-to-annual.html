@@ -1,0 +1,109 @@
+  <section class="calculator" aria-label="Hourly to annual income calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="rate">Hourly rate<span class="hint">Before tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="30" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate from 0 to 100,000.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Paid hours per week<span class="hint">Hours you're actually paid for</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 1 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="days">Days worked per week</label>
+        <div class="input-wrap"><input id="days" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter a number from 1 to 7.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="weeks">Paid weeks per year<span class="hint">Employees with paid leave: 52. Freelancers: weeks you actually work, often 46–48.</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="decimal" value="52" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a number from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Yearly income</h2>
+      <div class="result-main"><span id="out-annual">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Monthly</span><span id="out-monthly">—</span></li>
+        <li><span>Every two weeks</span><span id="out-biweekly">—</span></li>
+        <li><span>Weekly</span><span id="out-weekly">—</span></li>
+        <li><span>Daily</span><span id="out-daily">—</span></li>
+        <li><span>Paid hours per year</span><span id="out-hours">—</span></li>
+      </ul>
+      <p class="result-note">These are gross figures, before tax. Freelancers also need to cover their own expenses.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Common hourly rates at your hours</h2>
+    <p>This table uses the hours and weeks you entered above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Hourly rate</th><th class="num">Monthly</th><th class="num">Yearly</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your hourly rate</strong> before tax.</li>
+      <li><strong>Enter the hours you're paid for each week</strong> and how many days you work.</li>
+      <li><strong>Enter your paid weeks per year.</strong> Freelancers aren't paid for vacation, so use the weeks you actually work.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Weekly         = hourly rate × paid hours per week
+Yearly         = weekly × paid weeks per year
+Monthly        = yearly ÷ 12
+Every 2 weeks  = weekly × 2
+Daily          = weekly ÷ days worked per week</div>
+
+    <h2>Worked example</h2>
+    <p>Jordan earns $30 an hour for 40 hours a week, 5 days a week, and is paid for all 52 weeks.</p>
+    <div class="formula">Weekly   = 30 × 40        = $1,200
+Yearly   = 1,200 × 52     = $62,400
+Monthly  = 62,400 ÷ 12    = $5,200
+Daily    = 1,200 ÷ 5      = $240</div>
+    <p>If Jordan were a freelancer who worked 46 weeks a year instead, the same rate would give <strong>$55,200</strong> a year, before tax and expenses.</p>
+    <div class="tip">
+      <p><strong>Quick rule:</strong> for a full-time job paid all year (40 hours × 52 weeks = 2,080 hours), double the hourly rate and add three zeros for a rough yearly figure. $30 an hour is about $60,000 a year. Freelancers should use our <a href="{{root}}freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a> instead, because this shortcut ignores tax, expenses and unpaid time.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How many working hours are in a year?</summary>
+        <p>A full-time year of 40 hours a week for 52 weeks is 2,080 hours. With 37.5-hour weeks, common in the UK, it's 1,950 hours. Freelancers usually bill far fewer hours than this once time off and admin are taken out.</p>
+      </details>
+      <details>
+        <summary>Why is my monthly figure not four times my weekly pay?</summary>
+        <p>Most months are a little over four weeks long. There are 52 weeks in a year but only 12 months, so an average month has about 4.33 weeks.</p>
+      </details>
+      <details>
+        <summary>Is this before or after tax?</summary>
+        <p>Before tax. Your take-home pay depends on your country, state or region and personal situation.</p>
+      </details>
+    </div>
+  </div>

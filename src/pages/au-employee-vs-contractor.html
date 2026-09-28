@@ -1,0 +1,96 @@
+  <section class="calculator" aria-label="Employee vs contractor calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="salary">Employee base salary<span class="hint">Yearly, not including super</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="salary" type="text" inputmode="decimal" value="95000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="benefits">Other employee benefits<span class="hint">Bonus, allowances, etc. per year</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="benefits" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="rate">Contract hourly rate offered<span class="hint">Excluding GST</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="rate" type="text" inputmode="decimal" value="70" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Paid hours per week as a contractor</label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="38" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 1 to 80.</span>
+      </div>
+
+      <div class="field">
+        <label for="weeks">Paid weeks per year as a contractor<span class="hint">No paid annual leave, sick leave or public holidays</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="decimal" value="44" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a number from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Break-even contract rate</h2>
+      <div class="result-main"><span id="out-breakeven">—</span> <small>/ hour</small></div>
+      <ul class="result-list">
+        <li class="key"><span>At the rate offered</span><span id="out-verdict">—</span></li>
+        <li><span>Employee package (salary + super)</span><span id="out-package">—</span></li>
+        <li><span>Super guarantee (12%)</span><span id="out-super">—</span></li>
+        <li><span>Contract yearly income</span><span id="out-gross">—</span></li>
+        <li><span>Contract paid hours per year</span><span id="out-hours">—</span></li>
+      </ul>
+      <p class="result-note">Contractors with an ABN usually pay their own super and have no paid leave, so their rate needs to cover both.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the base salary</strong> you'd be paid as an employee, without super.</li>
+      <li><strong>Enter the contract rate</strong> you've been offered, excluding GST.</li>
+      <li><strong>Be realistic about contract hours and weeks.</strong> Employees get about 4 weeks of annual leave, 10 days of personal leave and public holidays paid; contractors don't.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Super            = salary × 12%
+Employee package = salary + super + other benefits
+Contract hours   = hours per week × weeks per year
+Break-even rate  = employee package ÷ contract hours</div>
+
+    <h2>Worked example</h2>
+    <p>Liam is offered a job at $95,000 plus super, or a contract at $70 an hour (excluding GST) for 38 hours a week, about 44 weeks a year.</p>
+    <div class="formula">Super            = 95,000 × 12%          = 11,400
+Employee package = 95,000 + 11,400       = 106,400
+Contract hours   = 38 × 44               = 1,672
+Break-even rate  = 106,400 ÷ 1,672       = $63.64/hour
+Contract income  = 70 × 1,672            = 117,040</div>
+    <p>The contract needs at least <strong>$63.64 an hour</strong>. At $70 it's worth about <strong>$10,640 more</strong> a year, before insurance, equipment and accounting costs.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Income tax, which is similar either way, and business deductions available to contractors.</li>
+      <li>Personal services income (PSI) rules, which can limit deductions for some contractors.</li>
+      <li>Whether you'd legally be a contractor. It depends on the whole working relationship, not the contract's title.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do contractors get super?</summary>
+        <p>Sometimes. If you're paid mainly for your labour, the business may still have to pay you super even if you have an ABN. Otherwise you'll need to fund your own. Check the ATO's employee or contractor guidance.</p>
+      </details>
+      <details>
+        <summary>Should my rate include GST?</summary>
+        <p>Quote your rate excluding GST. If you're registered for GST, add 10% on your invoices. Our <a href="{{root}}australia/gst-calculator/">GST calculator</a> does the maths.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Source:</strong> <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/super-guarantee" rel="noopener">ATO super guarantee rate</a>.</p>
+  </div>

@@ -1,0 +1,220 @@
+# LEGAL.md: Rules We Never Break
+
+**For:** the site owner and every AI assistant working on this project.
+**Last reviewed:** 28 September 2026
+
+> These rules are based on the main published US, UK and Indian laws and on Google's policies. They are not legal advice. Laws change, and an AI's knowledge can be out of date. If a rule matters for a real decision, check the official source or ask a professional.
+
+---
+
+## 0. How to use this file
+
+1. **Before any change**, find the matching section below (new page, new tool, new script, affiliate link, ads, email…).
+2. **If a change would break a rule, stop.** Don't publish it. Fix it first.
+3. **If you're not sure, don't publish.** Ask, check the official source, or leave it out.
+4. **After any change that affects visitors' data, money claims or legal pages**, add a line to the [Legal Change Log](#12-legal-change-log) at the bottom.
+
+**Rule for AI assistants:** if the owner asks for something that breaks a rule here, don't do it silently. Say which rule it breaks and why, and suggest a legal way to get the same result. Never guess tax figures or legal facts. If you can't verify something, say so.
+
+---
+
+## 1. Our situation (the facts every rule depends on)
+
+| Fact | Value |
+|---|---|
+| Who runs the site | One individual (solo), based in **India** |
+| Visitors | Mainly **United States** and **United Kingdom** (later Canada and Australia) |
+| Laws that apply | **UK:** UK GDPR, Data Protection Act 2018, PECR (cookies), Consumer Rights Act 2015, CAP Code, DMCC Act 2024, FCA rules. **US:** FTC Act and Endorsement Guides, California CalOPPA and CCPA, other state privacy laws, COPPA, CAN-SPAM, ADA. **India:** DPDP Act 2023, Income Tax Act, GST, FEMA |
+| Terms governed by | Laws of India (visitors keep their own country's consumer protections) |
+| Income | Google AdSense (later) + affiliate links (later) |
+| Data we collect today | None from calculators. Hosting logs + cookie-free analytics (Cloudflare). Emails people send us. |
+| Cookies / browser storage today | **None.** This is why we need no cookie banner. |
+
+**If any fact in this table changes, the legal pages must change too.** Check sections 3 and 4.
+
+---
+
+## 2. Hard stops: never do these
+
+### Privacy and data
+- ❌ **Never add cookies, `localStorage`, `sessionStorage`, IndexedDB, tracking pixels or fingerprinting** without first following [section 4](#4-adding-any-third-party-service-or-storage). In the UK, anything stored on a visitor's device that isn't strictly necessary needs consent *before* it is set (PECR).
+- ❌ **Never load anything from another company's server**, including Google Fonts, YouTube embeds, social share buttons, chat widgets, CDN scripts and external images, without following section 4. Each one sends the visitor's IP address to that company. (We use system fonts on purpose. If we ever want a custom font, host the font file ourselves.)
+- ❌ **Never send calculator inputs anywhere.** No server, no analytics events, no query strings (`?income=60000` ends up in server logs). If we add "share your result" links, put the values after `#` (the hash is never sent to the server) and review the privacy policy first.
+- ❌ **Never ask for identifying or sensitive information in a tool**, such as name, address, SSN, UK National Insurance number, UTR, bank details, date of birth or health information. Tools only need numbers.
+- ❌ **Never add a form, newsletter, comment box or account system** without a privacy review (section 4) and, for email marketing, [section 8](#8-email-and-newsletters-future).
+
+### Money, tax and advice
+- ❌ **Never give personal advice.** Tools give *estimates*. Don't write "you should…" about someone's own financial decisions. Write "many freelancers…" or "an accountant can help you decide…".
+- ❌ **Never promote loans, credit cards, buy-now-pay-later, investments, pensions, crypto or insurance to UK visitors** (not in ads you control, not through affiliate links, not in content) without checking FCA rules first. Credit broking and "financial promotions" can require FCA authorisation. It's a criminal offence to breach the financial promotion rules.
+- ❌ **Never hard-code a tax figure inside a tool.** All figures live in `public/assets/data/` (one file per country), come from the official source, and show the tax year. See [section 6](#6-every-tax-tool).
+- ❌ **Never guess a tax number.** If it can't be verified on IRS, HMRC, CRA or ATO websites, it doesn't go live.
+- ❌ **Never claim or suggest a link with a government body** (IRS, HMRC, CRA, ATO). Don't use their logos, don't use "official" in our tool names, and don't design pages to look like government sites.
+
+### Honesty (FTC, UK CAP Code, DMCC Act 2024)
+- ❌ **No fake reviews, testimonials, ratings or user counts.** No "Trusted by 10,000 freelancers" unless it's true and we can prove it. No "As seen on" unless it happened.
+- ❌ **No unlabelled affiliate links or sponsored content.** See [section 7](#7-affiliate-links).
+- ❌ **No fake urgency or scarcity** ("Only 3 spots left!").
+- ❌ **No misleading claims** about accuracy ("100% accurate", "IRS-approved").
+
+### Copyright and trademarks
+- ❌ **Never copy text, images, code or data** from other websites. Write our own. For code, only use libraries with a licence that allows it (MIT, Apache 2.0, BSD) and keep their licence notice.
+- ❌ **Images:** only use images we made, AI images without real people or brands, or images with a clear licence (e.g. CC0, Unsplash licence). Record the source.
+- ❌ **Never use another company's trademark to look like them**, e.g. naming a tool "TurboTax Calculator" or putting a brand in our domain name. Honest comparisons ("X vs Y") are fine if every claim is true and current.
+
+### Children
+- ❌ **Never target children** or design content for under-13s (COPPA, UK Children's Code).
+
+### Google rules (not law, but breaking them loses our income)
+- ❌ **Never click our own ads**, or ask anyone to click them ("support us by clicking ads").
+- ❌ **Never buy traffic**, use bots, or pay for clicks or visits.
+- ❌ **Never put ads where people click them by accident**, like right next to a calculator's input fields or buttons, or disguised as navigation or download buttons.
+- ❌ **Never mass-produce thin pages with AI.** Google treats this as "scaled content abuse". Every page must be reviewed by a human and be genuinely useful (README section 8).
+
+---
+
+## 3. Every new page: checklist
+
+- [ ] Footer links present: About, Contact, Privacy Policy, Terms, Disclaimer (California requires a visible "Privacy" link on the homepage; we put it on every page)
+- [ ] Money or tax page? Show the disclaimer box and "Last updated" date
+- [ ] No third-party requests (open the browser DevTools → Network tab: every request should go to our own domain, apart from services already listed in the privacy policy)
+- [ ] No cookies or storage (DevTools → Application tab should be empty)
+- [ ] No personal-data fields
+- [ ] Accessibility: every input has a `<label>`, text contrast is at least 4.5:1, the page works with keyboard only, images have `alt` text (US ADA lawsuits, UK Equality Act)
+- [ ] Claims are true and can be backed up
+- [ ] Written or reviewed by a human; nothing copied
+- [ ] Added to `sitemap.xml`
+
+---
+
+## 4. Adding any third-party service or storage
+
+Examples: analytics, fonts, video embeds, ad code, affiliate widgets, forms, newsletter tools, comment systems, chat, error tracking, and any `localStorage` or cookie.
+
+**Before adding it, answer these:**
+
+| Question | If yes… |
+|---|---|
+| Does it store anything on the visitor's device (cookie, storage, pixel)? | UK visitors must **opt in first** unless it's strictly necessary for something they asked for. Needs a consent tool. |
+| Does it receive visitors' IP address or other personal data? | Add it to the privacy policy (who, what, why, legal basis, how long). |
+| Does it track people across websites or show personalised ads? | Update the US state rights and California sections; add a "Privacy choices" link; honour Global Privacy Control. |
+| Is the company outside the UK? | Check it offers UK transfer safeguards (UK IDTA/Addendum or UK–US data bridge). Big providers usually do. |
+
+**Then:**
+1. Update `src/pages/privacy-policy.html` (section 2 table, section 3 cookies, section 4 sharing, and the summary box), then run `python build.py`.
+2. Change the **Effective date** and **Last updated** date.
+3. Update the **Content-Security-Policy** in `build.py` (`HEADERS`) to allow the new service's domains. It blocks every outside script by default, and that is on purpose.
+4. Update the facts table in section 1 of this file.
+5. Add a line to the Legal Change Log.
+
+**The privacy policy must always describe what the site actually does, no more and no less.**
+
+---
+
+## 5. Before turning on Google AdSense
+
+- [ ] AdSense → **Privacy & messaging** → turn on the **European regulations** message (Google-certified consent tool, required by Google for UK, EEA and Swiss visitors)
+- [ ] Same place: turn on the **US state regulations** message
+- [ ] Add a **"Privacy choices"** link to the footer of every page (lets visitors change consent)
+- [ ] Add the ready-made advertising section to the privacy policy (hidden comment at the bottom of `src/pages/privacy-policy.html`) and update the summary box and sections 3, 5 and 9
+- [ ] Add an `ads.txt` file in `public/` with the line AdSense gives you
+- [ ] Update the Content-Security-Policy in `build.py` to allow Google's ad and consent domains (otherwise ads are blocked)
+- [ ] Ads must be clearly recognisable as ads, and not placed next to calculator inputs or buttons
+- [ ] **UK representative check:** ad cookies count as "monitoring" UK visitors, so UK GDPR Article 27 may require a UK representative. Small, occasional, low-risk processing is exempt. Decide and record the decision in the change log.
+- [ ] Update section 1 of this file: "Cookies today" is no longer "None"
+
+---
+
+## 6. Every tax tool
+
+- [ ] Every figure comes from the official source for that country: **IRS** (irs.gov), **HMRC** (gov.uk), **CRA** (canada.ca), **ATO** (ato.gov.au)
+- [ ] Figures live only in `public/assets/data/<file>.js`, labelled with the tax year (or date checked) and the source URL
+- [ ] The page links to the official source
+- [ ] The page states what the tool **does not** cover (e.g. "does not include state income tax", "assumes no other income")
+- [ ] Tested against **at least 3 examples** worked out by hand or with an official worksheet. Record the test results.
+- [ ] Wording says "estimate", never "your tax is"
+- [ ] Yearly update done **before** the new tax year:
+
+| Country | Tax year starts | Update data file before |
+|---|---|---|
+| US | 1 January | January |
+| UK | 6 April | 6 April |
+| Canada | 1 January | January |
+| Australia | 1 July | 1 July |
+
+If a figure can't be updated in time, **show a clear notice on the page** ("figures are for tax year 2026; 2027 update coming soon") rather than showing wrong numbers silently.
+
+---
+
+## 7. Affiliate links
+
+- [ ] Label **right next to every link**: `<span class="affiliate-label">(affiliate link)</span>`
+- [ ] One short, plain note near the **top** of any page with affiliate links, e.g. "Some links on this page are affiliate links. We may earn a commission at no extra cost to you."
+- [ ] Add `rel="sponsored noopener"` to every affiliate link (Google requires paid links to be marked)
+- [ ] Only recommend things we'd honestly recommend; all claims about the product are true and current
+- [ ] **UK visitors: no credit, loans, investments, pensions or insurance** without an FCA check (see section 2)
+- [ ] Read each affiliate programme's own rules (many ban certain wording, paid ads, or use in emails)
+- [ ] Commissions never change calculator results or rankings
+
+---
+
+## 8. Email and newsletters (future)
+
+Not allowed until all of this is in place:
+- [ ] **UK:** marketing emails only to people who **actively opted in** (unticked box, clear wording). PECR.
+- [ ] **US (CAN-SPAM):** every marketing email has an honest subject line, identifies us, has a working unsubscribe link, and includes a **valid postal address** (a PO box or virtual address is allowed; don't publish a home address without thinking about safety). Unsubscribes honoured within 10 business days.
+- [ ] Privacy policy updated (section 4 of this file)
+- [ ] Email provider added to the privacy policy
+
+---
+
+## 9. Tools that handle personal information (Resume maker, Invoice generator)
+
+These tools (README Stage 3 and Phase D) involve names, addresses and work history. Before building one:
+- [ ] Everything must be processed **in the browser only**: no uploads, no server storage
+- [ ] Downloads (PDF etc.) generated on the visitor's own device
+- [ ] If saving drafts is wanted, it's `localStorage`, so check section 4 (it may count as strictly necessary if the visitor clicks "Save", but the privacy policy must explain it)
+- [ ] Privacy policy updated before launch
+
+---
+
+## 10. The owner's own legal duties (India)
+
+The site earns foreign income, so the owner has their own duties:
+- [ ] **Income tax:** declare AdSense and affiliate income in your Indian income tax return (ITR)
+- [ ] **GST:** registration may be required once turnover crosses the GST threshold. Services to foreign companies are usually treated as exports (zero-rated), which has its own paperwork (e.g. LUT)
+- [ ] **Foreign payments:** receive payments into your bank account and keep the bank's foreign inward remittance records (FIRC/e-FIRA)
+- [ ] **AdSense tax info:** fill in the tax forms AdSense asks for honestly
+- [ ] **Domain and brand:** before buying the final domain, search the name in the **USPTO** (US), **UK IPO** and **Indian trademark** databases to avoid using someone else's trademark
+
+➡️ **Talk to an Indian Chartered Accountant (CA)** once money starts coming in. Rules and thresholds change, so don't rely on this list for amounts.
+
+---
+
+## 11. Yearly legal calendar
+
+| When | Task |
+|---|---|
+| January | Update `tax-us.js` and `tax-ca.js` (IRS Rev. Proc., SSA wage base, IRS mileage; CRA brackets, CPP, EI). Review this whole file. |
+| Watch all year | The IRS can change the mileage rate mid-year (it did on 1 July 2026). |
+| Before 6 April | Update `tax-uk.js` (Income Tax incl. Scotland, NI, dividends, Corporation Tax, mileage, working from home) |
+| After 30 June and 31 December | Check the Bank of England Bank Rate page and update `public/assets/data/rates-uk.js` (late payment interest) |
+| Before 1 July | Update `tax-au.js` (rates: 15% → 14% from 1 July 2027, Medicare levy, LITO, super caps). Also confirm the Medicare low-income thresholds and add them if published. |
+| Every September | Re-read the privacy policy, terms and disclaimer. Do they still match what the site does? |
+| 2027 | Recheck India's DPDP Rules (obligations phase in through 2027) |
+| When traffic reaches ~100,000 visitors a year from one US state | Recheck US state privacy laws (CCPA etc. may start to apply) |
+| Before domain renewal | Renew on time; check the name hasn't become a trademark problem |
+
+---
+
+## 12. Legal Change Log
+
+Add one line every time something legal changes: new service, new data collected, legal page edits, decisions made.
+
+| Date | Change | Pages updated |
+|---|---|---|
+| 2026-09-28 | Initial legal setup: no cookies/storage, cookie-free analytics planned (Cloudflare), Privacy Policy, Terms (Indian law, consumer protections kept), Disclaimer (not FCA, not US adviser), Contact with DPDP grievance contact | privacy-policy, terms, disclaimer, contact, about |
+| 2026-09-28 | Created LEGAL.md, CLAUDE.md and AGENTS.md so humans and AI follow the same rules | — |
+| 2026-09-28 | Self-hosted the Inter font (SIL Open Font License; licence kept in `public/assets/fonts/OFL.txt`). No outside font servers. | — |
+| 2026-09-28 | Added security headers and a strict Content-Security-Policy (`public/_headers`, set in `build.py`). Only our own files and Cloudflare Web Analytics may load. | — |
+| 2026-09-28 | Late payment calculator: UK statutory interest rule (8% + Bank Rate on 30 June / 31 December) checked on legislation.gov.uk (SI 2002/1675) and GOV.UK; compensation £40/£70/£100 checked on GOV.UK; Bank Rate history checked on bankofengland.co.uk. Stored in `rates-uk.js` with sources. | late-payment-interest-calculator |
+| 2026-09-28 | Country tax tools launched with official figures stored only in `public/assets/data/tax-us.js`, `tax-uk.js`, `tax-ca.js`, `tax-au.js`, each listing its sources and date checked. Known limits stated on each page (e.g. Canada provincial tax is the visitor's estimate; Australia applies the full 2% Medicare levy; Quebec QST not pre-filled). ATO and SSA sites block automated reading, so those figures were confirmed via official search results and a second official source where possible. | us/, uk/, canada/, australia/ |

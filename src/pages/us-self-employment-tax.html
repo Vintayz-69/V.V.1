@@ -1,0 +1,112 @@
+  <section class="calculator" aria-label="Self-employment tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="profit">Net profit from self-employment<span class="hint">Your 1099 / Schedule C income minus business expenses, for 2026</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="profit" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="wages">W-2 wages from a job<span class="hint">Enter 0 if you have none</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="wages" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Self-employment tax for 2026</h2>
+      <div class="result-main"><span id="out-total">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>You can deduct (half)</span><span id="out-half">—</span></li>
+        <li><span>Social Security part (12.4%)</span><span id="out-ss">—</span></li>
+        <li><span>Medicare part (2.9%)</span><span id="out-med">—</span></li>
+        <li><span>Additional Medicare Tax (0.9%)</span><span id="out-addl">—</span></li>
+        <li><span>Net earnings (92.35% of profit)</span><span id="out-net">—</span></li>
+        <li><span>As a share of your profit</span><span id="out-rate">—</span></li>
+      </ul>
+      <p class="result-note">This is on top of federal income tax. Our <a href="{{root}}us/freelancer-take-home-pay-calculator/">take-home pay calculator</a> adds both together.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Self-employment tax at different profit levels</h2>
+    <p>Including Additional Medicare Tax, using your filing status and wages above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Net profit</th><th class="num">SE + Additional Medicare</th><th class="num">Share of profit</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your net profit</strong>: what clients paid you minus your business expenses.</li>
+      <li><strong>Choose your filing status.</strong> It only affects the Additional Medicare Tax threshold.</li>
+      <li><strong>Add any W-2 wages.</strong> Wages use up part of the Social Security limit first, so you may pay less Social Security tax on your freelance income.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Net earnings           = net profit × 92.35%
+Social Security part   = 12.4% × net earnings, up to $184,500 minus any W-2 wages
+Medicare part          = 2.9% × net earnings (no limit)
+Self-employment tax    = Social Security part + Medicare part
+Deductible half        = self-employment tax ÷ 2
+Additional Medicare    = 0.9% × net earnings above $200,000 (single/HoH),
+                         $250,000 (joint) or $125,000 (separate), less W-2 wages</div>
+    <p>No self-employment tax is due if your net earnings are under $400. The 92.35% step exists because employees don't pay payroll tax on their employer's share, so self-employed people get the same treatment.</p>
+
+    <h2>Worked example</h2>
+    <p>Jamie is a single freelance developer with $80,000 net profit in 2026 and no other job.</p>
+    <div class="formula">Net earnings         = 80,000 × 0.9235       = 73,880
+Social Security part = 73,880 × 12.4%        = 9,161.12
+Medicare part        = 73,880 × 2.9%         = 2,142.52
+Self-employment tax  = 9,161.12 + 2,142.52   = $11,303.64
+Deductible half      = 11,303.64 ÷ 2         = $5,651.82</div>
+    <p>Jamie owes <strong>$11,303.64</strong> in self-employment tax, and can deduct $5,651.82 when working out income tax. If Jamie earned $250,000, Social Security would stop at the $184,500 limit ($22,878), and $277.88 of Additional Medicare Tax would apply on the earnings above $200,000.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Federal and state income tax. Use our <a href="{{root}}us/freelancer-take-home-pay-calculator/">take-home pay calculator</a> for the full picture.</li>
+      <li>Church employee income, farm optional methods and other special cases on Schedule SE.</li>
+      <li>Tax years other than 2026.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is self-employment tax?</summary>
+        <p>It's Social Security and Medicare tax for people who work for themselves. Employees split these taxes with their employer; self-employed people pay both halves, which is why the rate is 15.3% rather than 7.65%.</p>
+      </details>
+      <details>
+        <summary>Do I pay self-employment tax on all my income?</summary>
+        <p>On 92.35% of your net profit. The Social Security part stops once your combined wages and net earnings reach $184,500 for 2026. The Medicare part has no limit.</p>
+      </details>
+      <details>
+        <summary>Can I deduct self-employment tax?</summary>
+        <p>You can deduct half of it (the "employer-equivalent" portion) when working out your adjusted gross income. It reduces your income tax, not the self-employment tax itself.</p>
+      </details>
+      <details>
+        <summary>When do I pay it?</summary>
+        <p>Through quarterly estimated tax payments during the year, and on Schedule SE with your tax return. Our <a href="{{root}}us/quarterly-estimated-tax-calculator/">quarterly estimated tax calculator</a> works out the payments.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" rel="noopener">IRS self-employment tax</a>, <a href="https://www.irs.gov/taxtopics/tc751" rel="noopener">IRS Topic 751 (wage base)</a>, <a href="https://www.irs.gov/pub/irs-pdf/f1040es.pdf" rel="noopener">2026 Form 1040-ES</a>.</p>
+  </div>

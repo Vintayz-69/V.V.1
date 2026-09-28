@@ -1,0 +1,112 @@
+  <section class="calculator" aria-label="1099 vs W-2 calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="salary">W-2 salary offered<span class="hint">Yearly, before tax</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="salary" type="text" inputmode="decimal" value="90000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="benefits">Value of W-2 benefits<span class="hint">Health insurance, 401(k) match, etc. per year</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="benefits" type="text" inputmode="decimal" value="12000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="rate">1099 hourly rate offered</label>
+        <div class="input-wrap"><span class="affix">$</span><input id="rate" type="text" inputmode="decimal" value="65" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Paid hours per week as a 1099<span class="hint">Hours you can bill</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 1 to 80.</span>
+      </div>
+
+      <div class="field">
+        <label for="weeks">Paid weeks per year as a 1099<span class="hint">No paid vacation or holidays</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="decimal" value="48" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a number from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Break-even 1099 rate</h2>
+      <div class="result-main"><span id="out-breakeven">—</span> <small>/ hour</small></div>
+      <ul class="result-list">
+        <li class="key"><span>At the rate offered</span><span id="out-verdict">—</span></li>
+        <li><span>Total W-2 package</span><span id="out-w2">—</span></li>
+        <li><span>Employer payroll tax included</span><span id="out-employer">—</span></li>
+        <li><span>1099 yearly income</span><span id="out-1099">—</span></li>
+        <li><span>1099 paid hours per year</span><span id="out-hours">—</span></li>
+      </ul>
+      <p class="result-note">The break-even rate is what the 1099 job must pay per hour to match the full W-2 package, before any extra business costs.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Break-even rate at different hours</h2>
+    <p>Fewer billable hours means you need a higher rate to match the same W-2 package.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>1099 hours</th><th class="num">Paid hours / year</th><th class="num">Break-even rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the W-2 salary</strong> and what the benefits are worth to you each year.</li>
+      <li><strong>Enter the 1099 rate</strong> you've been offered.</li>
+      <li><strong>Be realistic about 1099 hours and weeks.</strong> Contractors aren't paid for vacation, holidays or sick days.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Employer payroll tax = 6.2% of salary (up to $184,500) + 1.45% of salary
+W-2 package          = salary + benefits + employer payroll tax
+1099 paid hours      = hours per week × weeks per year
+Break-even rate      = W-2 package ÷ 1099 paid hours
+Difference           = (1099 rate × paid hours) − W-2 package</div>
+    <p>We add the employer's payroll tax because, as a 1099 contractor, you pay both halves through self-employment tax. Income tax is roughly similar either way, so it's left out of the comparison.</p>
+
+    <h2>Worked example</h2>
+    <p>Riley is offered a W-2 job at $90,000 with benefits worth $12,000, or a 1099 contract at $65 an hour for about 40 hours a week, 48 weeks a year.</p>
+    <div class="formula">Employer payroll tax = 90,000 × 7.65%       = 6,885
+W-2 package          = 90,000 + 12,000 + 6,885 = 108,885
+1099 paid hours      = 40 × 48               = 1,920
+Break-even rate      = 108,885 ÷ 1,920       = $56.71/hour
+1099 income          = 65 × 1,920            = 124,800
+Difference           = 124,800 − 108,885     = +$15,915</div>
+    <p>The 1099 contract needs at least <strong>$56.71 an hour</strong> to match the W-2 package. At $65 it's worth about <strong>$15,915 more a year</strong>, before business costs such as insurance, equipment and accounting.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Business expenses you'd pay as a contractor, and the tax deductions they bring.</li>
+      <li>Job security, unemployment insurance and workers' compensation, which W-2 employees usually have.</li>
+      <li>Differences in income tax from the QBI deduction or retirement plans.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What's the difference between 1099 and W-2?</summary>
+        <p>W-2 workers are employees: the employer withholds tax, pays half the payroll tax and often provides benefits. 1099 workers are independent contractors who pay their own taxes, including both halves of Social Security and Medicare.</p>
+      </details>
+      <details>
+        <summary>Is there a quick rule of thumb?</summary>
+        <p>Many people say a 1099 rate should be 25–40% higher than the equivalent W-2 hourly pay. The right number depends on the benefits you'd give up and how many hours you can really bill, which is what this calculator works out.</p>
+      </details>
+      <details>
+        <summary>Can an employer choose whether I'm 1099 or W-2?</summary>
+        <p>Not freely. Worker classification depends on how much control the company has over your work. If you're unsure, see the IRS guidance on independent contractors versus employees.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/taxtopics/tc751" rel="noopener">IRS Topic 751 (payroll tax rates and wage base)</a>, <a href="https://www.irs.gov/businesses/small-businesses-self-employed/independent-contractor-self-employed-or-employee" rel="noopener">IRS: contractor or employee?</a></p>
+  </div>

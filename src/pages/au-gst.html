@@ -1,0 +1,74 @@
+  <section class="calculator" aria-label="GST calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="mode">What do you want to do?</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="add">Add GST to a price</option>
+            <option value="remove">Take GST out of a price</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="amount" id="amount-label">Price excluding GST</label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="amount" type="text" inputmode="decimal" value="1000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2 id="out-title">Price including GST</h2>
+      <div class="result-main"><span id="out-main">—</span></div>
+      <ul class="result-list">
+        <li><span>Price excluding GST</span><span id="out-before">—</span></li>
+        <li class="key"><span>GST (10%)</span><span id="out-gst">—</span></li>
+        <li><span>Price including GST</span><span id="out-after">—</span></li>
+      </ul>
+      <p class="result-note">Only charge GST if you're registered for it. You must register once your GST turnover reaches $75,000.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How it's calculated</h2>
+    <div class="formula">Adding GST:    GST = price × 10%          total = price × 1.1
+Removing GST:  price = total ÷ 1.1        GST = total ÷ 11</div>
+    <p>A quick check: the GST in any GST-inclusive price is one-eleventh of that price.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$1,000 excluding GST  → GST $100    → $1,100 including GST
+$1,100 including GST  → GST $100    → $1,000 excluding GST
+$550 including GST    → GST $50     → $500 excluding GST</div>
+
+    <h2>When to register for GST</h2>
+    <ul>
+      <li>You must register within 21 days once your GST turnover reaches, or is expected to reach, $75,000.</li>
+      <li>Taxi and ride-sourcing drivers must register whatever their turnover.</li>
+      <li>Below $75,000 you can choose to register, then you must charge GST and lodge activity statements.</li>
+    </ul>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>GST-free sales (such as most basic food, some health and education) and input-taxed sales.</li>
+      <li>Exports and services to overseas customers, which are often GST-free.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How do I work out GST from a total?</summary>
+        <p>Divide the GST-inclusive price by 11. For example, a $220 invoice includes $20 of GST.</p>
+      </details>
+      <details>
+        <summary>Do freelancers have to charge GST?</summary>
+        <p>Only once you're registered. If your turnover is under $75,000 and you haven't registered, don't add GST to your invoices.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Source:</strong> <a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst" rel="noopener">ATO: registering for GST</a>.</p>
+  </div>

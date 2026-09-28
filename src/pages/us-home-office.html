@@ -1,0 +1,105 @@
+  <section class="calculator" aria-label="Home office deduction calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="office">Home office size<span class="hint">Used only and regularly for business</span></label>
+        <div class="input-wrap"><input id="office" type="text" inputmode="decimal" value="200" autocomplete="off"><span class="affix">sq ft</span></div>
+        <span class="error-msg">Enter the size in square feet.</span>
+      </div>
+
+      <div class="field">
+        <label for="home">Whole home size</label>
+        <div class="input-wrap"><input id="home" type="text" inputmode="decimal" value="1500" autocomplete="off"><span class="affix">sq ft</span></div>
+        <span class="error-msg">Enter the size in square feet.</span>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Yearly home costs<span class="hint">Rent or mortgage interest, utilities, insurance, repairs</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="expenses" type="text" inputmode="decimal" value="24000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="profit">Business profit before this deduction<span class="hint">The deduction can't be more than this</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="profit" type="text" inputmode="decimal" value="50000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your best home office deduction</h2>
+      <div class="result-main"><span id="out-best">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Best method</span><span id="out-method">—</span></li>
+        <li><span>Simplified method</span><span id="out-simple">—</span></li>
+        <li><span>Regular method (before depreciation)</span><span id="out-regular">—</span></li>
+        <li><span>Business use of home</span><span id="out-pct">—</span></li>
+      </ul>
+      <p class="result-note" id="cap-note" hidden>Your deduction is limited by your business profit. Under the regular method, the unused part can be carried forward to next year; under the simplified method it can't.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Simplified vs regular method</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>&nbsp;</th><th>Simplified method</th><th>Regular method</th></tr></thead>
+        <tbody>
+          <tr><td data-label="">How it works</td><td data-label="Simplified">$5 per square foot, up to 300 sq ft ($1,500 max)</td><td data-label="Regular">Business-use share of your actual home costs, plus depreciation if you own</td></tr>
+          <tr><td data-label="">Records needed</td><td data-label="Simplified">Office size and that it's used only for business</td><td data-label="Regular">Receipts and bills for every home cost</td></tr>
+          <tr><td data-label="">Depreciation</td><td data-label="Simplified">None, and none to pay back when you sell</td><td data-label="Regular">Allowed, but may be "recaptured" (taxed) when you sell</td></tr>
+          <tr><td data-label="">Unused amount</td><td data-label="Simplified">Can't be carried forward</td><td data-label="Regular">Can be carried forward</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Measure your office.</strong> It must be used regularly and only for business.</li>
+      <li><strong>Enter your whole home's size</strong> to work out the business share.</li>
+      <li><strong>Add up yearly home costs</strong>: rent or mortgage interest, utilities, homeowner's or renter's insurance and general repairs.</li>
+      <li><strong>Enter your business profit</strong> before the home office deduction, since the deduction can't exceed it.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Business use %     = office sq ft ÷ home sq ft
+Simplified method  = $5 × office sq ft (maximum 300 sq ft)
+Regular method     = business use % × yearly home costs
+Each is capped at  = business profit before this deduction</div>
+
+    <h2>Worked example</h2>
+    <p>Alex rents a 1,500 sq ft apartment and uses a 200 sq ft room only as an office. Rent and utilities come to $24,000 a year, and Alex's business profit is $50,000.</p>
+    <div class="formula">Business use %     = 200 ÷ 1,500        = 13.3%
+Simplified method  = 200 × $5           = $1,000
+Regular method     = 13.3% × 24,000     = $3,200</div>
+    <p>The regular method gives Alex <strong>$3,200</strong>, more than three times the simplified method, because rent is high. In a cheaper home, or for a bigger office, the simplified method can come out ahead and saves record-keeping.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Depreciation for homeowners under the regular method (Form 8829), which would make the regular method larger.</li>
+      <li>Costs that only relate to the office itself (direct expenses), such as painting just that room, which are 100% deductible.</li>
+      <li>Daycare facilities and storage of inventory, which have special rules.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Who can claim the home office deduction?</summary>
+        <p>Self-employed people who use part of their home regularly and only for business, as their main place of business or to meet clients. Employees working from home generally can't claim it on their federal return.</p>
+      </details>
+      <details>
+        <summary>Does a desk in my living room count?</summary>
+        <p>Usually not. The space must be used only for business. A separate room or a clearly defined area used for nothing else is much safer.</p>
+      </details>
+      <details>
+        <summary>Can I change method each year?</summary>
+        <p>Yes. You can choose either method each year.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.irs.gov/businesses/small-businesses-self-employed/simplified-option-for-home-office-deduction" rel="noopener">IRS simplified option for home office deduction</a>, <a href="https://www.irs.gov/publications/p587" rel="noopener">IRS Publication 587</a>.</p>
+  </div>

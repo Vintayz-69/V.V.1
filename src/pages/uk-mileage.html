@@ -1,0 +1,111 @@
+  <section class="calculator" aria-label="Business mileage allowance calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="year">Tax year</label>
+        <div class="select-wrap">
+          <select id="year">
+            <option value="2026-27">2026 to 2027</option>
+            <option value="2025-26">2025 to 2026</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="vehicle">Vehicle<span class="hint" id="rate-note">Rate per mile</span></label>
+        <div class="select-wrap">
+          <select id="vehicle">
+            <option value="car">Car or van</option>
+            <option value="motorcycle">Motorcycle</option>
+            <option value="bicycle">Bicycle (employees only)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="miles">Business miles in the tax year</label>
+        <div class="input-wrap"><input id="miles" type="text" inputmode="decimal" value="12000" autocomplete="off"><span class="affix">miles</span></div>
+        <span class="error-msg">Enter a number of miles, 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="taxRate">Your tax and NI rate<span class="hint">Optional: e.g. 26% (20% + 6%) or 42%</span></label>
+        <div class="input-wrap"><input id="taxRate" type="text" inputmode="decimal" value="26" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 60.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Mileage you can claim</h2>
+      <div class="result-main"><span id="out-allowance">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Estimated tax saving</span><span id="out-saving">—</span></li>
+      </ul>
+      <p class="result-note">Keep a record of every business journey: date, where you went, why, and the miles.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Mileage rates: the 2026 increase</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Vehicle</th><th class="num">From 6 April 2026</th><th class="num">Before 6 April 2026</th></tr></thead>
+        <tbody>
+          <tr><td>Cars and vans, first 10,000 miles</td><td class="num">55p</td><td class="num">45p</td></tr>
+          <tr><td>Cars and vans, after 10,000 miles</td><td class="num">25p</td><td class="num">25p</td></tr>
+          <tr><td>Motorcycles</td><td class="num">24p</td><td class="num">24p</td></tr>
+          <tr><td>Bicycles (employees only)</td><td class="num">20p</td><td class="num">20p</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The car and van rate for the first 10,000 miles rose from 45p to 55p on 6 April 2026, the first rise in many years. Check that any spreadsheet or app you use has been updated.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose the tax year and vehicle.</strong> Use 2025 to 2026 for the tax return due by 31 January 2027.</li>
+      <li><strong>Enter your business miles</strong> for the year. Normal commuting doesn't count.</li>
+      <li><strong>Optionally enter your tax and NI rate</strong> to see roughly what the claim saves you.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Cars and vans  = first 10,000 miles × 55p + remaining miles × 25p   (2026 to 2027)
+Motorcycles    = miles × 24p
+Bicycles       = miles × 20p   (employees' approved amount)
+Tax saving     = amount claimed × your tax and NI rate</div>
+
+    <h2>Worked example</h2>
+    <p>Lucy is a self-employed electrician who drove 12,000 business miles in her van in 2026 to 2027. She pays 20% Income Tax and 6% Class 4 NI on her top slice of profit.</p>
+    <div class="formula">First 10,000 miles  = 10,000 × 55p    = £5,500
+Next 2,000 miles    = 2,000 × 25p     = £500
+Total claim         = £6,000
+Tax saving          = 6,000 × 26%     = £1,560</div>
+    <p>Lucy can claim <strong>£6,000</strong>, saving about <strong>£1,560</strong>. At the old 45p rate, the same miles would have given £5,000.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Actual vehicle costs and capital allowances. If you've already claimed capital allowances for a vehicle, you can't switch it to flat rates.</li>
+      <li>Passenger payments and fuel-only rates for company cars.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Who can use these rates?</summary>
+        <p>Self-employed people using simplified expenses for cars, vans and motorcycles, and employers paying employees for business journeys in their own vehicles. Bicycles only have an approved rate for employees.</p>
+      </details>
+      <details>
+        <summary>Can I also claim parking and train fares?</summary>
+        <p>Yes. Parking, tolls and other travel costs, such as train fares, can be claimed on top of the mileage rate.</p>
+      </details>
+      <details>
+        <summary>Can I change back to actual costs later?</summary>
+        <p>No. Once you use the flat rate for a vehicle, you must keep using it for as long as you use that vehicle for your business.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/simpler-income-tax-simplified-expenses/vehicles" rel="noopener">simplified expenses: vehicles</a>, <a href="https://www.gov.uk/expenses-and-benefits-business-travel-mileage/rules-for-tax" rel="noopener">business travel mileage rates</a>.</p>
+  </div>

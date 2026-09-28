@@ -1,0 +1,102 @@
+  <section class="calculator" aria-label="Canada self-employed tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="earnings">Net self-employment income for 2026<span class="hint">Business income minus expenses (line 13500 and similar)</span></label>
+        <div class="input-wrap"><span class="affix">C$</span><input id="earnings" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="provincial">Provincial or territorial tax (your estimate)<span class="hint">As a % of taxable income. Around 4–8% is common on middle incomes; check your province's rates.</span></label>
+        <div class="input-wrap"><input id="provincial" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 30.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your take-home pay</h2>
+      <div class="result-main"><span id="out-take">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Per month</span><span id="out-monthly">—</span></li>
+        <li><span>Total tax and CPP</span><span id="out-total">—</span></li>
+        <li><span>CPP contributions (both halves)</span><span id="out-cpp">—</span></li>
+        <li><span>Federal income tax</span><span id="out-fed">—</span></li>
+        <li><span>Provincial tax (estimate)</span><span id="out-prov">—</span></li>
+        <li><span>Effective rate</span><span id="out-rate">—</span></li>
+      </ul>
+      <p class="result-note">Federal tax and CPP are calculated exactly from 2026 CRA figures. Provincial tax is your own estimate.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>CPP and take-home at different incomes</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Net income</th><th class="num">CPP</th><th class="num">Take-home</th><th class="num">Effective rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>2026 figures used</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Item</th><th>2026</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Item">Federal rates</td><td data-label="2026">14% to $58,523; 20.5% to $117,045; 26% to $181,440; 29% to $258,482; 33% above</td></tr>
+          <tr><td data-label="Item">Basic personal amount</td><td data-label="2026">$16,452 (falls to $14,829 between $181,440 and $258,482)</td></tr>
+          <tr><td data-label="Item">CPP (self-employed)</td><td data-label="2026">11.9% on earnings from $3,500 to $74,600 (max $8,460.90)</td></tr>
+          <tr><td data-label="Item">CPP2 (self-employed)</td><td data-label="2026">8% on earnings from $74,600 to $85,000 (max $832)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">CPP             = 11.9% × (income up to $74,600 − $3,500)
+                + 8% × (income between $74,600 and $85,000)
+CPP deduction   = employer half + enhanced part of your half + all CPP2
+Net income      = income − CPP deduction
+Federal tax     = 2026 brackets on net income
+                − 14% × (basic personal amount + base CPP on your half)
+Take-home       = income − CPP − federal tax − provincial estimate</div>
+    <p>As a self-employed person you pay both the employee and employer shares of CPP. The "base" part of your own share gives a tax credit; the rest is a deduction.</p>
+
+    <h2>Worked example</h2>
+    <p>Jordan is a self-employed web designer outside Quebec with $60,000 net income in 2026, and estimates provincial tax at 5% of taxable income.</p>
+    <div class="formula">CPP            = (60,000 − 3,500) × 11.9%          = 6,723.50
+CPP deduction  = 3,361.75 + 565.00                 = 3,926.75
+Net income     = 60,000 − 3,926.75                 = 56,073.25
+Federal tax    = 56,073.25 × 14% − 14% × (16,452 + 2,796.75) = 5,155.43
+Provincial     = 56,073.25 × 5%                    = 2,803.66
+Take-home      = 60,000 − 6,723.50 − 5,155.43 − 2,803.66 = $45,317.41</div>
+    <p>Jordan keeps about <strong>$45,317</strong>, or $3,776 a month. CPP is the biggest single cost at this income, more than federal income tax.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Exact provincial or territorial tax, surtaxes and health premiums. Enter your own estimate.</li>
+      <li>Quebec residents, who pay QPP instead of CPP and file a separate Quebec return.</li>
+      <li>Employment income, RRSP deductions, other credits, and optional EI for self-employed people.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why is CPP so high when I'm self-employed?</summary>
+        <p>Employees and employers each pay 5.95%. When you're self-employed you're both, so you pay 11.9% (plus 8% CPP2 on earnings between $74,600 and $85,000 in 2026).</p>
+      </details>
+      <details>
+        <summary>Do I have to pay tax in instalments?</summary>
+        <p>If your net tax owing is over $3,000 ($1,800 in Quebec) this year and in either of the two previous years, yes. Our <a href="{{root}}canada/tax-instalments-calculator/">instalments calculator</a> works it out.</p>
+      </details>
+      <details>
+        <summary>Can I get EI as a self-employed person?</summary>
+        <p>Only if you opt in to the EI special benefits program for self-employed people. It covers things like maternity and sickness benefits, not regular job-loss benefits.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026):</strong> <a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html" rel="noopener">CRA tax rates and brackets</a>, <a href="https://www.canada.ca/en/revenue-agency/programs/about-canada-revenue-agency-cra/federal-government-budgets/basic-personal-amount.html" rel="noopener">basic personal amount</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/canada-pension-plan-cpp/cpp-contribution-rates-maximums-exemptions.html" rel="noopener">CPP rates</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/calculating-deductions/making-deductions/second-additional-cpp-contribution-rates-maximums.html" rel="noopener">CPP2 rates</a>.</p>
+  </div>

@@ -1,0 +1,134 @@
+  <section class="calculator" aria-label="Hourly rate calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="income">Yearly take-home goal<span class="hint">What you want to keep after tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="income" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Yearly business expenses<span class="hint">Software, equipment, insurance, etc.</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="expenses" type="text" inputmode="decimal" value="6000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="tax">Estimated total tax rate<span class="hint">Income tax plus SE tax or NI</span></label>
+        <div class="input-wrap"><input id="tax" type="text" inputmode="decimal" value="25" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 90.</span>
+      </div>
+
+      <div class="field">
+        <label for="weeksOff">Weeks off per year<span class="hint">Vacation, holidays and sick days</span></label>
+        <div class="input-wrap"><input id="weeksOff" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a number from 0 to 51.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours worked per week<span class="hint">All working time, paid or not</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 1 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="billable">Billable percentage<span class="hint">Share of time clients pay for</span></label>
+        <div class="input-wrap"><input id="billable" type="text" inputmode="decimal" value="70" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from 1 to 100.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your minimum rate</h2>
+      <div class="result-main"><span id="out-hourly">—</span> <small>/ hour</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Day rate (8 hours)</span><span id="out-day">—</span></li>
+        <li><span>Monthly revenue target</span><span id="out-monthly">—</span></li>
+        <li><span>Yearly revenue needed</span><span id="out-revenue">—</span></li>
+        <li><span>Profit before tax</span><span id="out-profit">—</span></li>
+        <li><span>Estimated tax</span><span id="out-taxamt">—</span></li>
+        <li><span>Billable hours per year</span><span id="out-hours">—</span></li>
+      </ul>
+      <p class="result-note">This is the least you should charge to reach your goal. Many freelancers add 10–20% on top as a safety margin.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How your billable time changes your rate</h2>
+    <p>Most freelancers overestimate how many hours they can bill. Admin, sales, emails and finding new clients all take time nobody pays for. This table uses your numbers above to show what you'd need to charge at different billable percentages.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Billable %</th><th class="num">Billable hours / year</th><th class="num">Hourly rate needed</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Pick your currency</strong> and enter how much you want to take home each year after tax.</li>
+      <li><strong>Add your yearly business costs</strong>, such as software, a laptop, insurance and accounting fees.</li>
+      <li><strong>Enter your tax rate, time off and working hours.</strong> If you're unsure about tax, 25–30% is a common starting estimate.</li>
+      <li><strong>Be honest about billable time.</strong> 60–75% is typical. Your rate updates as you type.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <p>The calculator works backwards from the money you want to keep:</p>
+    <div class="formula">Working weeks        = 52 − weeks off
+Billable hours/year  = working weeks × hours per week × billable %
+Pre-tax profit       = desired take-home ÷ (1 − tax rate)
+Revenue needed       = pre-tax profit + business expenses
+Hourly rate          = revenue needed ÷ billable hours/year</div>
+    <p>Expenses are added <em>after</em> the tax step. Business expenses are usually tax-deductible, so tax is charged on your profit, not on everything clients pay you.</p>
+
+    <h2>Worked example</h2>
+    <p>Alex is a freelance designer who wants to take home $60,000 a year. They spend $6,000 a year on business costs, estimate 25% total tax, take 4 weeks off, work 40 hours a week and bill 70% of that time.</p>
+    <div class="formula">Working weeks        = 52 − 4             = 48
+Billable hours/year  = 48 × 40 × 0.70     = 1,344
+Pre-tax profit       = 60,000 ÷ 0.75      = 80,000
+Revenue needed       = 80,000 + 6,000     = 86,000
+Hourly rate          = 86,000 ÷ 1,344     ≈ $63.99/hour</div>
+    <p>Alex needs to charge at least <strong>$63.99 an hour</strong>, which is about <strong>$511.90 a day</strong> and <strong>$7,166.67 a month</strong> in revenue.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> compare this with the "divide by 2,080 hours" shortcut many people use. $60,000 ÷ 2,080 is only $28.85 an hour. That's less than half of what Alex actually needs, because it ignores tax, expenses, time off and unpaid work.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What billable percentage should I use?</summary>
+        <p>Most full-time freelancers bill between 60% and 75% of their working hours. The rest goes on admin, invoicing, marketing and finding new clients. If you're just starting out and still building a client list, 50% is a safer guess.</p>
+      </details>
+      <details>
+        <summary>What tax rate should I enter?</summary>
+        <p>Use your combined rate: income tax plus self-employment tax (US), National Insurance (UK), CPP contributions (Canada) or the Medicare levy (Australia). If you don't know yet, 25–30% is a reasonable starting estimate for many freelancers. An accountant can give you a precise figure.</p>
+      </details>
+      <details>
+        <summary>Should I charge by the hour or by the project?</summary>
+        <p>Your hourly rate is the foundation either way. Even if you quote a fixed project price, estimate the hours the project will take and multiply by this rate so you don't undercharge. Our <a href="{{root}}freelance/project-pricing-calculator/">project pricing calculator</a> does this for you.</p>
+      </details>
+      <details>
+        <summary>Why is my rate so much higher than my old salary divided by hours?</summary>
+        <p>As an employee, your employer paid for your equipment, holidays, sick days, part of your taxes and the time you spent in meetings. As a freelancer you pay for all of these yourself, so your rate has to cover them.</p>
+      </details>
+      <details>
+        <summary>Does this calculator include retirement savings?</summary>
+        <p>Not separately. If you want to save for retirement, add that amount to your desired take-home income, or include pension contributions in your business expenses if they're paid through your business.</p>
+      </details>
+    </div>
+  </div>
