@@ -319,6 +319,23 @@ ol {
   color: var(--muted);
 }
 
+/* The Calculators menu opens from its left edge, so it stays on screen. */
+.site-nav .nav-menu-list-start {
+  left: 0;
+  right: auto;
+}
+
+.site-nav .nav-menu-list-start a {
+  white-space: nowrap;
+}
+
+.site-nav .nav-menu-list a > .icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--muted);
+}
+
 .site-nav .nav-menu-list a[aria-current="page"] {
   background: var(--bg);
   font-weight: 650;

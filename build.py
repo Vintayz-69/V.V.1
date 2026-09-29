@@ -1038,6 +1038,12 @@ def json_ld(page):
     return f'<script type="application/ld+json">\n{data}\n</script>'
 
 
+# The header's Calculators menu: (nav key, name, path, icon).
+CALC_SECTIONS = [("tools", "Freelance calculators", "freelance/", "briefcase"),
+                 ("business", "Business tools", "business/", "trending"),
+                 ("career", "Career &amp; salary", "career/", "clock"),
+                 ("education", "Writing &amp; study", "education/", "award")]
+
 # The header's Country menu: (nav key, name, path). US and UK have drawn flags; the others show a code.
 COUNTRIES = [("us", "United States", "us/"), ("uk", "United Kingdom", "uk/"),
              ("ca", "Canada", "ca/"), ("au", "Australia", "au/")]
@@ -1057,6 +1063,12 @@ def header(page, up):
     countries = "\n".join("              " + country(*c) for c in COUNTRIES)
     in_country = " is-current" if nav in [c[0] for c in COUNTRIES] else ""
 
+    # The Calculators menu lists every calculator section (PDF and Resume have their own links).
+    sections = "\n".join(
+        f'              <li><a href="{up}{path}"{cur(key)}>{icon(ic)}{name}</a></li>'
+        for key, name, path, ic in CALC_SECTIONS)
+    in_calcs = " is-current" if nav in [c[0] for c in CALC_SECTIONS] else ""
+
     # The Country menu is a <details> element, so it opens and closes without JavaScript.
     # common.js only adds closing on Escape and on a click outside.
     return f"""<a class="skip-link" href="#main">Skip to content</a>
@@ -1067,7 +1079,14 @@ def header(page, up):
     <nav class="site-nav" aria-label="Main">
       <ul>
         <li class="hide-md"><a href="{home}"{cur('home')}>Home</a></li>
-        <li><a href="{up}freelance/"{cur('tools')}>Calc<span class="hide-sm-inline">ulators</span></a></li>
+        <li>
+          <details class="nav-menu">
+            <summary class="nav-menu-button{in_calcs}"><span>Calc<span class="hide-sm-inline">ulators</span></span>{icon('chevron', 'icon nav-chevron')}</summary>
+            <ul class="nav-menu-list nav-menu-list-start">
+{sections}
+            </ul>
+          </details>
+        </li>
         <li><a href="{up}pdf/"{cur('pdf')}>PDF<span class="hide-sm-inline"> tools</span></a></li>
         <li><a href="{up}resume-maker/"{cur('resume')}>Resume</a></li>
         <li>

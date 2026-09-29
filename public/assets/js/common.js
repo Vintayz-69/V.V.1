@@ -296,7 +296,7 @@
     tableRows: tableRows
   };
 
-  // The header's Country menu is a <details> element and works on its own; this also
+  // The header's Calculators and Country menus are <details> elements and work on their own; this also
   // closes it on Escape, on a click outside, and when keyboard focus moves away.
   function initNavMenus() {
     var menus = document.querySelectorAll(".nav-menu");
