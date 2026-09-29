@@ -1,0 +1,71 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Rotate PDF tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="page-toolbar">
+        <button type="button" class="btn btn-sm" id="rotate-all-left">Rotate all left</button>
+        <button type="button" class="btn btn-sm" id="rotate-all-right">Rotate all right</button>
+        <button type="button" class="btn btn-sm btn-quiet" id="rotate-clear">Undo all</button>
+      </div>
+      <p class="work-note" id="rotate-note"></p>
+      <ol class="page-grid wide-tiles" id="page-grid" aria-label="Pages"></ol>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Save rotated PDF</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's rotated by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to rotate PDF pages</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF.</strong> You'll see a preview of every page.</li>
+      <li><strong>Turn the pages that need it.</strong> Use the arrows under a page to turn it a quarter left or right, or turn every page at once.</li>
+      <li><strong>Press "Save rotated PDF"</strong> and download the new file.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>Every page in a PDF has a rotation setting: 0°, 90°, 180° or 270°. This tool changes only that setting. Nothing on the page is re-saved, so there's no loss of quality, and text you could select before is still selectable. Your file is never sent to our website.</p>
+
+    <h2>Example</h2>
+    <p>A 3-page scan where page 2 came out upside down and page 3 came out on its side. Page 1 is fine.</p>
+    <div class="formula">Page 1   no change                  →  0°
+Page 2   right arrow twice           →  180°
+Page 3   right arrow once            →  90°</div>
+    <p>If a page already had a rotation setting, the turn is added to it. A page set to 270° that you turn right once ends up at 0°, the normal way up.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does rotating reduce quality?</summary>
+        <p>No. Only the page's rotation setting changes. The text, pictures and file size stay the same.</p>
+      </details>
+      <details>
+        <summary>Can I rotate by 45 degrees?</summary>
+        <p>No. PDF pages can only be turned in quarter turns (90°, 180° or 270°), so this tool works in those steps.</p>
+      </details>
+      <details>
+        <summary>Do bookmarks, links and forms still work?</summary>
+        <p>Yes. The pages stay in the same file and only their rotation changes, so everything else in the PDF is kept.</p>
+      </details>
+      <details>
+        <summary>Why can't I rotate my PDF?</summary>
+        <p>If the PDF has a password or security settings that stop it being changed, it can't be rotated. Remove the protection in the app that made it first (you'll need the password).</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,89 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="PDF to JPG tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="pdf-options">
+        <fieldset class="choice-group">
+          <legend>Picture type</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="format" id="format-jpg" value="jpg" checked><label for="format-jpg">JPG<small>Smaller files</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="format" id="format-png" value="png"><label for="format-png">PNG<small>Crisper text, bigger files</small></label></div>
+          </div>
+        </fieldset>
+        <fieldset class="choice-group">
+          <legend>Sharpness</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="dpi" id="dpi-72" value="72"><label for="dpi-72">Screen<small>72 DPI</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="dpi" id="dpi-150" value="150" checked><label for="dpi-150">Standard<small>150 DPI</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="dpi" id="dpi-300" value="300"><label for="dpi-300">High<small>300 DPI</small></label></div>
+          </div>
+        </fieldset>
+        <div class="field span-2" id="field-pages">
+          <label for="pick-pages">Pages<span class="hint">Leave empty for every page, or type numbers like 1, 3-5</span></label>
+          <div class="input-wrap"><input id="pick-pages" type="text" autocomplete="off" spellcheck="false" placeholder="All pages"></div>
+          <span class="error-msg" id="pick-error"></span>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Convert to pictures</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's converted by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to convert a PDF to JPG</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Pick JPG or PNG and a sharpness.</strong> Standard suits screens and most uses; High is best for printing.</li>
+      <li><strong>Choose the pages</strong>, or leave the box empty for all of them.</li>
+      <li><strong>Press "Convert to pictures".</strong> Download each picture, or all of them in one ZIP file.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>Your browser draws each page onto a blank white canvas at the sharpness you chose, then saves it as a picture. DPI means "dots per inch": a page 1 inch wide becomes 150 pixels wide at 150 DPI. PDF page sizes are measured in points (72 to an inch), so the picture size is the page size ÷ 72 × DPI.</p>
+    <p>Phones can't draw pictures much bigger than 16 million pixels, so very large pages (like posters at 300 DPI) are made a little smaller to fit. Your PDF is never uploaded.</p>
+
+    <h2>Example</h2>
+    <div class="formula">A4 page     595.28 × 841.89 points  (8.27 × 11.69 inches)
+At 150 DPI  × 150 ÷ 72  →  1,240 × 1,754 pixels
+At 300 DPI  × 300 ÷ 72  →  2,480 × 3,508 pixels
+
+US Letter   612 × 792 points  (8.5 × 11 inches)
+At 300 DPI  × 300 ÷ 72  →  2,550 × 3,300 pixels</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should I choose JPG or PNG?</summary>
+        <p>JPG gives smaller files and is best for pages with photos. PNG keeps text and lines perfectly crisp but makes bigger files, so it suits pages of text, charts and diagrams.</p>
+      </details>
+      <details>
+        <summary>Which sharpness should I pick?</summary>
+        <p>Screen (72 DPI) is fine for small previews. Standard (150 DPI) looks good on phones, computers and in slides. High (300 DPI) is best for printing or zooming in, but the files are about four times bigger than Standard.</p>
+      </details>
+      <details>
+        <summary>Can I convert a PDF that's locked against editing?</summary>
+        <p>Often, yes. This tool only reads the PDF, so it can open files that block changes. A PDF that needs a password just to open can't be converted until you remove the password.</p>
+      </details>
+      <details>
+        <summary>Why does a page look slightly different from my PDF reader?</summary>
+        <p>If a PDF uses fonts that aren't saved inside the file, your browser uses the closest match it has. The layout stays the same, but letter shapes can differ a little.</p>
+      </details>
+    </div>
+  </div>

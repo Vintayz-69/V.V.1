@@ -178,6 +178,15 @@ ol {
   color: var(--navy-900);
 }
 
+.logo-by {
+  margin-left: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
 .logo-mark {
   width: 32px;
   height: 32px;
@@ -212,19 +221,6 @@ ol {
   color: var(--navy-900);
 }
 
-.site-nav .nav-country {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.site-nav .nav-country .flag {
-  width: 20px;
-  height: 14px;
-  border-radius: 2px;
-  box-shadow: 0 0 0 1px var(--border);
-}
-
 .site-nav .nav-cta {
   background: var(--navy-900);
   color: #fff;
@@ -234,6 +230,98 @@ ol {
 .site-nav .nav-cta:hover {
   background: var(--navy-700);
   color: #fff;
+}
+
+/* Country menu: a <details> element, so it works without JavaScript. */
+.nav-menu {
+  position: relative;
+}
+
+.nav-menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 550;
+  font-size: 0.95rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.nav-menu-button::-webkit-details-marker {
+  display: none;
+}
+
+.nav-menu-button:hover,
+.nav-menu[open] .nav-menu-button {
+  color: var(--text);
+  background: var(--bg);
+}
+
+.nav-menu-button.is-current {
+  color: var(--navy-900);
+}
+
+.nav-menu-button .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.nav-menu-button .nav-chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s ease;
+}
+
+.nav-menu[open] .nav-chevron {
+  transform: rotate(180deg);
+}
+
+.site-nav .nav-menu-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  display: block;
+  min-width: 220px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+}
+
+.site-nav .nav-menu-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.site-nav .nav-menu-list .flag,
+.site-nav .nav-menu-list .code {
+  width: 24px;
+  height: 16px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.site-nav .nav-menu-list .code {
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: var(--bg);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.site-nav .nav-menu-list a[aria-current="page"] {
+  background: var(--bg);
+  font-weight: 650;
 }
 
 /* ---------- Buttons ---------- */
@@ -1366,6 +1454,1598 @@ tr.is-yours td {
   font-size: 0.88rem;
 }
 
+/* ---------- PDF tools ---------- */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* A hidden file input's focus shows on the label that looks like its button. */
+.visually-hidden:focus-visible + label {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 2px;
+}
+
+.pdf-tool {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  margin: 32px 0 8px;
+  padding: 28px;
+}
+
+.pdf-tool [hidden] {
+  display: none !important;
+}
+
+.dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 52px 24px;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.dropzone.is-over {
+  border-color: var(--blue-600);
+  background: var(--blue-50);
+}
+
+.pdf-work.is-over {
+  outline: 2px dashed var(--blue-600);
+  outline-offset: 8px;
+  border-radius: var(--radius-sm);
+}
+
+.dropzone-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+
+.dropzone-icon .icon {
+  width: 30px;
+  height: 30px;
+}
+
+.dropzone .btn {
+  font-size: 1.05rem;
+  padding: 14px 30px;
+}
+
+.dropzone-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.btn-primary:disabled,
+.btn-primary:disabled:hover {
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+  color: #fff;
+}
+
+.btn-quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.btn-quiet:hover {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.file-card-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: var(--red-600);
+}
+
+.file-card strong {
+  display: block;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.file-card .file-card-meta {
+  display: block;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.work-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 14px;
+}
+
+.work-title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.work-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.pdf-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+  margin-top: 22px;
+}
+
+.pdf-options .span-2 {
+  grid-column: 1 / -1;
+}
+
+.choice-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choice-group legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.93rem;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choice label {
+  display: block;
+  height: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-weight: 600;
+  font-size: 0.93rem;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.choice label:hover {
+  border-color: var(--subtle);
+}
+
+.choice label small {
+  display: block;
+  margin-top: 2px;
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--subtle);
+}
+
+.choice input:checked + label {
+  border-color: var(--blue-600);
+  background: var(--blue-50);
+  color: var(--navy-900);
+  box-shadow: inset 0 0 0 1px var(--blue-600);
+}
+
+.choice input:focus-visible + label {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 2px;
+}
+
+.select-wrap select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.tool-actions .btn-primary {
+  min-width: 190px;
+}
+
+.pdf-status {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+/* Kept in the page when empty (margin only removed) so screen readers keep announcing it. */
+.pdf-status:empty {
+  margin: 0;
+}
+
+.pdf-status.is-error {
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  background: #fef2f2;
+  color: var(--red-600);
+}
+
+.pdf-status.is-busy::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+  vertical-align: -2px;
+  border: 2px solid var(--blue-100);
+  border-top-color: var(--blue-600);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pdf-privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0 0;
+  color: var(--subtle);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.pdf-privacy .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--green-600);
+}
+
+/* Lists of files (merge, pictures to PDF) */
+.file-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: file;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  counter-increment: file;
+}
+
+.file-thumb {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 64px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+.file-thumb canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.file-thumb:not(.is-drawn) canvas {
+  display: none;
+}
+
+.file-thumb::after {
+  content: counter(file);
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--navy-900);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name {
+  display: block;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.file-meta {
+  display: block;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.file-actions {
+  flex: none;
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.icon-btn:hover:not(:disabled) {
+  border-color: var(--navy-900);
+  color: var(--navy-900);
+}
+
+.icon-btn.danger:hover:not(:disabled) {
+  border-color: var(--red-600);
+  color: var(--red-600);
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.icon-btn .icon {
+  width: 18px;
+  height: 18px;
+}
+
+[draggable="true"] {
+  cursor: grab;
+}
+
+.is-dragging {
+  opacity: 0.45;
+}
+
+.file-item.drop-before {
+  box-shadow: inset 0 3px 0 var(--blue-600);
+}
+
+.file-item.drop-after {
+  box-shadow: inset 0 -3px 0 var(--blue-600);
+}
+
+/* Page previews (rotate, delete, extract, rearrange) */
+.page-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 14px;
+}
+
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 16px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.page-tile.drop-before::before,
+.page-tile.drop-after::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 44px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--blue-600);
+}
+
+.page-tile.drop-before::before {
+  left: -8px;
+}
+
+.page-tile.drop-after::after {
+  right: -8px;
+}
+
+.thumb {
+  --pad: 10px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: var(--pad);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+/* Pinned inside the square so it always fits, turned or not (a square holds any page turned 90°). */
+.thumb canvas {
+  position: absolute;
+  inset: var(--pad);
+  display: block;
+  max-width: calc(100% - 2 * var(--pad));
+  max-height: calc(100% - 2 * var(--pad));
+  margin: auto;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2);
+  transition: transform 0.25s ease, opacity 0.15s;
+}
+
+.thumb:not(.is-drawn) canvas {
+  display: none;
+}
+
+/* Blank page shape while the preview is drawn (or if it can't be). */
+.thumb:not(.is-drawn)::before {
+  content: "";
+  width: 62%;
+  aspect-ratio: 1 / 1.41;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.15);
+}
+
+.thumb canvas.rot-90 {
+  transform: rotate(90deg);
+}
+
+.thumb canvas.rot-180 {
+  transform: rotate(180deg);
+}
+
+.thumb canvas.rot-270 {
+  transform: rotate(270deg);
+}
+
+.page-tile.is-changed .thumb {
+  border-color: var(--blue-600);
+}
+
+.page-label {
+  display: block;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.tile-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.tile-row .icon-btn {
+  width: 36px;
+  height: 36px;
+}
+
+.page-pick {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.page-pick:hover .thumb {
+  border-color: var(--subtle);
+}
+
+.pick-mark {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  background: #fff;
+  color: transparent;
+}
+
+.pick-mark .icon {
+  width: 15px;
+  height: 15px;
+}
+
+.page-pick[aria-pressed="true"] .thumb {
+  border-color: var(--blue-600);
+  box-shadow: inset 0 0 0 2px var(--blue-600);
+  background: var(--blue-50);
+}
+
+.page-pick[aria-pressed="true"] .pick-mark {
+  border-color: var(--blue-600);
+  background: var(--blue-600);
+  color: #fff;
+}
+
+.pick-delete .page-pick[aria-pressed="true"] .thumb {
+  border-color: var(--red-600);
+  box-shadow: inset 0 0 0 2px var(--red-600);
+  background: #fef2f2;
+}
+
+.pick-delete .page-pick[aria-pressed="true"] .pick-mark {
+  border-color: var(--red-600);
+  background: var(--red-600);
+}
+
+.pick-delete .page-pick[aria-pressed="true"] canvas {
+  opacity: 0.35;
+}
+
+/* Results panel (dark, like the calculators) */
+.pdf-result {
+  margin-top: 22px;
+  padding: 28px;
+  border-radius: var(--radius);
+  color: #fff;
+  background:
+    radial-gradient(500px 260px at 100% 0%, rgba(59, 130, 246, 0.35), transparent 65%),
+    linear-gradient(180deg, var(--navy-800), var(--navy-900));
+}
+
+.result-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.result-badge {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(110, 231, 183, 0.15);
+  color: #6ee7b7;
+}
+
+.pdf-result h2 {
+  margin: 2px 0 4px;
+  color: #fff;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+}
+
+.pdf-result h2:focus {
+  outline: none;
+}
+
+.result-head p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.btn-download {
+  font-size: 1.02rem;
+  padding: 14px 26px;
+}
+
+.result-file {
+  margin: 10px 0 0;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.result-files {
+  max-height: 340px;
+  margin: 18px 0 0;
+  padding: 0;
+  overflow: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  list-style: none;
+}
+
+.result-files li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.92rem;
+}
+
+.result-file-name {
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.result-file-meta {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.result-file-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #93c5fd;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.result-file-link:hover {
+  color: #fff;
+}
+
+.result-file-link .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.pdf-result .btn-ghost-dark {
+  margin-top: 18px;
+}
+
+@media (max-width: 600px) {
+  .pdf-tool {
+    padding: 18px;
+  }
+
+  .dropzone {
+    padding: 36px 16px;
+  }
+
+  .pdf-options {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-actions .btn-primary {
+    flex: 1 1 100%;
+  }
+
+  .page-grid {
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 14px 10px;
+  }
+
+  .thumb {
+    --pad: 7px;
+  }
+
+  /* Tiles with buttons under them need room for "Page 10" between two buttons. */
+  .page-grid.wide-tiles {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .file-item {
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  .file-actions .icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .pdf-result {
+    padding: 22px 18px;
+  }
+
+  .result-files li {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .result-file-name {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- Resume maker ---------- */
+
+/* The form (left) and the live preview (right). Built by assets/js/resume.js. */
+.resume-app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin: 32px 0 8px;
+  min-height: 640px;
+}
+
+.rf-noscript {
+  grid-column: 1 / -1;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--amber-50);
+  border: 1px solid var(--amber-300);
+}
+
+.resume-form {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.rf-bar {
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.rf-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rf-privacy {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.rf-privacy .icon {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  color: var(--green-600);
+}
+
+/* The file picker is hidden; its label is styled as the "Open draft" button. */
+.rf-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.rf-file:focus-visible + label {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 2px;
+}
+
+.rf-offscreen {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+}
+
+.rf-group {
+  min-width: 0;
+  margin: 0;
+  padding: 20px 22px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.rf-group > legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin: 0 0 12px;
+  font-weight: 750;
+  font-size: 1.08rem;
+  letter-spacing: -0.01em;
+}
+
+.rf-help {
+  clear: both;
+  margin: -4px 0 14px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.rf-grid {
+  clear: both;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+}
+
+.rf-grid .span-2 {
+  grid-column: 1 / -1;
+}
+
+.input-wrap.is-text input {
+  font-weight: 450;
+  font-variant-numeric: normal;
+}
+
+.rf-textarea {
+  display: block;
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 0.97rem;
+  line-height: 1.5;
+  color: var(--text);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.rf-textarea:hover {
+  border-color: var(--subtle);
+}
+
+.rf-textarea:focus {
+  outline: none;
+  border-color: var(--blue-600);
+  box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.14);
+}
+
+.resume-form ::placeholder {
+  color: var(--subtle);
+  opacity: 1;
+}
+
+.rf-entries {
+  display: grid;
+  gap: 12px;
+}
+
+.rf-entries:not(:empty) {
+  margin-bottom: 12px;
+}
+
+.rf-entry {
+  padding: 14px 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.rf-entry-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.rf-entry-title {
+  min-width: 0;
+  margin: 0;
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rf-entry-tools {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+.rf-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rf-icon-btn:hover:not(:disabled) {
+  border-color: var(--navy-900);
+  color: var(--navy-900);
+}
+
+.rf-icon-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.rf-choices {
+  display: grid;
+  gap: 8px;
+}
+
+.rf-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.rf-radio input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--blue-600);
+}
+
+.rf-radio:has(input:checked) {
+  border-color: var(--blue-600);
+  background: var(--blue-50);
+}
+
+/* Preview panel (dark, like the calculator results), with white pages inside. */
+.rp-panel {
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: calc(100vh - 100px);
+  min-width: 0;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  background:
+    radial-gradient(500px 260px at 100% 0%, rgba(59, 130, 246, 0.35), transparent 65%),
+    linear-gradient(180deg, var(--navy-800), var(--navy-900));
+  box-shadow: var(--shadow-lg);
+}
+
+.rp-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+}
+
+.rp-title {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.rp-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+
+.rp-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.rp-options label {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.rp-options .select-wrap select {
+  height: 44px;
+  font-size: 0.93rem;
+}
+
+.rp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rp-actions .btn {
+  flex: 1 1 auto;
+}
+
+.rp-status {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+}
+
+.rp-status:empty {
+  display: none;
+}
+
+.rp-status.is-error {
+  color: #fca5a5;
+}
+
+.rp-warnings {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rp-warnings:empty {
+  display: none;
+}
+
+.rp-warnings li {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(245, 196, 81, 0.12);
+  border: 1px solid rgba(245, 196, 81, 0.4);
+  color: #fde68a;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.rp-pages {
+  display: grid;
+  gap: 14px;
+  min-height: 0;
+  overflow: auto;
+  border-radius: var(--radius-sm);
+}
+
+.rp-sheet {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.55);
+  aspect-ratio: 612 / 792;
+}
+
+.rp-a4 .rp-sheet {
+  aspect-ratio: 595.28 / 841.89;
+}
+
+/* Until the visitor types, the preview shows the example, faded and labelled. */
+.rp-panel.is-example .rp-page {
+  opacity: 0.55;
+}
+
+.rp-panel.is-example .rp-sheet:first-child::after {
+  content: "Example";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--navy-900);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.rp-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  color: #111827;
+}
+
+.rp-page span {
+  position: absolute;
+  white-space: pre;
+  line-height: 1;
+}
+
+/* Metric-compatible with the Helvetica and Times fonts used in the PDF. */
+.rp-sans {
+  font-family: Helvetica, Arial, "Liberation Sans", "Nimbus Sans", sans-serif;
+}
+
+.rp-serif {
+  font-family: "Times New Roman", Times, "Liberation Serif", "Nimbus Roman", serif;
+}
+
+.rp-page .rp-bold {
+  font-weight: 700;
+}
+
+.rp-page .rp-italic {
+  font-style: italic;
+}
+
+.rp-page .rp-soft {
+  color: #4b5563;
+}
+
+.rp-rule {
+  position: absolute;
+  height: 0;
+  border-top: 0.75px solid #9ca3af;
+}
+
+/* Phones and tablets: a bar pinned to the bottom with Preview and Download. */
+.resume-bar {
+  display: none;
+}
+
+@media (max-width: 1080px) {
+  .resume-app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rp-panel {
+    position: static;
+    max-height: none;
+  }
+
+  .rp-pages {
+    overflow: visible;
+  }
+
+  .resume-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 40;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    background: var(--navy-900);
+    box-shadow: 0 12px 32px -8px rgba(7, 20, 43, 0.5);
+    transform: translateY(160%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .resume-bar.show {
+    transform: none;
+  }
+
+  .resume-bar .btn {
+    flex: 1 1 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .rf-group {
+    padding: 16px;
+  }
+
+  .rf-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rf-bar {
+    padding: 14px;
+  }
+
+  .rp-panel {
+    padding: 16px;
+  }
+}
+
+/* Search box on hub pages (assets/js/tool-search.js) */
+.hub-search {
+  position: relative;
+  max-width: 560px;
+  margin-top: 22px;
+}
+
+.hub-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  display: flex;
+  color: var(--subtle);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.hub-search input {
+  width: 100%;
+  height: 54px;
+  padding: 0 16px 0 48px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem; /* 16px or more stops phones zooming in on tap */
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.hub-search input::placeholder {
+  color: var(--subtle);
+}
+
+.hub-search input:hover {
+  border-color: var(--subtle);
+}
+
+.hub-search input:focus {
+  outline: none;
+  border-color: var(--blue-600);
+  box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.14);
+}
+
+.search-status {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.search-status:empty {
+  margin: 0;
+}
+
+main .section[hidden],
+.card-grid > li[hidden] {
+  display: none;
+}
+
+.tool-bars-wrap {
+  max-width: 560px;
+  margin-top: 14px;
+}
+
+.tool-bars-label {
+  margin: 0 0 4px 6px;
+  color: var(--blue-600);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Wide screens: the list sits beside the title instead of under the search box. */
+@media (min-width: 961px) {
+  .hub-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    align-items: start;
+    gap: 48px;
+  }
+
+  .hub-hero .tool-bars-wrap {
+    max-width: none;
+    margin-top: 0;
+    animation-delay: 0.12s;
+  }
+
+  .hub-hero .tool-bars,
+  .hub-hero .tool-deck.is-deck {
+    max-height: 372px;
+  }
+
+  .hub-hero .tool-deck.is-deck {
+    height: 372px;
+  }
+}
+
+/* List of tool bars beside (or under) the hub search box. Without JavaScript it's a plain
+   scrolling list. tool-search.js adds .is-deck to #tool-deck and turns it into a 3D deck: the
+   box scrolls over an empty track while the bars stay pinned (sticky) and are placed one by one
+   (transform, z-index, opacity): one faces you in the middle, the rest stack above and below. */
+.tool-bars {
+  --fade-bottom: 0px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* long descriptions shorten with "…" instead of widening the list */
+  gap: 8px;
+  max-height: 322px;
+  margin: 0;
+  padding: 6px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.tool-bars > li {
+  min-width: 0;
+}
+
+/* The framed panel around the list, with the Animation switch in its top-right corner. */
+.tool-deck-frame {
+  padding: 6px 8px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 #fff;
+}
+
+.tool-deck-bar {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 32px;
+}
+
+.deck-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.deck-switch:hover {
+  color: var(--text);
+}
+
+.deck-switch-track {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--border-strong);
+  transition: background 0.2s;
+}
+
+.deck-switch-track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.3);
+  transition: transform 0.2s;
+}
+
+.deck-switch[aria-checked="true"] .deck-switch-track {
+  background: var(--blue-600);
+}
+
+.deck-switch[aria-checked="true"] .deck-switch-track::after {
+  transform: translateX(14px);
+}
+
+.tool-deck.is-deck {
+  position: relative;
+  height: 322px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none; /* the stacks above and below show there's more */
+}
+
+.tool-deck.is-deck::-webkit-scrollbar {
+  display: none;
+}
+
+.tool-deck.is-deck .tool-bars {
+  position: sticky;
+  top: 0;
+  display: block;
+  height: 100%;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  perspective: 900px;
+}
+
+.tool-deck.is-deck .tool-bars > li {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  left: 6px;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.tool-deck.is-deck .tool-bars > li.is-centre .tool-bar {
+  border-color: var(--blue-600);
+  box-shadow: var(--shadow-lg);
+}
+
+.tool-deck.is-deck .tool-bars > li.is-centre .tool-bar-go {
+  color: var(--blue-600);
+}
+
+.tool-deck-track {
+  pointer-events: none;
+}
+
+.tool-bars > li[hidden] {
+  display: none;
+}
+
+.tool-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.tool-bar:hover,
+.tool-bar:focus-visible {
+  border-color: var(--blue-600);
+  background: #fff;
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+.tool-bar:focus-visible {
+  outline-offset: 1px;
+}
+
+.tool-bar-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--blue-50);
+  color: var(--blue-600);
+}
+
+.tool-bar-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.tool-bar-text strong {
+  font-size: 0.98rem;
+  font-weight: 650;
+}
+
+.tool-bar-text span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.84rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tool-bar-go {
+  flex: none;
+  display: flex;
+  color: var(--subtle);
+  transition: transform 0.2s, color 0.2s;
+}
+
+.tool-bar:hover .tool-bar-go,
+.tool-bar:focus-visible .tool-bar-go {
+  color: var(--blue-600);
+  transform: translateX(4px);
+}
+
 /* ---------- Footer (dark) ---------- */
 
 .site-footer {
@@ -1377,8 +3057,8 @@ tr.is-yours td {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: 1.4fr repeat(6, 1fr);
+  gap: 24px;
   padding-bottom: 36px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -1527,6 +3207,36 @@ tr.is-yours td {
 
   .site-nav .hide-sm {
     display: none;
+  }
+
+  .site-nav .hide-sm-inline {
+    display: none;
+  }
+
+  /* Phones: the Country menu shows just its globe ("Country" is still read out by screen readers). */
+  .site-nav .nav-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .nav-menu-button {
+    padding: 8px;
+  }
+
+  .nav-menu-button .nav-chevron {
+    display: none;
+  }
+
+  .site-header .container {
+    gap: 10px;
+  }
+
+  .site-nav ul {
+    gap: 2px;
   }
 
   .site-nav a {
@@ -1685,5 +3395,262 @@ tr.is-yours td {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Phones and small tablets: drop "by Vintayz" next to the logo so the menu fits (it stays in the footer). */
+@media (max-width: 700px) {
+  .site-header .logo-by {
+    display: none;
+  }
+}
+
+/* The smallest phones: tighten the menu so all four items fit inside the 16px gutter. */
+@media (max-width: 400px) {
+  .site-header .container {
+    gap: 8px;
+  }
+
+  .site-nav ul {
+    gap: 0;
+  }
+
+  .site-nav a {
+    padding: 8px 7px;
+  }
+
+  .nav-menu-button {
+    padding: 8px 6px;
+  }
+}
+
+/* ---------- Light/dark switch (header) ----------
+   A sliding switch: sun on the left, moon on the right; the knob sits under the one in use. */
+
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+}
+
+.theme-switch[hidden] {
+  display: none;
+}
+
+.theme-switch-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 58px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--subtle);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.theme-switch:hover .theme-switch-track {
+  border-color: var(--subtle);
+}
+
+.theme-switch-track .icon {
+  position: relative;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  transition: color 0.2s;
+}
+
+.theme-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.theme-switch[aria-checked="false"] .icon-sun {
+  color: #b45309;
+}
+
+.theme-switch[aria-checked="true"] .icon-moon {
+  color: #fcd34d;
+}
+
+.theme-switch[aria-checked="true"] .theme-switch-knob {
+  transform: translateX(28px);
+}
+
+@media (max-width: 560px) {
+  .theme-switch {
+    margin-left: 2px;
+  }
+
+  .theme-switch-track {
+    width: 48px;
+    height: 26px;
+    padding: 0 6px;
+  }
+
+  .theme-switch-track .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .theme-switch-knob {
+    width: 20px;
+    height: 20px;
+  }
+
+  .theme-switch[aria-checked="true"] .theme-switch-knob {
+    transform: translateX(22px);
+  }
+}
+
+/* ---------- Dark mode ----------
+   theme.js sets data-theme="dark" on <html> when the device is set to dark, and the header
+   switch flips it. Most colours come from the variables below; the rules after them fix the
+   places that use a fixed light colour or navy as text. Things that stand for paper (PDF page
+   previews, the resume preview) stay white on purpose. */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a1120;
+  --surface: #111b2e;
+  --text: #e5eaf3;
+  --muted: #a6b2c6;
+  --subtle: #8a96ab;
+  --border: #223049;
+  --border-strong: #34445f;
+  --blue-600: #7aa2ff; /* links, icons and outlines: light enough to read on dark */
+  --blue-700: #a3bfff;
+  --blue-50: #15233f;
+  --blue-100: #1c3160;
+  --green-600: #34d399;
+  --green-50: #0f2a22;
+  --red-600: #f87171;
+  --amber-50: #2a2210;
+  --amber-300: #7a6120;
+  --btn-blue: #3667eb; /* button background: dark enough for white text */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.4), 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .site-header {
+  background: rgba(10, 17, 32, 0.86);
+}
+
+[data-theme="dark"] .logo,
+[data-theme="dark"] .logo:hover,
+[data-theme="dark"] .site-nav a[aria-current="page"],
+[data-theme="dark"] .nav-menu-button.is-current,
+[data-theme="dark"] .choice input:checked + label {
+  color: var(--text);
+}
+
+[data-theme="dark"] .btn:hover,
+[data-theme="dark"] .icon-btn:hover:not(:disabled),
+[data-theme="dark"] .rf-icon-btn:hover:not(:disabled) {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+[data-theme="dark"] .site-nav .nav-cta,
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] .btn-primary:disabled,
+[data-theme="dark"] .btn-primary:disabled:hover {
+  background: var(--btn-blue);
+  border-color: var(--btn-blue);
+  color: #fff;
+}
+
+[data-theme="dark"] .site-nav .nav-cta:hover,
+[data-theme="dark"] .btn-primary:hover {
+  background: #2f5bd6;
+  border-color: #2f5bd6;
+  color: #fff;
+}
+
+[data-theme="dark"] .page-pick[aria-pressed="true"] .pick-mark,
+[data-theme="dark"] .deck-switch[aria-checked="true"] .deck-switch-track {
+  border-color: var(--btn-blue);
+  background: var(--btn-blue);
+}
+
+[data-theme="dark"] .page-hero {
+  background:
+    radial-gradient(800px 300px at 90% -40%, rgba(122, 162, 255, 0.12), transparent 70%),
+    linear-gradient(180deg, var(--surface), var(--bg));
+}
+
+[data-theme="dark"] .input-wrap input[type="date"] {
+  color-scheme: dark;
+}
+
+/* Navy blocks sit on a near-navy page, so give them an edge. */
+[data-theme="dark"] .formula,
+[data-theme="dark"] .pdf-result {
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .site-footer {
+  border-top: 1px solid var(--border);
+}
+
+[data-theme="dark"] .steps li::before {
+  background: var(--blue-100);
+  color: var(--text);
+}
+
+[data-theme="dark"] .tip {
+  border-color: #1f5c46;
+}
+
+[data-theme="dark"] .file-card-icon {
+  background: #3a1616;
+}
+
+[data-theme="dark"] .pdf-status.is-error {
+  border-color: #5c1f1f;
+  background: #2a1212;
+}
+
+[data-theme="dark"] .pick-delete .page-pick[aria-pressed="true"] .thumb {
+  background: #2a1212;
+}
+
+[data-theme="dark"] .pick-mark,
+[data-theme="dark"] .tool-bar:hover,
+[data-theme="dark"] .tool-bar:focus-visible {
+  background: var(--surface);
+}
+
+[data-theme="dark"] .tool-deck-frame {
+  background: rgba(17, 27, 46, 0.6);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="dark"] .theme-switch-knob {
+  background: #2a3a58;
+}
+
+/* Small phones: slightly tighter menu links so the light/dark switch keeps a margin from the edge. */
+@media (max-width: 420px) {
+  .site-nav a {
+    padding-right: 6px;
+    padding-left: 6px;
   }
 }

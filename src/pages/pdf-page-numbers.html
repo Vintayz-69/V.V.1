@@ -1,0 +1,113 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Add page numbers tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="pdf-options">
+        <div class="field">
+          <label for="num-position">Where</label>
+          <div class="select-wrap">
+            <select id="num-position">
+              <option value="bottom-center">Bottom, middle</option>
+              <option value="bottom-right">Bottom, right</option>
+              <option value="bottom-left">Bottom, left</option>
+              <option value="top-center">Top, middle</option>
+              <option value="top-right">Top, right</option>
+              <option value="top-left">Top, left</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="num-format">Style</label>
+          <div class="select-wrap">
+            <select id="num-format">
+              <option value="plain">1</option>
+              <option value="page">Page 1</option>
+              <option value="page-of" selected>Page 1 of 10</option>
+              <option value="slash">1 / 10</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="num-start">First number</label>
+          <div class="input-wrap"><input id="num-start" type="text" inputmode="numeric" value="1" autocomplete="off"></div>
+          <span class="error-msg">Enter a whole number, 1 or more.</span>
+        </div>
+        <div class="field">
+          <label for="num-size">Text size</label>
+          <div class="select-wrap">
+            <select id="num-size">
+              <option value="9">Small</option>
+              <option value="11" selected>Medium</option>
+              <option value="14">Large</option>
+            </select>
+          </div>
+        </div>
+        <div class="field span-2">
+          <label class="check" for="num-skip"><input type="checkbox" id="num-skip"> Don't number the first page (for a cover page)</label>
+        </div>
+        <p class="work-note span-2" id="num-preview"></p>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Add page numbers</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's numbered by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to add page numbers to a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Pick where the numbers go and how they look</strong>, for example "Page 1 of 10" at the bottom.</li>
+      <li><strong>Skip the cover if you have one.</strong> Tick the box and numbering starts on page 2.</li>
+      <li><strong>Press "Add page numbers"</strong> and download the new PDF.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>The numbers are written onto each page as real text in a plain Helvetica font, 30 points (about 10.6 mm) from the edge. If a page is turned sideways in the PDF, the number is placed on the edge that's at the bottom (or top) when you read it, so it's always the right way up. Everything else on the page is left as it was, and your file is never uploaded.</p>
+
+    <h2>Example</h2>
+    <p>A 10-page proposal with a cover page. Choose the "Page 1 of 10" style, keep the first number at 1, and tick "Don't number the first page".</p>
+    <div class="formula">Pages numbered   =  10 − 1 cover       =  9
+Cover (page 1)   →  no number
+Page 2           →  "Page 1 of 9"
+Page 10          →  "Page 9 of 9"</div>
+    <div class="tip">
+      <p><strong>Tip:</strong> if this PDF is one part of a longer document, change the first number. A second part that starts at 21 is numbered 21, 22, 23 and so on.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Will the numbers cover my text?</summary>
+        <p>They sit about 10.6 mm from the edge, where most documents have a margin. If your pages have something there, try the top instead, or the Small text size.</p>
+      </details>
+      <details>
+        <summary>What if some pages are landscape or turned sideways?</summary>
+        <p>Each page is checked separately. The number goes on the edge that's at the bottom (or top) as you read that page, and it's written the right way up.</p>
+      </details>
+      <details>
+        <summary>Can I remove the numbers later?</summary>
+        <p>Not easily: they become part of the page. Your original file isn't changed, so keep it in case you want to number the pages differently.</p>
+      </details>
+      <details>
+        <summary>Can I number a password-protected PDF?</summary>
+        <p>No. Remove the password or security settings in the app that made the PDF first.</p>
+      </details>
+    </div>
+  </div>

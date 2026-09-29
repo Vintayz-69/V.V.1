@@ -1,0 +1,91 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Compress PDF tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="pdf-options">
+        <fieldset class="choice-group span-2">
+          <legend>How much to compress</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="level" id="level-light" value="light"><label for="level-light">Light<small>Best picture quality</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="level" id="level-recommended" value="recommended" checked><label for="level-recommended">Recommended<small>Good quality, smaller file</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="level" id="level-strong" value="strong"><label for="level-strong">Strong<small>Smallest file, softer pictures</small></label></div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Compress PDF</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's compressed by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to compress a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Pick a level.</strong> Recommended suits most files. Choose Strong if you need the smallest possible file, for example to fit an email or upload limit.</li>
+      <li><strong>Press "Compress PDF"</strong>, then open the new file and check the pictures look good enough before you send it.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>In most large PDFs, almost all of the size is photos and scanned pages. The compressor makes those smaller and leaves everything else alone:</p>
+    <ul>
+      <li><strong>Photos and scans</strong> are re-saved as JPEG pictures at a lower quality, and made smaller if they're bigger than they need to be.</li>
+      <li><strong>Data saved without any compression</strong> is compressed without losing anything.</li>
+      <li><strong>Leftover parts</strong> that nothing in the file uses any more are removed.</li>
+    </ul>
+    <p>Text, fonts and drawings (like charts and logos made of lines) aren't touched, so they stay sharp and you can still select and search the text.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Level</th><th class="num">Longest side of a picture</th><th class="num">JPEG quality</th></tr></thead>
+        <tbody>
+          <tr><td>Light</td><td class="num">3,000 pixels</td><td class="num">82%</td></tr>
+          <tr><td>Recommended</td><td class="num">2,000 pixels</td><td class="num">70%</td></tr>
+          <tr><td>Strong</td><td class="num">1,400 pixels</td><td class="num">50%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Recommended and Strong also turn large lossless pictures (such as screenshots saved inside the PDF) into JPEG, but only when that at least halves their size. A picture is only replaced when the new version is smaller.</p>
+
+    <h2>Example</h2>
+    <p>A US Letter page scanned at 300 DPI is a picture of 2,550 × 3,300 pixels. Here is what each level does to it:</p>
+    <div class="formula">Light         longest side 3,300 > 3,000  →  2,318 × 3,000 pixels  (about 273 DPI)
+Recommended   longest side 3,300 > 2,000  →  1,545 × 2,000 pixels  (about 182 DPI)
+Strong        longest side 3,300 > 1,400  →  1,082 × 1,400 pixels  (about 127 DPI)</div>
+    <p>Even at Strong, a page of text scanned this way is still easy to read on screen. For printing, Light or Recommended look better.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why didn't my PDF get much smaller?</summary>
+        <p>The compressor works best on PDFs with photos or scanned pages. A PDF that's mostly typed text is usually small already, and there's little left to shrink. If the new file wouldn't be meaningfully smaller, the tool tells you so, and you can keep your original.</p>
+      </details>
+      <details>
+        <summary>Will the text go blurry?</summary>
+        <p>No. Only pictures are re-saved. Text stays as real text, so it's just as sharp and you can still copy and search it. (Pages that are scans are pictures, so their text is re-saved as part of the picture.)</p>
+      </details>
+      <details>
+        <summary>Is it safe to compress private documents here?</summary>
+        <p>Yes. Your PDF is compressed by your own browser and is never uploaded, so nobody else sees it: not us, and not any other company.</p>
+      </details>
+      <details>
+        <summary>Can I undo the compression?</summary>
+        <p>The compressor makes a new file and doesn't change your original, so keep the original until you've checked the new one. Picture quality that's been removed can't be added back later.</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,100 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Split PDF tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="pdf-options">
+        <fieldset class="choice-group span-2">
+          <legend>How do you want to split it?</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="split-mode" id="mode-ranges" value="ranges" checked><label for="mode-ranges">By page ranges<small>Each range becomes a file</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="split-mode" id="mode-every" value="every"><label for="mode-every">Into equal parts<small>The same number of pages each</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="split-mode" id="mode-each" value="each"><label for="mode-each">Every page<small>One file for each page</small></label></div>
+          </div>
+        </fieldset>
+
+        <div class="field span-2" id="field-ranges">
+          <label for="split-ranges">Page ranges<span class="hint">Separate the files with commas, e.g. 1-3, 4-6, 7-</span></label>
+          <div class="input-wrap"><input id="split-ranges" type="text" autocomplete="off" spellcheck="false"></div>
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="field" id="field-every" hidden>
+          <label for="split-every">Pages in each file</label>
+          <div class="input-wrap"><input id="split-every" type="text" inputmode="numeric" value="2" autocomplete="off"><span class="affix">pages</span></div>
+          <span class="error-msg"></span>
+        </div>
+
+        <p class="work-note span-2" id="split-preview"></p>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Split PDF</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's split by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to split a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Pick how to split it:</strong> by page ranges you type, into equal parts (for example every 2 pages), or one file for every page.</li>
+      <li><strong>Press "Split PDF".</strong> Download the files one by one, or all together in a ZIP file.</li>
+    </ol>
+
+    <h2>How to write page ranges</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>You type</th><th>You get</th></tr></thead>
+        <tbody>
+          <tr><td>1-3</td><td>One file with pages 1, 2 and 3</td></tr>
+          <tr><td>5</td><td>One file with only page 5</td></tr>
+          <tr><td>8-</td><td>One file from page 8 to the last page</td></tr>
+          <tr><td>1-3, 4-6, 7-</td><td>Three files, one for each range</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How it works</h2>
+    <p>Each new file is made by copying the pages you asked for into a fresh PDF. The pages aren't re-saved, so their quality doesn't change, and pages you leave out aren't in the new files at all. When there's more than one file, the ZIP is put together on your device too. Nothing is sent to our website.</p>
+
+    <h2>Example</h2>
+    <p>A 10-page PDF split with the ranges <strong>1-3, 4-6, 7-</strong> gives three files. Split into equal parts of <strong>4 pages</strong> instead, the last file gets the pages left over.</p>
+    <div class="formula">Ranges 1-3, 4-6, 7-      →  pages 1–3 (3 pages), 4–6 (3 pages), 7–10 (4 pages)
+Equal parts of 4 pages   →  pages 1–4, 5–8, 9–10
+Every page               →  10 files of 1 page each</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What's the difference between splitting and extracting pages?</summary>
+        <p>Splitting makes several files from one PDF. <a href="{{root}}pdf/extract-pdf-pages/">Extracting pages</a> makes one new file that holds just the pages you pick.</p>
+      </details>
+      <details>
+        <summary>Can the ranges overlap?</summary>
+        <p>Yes. Each range becomes its own file, so "1-5, 3-8" gives two files that both include pages 3, 4 and 5.</p>
+      </details>
+      <details>
+        <summary>How do I open the ZIP file?</summary>
+        <p>A ZIP holds several files in one download. On a computer, double-click it. On an iPhone, tap it in the Files app. On Android, open it from your Files or Downloads app. You can also skip the ZIP and download each file on its own.</p>
+      </details>
+      <details>
+        <summary>Are bookmarks and form fields kept?</summary>
+        <p>Pages keep their text, pictures and web links. Bookmarks and fillable form fields aren't carried over into the new files, though anything already typed into a form still shows on the page.</p>
+      </details>
+    </div>
+  </div>

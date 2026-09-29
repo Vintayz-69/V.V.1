@@ -296,9 +296,73 @@
     tableRows: tableRows
   };
 
+  // The header's Country menu is a <details> element and works on its own; this also
+  // closes it on Escape, on a click outside, and when keyboard focus moves away.
+  function initNavMenus() {
+    var menus = document.querySelectorAll(".nav-menu");
+    if (!menus.length) return;
+
+    function closeOutside(target) {
+      Array.prototype.forEach.call(menus, function (menu) {
+        if (menu.open && !menu.contains(target)) menu.open = false;
+      });
+    }
+
+    document.addEventListener("click", function (e) { closeOutside(e.target); });
+    document.addEventListener("focusin", function (e) { closeOutside(e.target); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      Array.prototype.forEach.call(menus, function (menu) {
+        if (!menu.open) return;
+        menu.open = false;
+        menu.querySelector("summary").focus();
+      });
+    });
+  }
+
+  // Light/dark switch in the header. theme.js has already set data-theme on <html> from the
+  // device's setting; the switch flips it for this page. Nothing is stored (LEGAL.md §2), so the
+  // next page follows the device again.
+  function initThemeSwitch() {
+    var button = document.getElementById("theme-toggle");
+    if (!button) return;
+    var root = document.documentElement;
+    var chosen = false; // pressed on this page?
+
+    function isDark() {
+      return root.getAttribute("data-theme") === "dark";
+    }
+
+    function show() {
+      button.setAttribute("aria-checked", isDark() ? "true" : "false");
+      button.title = isDark() ? "Switch to light mode" : "Switch to dark mode";
+    }
+
+    button.hidden = false;
+    show();
+    button.addEventListener("click", function () {
+      chosen = true;
+      root.setAttribute("data-theme", isDark() ? "light" : "dark");
+      show();
+    });
+
+    // If the device changes between light and dark (e.g. at sunset), follow it, unless the
+    // visitor has used the switch on this page.
+    var media = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+    if (media && media.addEventListener) {
+      media.addEventListener("change", function (e) {
+        if (chosen) return;
+        root.setAttribute("data-theme", e.matches ? "dark" : "light");
+        show();
+      });
+    }
+  }
+
   function onReady() {
+    initThemeSwitch();
     var yearEl = document.getElementById("year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+    initNavMenus();
     initReveal();
     initTilt();
   }

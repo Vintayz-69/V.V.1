@@ -1,0 +1,123 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Add watermark tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="pdf-options">
+        <div class="field span-2">
+          <label for="wm-text">Watermark text</label>
+          <div class="input-wrap"><input id="wm-text" type="text" value="DRAFT" maxlength="60" autocomplete="off"></div>
+          <span class="error-msg"></span>
+        </div>
+        <fieldset class="choice-group">
+          <legend>Direction</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="wm-angle" id="wm-diagonal" value="diagonal" checked><label for="wm-diagonal">Diagonal</label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="wm-angle" id="wm-flat" value="flat"><label for="wm-flat">Straight across</label></div>
+          </div>
+        </fieldset>
+        <fieldset class="choice-group">
+          <legend>Layer</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="wm-layer" id="wm-over" value="over" checked><label for="wm-over">Over the page</label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="wm-layer" id="wm-behind" value="behind"><label for="wm-behind">Behind the text</label></div>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="wm-size">Size</label>
+          <div class="select-wrap">
+            <select id="wm-size">
+              <option value="small">Small</option>
+              <option value="medium" selected>Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="wm-colour">Colour</label>
+          <div class="select-wrap">
+            <select id="wm-colour">
+              <option value="grey" selected>Grey</option>
+              <option value="red">Red</option>
+              <option value="blue">Blue</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="wm-opacity">Strength</label>
+          <div class="select-wrap">
+            <select id="wm-opacity">
+              <option value="light">Faint (15%)</option>
+              <option value="medium" selected>Medium (30%)</option>
+              <option value="strong">Strong (50%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="pick-pages">Pages<span class="hint">Empty = every page</span></label>
+          <div class="input-wrap"><input id="pick-pages" type="text" autocomplete="off" spellcheck="false" placeholder="All pages"></div>
+          <span class="error-msg"></span>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Add watermark</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's marked by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to add a watermark to a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Type your watermark</strong>, such as DRAFT, CONFIDENTIAL, COPY or SAMPLE.</li>
+      <li><strong>Pick the direction, size, colour and strength.</strong> Leave "Pages" empty to mark every page.</li>
+      <li><strong>Press "Add watermark"</strong> and download the new PDF.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>The text is written onto each page in bold Helvetica, see-through at the strength you pick, and placed in the middle of the page. Its size is set from the page: Small, Medium and Large span 35%, 50% and 70% of the page's width (or of the corner-to-corner line for diagonal text), up to a limit so short words don't become huge.</p>
+    <p>"Over the page" puts the watermark on top of everything. "Behind the text" puts it underneath, so it doesn't cover any words. Scanned pages are one big picture, so a watermark behind them is hidden; use "Over the page" for scans. Your file never leaves your device.</p>
+
+    <h2>Example</h2>
+    <p>DRAFT, straight across a US Letter page (612 × 792 points), Medium size. In bold Helvetica, the word DRAFT is 3.388 times as wide as its font size.</p>
+    <div class="formula">Width of the text   =  50% × 612                 =  306 points
+Font size           =  306 ÷ 3.388               =  90.32 points
+Start from the left =  (612 − 306) ÷ 2           =  153 points
+Baseline height     =  396 − (90.32 × 0.718) ÷ 2  =  363.58 points</div>
+    <p>The last line lowers the baseline by half the height of the capital letters, so the word sits in the middle of the page.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can someone remove the watermark?</summary>
+        <p>It becomes part of the page, but someone with PDF editing software could still remove it. Treat a watermark as a clear label ("this is a draft"), not as security.</p>
+      </details>
+      <details>
+        <summary>Which characters can I use?</summary>
+        <p>Letters A to Z (including accented letters like é and ü), numbers and common symbols such as £, € and &amp;. Some other alphabets and emoji can't be used with this font.</p>
+      </details>
+      <details>
+        <summary>Can I watermark only some pages?</summary>
+        <p>Yes. Type the page numbers in the Pages box, such as 1 or 2-5. Leave it empty to mark every page.</p>
+      </details>
+      <details>
+        <summary>Does it work on landscape or sideways pages?</summary>
+        <p>Yes. Each page is measured the way you read it, so the watermark always sits in the middle and the right way up.</p>
+      </details>
+    </div>
+  </div>

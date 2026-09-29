@@ -1,0 +1,71 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Extract PDF pages tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="pdf-options">
+        <div class="field span-2">
+          <label for="pick-pages">Pages to keep<span class="hint">Tap pages below, or type numbers like 2-4, 9</span></label>
+          <div class="input-wrap"><input id="pick-pages" type="text" autocomplete="off" spellcheck="false"></div>
+          <span class="error-msg" id="pick-error"></span>
+        </div>
+        <p class="work-note span-2" id="pick-note"></p>
+      </div>
+      <ol class="page-grid" id="page-grid" aria-label="Pages"></ol>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Extract pages</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's handled by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to extract pages from a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF.</strong> You'll see a preview of every page.</li>
+      <li><strong>Pick the pages you want.</strong> Tap them, or type their numbers (for example 2-4, 9).</li>
+      <li><strong>Press "Extract pages"</strong> and download your new PDF with just those pages.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>The tool copies the pages you pick into a brand-new PDF, in the same order they're in now. Pages aren't re-saved, so text stays sharp and pictures keep their quality. The pages you don't pick aren't in the new file at all, and your original file isn't changed. It all happens in your browser, so your PDF is never uploaded.</p>
+
+    <h2>Example</h2>
+    <p>From a 20-page report, you only need the summary on pages 2 to 4 and the table on page 9. Type <strong>2-4, 9</strong>.</p>
+    <div class="formula">2-4, 9  →  pages 2, 3, 4 and 9  =  a new 4-page PDF
+Old page 9 becomes page 4 of the new file.</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I change the order of the pages?</summary>
+        <p>Extracted pages keep their original order. To change it, extract them first, then use <a href="{{root}}pdf/rearrange-pdf-pages/">Rearrange PDF pages</a> on the new file.</p>
+      </details>
+      <details>
+        <summary>How is this different from splitting a PDF?</summary>
+        <p>Extracting gives you one new file with the pages you pick. <a href="{{root}}pdf/split-pdf/">Splitting</a> cuts a PDF into several files, for example one per chapter or one per page.</p>
+      </details>
+      <details>
+        <summary>Does extracting lower the quality?</summary>
+        <p>No. The pages are copied exactly as they are.</p>
+      </details>
+      <details>
+        <summary>Are links and form fields kept?</summary>
+        <p>Web links and links between the pages you keep still work. Bookmarks and fillable form fields aren't carried over, though anything already typed into a form still shows on the page.</p>
+      </details>
+    </div>
+  </div>

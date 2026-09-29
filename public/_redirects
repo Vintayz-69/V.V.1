@@ -1,0 +1,6 @@
+/canada /ca/ 301
+/canada/ /ca/ 301
+/canada/* /ca/:splat 301
+/australia /au/ 301
+/australia/ /au/ 301
+/australia/* /au/:splat 301

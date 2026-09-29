@@ -1,0 +1,68 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Rearrange PDF pages tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="page-toolbar">
+        <button type="button" class="btn btn-sm" id="order-reverse">Reverse order</button>
+        <button type="button" class="btn btn-sm btn-quiet" id="order-clear">Undo all</button>
+      </div>
+      <p class="work-note" id="order-note"></p>
+      <ol class="page-grid wide-tiles" id="page-grid" aria-label="Pages"></ol>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Save new order</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's handled by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to rearrange PDF pages</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF.</strong> You'll see a preview of every page, labelled with its current page number.</li>
+      <li><strong>Move the pages.</strong> On a computer, drag a page to its new place. On a phone, use the arrows under each page to move it earlier or later. "Reverse order" flips the whole document.</li>
+      <li><strong>Press "Save new order"</strong> and download the PDF.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>A PDF keeps a list of its pages in reading order. This tool rewrites that list and nothing else. The pages themselves aren't copied or re-saved, so quality doesn't change, and bookmarks, links and form fields keep pointing at the right pages. Your file never leaves your device.</p>
+
+    <h2>Example</h2>
+    <p>You scanned a 4-page letter but fed it into the scanner last page first, so the PDF reads 4, 3, 2, 1. Press "Reverse order" and save.</p>
+    <div class="formula">Before   4, 3, 2, 1
+After    1, 2, 3, 4</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I move a page on my phone?</summary>
+        <p>Yes. Use the left and right arrows under a page. Each tap moves it one place earlier or later.</p>
+      </details>
+      <details>
+        <summary>Do bookmarks and links still work after rearranging?</summary>
+        <p>Yes. Only the order changes, so a bookmark or link that pointed to a page still takes you to that same page in its new position.</p>
+      </details>
+      <details>
+        <summary>Can I delete or rotate pages here too?</summary>
+        <p>This tool only changes the order. To remove pages, use <a href="{{root}}pdf/delete-pdf-pages/">Delete PDF pages</a>; to turn them, use <a href="{{root}}pdf/rotate-pdf/">Rotate PDF</a>.</p>
+      </details>
+      <details>
+        <summary>Can I put pages from different PDFs together?</summary>
+        <p>Yes, in two steps: <a href="{{root}}pdf/merge-pdf/">merge the files</a> first, then rearrange the pages of the merged PDF here.</p>
+      </details>
+    </div>
+  </div>

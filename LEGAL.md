@@ -27,7 +27,7 @@
 | Laws that apply | **UK:** UK GDPR, Data Protection Act 2018, PECR (cookies), Consumer Rights Act 2015, CAP Code, DMCC Act 2024, FCA rules. **US:** FTC Act and Endorsement Guides, California CalOPPA and CCPA, other state privacy laws, COPPA, CAN-SPAM, ADA. **India:** DPDP Act 2023, Income Tax Act, GST, FEMA |
 | Terms governed by | Laws of India (visitors keep their own country's consumer protections) |
 | Income | Google AdSense (later) + affiliate links (later) |
-| Data we collect today | None from calculators. Hosting logs + cookie-free analytics (Cloudflare). Emails people send us. |
+| Data we collect today | None from calculators, PDF tools or resume makers (they run in the browser; PDF and picture files are never uploaded). Hosting logs + cookie-free analytics (Cloudflare). Emails people send us. |
 | Cookies / browser storage today | **None.** This is why we need no cookie banner. |
 
 **If any fact in this table changes, the legal pages must change too.** Check sections 3 and 4.
@@ -167,7 +167,7 @@ Not allowed until all of this is in place:
 
 ---
 
-## 9. Tools that handle personal information (Resume maker, Invoice generator)
+## 9. Tools that handle personal information (Resume maker, Invoice generator, PDF tools)
 
 These tools (README Stage 3 and Phase D) involve names, addresses and work history. Before building one:
 - [ ] Everything must be processed **in the browser only**: no uploads, no server storage
@@ -218,3 +218,7 @@ Add one line every time something legal changes: new service, new data collected
 | 2026-09-28 | Added security headers and a strict Content-Security-Policy (`public/_headers`, set in `build.py`). Only our own files and Cloudflare Web Analytics may load. | — |
 | 2026-09-28 | Late payment calculator: UK statutory interest rule (8% + Bank Rate on 30 June / 31 December) checked on legislation.gov.uk (SI 2002/1675) and GOV.UK; compensation £40/£70/£100 checked on GOV.UK; Bank Rate history checked on bankofengland.co.uk. Stored in `rates-uk.js` with sources. | late-payment-interest-calculator |
 | 2026-09-28 | Country tax tools launched with official figures stored only in `public/assets/data/tax-us.js`, `tax-uk.js`, `tax-ca.js`, `tax-au.js`, each listing its sources and date checked. Known limits stated on each page (e.g. Canada provincial tax is the visitor's estimate; Australia applies the full 2% Medicare levy; Quebec QST not pre-filled). ATO and SSA sites block automated reading, so those figures were confirmed via official search results and a second official source where possible. | us/, uk/, canada/, australia/ |
+| 2026-09-28 | Domain set to vintayz.com. Site is now "ToolNest by Vintayz": legal pages say ToolNest is part of Vintayz, run by the same individual in India (no change to who the controller is or what data we handle). Hosting chosen: Cloudflare Pages, matching the privacy policy. | privacy-policy, terms, disclaimer, about, contact |
+| 2026-09-29 | AdSense site verification done with the meta tag (homepage) and `ads.txt`, not the AdSense script. Neither loads anything from Google or sets cookies, so the privacy policy is unchanged. The AdSense script stays off until section 5 is complete. | — |
+| 2026-09-29 | Resume and CV makers for the US, UK, Canada and Australia (`/resume-maker/`), following section 9: everything is processed in the browser, the PDF is made on the device with self-hosted pdf-lib (MIT), no cookies or storage (drafts are only files the visitor downloads), no photo, date of birth or ID fields, and a warning if someone types a date of birth, ID number or bank details. Country advice checked on CareerOneStop (US Dept. of Labor), National Careers Service and JobHelp (GOV.UK), Job Bank (Canada) and Workforce Australia; Workforce Australia blocks automated reading, so its template PDF was read directly and the rest confirmed via official search results. Privacy policy section 2 and summary updated. | privacy-policy, resume-maker (5 pages) |
+| 2026-09-29 | PDF tools (`/pdf/`: merge, split, compress, rotate, delete/extract/rearrange pages, JPG to PDF, PDF to JPG, page numbers, watermark), following section 9: files are opened and changed in the browser only, never uploaded; no cookies or storage. Libraries self-hosted with licences kept: pdf-lib 1.17.1 (MIT, `assets/vendor/pdf-lib/LICENSE.txt`, includes pako, UPNG, standard-fonts, tslib notices) and pdf.js 6.3.289 (Apache 2.0, `assets/vendor/pdfjs/`, with Foxit, Liberation, Adobe CMap, OpenJPEG and JBIG2 licences). pdf.js runs with WebAssembly off, so the Content-Security-Policy is unchanged. Deleted/extracted/split pages are left out of new files completely (tested). Privacy policy (section 2 table, section 7, summary, effective date), terms (section 1, liability), disclaimer (new PDF section) and about updated. | privacy-policy, terms, disclaimer, about, home, pdf (12 pages) |

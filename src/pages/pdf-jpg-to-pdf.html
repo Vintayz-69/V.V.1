@@ -1,0 +1,103 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="JPG to PDF tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,.jpg,.jpeg,.png,.webp,.gif,.bmp" multiple>
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose pictures</label>
+      <p class="dropzone-hint">or drop them here. JPG, PNG, WebP, GIF and BMP all work.</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="work-head">
+        <h2 class="work-title">Pictures</h2>
+        <p class="work-note" id="images-summary"></p>
+      </div>
+      <ol class="file-list" id="file-list"></ol>
+      <p class="work-note">The top picture goes on page 1. Drag to change the order, or use the arrows.</p>
+
+      <div class="pdf-options">
+        <div class="field">
+          <label for="page-size">Page size</label>
+          <div class="select-wrap">
+            <select id="page-size">
+              <option value="a4">A4 (210 × 297 mm)</option>
+              <option value="letter">US Letter (8.5 × 11 in)</option>
+              <option value="fit">Same size as the picture</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="page-orientation">Page orientation</label>
+          <div class="select-wrap">
+            <select id="page-orientation">
+              <option value="auto">Automatic (match each picture)</option>
+              <option value="portrait">Portrait (tall)</option>
+              <option value="landscape">Landscape (wide)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="page-margin">Margin</label>
+          <div class="select-wrap">
+            <select id="page-margin">
+              <option value="none">None</option>
+              <option value="small" selected>Small (about 6 mm)</option>
+              <option value="large">Large (about 13 mm)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Convert to PDF</button>
+        <input class="visually-hidden" type="file" id="pdf-more" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,.jpg,.jpeg,.png,.webp,.gif,.bmp" multiple>
+        <label class="btn" for="pdf-more">{{icon:plus}} Add more pictures</label>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Start over</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your pictures stay on your device. They're converted by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to turn JPG pictures into a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your pictures.</strong> Pick one or many from your phone's photos or your computer.</li>
+      <li><strong>Put them in order.</strong> Each picture gets its own page, top one first.</li>
+      <li><strong>Pick a page size and margin.</strong> A4 is standard in most countries; US Letter in the US and Canada.</li>
+      <li><strong>Press "Convert to PDF"</strong> and download your file.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>JPG and PNG pictures go into the PDF exactly as they are: every pixel is kept at full size, and so is the picture's colour profile (for example the rich "Display P3" colours of iPhone photos), so colours look the same as in your photo app. Other picture types your browser can open, like WebP and GIF, are converted first at high quality. Each picture is made as big as fits inside the margins and placed in the middle of its page. Phone photos are turned the right way up using the rotation note the camera saves in the photo.</p>
+    <p>Page sizes are measured in points, the unit PDFs use: 1 point is 1/72 of an inch (about 0.35 mm). "Same size as the picture" makes each page 3/4 of a point for every pixel.</p>
+
+    <h2>Example</h2>
+    <p>A phone photo of 4,032 × 3,024 pixels, on A4 with automatic orientation and small margins:</p>
+    <div class="formula">The photo is wider than tall      →  landscape A4 = 841.89 × 595.28 points
+Space inside small margins (18)   =  805.89 × 559.28 points
+Scale to fit                      =  smaller of 805.89 ÷ 4,032 and 559.28 ÷ 3,024 = 0.18495
+Picture size                      =  745.71 × 559.28 points (about 263 × 197 mm)
+Left and right space              =  (841.89 − 745.71) ÷ 2 = 48.09 points each</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does converting reduce picture quality?</summary>
+        <p>Not for JPG and PNG files: they're put into the PDF without being re-saved, at full size, with their colours. Other types are converted at high quality. When you open the PDF, your reader shrinks a big photo to fit the page on screen; zoom in and you'll see all the detail. If the finished PDF is too big to send, try our <a href="{{root}}pdf/compress-pdf/">PDF compressor</a>.</p>
+      </details>
+      <details>
+        <summary>Can I put several pictures on one page?</summary>
+        <p>Not at the moment. Each picture gets its own page, sized to fit.</p>
+      </details>
+      <details>
+        <summary>My iPhone photo won't open. What can I do?</summary>
+        <p>Some browsers can't open iPhone HEIC photos. Save or share the photo as a JPG first. To make your iPhone take JPG photos from now on, go to Settings → Camera → Formats and choose "Most Compatible".</p>
+      </details>
+      <details>
+        <summary>What happens to transparent PNG pictures?</summary>
+        <p>PNG pictures keep their transparency, so the white page shows through. WebP pictures with transparent parts get a white background.</p>
+      </details>
+    </div>
+  </div>

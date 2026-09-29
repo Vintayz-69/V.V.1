@@ -1,0 +1,10 @@
+pdf.js 6.3.289 by Mozilla (https://mozilla.github.io/pdf.js/), from the npm package pdfjs-dist.
+Licence: Apache License 2.0 (LICENSE.txt in this folder).
+
+Files taken from the package's "legacy" build, which supports older phone browsers:
+  legacy/build/pdf.min.mjs         -> pdf.min.js         (renamed only, so every host serves it as JavaScript)
+  legacy/build/pdf.worker.min.mjs  -> pdf.worker.min.js  (renamed only)
+  wasm/*_nowasm_fallback.js        -> wasm/              (image decoders used instead of WebAssembly,
+                                                          which the site's Content-Security-Policy blocks)
+  cmaps/, standard_fonts/          -> copied unchanged, with their own licence files
+No other changes.

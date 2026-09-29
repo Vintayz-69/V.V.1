@@ -1,6 +1,6 @@
-# ToolNest 🧮
+# ToolNest by Vintayz 🧮
 
-> **Working name.** Replace it everywhere once you choose and buy your final domain.
+> **Brand:** the website is **Vintayz** (vintayz.com). **ToolNest** is its calculators part. Set in `build.py` (`BRAND`, `OWNER`, `DOMAIN`).
 
 Free, fast, and accurate calculators and tools. We start with money tools for **freelancers and self-employed people in the United States, United Kingdom, Canada, and Australia**, then grow into a one-stop tool site for every field, all on **one domain**.
 
@@ -29,9 +29,10 @@ We build **one section at a time**. The next stage starts only after the current
 
 | Stage | Section | URL | Status |
 |---|---|---|---|
-| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/canada/`, `/australia/` | 🟢 Built (30 tools), waiting to launch |
+| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/ca/`, `/au/` | 🟢 Built (30 tools), waiting to launch |
 | 2 | Salary and career calculators | `/career/` | ⚪ Planned |
-| 3 | Resume maker and cover letter tools | `/resume-maker/` | ⚪ Planned |
+| Extra | PDF tools (merge, split, compress, convert…) | `/pdf/` | 🟢 Built (11 tools), waiting to launch |
+| 3 | Resume maker and cover letter tools | `/resume-maker/` | 🟡 Resume makers built (US, UK, Canada, Australia); cover letters planned |
 | 4 | Business tools (invoices, margins, sales tax) | `/business/` | ⚪ Planned |
 | 5 | Health, education, unit converters, and more | `/health/`, `/education/`, etc. | ⚪ Planned |
 
@@ -71,13 +72,13 @@ Build one country completely before starting the next.
 - [x] Business mileage allowance calculator
 - [x] Working from home expenses calculator
 
-#### C3: 🇨🇦 Canada → `/canada/` (tax year 2026; federal + CPP exact, provincial is the visitor's estimate)
+#### C3: 🇨🇦 Canada → `/ca/` (tax year 2026; federal + CPP exact, provincial is the visitor's estimate)
 - [x] Self-employed tax calculator (including CPP contributions)
 - [x] Quarterly tax instalments calculator
 - [x] Employee vs contractor comparison calculator
 - [x] GST/HST calculator (simple and popular, can be built early)
 
-#### C4: 🇦🇺 Australia → `/australia/` (income year 2026–27)
+#### C4: 🇦🇺 Australia → `/au/` (income year 2026–27)
 - [x] Sole trader tax calculator (including Medicare levy)
 - [x] GST calculator (simple and popular, can be built early)
 - [x] Employee vs contractor comparison calculator
@@ -105,6 +106,7 @@ toolnest/
 │   ├── hourly-rate.html ...   # One file per tool
 │   └── privacy-policy.html ...
 ├── tests/run-tests.js         # Checks every calculator against hand-worked examples
+├── tests/pdf-tests.js         # Checks every PDF tool (run by run-tests.js)
 └── public/                    # THE WEBSITE: deploy this folder
     ├── index.html, about/, contact/, privacy-policy/, terms/, disclaimer/
     ├── freelance/<tool-name>/index.html
@@ -116,6 +118,8 @@ toolnest/
         ├── js/common.js       # Shared helpers, calculator wiring, animations
         ├── js/tools/*.js      # One script per calculator (the formulas live here)
         ├── js/us-tax.js, uk-tax.js, ca-tax.js, au-tax.js   # Shared tax engines per country
+        ├── js/pdf-common.js   # Shared PDF engine and page wiring for the /pdf/ tools
+        ├── vendor/            # Self-hosted pdf-lib (MIT) and pdf.js (Apache 2.0) with their licences
         └── data/              # ALL official figures, one file per country (with sources)
             ├── tax-us.js, tax-uk.js, tax-ca.js, tax-au.js
             └── rates-uk.js    # UK late payment interest + Bank Rate history
@@ -315,3 +319,8 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 | 2026-09-28 | Premium redesign (navy fintech style, self-hosted Inter font, dark hero, results panel, mobile result bar, minimal animation). Added page builder (build.py), moved the site into public/, added security headers. Built all Phase A tools: contractor day rate, project pricing, hourly to annual, billable hours, late payment interest (UK figures verified on GOV.UK, legislation.gov.uk and the Bank of England). 101 automated checks pass. |
 | 2026-09-28 | Added `/us/` and `/uk/` country hubs (hybrid structure: global tools stay single, country tax tools go in hubs). US/UK links with flags in header, footer and homepage. Official links and holiday counts checked on IRS, OPM and GOV.UK. |
 | 2026-09-28 | Built Phase B (emergency fund, retirement savings, income smoothing) and all Phase C country tax tools: US (6), UK (5), Canada (4), Australia (4), plus /canada/ and /australia/ hubs. Every figure checked on IRS, SSA/IRS, GOV.UK/HMRC, CRA and ATO/Treasury sources. 30 tools, 39 pages, 383 automated checks pass. |
+| 2026-09-29 | Shortened Canada and Australia URLs to `/ca/` and `/au/` to match `/us/` and `/uk/`. Old `/canada/` and `/australia/` links send visitors to the new pages with permanent (301) redirects in `public/_redirects`. |
+| 2026-09-29 | Built four country resume makers under `/resume-maker/`: US Resume Builder (Letter, CareerOneStop), UK CV Maker (A4, National Careers Service), Canadian Resume Builder (Letter, Job Bank) and Australian Resume Builder (A4, Workforce Australia). Shared engine in `assets/js/resume.js`, country settings in `assets/js/tools/resume-*.js`. Live preview, PDF made in the browser, copy as text, draft files, privacy warnings. Tests check headings, privacy checks, paper sizes and page counts. |
+| 2026-09-29 | Added `/pdf/` section with 11 PDF tools that run fully in the browser (files never uploaded): merge, split, compress, rotate, delete pages, extract pages, rearrange pages, JPG to PDF, PDF to JPG, page numbers, watermark. Self-hosted pdf-lib and pdf.js. 157 automated checks in `tests/pdf-tests.js`; every tool also tested end to end in Chrome under the real security headers, at 390px and desktop. Header fixed to fit 390px phones. |
+| 2026-09-29 | Header menu reordered: Home, Calculators, PDF tools, Resume, Country (a drop-down with US, UK, Canada and Australia that works without JavaScript and stores nothing), About, Rate calculator. Checked in Chrome from 360px to 1280px: no overflow, and the menu works with mouse, keyboard and Escape. |
+| 2026-09-29 | New logo and favicon: a gold serif "T" whose foot is the open jaw of a wrench, in a thin gold frame on navy, drawn by hand as SVG in `build.py` (our own work, no licence needed). Replaces the blue bar-chart mark in the header, footer and browser tab. |

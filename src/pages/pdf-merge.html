@@ -1,0 +1,74 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Merge PDF tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf" multiple>
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose PDF files</label>
+      <p class="dropzone-hint">or drop them here. You can pick several at once.</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="work-head">
+        <h2 class="work-title">Files to merge</h2>
+        <p class="work-note" id="merge-summary"></p>
+      </div>
+      <ol class="file-list" id="file-list"></ol>
+      <p class="work-note">The top file comes first. Drag files to change the order, or use the arrows.</p>
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Merge PDFs</button>
+        <input class="visually-hidden" type="file" id="pdf-more" accept="application/pdf,.pdf" multiple>
+        <label class="btn" for="pdf-more">{{icon:plus}} Add more files</label>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Start over</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your files stay on your device. They're merged by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to merge PDF files</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDFs.</strong> Tap "Choose PDF files" and pick two or more, or drag them onto the box.</li>
+      <li><strong>Put them in order.</strong> The file at the top goes first. Drag files up or down, or use the arrow buttons. Forgot one? Tap "Add more files".</li>
+      <li><strong>Press "Merge PDFs"</strong> and download your new file. Your original files aren't changed.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>Your browser opens each PDF and copies its pages, in your order, into a brand-new PDF. The pages are copied exactly as they are, not re-saved, so text stays sharp, pictures keep their quality, and links between pages of the same file keep working.</p>
+    <p>All of this happens on your own phone or computer. Your files are never sent to our website or to anyone else, which makes this safe to use for contracts, invoices and other private documents.</p>
+
+    <h2>Example</h2>
+    <p>Sam is sending an invoice pack to a client. They have a 3-page invoice, a 2-page timesheet and a 1-page receipt. They pick all three files, drag the timesheet to the top, and press Merge PDFs.</p>
+    <div class="formula">Timesheet   2 pages  →  pages 1–2
+Invoice     3 pages  →  pages 3–5
+Receipt     1 page   →  page 6
+Merged PDF           =  6 pages</div>
+    <div class="tip">
+      <p><strong>Tip:</strong> if a merged file is too big to email, run it through our <a href="{{root}}pdf/compress-pdf/">PDF compressor</a>. It shrinks the photos inside and leaves the text sharp.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How many files can I merge?</summary>
+        <p>As many as your device can handle. We don't set a limit. Dozens of everyday PDFs are fine on most phones and computers; very large scanned files take longer.</p>
+      </details>
+      <details>
+        <summary>Will merging lower the quality?</summary>
+        <p>No. Pages are copied as they are, not re-saved, so nothing is compressed. The merged file is usually close to the sizes of all your files added together.</p>
+      </details>
+      <details>
+        <summary>Is anything left out of the merged file?</summary>
+        <p>Every page is kept, along with its text, pictures and links. Two things aren't carried over: bookmarks (the list of chapters some readers show in a sidebar) and fillable form fields. Anything already typed into a form still shows on the page, but it can't be edited any more.</p>
+      </details>
+      <details>
+        <summary>Can I merge password-protected PDFs?</summary>
+        <p>No. A PDF with a password or "no changes" security settings can't be merged. Remove the protection in the app that made it first (you'll need the password).</p>
+      </details>
+      <details>
+        <summary>Can I merge PDFs on my phone?</summary>
+        <p>Yes. Tap "Choose PDF files" and pick them from your Files app, downloads or email attachments you've saved. Use the arrows to change the order, then tap Merge PDFs and save the file.</p>
+      </details>
+    </div>
+  </div>

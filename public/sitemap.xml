@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vintayz.com/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/freelance/</loc>
@@ -93,43 +93,43 @@
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/canada/</loc>
+    <loc>https://vintayz.com/ca/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/australia/</loc>
+    <loc>https://vintayz.com/au/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/canada/self-employed-tax-calculator/</loc>
+    <loc>https://vintayz.com/ca/self-employed-tax-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/canada/tax-instalments-calculator/</loc>
+    <loc>https://vintayz.com/ca/tax-instalments-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/canada/employee-vs-contractor-calculator/</loc>
+    <loc>https://vintayz.com/ca/employee-vs-contractor-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/canada/gst-hst-calculator/</loc>
+    <loc>https://vintayz.com/ca/gst-hst-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/australia/sole-trader-tax-calculator/</loc>
+    <loc>https://vintayz.com/au/sole-trader-tax-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/australia/gst-calculator/</loc>
+    <loc>https://vintayz.com/au/gst-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/australia/employee-vs-contractor-calculator/</loc>
+    <loc>https://vintayz.com/au/employee-vs-contractor-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
-    <loc>https://vintayz.com/australia/voluntary-super-contribution-calculator/</loc>
+    <loc>https://vintayz.com/au/voluntary-super-contribution-calculator/</loc>
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
@@ -137,8 +137,76 @@
     <lastmod>2026-09-28</lastmod>
   </url>
   <url>
+    <loc>https://vintayz.com/pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/merge-pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/split-pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/compress-pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/rotate-pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/delete-pdf-pages/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/extract-pdf-pages/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/rearrange-pdf-pages/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/jpg-to-pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/pdf-to-jpg/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/add-page-numbers-to-pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/pdf/add-watermark-to-pdf/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/resume-maker/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/resume-maker/us-resume-builder/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/resume-maker/uk-cv-maker/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/resume-maker/canada-resume-builder/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/resume-maker/australia-resume-builder/</loc>
+    <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
     <loc>https://vintayz.com/about/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/contact/</loc>
@@ -146,14 +214,14 @@
   </url>
   <url>
     <loc>https://vintayz.com/privacy-policy/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/terms/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/disclaimer/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
   </url>
 </urlset>

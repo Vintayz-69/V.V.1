@@ -425,5 +425,129 @@ const AU_LIBS = ["data/tax-au.js", "js/au-tax.js"];
   expectAll("AU super over the cap", calc({ income: 150000, employer: 18000, extra: 20000 }), { overCap: true, capRoom: -5500 });
 }
 
-console.log(`\n${passed} passed, ${failed} failed`);
-process.exit(failed ? 1 : 0);
+// ---------------- Resume and CV makers (one per country, shared engine js/resume.js)
+function loadResume(country) {
+  const sandbox = { window: {}, document: { getElementById: () => null } };
+  vm.createContext(sandbox);
+  for (const file of ["js/resume.js", `js/tools/resume-${country}.js`]) {
+    vm.runInContext(fs.readFileSync(path.join(JS, file), "utf8"), sandbox);
+  }
+  return { T: sandbox.window.ToolNestCalc, R: sandbox.window.ToolNestResume };
+}
+{
+  const { R } = loadResume("us");
+  const dropped = [];
+  check("resume clean: accents kept, others simplified", R.clean("Zoë “café” – ő ł 中 🎨", dropped), "Zoë “café” – o l");
+  check("resume clean: unsupported characters reported", dropped.join(""), "中🎨");
+  check("resume clean: spaces and minus", R.clean("5 000 − 10"), "5 000 - 10");
+  check("resume skills split, not inside brackets", R.tags("Figma, Photoshop (web, print); SQL\n• Excel").join("|"), "Figma|Photoshop (web, print)|SQL|Excel");
+  check("resume pasted bullets removed", R.lines("• one\n- two\n\n-5% costs").join("|"), "one|two|-5% costs");
+  check("resume wrap by width", R.wrap("aaa bbb ccc", 7, (s) => s.length).join("|"), "aaa bbb|ccc");
+  check("resume wrap long word", R.wrap("abcdefghij", 4, (s) => s.length).join("|"), "abcd|efgh|ij");
+  check("resume date range", R.dateRange("Jan 2020", "Present"), "Jan 2020 – Present");
+  check("resume date end only", R.dateRange("", "2018"), "2018");
+  const safe = R.sanitize({ name: 5, experience: [{ title: "x".repeat(6000) }] });
+  check("resume draft: non-text dropped", safe.name, undefined);
+  check("resume draft: long text cut", safe.experience[0].title.length, 5000);
+}
+{
+  // Each country's headings, in its order (README §5; guidance in each tools/resume-*.js file).
+  const headings = {
+    us: "Professional Summary|Skills|Work Experience|Education|Certifications",
+    uk: "Personal Profile|Key Skills|Employment History|Education and Qualifications|Interests|Additional Information|References",
+    ca: "Summary of Qualifications|Skills|Work Experience|Volunteer Experience|Education|Certifications|Languages",
+    au: "Personal Summary|Key Skills|Work Experience|Education|Qualifications and Certificates|Achievements|Referees",
+  };
+  const paper = { us: "letter", uk: "a4", ca: "letter", au: "a4" };
+  for (const c of Object.keys(headings)) {
+    const { T } = loadResume(c);
+    check(`resume ${c} headings`, T.doc(T.config.example).sections.map((s) => s.heading).join("|"), headings[c]);
+    check(`resume ${c} paper`, T.config.paper, paper[c]);
+    check(`resume ${c} example has no privacy warnings`, T.warnings(T.config.example).length, 0);
+    check(`resume ${c} empty sections left out`, T.doc({ name: "A", skills: " , ," }).sections.length, 0);
+  }
+}
+{
+  const { T } = loadResume("us");
+  const text = T.text(T.config.example);
+  check("resume US text starts with name", text.split("\n")[0], "JORDAN RIVERA");
+  check("resume US text job line", text.includes("WORK EXPERIENCE\nSenior Graphic Designer | Mar 2022 – Present\nHarbor & Pine Creative | Austin, TX"), true);
+  check("resume US file name", T.fileName("Jordan Rivera"), "Jordan-Rivera-Resume");
+  check("resume US file name without a name", T.fileName(""), "Resume");
+  check("resume US phone is not an ID", T.warnings({ phone: "(512) 555-0142" }).length, 0);
+  check("resume US SSN spotted", T.warnings({ summary: "SSN 123-45-6789" }).length, 1);
+  check("resume US birthdate advice", T.warnings({ summary: "Date of birth: 1 May 1990" })[0].startsWith("CareerOneStop"), true);
+}
+{
+  const { T } = loadResume("uk");
+  check("resume UK file name", T.fileName("Zoë O'Brien"), "Zoe-OBrien-CV");
+  check("resume UK NI number spotted", T.warnings({ additional: "NI: AB 12 34 56 C" }).length, 1);
+  check("resume UK same advice shown once", T.warnings({ summary: "Married. Date of birth 1990." }).length, 1);
+  const refs = (mode, people) => T.doc({ references: { mode, people } }).sections.map((s) => s.items[0].text || s.items[0].name).join("|");
+  check("resume UK references on request", refs("request", []), "References are available on request.");
+  check("resume UK references left out", refs("none", [{ name: "A" }]), "");
+  check("resume UK referees listed", refs("list", [{ name: "Ann Lee", title: "Manager" }]), "Ann Lee");
+}
+{
+  const { T } = loadResume("ca");
+  check("resume CA SIN spotted", T.warnings({ summary: "SIN 046 454 286" })[0].includes("Social Insurance Number"), true);
+  check("resume CA phone is not a SIN", T.warnings({ phone: "(905) 555-0187" }).length, 0);
+}
+{
+  const { T } = loadResume("au");
+  check("resume AU international phone is not an ID", T.warnings({ phone: "+61 491 570 156", references: { people: [{ phone: "+61 491 570 157" }] } }).length, 0);
+  check("resume AU date of birth advice", T.warnings({ summary: "DOB 01/02/1990" })[0].startsWith("Workforce Australia"), true);
+  check("resume AU bank details advice", T.warnings({ additional: "BSB 062-000" }).length, 1);
+}
+
+// Real PDFs with pdf-lib, run in Node's own context (pdf-lib rejects objects from a vm sandbox).
+// Page counts must match the worked examples on each page.
+async function resumePdfTests() {
+  const PDFLib = require(path.join(JS, "vendor", "pdf-lib", "pdf-lib.min.js"));
+  const expected = {
+    us: { size: "612x792", normal: 1, compact: 1 },
+    uk: { size: "595.28x841.89", normal: 1, compact: 1 },
+    ca: { size: "612x792", normal: 2, compact: 1 },
+    au: { size: "595.28x841.89", normal: 2, compact: 1 },
+  };
+  for (const c of Object.keys(expected)) {
+    global.window = {};
+    global.document = { getElementById: () => null };
+    for (const file of ["js/resume.js", `js/tools/resume-${c}.js`]) vm.runInThisContext(fs.readFileSync(path.join(JS, file), "utf8"));
+    const T = window.ToolNestCalc;
+    const R = window.ToolNestResume;
+    delete global.window;
+    delete global.document;
+    for (const spacing of ["normal", "compact"]) {
+      const lay = T.layout(T.config.example, { font: "sans", spacing }, R.pdfMeasure(PDFLib, "sans"));
+      const bytes = await R.makePdf(PDFLib, lay, { title: "Example", author: T.config.example.name, lang: T.config.lang });
+      const pdf = await PDFLib.PDFDocument.load(bytes);
+      const size = pdf.getPage(0).getSize();
+      check(`resume ${c} PDF ${spacing} pages`, pdf.getPageCount(), expected[c][spacing]);
+      check(`resume ${c} PDF paper size`, `${size.width}x${size.height}`, expected[c].size);
+      check(`resume ${c} PDF within length advice`, pdf.getPageCount() <= T.config.maxPages, true);
+    }
+    // A long resume: no section heading may be the last line on a page.
+    const long = { ...T.config.example, experience: Array.from({ length: 14 }, (_, i) => ({ ...T.config.example.experience[i % 2] })) };
+    const lay = T.layout(long, { font: "serif" }, R.pdfMeasure(PDFLib, "serif"));
+    const headingSize = T.config.bodySize.normal + 0.5;
+    const stranded = lay.pages.slice(0, -1).filter((p) => {
+      const body = p.runs.filter((r) => !/Page \d+ of/.test(r.t));
+      const lastY = Math.max(...body.map((r) => r.y));
+      return body.some((r) => r.s === headingSize && r.f === "bold" && r.y === lastY);
+    }).length;
+    check(`resume ${c} long resume runs to several pages`, lay.pages.length > 2, true);
+    check(`resume ${c} no heading left alone at a page foot`, stranded, 0);
+  }
+}
+
+resumePdfTests().catch((err) => {
+  failed++;
+  console.log(`FAIL  resume PDF tests: ${err.message}`);
+}).then(() => require("./pdf-tests.js")(check, expectAll)).catch((err) => {
+  failed++;
+  console.log("FAIL  PDF tool tests stopped:", err);
+}).then(() => {
+  console.log(`\n${passed} passed, ${failed} failed`);
+  process.exit(failed ? 1 : 0);
+});
