@@ -1,0 +1,88 @@
+  <section class="calculator" aria-label="College GPA calculator">
+    <div class="calc-form">
+      <div class="field span-2">
+        <p class="field-title" id="gpa-courses-title">Your courses and grades<span class="hint">Common 4.0 grading scale</span></p>
+        <div class="table-wrap">
+          <table class="inv-items-table gpa-table" aria-labelledby="gpa-courses-title">
+            <thead>
+              <tr>
+                <th>Course Name</th>
+                <th class="col-grade">Grade</th>
+                <th class="num col-credits">Credits</th>
+                <th class="col-del"><span class="visually-hidden">Remove</span></th>
+              </tr>
+            </thead>
+            <tbody id="gpa-courses-body"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-sm btn-ghost btn-add-row" id="btn-add-course">{{icon:plus}} Add course</button>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="btn-reset-gpa">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your grades stay on your device</span>
+      </div>
+    </div>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your cumulative GPA</h2>
+      <div class="result-main"><span id="out-gpa">0.00</span> <small>/ 4.00</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Total credits attempted</span><span id="out-credits">0</span></li>
+        <li><span>Total quality points</span><span id="out-points">0</span></li>
+        <li class="key"><span>Average letter grade</span><span id="out-standing">—</span></li>
+      </ul>
+      <p class="result-note">Quality points are calculated by multiplying each course credit by its letter grade value.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>The 4.0 grade point scale used here</h2>
+    <p>This is a common 4.0 scale used by many US colleges. Scales differ between schools: some give an A+ 4.3 points, some use D- grades, and each school decides which percentage earns which letter. Check your college catalog or student handbook for your own school's scale.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Letter grade</th><th class="num">Grade points</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A+ / A</strong></td><td class="num">4.0</td></tr>
+          <tr><td><strong>A-</strong></td><td class="num">3.7</td></tr>
+          <tr><td><strong>B+</strong></td><td class="num">3.3</td></tr>
+          <tr><td><strong>B</strong></td><td class="num">3.0</td></tr>
+          <tr><td><strong>B-</strong></td><td class="num">2.7</td></tr>
+          <tr><td><strong>C+</strong></td><td class="num">2.3</td></tr>
+          <tr><td><strong>C</strong></td><td class="num">2.0</td></tr>
+          <tr><td><strong>C-</strong></td><td class="num">1.7</td></tr>
+          <tr><td><strong>D+</strong></td><td class="num">1.3</td></tr>
+          <tr><td><strong>D</strong></td><td class="num">1.0</td></tr>
+          <tr><td><strong>F</strong></td><td class="num">0.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How GPA is calculated</h2>
+    <div class="formula">Grade Points Per Course   = Course Credits × Letter Grade Value
+Total Quality Points      = Sum of all Grade Points
+Cumulative GPA            = Total Quality Points ÷ Total Course Credits</div>
+
+    <h2>Worked example</h2>
+    <p>A university student takes 4 classes in a semester: Economics (3 credits, grade A = 12 points), Calculus I (4 credits, grade B+ = 13.2 points), Computer Science (4 credits, grade A- = 14.8 points), and Academic Writing (3 credits, grade A = 12 points). Total credits = 14. Total quality points = 52.0. Dividing 52.0 by 14 gives a semester GPA of <strong>3.71</strong>, which is about an A- average.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a weighted vs unweighted GPA?</summary>
+        <p>An unweighted GPA measures all classes on a 4.0 scale regardless of difficulty. A weighted GPA gives extra points (up to 5.0) for Advanced Placement (AP), International Baccalaureate (IB), or honors courses.</p>
+      </details>
+      <details>
+        <summary>Do Pass/Fail courses affect GPA?</summary>
+        <p>Usually no. Pass/Fail or credit-only courses count toward your degree credit requirements, but are excluded from GPA quality point calculations.</p>
+      </details>
+      <details>
+        <summary>Why do some courses change my GPA more than others?</summary>
+        <p>Each grade is weighted by the course's credits. A 4-credit course counts for more than a 1-credit course, so its grade moves your GPA further.</p>
+      </details>
+      <details>
+        <summary>What GPA do I need for honors or the Dean's List?</summary>
+        <p>Every college sets its own cut-offs for Latin honors (cum laude, magna cum laude, summa cum laude) and the Dean's List. Your college catalog or registrar's website lists them.</p>
+      </details>
+    </div>
+  </div>

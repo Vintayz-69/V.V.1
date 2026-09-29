@@ -1,0 +1,221 @@
+  <section class="invoice-tool" aria-label="Freelance invoice generator">
+    <div class="invoice-app" id="invoice-app">
+      <!-- Form Panel -->
+      <div class="inv-form-panel">
+        <div class="inv-bar">
+          <div class="inv-bar-actions">
+            <button type="button" class="btn btn-primary" id="btn-download-pdf">{{icon:file}} Download PDF</button>
+            <button type="button" class="btn btn-sm" id="btn-save-draft">{{icon:upload}} Save draft</button>
+            <input type="file" id="inv-file-draft" accept=".json" class="rf-file">
+            <label for="inv-file-draft" class="btn btn-sm">{{icon:refresh}} Open draft</label>
+            <button type="button" class="btn btn-sm btn-ghost" id="btn-reset-example">Reset example</button>
+          </div>
+          <p class="rf-privacy">{{icon:lock}} <span><strong>Privacy first:</strong> Your invoice is created entirely in your browser. Nothing you type or download is ever uploaded or saved on our servers.</span></p>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-currency">Currency</label>
+              <div class="select-wrap">
+                <select id="inv-currency">
+                  <option value="USD">USD ($)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="CAD">CAD (C$)</option>
+                  <option value="AUD">AUD (A$)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="inv-number">Invoice number</label>
+              <input type="text" id="inv-number" value="INV-2026-001" placeholder="e.g. INV-001">
+            </div>
+          </div>
+
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-date">Invoice date</label>
+              <input type="date" id="inv-date" value="2026-09-28">
+            </div>
+            <div class="field">
+              <label for="inv-due">Payment due date</label>
+              <input type="date" id="inv-due" value="2026-10-12">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Your Business Info (From)</h3>
+          <div class="field">
+            <label for="inv-from-name">Your name or business</label>
+            <input type="text" id="inv-from-name" placeholder="e.g. Sarah Chen Design" value="Sarah Chen Design">
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-from-email">Email</label>
+              <input type="email" id="inv-from-email" placeholder="sarah@chencreative.com" value="sarah@chencreative.com">
+            </div>
+            <div class="field">
+              <label for="inv-from-address">City, state, country / tax ID</label>
+              <input type="text" id="inv-from-address" placeholder="Seattle, WA, United States" value="Seattle, WA, United States">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Client Info (Bill To)</h3>
+          <div class="field">
+            <label for="inv-to-name">Client business or name</label>
+            <input type="text" id="inv-to-name" placeholder="e.g. Acme Digital Studio" value="Acme Digital Studio">
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-to-email">Client email</label>
+              <input type="email" id="inv-to-email" placeholder="accounts@acmedigital.com" value="accounts@acmedigital.com">
+            </div>
+            <div class="field">
+              <label for="inv-to-address">Client location / billing address</label>
+              <input type="text" id="inv-to-address" placeholder="San Francisco, CA" value="San Francisco, CA">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3 id="inv-items-title">Line Items</h3>
+          <div class="table-wrap">
+            <table class="inv-items-table" aria-labelledby="inv-items-title">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th class="num col-qty">Qty / Hrs</th>
+                  <th class="num col-rate">Rate (<span class="inv-cur-sym">$</span>)</th>
+                  <th class="num col-amount">Amount</th>
+                  <th class="col-del"><span class="visually-hidden">Remove</span></th>
+                </tr>
+              </thead>
+              <tbody id="inv-items-body"></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-sm btn-ghost btn-add-row" id="btn-add-item">{{icon:plus}} Add item or service</button>
+
+          <div class="inv-totals-grid">
+            <div class="field">
+              <label for="inv-discount">Discount %<span class="hint">Optional</span></label>
+              <input type="text" inputmode="decimal" id="inv-discount" value="5" placeholder="0">
+            </div>
+            <div class="field">
+              <label for="inv-tax">Tax %<span class="hint">VAT, GST or sales tax</span></label>
+              <input type="text" inputmode="decimal" id="inv-tax" value="0" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Payment Instructions &amp; Bank Details</h3>
+          <div class="field">
+            <label for="inv-notes">Payment methods, bank transfer details, terms</label>
+            <textarea id="inv-notes" rows="4" placeholder="Bank name, Account number, Routing/IBAN/BSB, or PayPal email..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Preview Panel -->
+      <div class="inv-preview-panel">
+        <div class="inv-paper" id="invoice-paper">
+          <div class="inv-paper-header">
+            <div>
+              <h2 class="inv-paper-title">INVOICE</h2>
+              <div class="inv-paper-meta" id="prev-inv-num">INV-2026-001</div>
+            </div>
+            <div class="inv-paper-dates">
+              <p><strong>Date:</strong> <span id="prev-inv-date">2026-09-28</span></p>
+              <p><strong>Due:</strong> <span id="prev-inv-due">2026-10-12</span></p>
+            </div>
+          </div>
+
+          <div class="inv-paper-parties">
+            <div>
+              <span class="inv-party-lbl">From</span>
+              <strong id="prev-sender-name">Sarah Chen Design</strong>
+              <div id="prev-sender-email">sarah@chencreative.com</div>
+              <div id="prev-sender-address">Seattle, WA, United States</div>
+            </div>
+            <div>
+              <span class="inv-party-lbl">Billed To</span>
+              <strong id="prev-client-name">Acme Digital Studio</strong>
+              <div id="prev-client-email">accounts@acmedigital.com</div>
+              <div id="prev-client-address">San Francisco, CA</div>
+            </div>
+          </div>
+
+          <table class="inv-paper-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th class="num">Qty</th>
+                <th class="num">Rate</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody id="prev-items-list"></tbody>
+          </table>
+
+          <div class="inv-paper-summary">
+            <div class="inv-paper-totals">
+              <div class="row"><span>Subtotal:</span><span class="val" id="prev-subtotal">$0.00</span></div>
+              <div class="row" id="prev-discount-row"><span><span id="prev-discount-label">Discount</span>:</span><span class="val" id="prev-discount">-$0.00</span></div>
+              <div class="row" id="prev-tax-row"><span><span id="prev-tax-label">Tax</span>:</span><span class="val" id="prev-tax">$0.00</span></div>
+              <div class="row total"><span>Total Due:</span><span class="val" id="prev-total">$0.00</span></div>
+            </div>
+          </div>
+
+          <div class="inv-paper-notes" id="prev-notes-box">
+            <h4>Payment Instructions &amp; Notes</h4>
+            <div id="prev-notes"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to create and download your freelance invoice</h2>
+    <ol class="steps">
+      <li><strong>Select your currency</strong> and fill in your freelance business details and your client's contact information.</li>
+      <li><strong>Add your billable line items</strong>: set descriptions, hours or quantities, and agreed rates. Add any optional discount or sales tax / VAT.</li>
+      <li><strong>Include clear payment details</strong>: your bank routing/account numbers, IBAN, BSB or payment links, along with due dates.</li>
+      <li><strong>Preview live and click “Download PDF”</strong>: A professional, print-ready PDF is rendered instantly on your device with no watermarks and no sign-up required.</li>
+    </ol>
+
+    <h2>How the invoice total is calculated</h2>
+    <div class="formula">Line Item Total     = Quantity × Unit Rate
+Subtotal            = Sum of all Line Items
+Discount Amount     = Subtotal × (Discount % ÷ 100)
+Taxable Amount      = Subtotal − Discount Amount
+Tax (VAT / GST)     = Taxable Amount × (Tax % ÷ 100)
+Total Amount Due    = Taxable Amount + Tax</div>
+
+    <h2>Worked example</h2>
+    <p>Sarah Chen completed a brand identity project for $2,500, 25 hours of UI design at $85/hour ($2,125), and design system guidelines for $750. Her subtotal was <strong>$5,375.00</strong>. Sarah gave a 5% repeat client discount ($268.75), reducing the taxable amount to $5,106.25. With 0% sales tax applied, her total invoice due was <strong>$5,106.25</strong>.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Are my client invoices saved or stored online?</summary>
+        <p>No. Your invoice is created and turned into a PDF entirely inside your web browser. Your details, your client's details, bank details and amounts are never sent to us. Once you close the page, the information is gone unless you click <em>Save draft</em> to download a backup file to your own computer.</p>
+      </details>
+      <details>
+        <summary>Can I add VAT, GST, or local sales tax?</summary>
+        <p>Yes. Enter the tax rate that applies to your invoice in the Tax % box. The generator applies it after any discount and shows it as a separate line on the PDF. Whether you must charge tax, and at what rate, depends on your country, your registration and your client, so check with your tax authority or an accountant. For Canada and Australia, our <a href="{{root}}ca/gst-hst-calculator/">GST/HST calculator</a> and <a href="{{root}}au/gst-calculator/">GST calculator</a> show the current rates and link to the official sources.</p>
+      </details>
+      <details>
+        <summary>What payment terms should freelancers include?</summary>
+        <p>Many freelancers use "Net 14" (due within 14 days) or "Net 30" (due within 30 days), but agree the terms with your client before you start work. A clear due date and clear payment instructions on the invoice make it easier for clients to pay on time. If a business client in the UK pays late, our <a href="{{root}}freelance/late-payment-interest-calculator/">late payment interest calculator</a> shows what you can claim.</p>
+      </details>
+      <details>
+        <summary>Can I re-open and edit a previous invoice later?</summary>
+        <p>Yes! Click <strong>Save draft</strong> to download a lightweight <code>.json</code> file to your device. Next time you visit this page, click <strong>Open draft</strong> to pick that file up right where you left off.</p>
+      </details>
+    </div>
+  </div>

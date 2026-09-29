@@ -1,0 +1,94 @@
+  <section class="calculator" aria-label="Profit margin and markup calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="cost">Cost of Goods / Service<span class="hint">What you pay to make or deliver it</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="cost" type="text" inputmode="decimal" value="60" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="revenue">Selling Price / Revenue<span class="hint">What the customer pays</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="revenue" type="text" inputmode="decimal" value="100" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="expenses">Additional Operating Expenses<span class="hint">Optional overhead, marketing or shipping</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="expenses" type="text" inputmode="decimal" value="15" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your profit margin</h2>
+      <div class="result-main"><span id="out-gross-margin">—</span> <small>gross margin</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Gross profit</span><span id="out-gross-profit">—</span></li>
+        <li><span>Markup percentage</span><span id="out-markup">—</span></li>
+        <li class="key"><span>Net profit</span><span id="out-net-profit">—</span></li>
+        <li><span>Net profit margin</span><span id="out-net-margin">—</span></li>
+      </ul>
+      <p class="result-note">Gross margin measures what you keep from sales after direct costs. Net margin shows what is left after overhead expenses.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Pricing targets for this product</h2>
+    <p>Wondering what price you would need to charge to achieve standard target gross profit margins? Based on your current cost above, here is how you would price it:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Target Margin</th><th class="num">Required Selling Price</th><th class="num">Gross Profit</th></tr></thead>
+        <tbody id="margin-table-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Margin vs. markup: what is the difference?</h2>
+    <p>Many business owners confuse <strong>margin</strong> and <strong>markup</strong>, which can lead to underpricing:</p>
+    <ul>
+      <li><strong>Profit Margin</strong> is the percentage of the <em>selling price</em> that is profit. A 40% margin means 40 cents of every dollar taken in is profit.</li>
+      <li><strong>Markup</strong> is the percentage added on top of your <em>cost</em>. To achieve a 40% margin on a $60 item, you need a <strong>66.7% markup</strong> ($60 × 1.667 = $100).</li>
+    </ul>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Gross Profit       = Selling Price − Cost of Goods
+Gross Margin %     = (Gross Profit ÷ Selling Price) × 100
+Markup %           = (Gross Profit ÷ Cost of Goods) × 100
+Net Profit         = Gross Profit − Operating Expenses
+Net Margin %       = (Net Profit ÷ Selling Price) × 100</div>
+
+    <h2>Worked example</h2>
+    <p>A craft store owner buys materials for a handcrafted candle for $60 and sells it for $100. Their direct gross profit is $40, which is a <strong>40.0% gross margin</strong> and a <strong>66.7% markup</strong>. With $15 in packaging and platform fees, their final net profit is <strong>$25.00</strong> (a 25.0% net margin).</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a healthy gross profit margin for a small business?</summary>
+        <p>It depends a lot on the industry. Businesses that sell physical products have material, stock and shipping costs, so their gross margins are usually lower than service or digital businesses, where each extra sale costs very little. Compare yourself with businesses like yours, and with your own past results, rather than with one general number.</p>
+      </details>
+      <details>
+        <summary>How do I price a product if I know my target margin?</summary>
+        <p>Use the formula: <code>Price = Cost ÷ (1 − (Target Margin ÷ 100))</code>. For example, if an item costs $40 and you want a 50% margin: $40 ÷ (1 − 0.50) = $80.</p>
+      </details>
+      <details>
+        <summary>Why is markup always higher than profit margin?</summary>
+        <p>Because markup is divided by the smaller number (your cost), whereas margin is divided by the larger number (your total selling price).</p>
+      </details>
+    </div>
+  </div>

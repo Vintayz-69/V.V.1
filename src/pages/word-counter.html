@@ -1,0 +1,72 @@
+  <section class="calculator" aria-label="Word counter and text analyzer">
+    <div class="calc-form text-tool-form">
+      <div class="field span-2">
+        <label for="text-input">Type or paste your text below<span class="hint">Instant real-time analysis</span></label>
+        <textarea id="text-input" class="text-tool-input" rows="12" placeholder="Start typing or paste your essay, resume, article, or speech here..."></textarea>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="btn-clear-text">{{icon:trash}} Clear text</button>
+        <button type="button" class="btn btn-sm" id="btn-sample-text">{{icon:refresh}} Load sample text</button>
+        <span class="privacy-note">{{icon:lock}} Analyzed locally in your browser. Nothing is uploaded.</span>
+      </div>
+    </div>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Text metrics</h2>
+      <div class="result-main"><span id="out-words">0</span> <small>words</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Characters (with spaces)</span><span id="out-chars">0</span></li>
+        <li><span>Characters (no spaces)</span><span id="out-chars-no-spaces">0</span></li>
+        <li class="key"><span>Sentences</span><span id="out-sentences">0</span></li>
+        <li><span>Paragraphs</span><span id="out-paragraphs">0</span></li>
+        <li class="key"><span>Estimated reading time</span><span id="out-read-time">0 sec</span></li>
+        <li><span>Estimated speaking time</span><span id="out-speak-time">0 sec</span></li>
+        <li class="key"><span>Flesch reading ease</span><span id="out-ease">100 / 100</span></li>
+        <li><span>Target audience / grade</span><span id="out-grade">Early / Basic</span></li>
+      </ul>
+      <p class="result-note">Reading speed assumes an average 200 words per minute. Speaking speed assumes 130 words per minute.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Understanding reading level and Flesch score</h2>
+    <p>The <strong>Flesch Reading Ease score</strong> rates content on a 100-point scale. The higher the number, the easier the text is to understand:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Score</th><th>Reading Level</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>90 – 100</strong></td><td>5th Grade</td><td>Very easy to read. Conversational and punchy.</td></tr>
+          <tr><td><strong>80 – 89</strong></td><td>6th Grade</td><td>Easy reading. Plain English for general audiences.</td></tr>
+          <tr><td><strong>70 – 79</strong></td><td>7th Grade</td><td>Fairly easy. Ideal for consumer blogs and product descriptions.</td></tr>
+          <tr><td><strong>60 – 69</strong></td><td>8th &amp; 9th Grade</td><td>Standard reading level. Recommended for business writing.</td></tr>
+          <tr><td><strong>50 – 59</strong></td><td>10th – 12th Grade</td><td>Fairly difficult. Appropriate for academic or trade articles.</td></tr>
+          <tr><td><strong>0 – 49</strong></td><td>College / Graduate</td><td>Difficult. Dense technical, medical, or legal documents.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How to use this text tool</h2>
+    <ol class="steps">
+      <li><strong>Paste or type your writing</strong> directly into the box. All metrics update instantly as you keystroke.</li>
+      <li><strong>Check length requirements:</strong> Keep track of strict character limits for social media, cover letters, essays, or meta descriptions.</li>
+      <li><strong>Time your presentations:</strong> Use the speaking time metric to rehearse speeches and keynote presentations accurately.</li>
+      <li><strong>Improve clarity:</strong> If your readability score is under 60, shorten long sentences and replace complex multisyllabic jargon with plain words.</li>
+    </ol>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does this tool save or upload what I paste?</summary>
+        <p>No. The counting happens inside your own browser. Your text is never sent to us or saved anywhere, and it's gone when you close or reload the page.</p>
+      </details>
+      <details>
+        <summary>How is reading time calculated?</summary>
+        <p>We divide the word count by <strong>200 words per minute</strong>, a common rule of thumb for reading carefully. Real reading speed varies a lot from person to person and with how hard the text is, so treat it as a rough guide.</p>
+      </details>
+      <details>
+        <summary>How is speaking time calculated?</summary>
+        <p>We divide the word count by <strong>130 words per minute</strong>, a steady speaking pace for talks and presentations. Many people speak faster, so using a slower pace helps you avoid running over time. Rehearse out loud to check your own speed.</p>
+      </details>
+    </div>
+  </div>

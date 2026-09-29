@@ -500,6 +500,131 @@ function loadResume(country) {
   check("resume AU bank details advice", T.warnings({ additional: "BSB 062-000" }).length, 1);
 }
 
+// ---------------- Freelance Invoice Generator (Stage 1 Phase D)
+{
+  const calc = load("invoice-generator");
+  // Worked example: Sarah Chen
+  expectAll("invoice-generator Sarah Chen", calc({
+    items: [
+      { desc: "Brand", qty: 1, rate: 2500 },
+      { desc: "UI", qty: 25, rate: 85 },
+      { desc: "System", qty: 1, rate: 750 }
+    ],
+    discountPct: 5,
+    taxPct: 0
+  }), { subtotal: 5375, discount: 268.75, taxable: 5106.25, tax: 0, total: 5106.25 });
+
+  // Example with tax
+  expectAll("invoice-generator with tax", calc({
+    items: [{ qty: 10, rate: 100 }],
+    discountPct: 10,
+    taxPct: 20
+  }), { subtotal: 1000, discount: 100, taxable: 900, tax: 180, total: 1080 });
+
+  // Simple item
+  expectAll("invoice-generator simple", calc({
+    items: [{ qty: 2, rate: 50 }],
+    discountPct: 0,
+    taxPct: 5
+  }), { subtotal: 100, discount: 0, taxable: 100, tax: 5, total: 105 });
+}
+
+// ---------------- Profit Margin & Markup Calculator (Stage 4 Business)
+{
+  const calc = load("profit-margin");
+  // Worked example from page: candle craft store
+  expectAll("profit-margin candle store", calc({ cost: 60, revenue: 100, expenses: 15 }),
+    { grossProfit: 40, grossMargin: 40, markup: 66.67, netProfit: 25, netMargin: 25 });
+  expectAll("profit-margin retail", calc({ cost: 200, revenue: 350, expenses: 50 }),
+    { grossProfit: 150, grossMargin: 42.86, markup: 75, netProfit: 100, netMargin: 28.57 });
+  expectAll("profit-margin break-even", calc({ cost: 50, revenue: 50, expenses: 0 }),
+    { grossProfit: 0, grossMargin: 0, markup: 0, netProfit: 0, netMargin: 0 });
+}
+
+// ---------------- Break-Even Analysis Calculator (Stage 4 Business)
+{
+  const calc = load("break-even");
+  // Worked example from page: coffee roaster
+  expectAll("break-even coffee roaster", calc({ fixed: 5000, price: 50, variable: 20 }),
+    { contributionMargin: 30, cmRatio: 60, units: 166.67, revenue: 8333.33 });
+  expectAll("break-even software", calc({ fixed: 12000, price: 100, variable: 40 }),
+    { contributionMargin: 60, cmRatio: 60, units: 200, revenue: 20000 });
+  expectAll("break-even small shop", calc({ fixed: 2500, price: 25, variable: 10 }),
+    { contributionMargin: 15, cmRatio: 60, units: 166.67, revenue: 4166.67 });
+}
+
+// ---------------- Payment Processing Fee Calculator (Stage 4 Business)
+{
+  const calc = load("payment-fee");
+  // Worked example from page: Web developer Stripe
+  expectAll("payment-fee Stripe $1k", calc({ amount: 1000, pct: 2.9, fixedFee: 0.30 }),
+    { fee: 29.30, net: 970.70, effectiveRate: 2.93, grossUp: 1030.18, grossUpFee: 30.18 });
+  expectAll("payment-fee PayPal $100", calc({ amount: 100, pct: 3.49, fixedFee: 0.49 }),
+    { fee: 3.98, net: 96.02, effectiveRate: 3.98, grossUp: 104.12, grossUpFee: 4.12 });
+  expectAll("payment-fee zero fee", calc({ amount: 500, pct: 0, fixedFee: 0 }),
+    { fee: 0, net: 500, effectiveRate: 0, grossUp: 500, grossUpFee: 0 });
+}
+
+// ---------------- Salary to Hourly Calculator (Stage 2 Career)
+{
+  const calc = load("salary-to-hourly");
+  // Worked example from page: Jordan $65k
+  expectAll("salary-to-hourly Jordan", calc({ salary: 65000, hours: 40, days: 5, weeks: 52 }),
+    { annualHours: 2080, hourly: 31.25, daily: 250, weekly: 1250, biweekly: 2500, monthly: 5416.67, overtime: 46.88 });
+  expectAll("salary-to-hourly UK hours", calc({ salary: 90000, hours: 37.5, days: 5, weeks: 50 }),
+    { annualHours: 1875, hourly: 48, daily: 360, weekly: 1800, biweekly: 3600, monthly: 7500, overtime: 72 });
+  expectAll("salary-to-hourly part time", calc({ salary: 40000, hours: 20, days: 4, weeks: 52 }),
+    { annualHours: 1040, hourly: 38.46, daily: 192.31, weekly: 769.23, biweekly: 1538.46, monthly: 3333.33, overtime: 57.69 });
+}
+
+// ---------------- Word Counter & Readability Analyzer (Stage 5 Education)
+{
+  const calc = load("word-counter");
+  const sample = "The quick brown fox jumps over the lazy dog. It was a sunny day in the park.";
+  const r1 = calc({ text: sample });
+  check("word-counter words", r1.words, 17);
+  check("word-counter sentences", r1.sentences, 2);
+  check("word-counter chars", r1.chars, 76);
+  check("word-counter chars no spaces", r1.charsNoSpaces, 60);
+  check("word-counter paragraphs", r1.paragraphs, 1);
+
+  const r2 = calc({ text: "" });
+  check("word-counter empty words", r2.words, 0);
+  check("word-counter empty sentences", r2.sentences, 0);
+
+  const r3 = calc({ text: "First paragraph here.\n\nSecond paragraph with multiple words and thoughts." });
+  check("word-counter multi-para words", r3.words, 10);
+  check("word-counter multi-para count", r3.paragraphs, 2);
+}
+
+// ---------------- College GPA Calculator (Stage 5 Education)
+{
+  const calc = load("gpa-calculator");
+  // Worked example from page: student 4 classes
+  expectAll("gpa-calculator student", calc({
+    courses: [
+      { name: "Economics", credits: 3, grade: "A" },
+      { name: "Calculus I", credits: 4, grade: "B+" },
+      { name: "Computer Science", credits: 4, grade: "A-" },
+      { name: "Academic Writing", credits: 3, grade: "A" }
+    ]
+  }), { totalCredits: 14, totalPoints: 52, gpa: 3.71, standing: "About A-" });
+
+  expectAll("gpa-calculator 4.0", calc({
+    courses: [
+      { credits: 4, grade: "A" },
+      { credits: 4, grade: "A" }
+    ]
+  }), { totalCredits: 8, totalPoints: 32, gpa: 4.0, standing: "About A" });
+
+  expectAll("gpa-calculator passing", calc({
+    courses: [
+      { credits: 3, grade: "C" },
+      { credits: 3, grade: "C" }
+    ]
+  }), { totalCredits: 6, totalPoints: 12, gpa: 2.0, standing: "About C" });
+}
+
 // Real PDFs with pdf-lib, run in Node's own context (pdf-lib rejects objects from a vm sandbox).
 // Page counts must match the worked examples on each page.
 async function resumePdfTests() {

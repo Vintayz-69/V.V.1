@@ -1,0 +1,103 @@
+  <section class="calculator" aria-label="Payment processing fee calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="gateway-preset">Payment provider<span class="hint">US standard rates. Outside the US, choose Custom and enter your provider's rate.</span></label>
+        <div class="select-wrap">
+          <select id="gateway-preset">
+            <option value="stripe">Stripe, US cards (2.9% + $0.30)</option>
+            <option value="paypal">PayPal Checkout, US (3.49% + $0.49)</option>
+            <option value="square">Square online, US (3.3% + $0.30)</option>
+            <option value="custom">Custom rate (enter your own)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="amount">Invoice / Sale Amount<span class="hint">Total charged to client</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="amount" type="text" inputmode="decimal" value="100" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount greater than 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="pct">Percentage Fee<span class="hint">e.g. 2.9% for Stripe</span></label>
+        <div class="input-wrap"><input id="pct" type="text" inputmode="decimal" value="2.9" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage between 0 and 99.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="fixedFee">Fixed Transaction Fee<span class="hint">Fixed amount charged per transaction</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="fixedFee" type="text" inputmode="decimal" value="0.30" autocomplete="off"></div>
+        <span class="error-msg">Enter a fee of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your payout</h2>
+      <div class="result-main"><span id="out-net">—</span> <small>net payout</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Processing fee deducted</span><span id="out-fee">—</span></li>
+        <li><span>Effective fee rate</span><span id="out-effective">—</span></li>
+        <li class="key"><span>Amount to invoice (Gross-up)</span><span id="out-grossup">—</span></li>
+        <li><span>Extra charged to cover fee</span><span id="out-grossup-fee">—</span></li>
+      </ul>
+      <p class="result-note">To receive exactly your target amount after payment processor fees, charge the “Gross-up” figure.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Processor fee comparison for this transaction</h2>
+    <p>What you would take home on this amount at each provider's <strong>standard US rate for online card payments</strong>, as listed on their own pricing pages on 30 September 2026 (<a href="https://stripe.com/pricing" rel="noopener">Stripe</a>, <a href="https://www.paypal.com/us/business/paypal-business-fees" rel="noopener">PayPal</a>, <a href="https://squareup.com/us/en/payments/our-fees" rel="noopener">Square</a>). Rates are different in other countries, for international cards, for currency conversion and for in-person payments, and providers can change them at any time. Always check your own provider's pricing page.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Gateway</th><th class="num">Fee</th><th class="num">You Receive</th><th class="num">Invoice to Net Target</th></tr></thead>
+        <tbody id="gateway-table-body"><tr><td colspan="4">Enter your transaction amount above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How the "Gross-up" fee calculation works</h2>
+    <p>If you quote a client $100 and they pay by card through a provider charging 2.9% + $0.30, you receive $96.80. If you simply add $3.20 to the bill ($103.20), the provider takes its percentage of the larger total, so you still end up a little short.</p>
+    <p>The true gross-up formula calculates the exact amount to invoice so that after the processor takes their cut, you are left with 100% of your target earnings.</p>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Transaction Fee    = (Amount × (Percentage Fee ÷ 100)) + Fixed Fee
+Net Payout         = Amount − Transaction Fee
+Effective Fee Rate = (Transaction Fee ÷ Amount) × 100
+Gross-Up Amount    = (Target Amount + Fixed Fee) ÷ (1 − (Percentage Fee ÷ 100))</div>
+
+    <h2>Worked example</h2>
+    <p>A web developer bills a client <strong>$1,000.00</strong> through Stripe (2.9% + $0.30). The processing fee is $29.00 (percentage) + $0.30 (fixed) = <strong>$29.30</strong>, giving a net payout of <strong>$970.70</strong>.</p>
+    <p>If the contract specifies that the client covers transaction fees so the developer nets exactly $1,000.00, the invoice amount should be <strong>$1,030.18</strong>: ($1,000 + $0.30) ÷ (1 − 0.029) = $1,030.18. Stripe takes $30.18 in total fees, leaving exactly $1,000.00 in the developer's bank.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I pass card processing fees on to my clients?</summary>
+        <p>It depends on where you and your client are, and on the kind of card. Card surcharges are restricted or banned in some countries and US states, and card networks have their own rules. Many freelancers avoid the question by building fees into their prices, or by offering a cheaper payment method such as a bank transfer. Check the current rules for your country, and your payment provider's terms, before adding a card fee to an invoice.</p>
+      </details>
+      <details>
+        <summary>Why do small transactions have a much higher effective rate?</summary>
+        <p>Because the fixed part of the fee takes a bigger share of a small sale. On a $5 payment, a $0.30 fixed fee alone is 6%, so with a 2.9% rate the total fee is 8.9% of the sale.</p>
+      </details>
+      <details>
+        <summary>How can I lower my transaction fees?</summary>
+        <p>Offer a bank transfer option (such as ACH in the US, Faster Payments in the UK, Interac e-Transfer in Canada or PayID in Australia). Bank transfers are often much cheaper than card payments, but costs depend on your bank and provider, so compare their fee pages.</p>
+      </details>
+    </div>
+  </div>

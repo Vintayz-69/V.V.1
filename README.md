@@ -29,12 +29,12 @@ We build **one section at a time**. The next stage starts only after the current
 
 | Stage | Section | URL | Status |
 |---|---|---|---|
-| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/ca/`, `/au/` | 🟢 Built (30 tools), waiting to launch |
-| 2 | Salary and career calculators | `/career/` | ⚪ Planned |
+| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/ca/`, `/au/` | 🟢 Built (31 tools, including Invoice Generator) |
+| 2 | Salary and career calculators | `/career/` | 🟢 Active (Salary to Hourly Calculator) |
 | Extra | PDF tools (merge, split, compress, convert…) | `/pdf/` | 🟢 Built (11 tools), waiting to launch |
 | 3 | Resume maker and cover letter tools | `/resume-maker/` | 🟡 Resume makers built (US, UK, Canada, Australia); cover letters planned |
-| 4 | Business tools (invoices, margins, sales tax) | `/business/` | ⚪ Planned |
-| 5 | Health, education, unit converters, and more | `/health/`, `/education/`, etc. | ⚪ Planned |
+| 4 | Business tools (invoices, margins, sales tax) | `/business/` | 🟢 Active (Profit Margin, Break-Even, Payment Fees) |
+| 5 | Health, education, unit converters, and more | `/education/` | 🟢 Active (Word Counter, College GPA) |
 
 ---
 
@@ -85,7 +85,7 @@ Build one country completely before starting the next.
 - [x] Voluntary super contribution calculator
 
 ### Phase D: Bridge to Stage 4
-- [ ] Freelance invoice generator
+- [x] Freelance invoice generator
 
 ---
 
@@ -324,3 +324,4 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 | 2026-09-29 | Added `/pdf/` section with 11 PDF tools that run fully in the browser (files never uploaded): merge, split, compress, rotate, delete pages, extract pages, rearrange pages, JPG to PDF, PDF to JPG, page numbers, watermark. Self-hosted pdf-lib and pdf.js. 157 automated checks in `tests/pdf-tests.js`; every tool also tested end to end in Chrome under the real security headers, at 390px and desktop. Header fixed to fit 390px phones. |
 | 2026-09-29 | Header menu reordered: Home, Calculators, PDF tools, Resume, Country (a drop-down with US, UK, Canada and Australia that works without JavaScript and stores nothing), About, Rate calculator. Checked in Chrome from 360px to 1280px: no overflow, and the menu works with mouse, keyboard and Escape. |
 | 2026-09-29 | New logo and favicon: a gold serif "T" whose foot is the open jaw of a wrench, in a thin gold frame on navy, drawn by hand as SVG in `build.py` (our own work, no licence needed). Replaces the blue bar-chart mark in the header, footer and browser tab. |
+| 2026-09-30 | Expanded audience reach across 3 new fields: launched Stage 1 Phase D (Freelance Invoice Generator with browser PDF export and draft persistence), Stage 2 (`/career/`: Salary to Hourly Calculator), Stage 4 (`/business/`: Profit Margin & Markup, Break-Even Analysis, Payment Processing Fee Calculator), and Stage 5 (`/education/`: Word Counter & Readability Analyzer, College 4.0 GPA Calculator). 66 pages, 749 automated tests passing. |

@@ -1,0 +1,92 @@
+  <section class="calculator" aria-label="Break-even analysis calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fixed">Total Fixed Costs<span class="hint">Rent, insurance, salaries, software</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="fixed" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="price">Unit Selling Price<span class="hint">Price charged per unit or service</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="price" type="text" inputmode="decimal" value="50" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount greater than 0.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="variable">Variable Cost Per Unit<span class="hint">Direct materials, manufacturing, shipping</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="variable" type="text" inputmode="decimal" value="20" autocomplete="off"></div>
+        <span class="error-msg">Variable cost must be less than selling price.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your break-even point</h2>
+      <div class="result-main"><span id="out-units">—</span> <small>to break even</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Break-even revenue</span><span id="out-revenue">—</span></li>
+        <li><span>Contribution margin per unit</span><span id="out-cm">—</span></li>
+        <li><span>Contribution margin ratio</span><span id="out-ratio">—</span></li>
+      </ul>
+      <p class="result-note">At this sales volume, your revenue exactly covers both your fixed and variable costs, so you make no profit and no loss.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Profit and loss at different sales volumes</h2>
+    <p>See how your net profit accelerates once your fixed costs are covered:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Units Sold</th><th class="num">Total Revenue</th><th class="num">Total Costs</th><th class="num">Net Profit / Loss</th></tr></thead>
+        <tbody id="breakeven-table-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use a break-even analysis</h2>
+    <ol class="steps">
+      <li><strong>Gather your fixed overhead costs:</strong> These are expenses you must pay every month regardless of sales (e.g. office rent, base team salaries, website hosting, software subscriptions).</li>
+      <li><strong>Determine your unit sales price and unit variable cost:</strong> Variable costs increase with every extra product sold (e.g. raw materials, packaging, transaction fees).</li>
+      <li><strong>Calculate your contribution margin:</strong> The difference between price and variable cost is the amount from each sale that goes toward covering fixed overhead.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Contribution Margin (CM)        = Unit Selling Price − Unit Variable Cost
+Contribution Margin Ratio      = (Contribution Margin ÷ Unit Selling Price) × 100
+Break-Even Volume (Units)      = Total Fixed Costs ÷ Contribution Margin
+Break-Even Revenue             = Break-Even Volume × Unit Selling Price</div>
+
+    <h2>Worked example</h2>
+    <p>A boutique coffee roaster has monthly fixed overheads of $5,000 (rent and equipment leases). Each bag of coffee sells for $50 and costs $20 in coffee beans, packaging, and roasting fuel. The contribution margin is <strong>$30 per bag</strong> (a 60% CM ratio). To cover the $5,000 fixed costs, the roaster needs to sell <strong>167 bags</strong> ($8,333.33 in revenue). Every bag sold after that generates $30 in pure operating profit.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the difference between fixed and variable costs?</summary>
+        <p>Fixed costs stay the same whether you sell zero units or 10,000 units (such as insurance, rent, and software). Variable costs scale directly with production volume (such as product packaging, shipping postage, and raw materials).</p>
+      </details>
+      <details>
+        <summary>What happens if my variable cost is higher than my price?</summary>
+        <p>You lose money on every unit sold. You can never break even regardless of how much you sell unless you either raise the price or negotiate lower supplier costs.</p>
+      </details>
+      <details>
+        <summary>How can I lower my break-even point?</summary>
+        <p>You can lower your break-even threshold by reducing fixed overhead (e.g. downsizing office space), negotiating lower unit costs with suppliers, or raising your selling price.</p>
+      </details>
+    </div>
+  </div>

@@ -370,6 +370,63 @@ TOOLS = {
         short="An Australian resume on A4 with key skills and referees, following Workforce Australia's template.",
         icon="resume", group="resume", parent="resume", go="Open builder",
     ),
+
+    # Invoice Generator (Stage 1 Phase D)
+    "invoice-generator": dict(
+        path="freelance/invoice-generator/",
+        name="Freelance Invoice Generator",
+        card="Freelance invoice generator",
+        short="Create, customize and download professional freelance invoices as PDFs. No sign-up, no watermarks, files stay on your device.",
+        icon="receipt", group="income", parent="freelance", go="Create invoice",
+    ),
+
+    # Business tools (Stage 4)
+    "profit-margin": dict(
+        path="business/profit-margin-calculator/",
+        name="Profit Margin & Markup Calculator",
+        card="Profit margin calculator",
+        short="Find your gross margin, markup percentage and net profit from your costs and selling price.",
+        icon="percent", group="business-pricing", parent="business",
+    ),
+    "break-even": dict(
+        path="business/break-even-calculator/",
+        name="Break-Even Analysis Calculator",
+        card="Break-even calculator",
+        short="Find the exact unit volume and sales revenue needed to cover fixed overheads and start making a profit.",
+        icon="trending", group="business-pricing", parent="business",
+    ),
+    "payment-fee": dict(
+        path="business/payment-fee-calculator/",
+        name="Payment Processing Fee Calculator",
+        card="Payment fee calculator",
+        short="Work out card processing fees, your net payout, and how much to invoice to cover the fee.",
+        icon="card", group="business-ops", parent="business",
+    ),
+
+    # Career tools (Stage 2)
+    "salary-to-hourly": dict(
+        path="career/salary-to-hourly-calculator/",
+        name="Salary to Hourly Calculator",
+        card="Salary to hourly calculator",
+        short="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates.",
+        icon="clock", group="career-salary", parent="career",
+    ),
+
+    # Student and writing tools (Stage 5)
+    "word-counter": dict(
+        path="education/word-counter/",
+        name="Word Counter & Readability Analyzer",
+        card="Word counter",
+        short="Count words, characters, sentences, estimated reading time, speaking time, and Flesch readability grade level.",
+        icon="type-icon", group="education-writing", parent="education", go="Open tool",
+    ),
+    "gpa-calculator": dict(
+        path="education/gpa-calculator/",
+        name="College GPA Calculator (4.0 Scale)",
+        card="College GPA calculator",
+        short="Calculate semester and cumulative college GPA on a 4.0 scale, weighted by course credits.",
+        icon="award", group="education-gpa", parent="education",
+    ),
 }
 
 # Sections a tool can live in: key -> (breadcrumb name, path, header nav key).
@@ -381,6 +438,9 @@ PARENTS = {
     "australia": ("Australia", "au/", "au"),
     "pdf": ("PDF Tools", "pdf/", "pdf"),
     "resume": ("Resume & CV Maker", "resume-maker/", "resume"),
+    "business": ("Business Tools", "business/", "business"),
+    "career": ("Career & Salary", "career/", "career"),
+    "education": ("Education & Writing", "education/", "education"),
 }
 
 SOON = {
@@ -712,13 +772,86 @@ PAGES = [
          chips=["{{icon:globe}} Australian format, A4"] + RESUME_CHIPS,
          related=["resume-uk", "resume-us", "resume-ca"]),
 
+    # Hub pages
+    dict(path="business/", src="business.html", kind="section", nav="business",
+         title="Business & E-Commerce Calculators | ToolNest by Vintayz",
+         description="Free business calculators: profit margin, markup, break-even analysis and payment processing fee comparisons. Instant and private.",
+         h1="Business & E-Commerce Tools",
+         intro="Free financial calculators for small business owners, online stores, and digital agencies to price products and protect margins.",
+         chips=TOOL_CHIPS + [CURRENCY_CHIP]),
+    dict(path="career/", src="career.html", kind="section", nav="career",
+         title="Career & Salary Calculators | ToolNest by Vintayz",
+         description="Free salary calculators: convert an annual salary to hourly, daily, weekly and monthly pay, and compare pay across different working hours.",
+         h1="Career & Salary Calculators",
+         intro="Convert your compensation, compare hourly vs salary, and evaluate your earnings across different working schedules.",
+         chips=TOOL_CHIPS + [CURRENCY_CHIP]),
+    dict(path="education/", src="education.html", kind="section", nav="education",
+         title="Student & Writing Tools | ToolNest by Vintayz",
+         description="Free writing and academic tools: word counter, readability analyzer, speaking time and college GPA calculator. Private in your browser.",
+         h1="Student & Writing Tools",
+         intro="Analyze text metrics, check readability scores, and calculate cumulative college GPA on a 4.0 scale.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
+
+    # Invoice Generator
+    dict(tool="invoice-generator", src="invoice-generator.html", script="invoice-generator.js", libs=["vendor/pdf-lib/pdf-lib.min.js"],
+         title="Freelance Invoice Generator, Free PDF | ToolNest by Vintayz",
+         description="Make a professional freelance invoice and download it as a PDF, free. No sign-up and no watermark. Your details never leave your device.",
+         intro="Generate clean, professional invoices and download them as PDFs. Runs completely in your browser with zero server uploads.",
+         chips=[CURRENCY_CHIP, "{{icon:lock}} Files never leave your device", "{{icon:check}} Free, no watermark"],
+         related=["hourly-rate", "late-payment", "project-pricing"]),
+
+    # Business Tools
+    dict(tool="profit-margin", src="profit-margin.html", script="profit-margin.js",
+         title="Profit Margin & Markup Calculator | ToolNest by Vintayz",
+         description="Calculate gross margin, markup percentage, and net profit from your costs and selling price. Free, in USD, GBP, CAD or AUD.",
+         intro="Find your gross margin, markup percentage and net profit from your direct costs and selling price.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["break-even", "payment-fee", "project-pricing"]),
+
+    dict(tool="break-even", src="break-even.html", script="break-even.js",
+         title="Break-Even Analysis Calculator | ToolNest by Vintayz",
+         description="Free break-even calculator: find how many units and how much revenue you need to cover your fixed costs, with a profit and loss table.",
+         intro="Work out how many units you need to sell to cover your fixed overheads and start making a profit.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["profit-margin", "payment-fee", "hourly-rate"]),
+
+    dict(tool="payment-fee", src="payment-fee.html", script="payment-fee.js",
+         title="Stripe & PayPal Fee Calculator | ToolNest by Vintayz",
+         description="Work out Stripe, PayPal and Square card fees on any amount, see your net payout, and find how much to invoice so you still receive the full amount.",
+         intro="Calculate payment gateway processing fees, see your net payout, and find the gross-up amount to charge to cover transaction fees.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["profit-margin", "invoice-generator", "project-pricing"]),
+
+    # Career Tools
+    dict(tool="salary-to-hourly", src="salary-to-hourly.html", script="salary-to-hourly.js",
+         title="Salary to Hourly Calculator | ToolNest by Vintayz",
+         description="Convert annual salary to hourly, daily, weekly, bi-weekly and overtime wage equivalents. Customize hours and paid weeks.",
+         intro="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates based on your work schedule.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["hourly-to-annual", "us-1099-vs-w2", "billable-hours"]),
+
+    # Student & Writing Tools
+    dict(tool="word-counter", src="word-counter.html", script="word-counter.js",
+         title="Word Counter & Readability Analyzer | ToolNest by Vintayz",
+         description="Count words, characters, sentences, paragraphs, reading time, speaking time and Flesch reading ease level. 100% private in browser.",
+         intro="Analyze text metrics, character counts, reading time, and reading grade level directly inside your browser.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
+         related=["gpa-calculator", "resume-us", "invoice-generator"]),
+
+    dict(tool="gpa-calculator", src="gpa-calculator.html", script="gpa-calculator.js",
+         title="College GPA Calculator (4.0 Scale) | ToolNest by Vintayz",
+         description="Calculate your semester or cumulative college GPA on a 4.0 scale, weighted by course credits. Free, private and easy to use on your phone.",
+         intro="Calculate your college semester and cumulative grade point average on a standard 4.0 scale with credit weighting.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
+         related=["word-counter", "salary-to-hourly"]),
+
     dict(path="about/", src="about.html", kind="legal", nav="about", updated=PDF_DAY,
          title="About ToolNest by Vintayz", h1="About ToolNest",
          description="ToolNest builds free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia."),
     dict(path="contact/", src="contact.html", kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
-    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=PDF_DAY,
+    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated="2026-09-30",
          title="Privacy Policy | ToolNest by Vintayz", h1="Privacy Policy",
          description="How ToolNest handles personal information, cookies and analytics, and your privacy rights in the UK, the US and India."),
     dict(path="terms/", src="terms.html", kind="legal", updated=PDF_DAY,
@@ -777,6 +910,10 @@ ICONS = {
     "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>',
     "search": '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
     "resume": '<rect x="5" y="3" width="14" height="18" rx="2.5"/><circle cx="12" cy="9" r="2.2"/><path d="M8.5 14.5c.8-1.4 2-2 3.5-2s2.7.6 3.5 2M9 18h6"/>',
+    "percent": '<line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',
+    "card": '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>',
+    "type-icon": '<polyline points="4 7 4 4 20 4 20 7"/><line x1="12" y1="4" x2="12" y2="20"/>',
+    "award": '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>',
 }
 
 
@@ -867,6 +1004,17 @@ def expand(text, up):
     return re.sub(r"\{\{(\w+)(?::([\w-]+))?\}\}", sub, text)
 
 
+# schema.org applicationCategory for tool pages, by tool key or by section. Anything
+# not listed is a FinanceApplication (the money calculators).
+APP_CATEGORY = {
+    "pdf": "UtilitiesApplication",
+    "resume": "BusinessApplication",
+    "business": "BusinessApplication",
+    "education": "EducationalApplication",
+    "invoice-generator": "BusinessApplication",
+}
+
+
 def json_ld(page):
     url = f"{DOMAIN}/{page['path']}"
     graph = []
@@ -882,7 +1030,7 @@ def json_ld(page):
     if page["kind"] == "tool":
         graph.append({
             "@type": "WebApplication", "name": page["h1"], "url": url,
-            "applicationCategory": {"pdf": "UtilitiesApplication", "resume": "BusinessApplication"}.get(page["parent"], "FinanceApplication"),
+            "applicationCategory": APP_CATEGORY.get(page["tool"], APP_CATEGORY.get(page["parent"], "FinanceApplication")),
             "operatingSystem": "Any",
             "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
         })
@@ -987,6 +1135,27 @@ def footer(up):
         <ul>
 {links(('resume',))}
           <li><a href="{up}resume-maker/">All resume makers</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Business tools">
+        <h2>Business</h2>
+        <ul>
+{links(('business-pricing', 'business-ops'))}
+          <li><a href="{up}business/">All business tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Career tools">
+        <h2>Career &amp; Salary</h2>
+        <ul>
+{links(('career-salary',))}
+          <li><a href="{up}career/">All career tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Writing and study tools">
+        <h2>Writing &amp; Study</h2>
+        <ul>
+{links(('education-writing', 'education-gpa'))}
+          <li><a href="{up}education/">All study tools</a></li>
         </ul>
       </nav>
       <nav aria-label="Company">
@@ -1180,7 +1349,12 @@ def render(page):
 <meta property="og:title" content="{page.get('h1', page['title'])}">
 <meta property="og:description" content="{page['description']}">
 <meta property="og:url" content="{canonical}">
-<meta name="twitter:card" content="summary">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="{DOMAIN}/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ToolNest by Vintayz: free calculators and tools for freelancers">
+<meta name="twitter:card" content="summary_large_image">
 {verify}<link rel="icon" href="{up}favicon.svg" type="image/svg+xml">
 <link rel="preload" href="{up}assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <script src="{up}{asset("js/theme.js")}"></script>

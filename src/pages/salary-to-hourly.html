@@ -1,0 +1,104 @@
+  <section class="calculator" aria-label="Salary to hourly calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="salary">Annual Base Salary<span class="hint">Your gross yearly pay before taxes and deductions</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="salary" type="text" inputmode="decimal" value="65000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours Worked Per Week<span class="hint">Full-time is often 40 in the US or 37.5 in the UK</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hrs</span></div>
+        <span class="error-msg">Enter hours from 1 to 168.</span>
+      </div>
+
+      <div class="field">
+        <label for="days">Days Worked Per Week<span class="hint">Usually 5 days</span></label>
+        <div class="input-wrap"><input id="days" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter days from 1 to 7.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="weeks">Paid Weeks Per Year<span class="hint">52 weeks if you receive paid vacation; fewer if unpaid</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="decimal" value="52" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter weeks from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Equivalent pay</h2>
+      <div class="result-main"><span id="out-hourly">—</span> <small>/ hour</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Daily pay</span><span id="out-daily">—</span></li>
+        <li><span>Weekly pay</span><span id="out-weekly">—</span></li>
+        <li class="key"><span>Bi-weekly paycheck</span><span id="out-biweekly">—</span></li>
+        <li><span>Monthly gross pay</span><span id="out-monthly">—</span></li>
+        <li><span>Overtime rate (1.5x)</span><span id="out-overtime">—</span></li>
+        <li><span>Total working hours / year</span><span id="out-hours">—</span></li>
+      </ul>
+      <p class="result-note">Gross pre-tax equivalents based on your exact working schedule.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Pay comparison across different working hours</h2>
+    <p>Wondering how your hourly rate changes if you work 35, 37.5, or 45 hours each week on the same salary? Here is the breakdown:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Schedule</th><th class="num">Annual Hours</th><th class="num">Equivalent Hourly Rate</th><th class="num">Monthly Gross</th></tr></thead>
+        <tbody id="salary-table-body"><tr><td colspan="4">Enter your salary above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to convert salary to an hourly wage</h2>
+    <ol class="steps">
+      <li><strong>Determine your annual hours:</strong> Multiply the hours you work each week by the number of weeks you are paid per year. For a full-time job (40 hours/week, 52 paid weeks), this equals <strong>2,080 hours</strong> per year.</li>
+      <li><strong>Divide your annual salary by annual hours:</strong> This reveals your unadjusted baseline hourly wage.</li>
+      <li><strong>Factor in overtime or extra hours:</strong> If you regularly put in unpaid overtime (e.g. 50 hours/week on a salaried exempt contract), your real hourly compensation drops significantly.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Annual Working Hours  = Paid Weeks/Year × Hours Worked/Week
+Hourly Rate           = Annual Salary ÷ Annual Working Hours
+Weekly Pay            = Hourly Rate × Hours Worked/Week
+Bi-Weekly Pay         = Weekly Pay × 2
+Daily Pay             = Weekly Pay ÷ Days Worked/Week
+Monthly Pay           = Annual Salary ÷ 12
+Overtime Rate (1.5x)  = Hourly Rate × 1.5</div>
+
+    <h2>Worked example</h2>
+    <p>Jordan earns an annual salary of <strong>$65,000.00</strong> in the US, working 40 hours per week across 5 days, with 52 paid weeks (including PTO). Jordan's annual hours are 2,080. Dividing $65,000 by 2,080 yields an equivalent hourly rate of <strong>$31.25 per hour</strong>. Jordan earns $250.00 per day, $1,250.00 per week, and receives a bi-weekly paycheck of $2,500.00 before tax deductions. If eligible for time-and-a-half overtime, the overtime rate is <strong>$46.88/hour</strong>.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How many working hours are in a year?</summary>
+        <p>In standard full-time employment (40 hours per week for 52 weeks), there are <strong>2,080 working hours</strong> in a year. At 37.5 hours per week, a common full-time contract in the UK, it's <strong>1,950 hours</strong>.</p>
+      </details>
+      <details>
+        <summary>Does this calculation include taxes?</summary>
+        <p>No. It shows your gross (before-tax) pay. Tax depends on your country and situation. If you are self-employed, our tax calculators estimate what you keep after tax in the <a href="{{root}}us/">US</a>, <a href="{{root}}uk/">UK</a>, <a href="{{root}}ca/">Canada</a> and <a href="{{root}}au/">Australia</a>.</p>
+      </details>
+      <details>
+        <summary>What if I take unpaid time off?</summary>
+        <p>If you take 2 weeks of unpaid leave, change "Paid Weeks Per Year" to 50. This recalculates your true hourly rate based on the actual hours you spent earning that annual total.</p>
+      </details>
+    </div>
+  </div>
