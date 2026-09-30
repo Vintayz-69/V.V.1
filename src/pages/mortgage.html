@@ -1,0 +1,113 @@
+  <section class="calculator" aria-label="Mortgage payment calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="homePrice">Home Purchase Price<span class="hint">Agreed property price</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="homePrice" type="text" inputmode="decimal" value="400000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="downPayment">Down Payment (Deposit)<span class="hint">Cash upfront</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="downPayment" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="rate">Fixed Annual Interest Rate<span class="hint">Annual percentage</span></label>
+        <div class="input-wrap"><input id="rate" type="text" inputmode="decimal" value="6.5" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter an interest rate between 0% and 50%.</span>
+      </div>
+
+      <div class="field">
+        <label for="termYears">Loan Term<span class="hint">Duration of mortgage</span></label>
+        <div class="select-wrap">
+          <select id="termYears">
+            <option value="30" selected>30 years (Standard)</option>
+            <option value="25">25 years</option>
+            <option value="20">20 years</option>
+            <option value="15">15 years</option>
+            <option value="10">10 years</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="propertyTax">Annual Property Taxes<span class="hint">Optional local tax / rates</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="propertyTax" type="text" inputmode="decimal" value="4000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="homeInsurance">Annual Home Insurance<span class="hint">Optional buildings insurance</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="homeInsurance" type="text" inputmode="decimal" value="1200" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. No data leaves your device.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated monthly payment</h2>
+      <div class="result-main"><span id="out-total-monthly">—</span> <small>per month</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Principal &amp; interest</span><span id="out-monthly-pi">—</span></li>
+        <li><span>Monthly property taxes</span><span id="out-monthly-tax">—</span></li>
+        <li><span>Monthly home insurance</span><span id="out-monthly-insurance">—</span></li>
+        <li class="key"><span>Loan principal borrowed</span><span id="out-loan-amount">—</span></li>
+        <li><span>Down payment equity</span><span id="out-down-pct">—</span></li>
+        <li class="key"><span>Total interest paid over term</span><span id="out-total-interest">—</span></li>
+        <li><span>Total payment (Principal + Interest)</span><span id="out-total-cost">—</span></li>
+      </ul>
+      <p class="result-note">Pure mathematical calculation based on a fixed amortization schedule. We do not recommend lenders, compare credit products, or receive commissions.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How mortgage amortization is calculated</h2>
+    <p>Monthly repayments on a fixed-rate mortgage are calculated using the standard mathematical loan amortization formula:</p>
+    <div class="formula">Monthly Payment (M) = L × [ r(1 + r)^n ] ÷ [ (1 + r)^n - 1 ]
+
+Where:
+  L = Loan Amount (Home Purchase Price minus Down Payment)
+  r = Monthly Interest Rate (Annual Rate ÷ 100 ÷ 12)
+  n = Total Number of Monthly Payments (Loan Term in Years × 12)</div>
+
+    <h2>Understanding your monthly housing costs</h2>
+    <p>In addition to repaying the borrowed principal and mortgage interest, homeownership entails recurring escrow costs:</p>
+    <ul>
+      <li><strong>Principal:</strong> The portion of each payment that directly repays your loan balance and builds equity in the property.</li>
+      <li><strong>Interest:</strong> The fee charged by the lender for borrowing capital. In the early years of a 30-year mortgage, the vast majority of each payment goes toward interest.</li>
+      <li><strong>Property Taxes &amp; Insurance:</strong> Local municipal or council taxes and buildings insurance are typically bundled into monthly housing escrow.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why is a 15-year mortgage significantly cheaper overall than a 30-year?</summary>
+        <p>A 15-year loan requires higher monthly repayments, but because the principal balance is paid down twice as quickly, you accumulate drastically less total compound interest over the life of the loan.</p>
+      </details>
+      <details>
+        <summary>What is a standard down payment?</summary>
+        <p>A 20% down payment is standard to avoid private mortgage insurance (PMI in the US), although many first-time homebuyer schemes allow deposits between 5% and 10%.</p>
+      </details>
+      <details>
+        <summary>Is this financial or lending advice?</summary>
+        <p>No. ToolNest provides pure mathematical calculations for budgeting and illustrative planning purposes only. We do not act as a credit broker, mortgage lender, or financial adviser.</p>
+      </details>
+    </div>
+  </div>

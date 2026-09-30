@@ -1,0 +1,96 @@
+  <section class="calculator" aria-label="Body Mass Index calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="unit">Measurement System</label>
+        <div class="select-wrap">
+          <select id="unit">
+            <option value="metric" selected>Metric (Kilograms &amp; Centimeters)</option>
+            <option value="imperial">Imperial (Pounds, Feet &amp; Inches)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Metric inputs -->
+      <div class="field metric-field">
+        <label for="weightKg">Body Weight<span class="hint">In kilograms</span></label>
+        <div class="input-wrap"><input id="weightKg" type="text" inputmode="decimal" value="70" autocomplete="off"><span class="affix">kg</span></div>
+        <span class="error-msg">Enter between 20 and 400 kg.</span>
+      </div>
+
+      <div class="field metric-field">
+        <label for="heightCm">Height<span class="hint">In centimeters</span></label>
+        <div class="input-wrap"><input id="heightCm" type="text" inputmode="decimal" value="175" autocomplete="off"><span class="affix">cm</span></div>
+        <span class="error-msg">Enter between 80 and 250 cm.</span>
+      </div>
+
+      <!-- Imperial inputs -->
+      <div class="field imperial-field" style="display: none;">
+        <label for="weightLbs">Body Weight<span class="hint">In pounds</span></label>
+        <div class="input-wrap"><input id="weightLbs" type="text" inputmode="decimal" value="150" autocomplete="off"><span class="affix">lbs</span></div>
+        <span class="error-msg">Enter between 44 and 880 lbs.</span>
+      </div>
+
+      <div class="field imperial-field" style="display: none;">
+        <label>Height (Feet &amp; Inches)</label>
+        <div style="display: flex; gap: 8px;">
+          <div class="input-wrap" style="flex: 1;"><input id="heightFt" type="text" inputmode="numeric" value="5" autocomplete="off"><span class="affix">ft</span></div>
+          <div class="input-wrap" style="flex: 1;"><input id="heightIn" type="text" inputmode="numeric" value="8" autocomplete="off"><span class="affix">in</span></div>
+        </div>
+        <span class="error-msg">Enter a valid height.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. Runs in your browser.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your BMI score</h2>
+      <div class="result-main"><span id="out-bmi">—</span> <small>kg/m²</small></div>
+      <ul class="result-list">
+        <li class="key"><span>WHO classification</span><span id="out-category" class="badge">—</span></li>
+        <li class="key"><span>Healthy weight range</span><span id="out-healthy-range">—</span></li>
+        <li><span>BMI Prime</span><span id="out-bmi-prime">—</span></li>
+      </ul>
+      <p class="result-note">BMI is a screening metric based on the World Health Organization (WHO) international guidelines for adult men and women.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>World Health Organization (WHO) weight categories</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Classification</th><th class="num">BMI Range (kg/m²)</th><th>Health Risk Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Underweight</strong></td><td class="num">&lt; 18.5</td><td>Risk of nutritional deficiency</td></tr>
+          <tr><td><strong>Normal (Healthy weight)</strong></td><td class="num">18.5 – 24.9</td><td>Lowest statistical health risk</td></tr>
+          <tr><td><strong>Overweight (Pre-obese)</strong></td><td class="num">25.0 – 29.9</td><td>Increased cardiovascular risk</td></tr>
+          <tr><td><strong>Obesity Class I</strong></td><td class="num">30.0 – 34.9</td><td>High risk</td></tr>
+          <tr><td><strong>Obesity Class II</strong></td><td class="num">35.0 – 39.9</td><td>Very high risk</td></tr>
+          <tr><td><strong>Obesity Class III (Severe)</strong></td><td class="num">&ge; 40.0</td><td>Extremely high risk</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How Body Mass Index is calculated</h2>
+    <p>BMI evaluates the ratio of total body mass to height squared:</p>
+    <div class="formula">Metric:    BMI = Weight (kg) ÷ [ Height (m) ]²
+Imperial:  BMI = 703 × Weight (lbs) ÷ [ Height (inches) ]²</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What are the limitations of the BMI formula?</summary>
+        <p>BMI does not distinguish between lean skeletal muscle mass and adipose fat tissue. Muscular athletes, bodybuilders, and strength trainers may register as "overweight" or "obese" despite having very low body fat percentages.</p>
+      </details>
+      <details>
+        <summary>What is BMI Prime?</summary>
+        <p>BMI Prime is the ratio of your actual BMI to the upper limit of the normal weight threshold (25.0). A BMI Prime below 0.74 indicates underweight, 0.74 to 1.00 is optimal healthy weight, and above 1.00 indicates overweight.</p>
+      </details>
+      <details>
+        <summary>Does BMI apply equally to children and teenagers?</summary>
+        <p>No. Children and teens undergo rapid development and must be evaluated against age-and-sex-specific growth percentiles (CDC/WHO pediatric growth charts), not the adult standard table above.</p>
+      </details>
+    </div>
+  </div>

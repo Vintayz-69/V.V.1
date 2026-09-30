@@ -33,8 +33,14 @@
     }).format(value);
   }
 
-  // Guess a sensible default from the browser language (en-GB → GBP, etc.).
+  // Guess a sensible default from the URL path or browser language.
   function initialCurrency() {
+    var path = (typeof window !== "undefined" && window.location && window.location.pathname) ? window.location.pathname : "";
+    if (path.indexOf("/uk/") !== -1) return "GBP";
+    if (path.indexOf("/ca/") !== -1) return "CAD";
+    if (path.indexOf("/au/") !== -1) return "AUD";
+    if (path.indexOf("/us/") !== -1) return "USD";
+
     var lang = (navigator.language || "").toUpperCase();
     if (lang.indexOf("-GB") !== -1) return "GBP";
     if (lang.indexOf("-CA") !== -1) return "CAD";
@@ -170,6 +176,19 @@
         if (opts.onReset) opts.onReset();
         update();
       });
+    }
+
+    var actions = form.querySelector(".form-actions");
+    if (actions && !form.querySelector(".btn-print")) {
+      var printBtn = document.createElement("button");
+      printBtn.type = "button";
+      printBtn.className = "btn btn-sm btn-ghost btn-print";
+      printBtn.id = "print-summary";
+      printBtn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print summary';
+      printBtn.addEventListener("click", function () { window.print(); });
+      var privacy = actions.querySelector(".privacy-note");
+      if (privacy) actions.insertBefore(printBtn, privacy);
+      else actions.appendChild(printBtn);
     }
 
     update();

@@ -190,12 +190,12 @@ module.exports = async function pdfTests(check, expectAll) {
       .map((m) => ({ slug: m[1].split("/").slice(-2, -1)[0], words: m[2] }));
     const cards = read("card");
     const bars = read("tool-bar");
-    check("search: a bar for every tool", bars.length, 11);
+    check("search: a bar for every tool", bars.length, 13);
     check("search: bars list popular tools first", bars.slice(0, 6).map((b) => b.slug).join(","), "merge-pdf,split-pdf,rotate-pdf,jpg-to-pdf,pdf-to-jpg,compress-pdf");
     check("search: bars and cards find the same tools", bars.filter((b) => S.matches(b.words, "photo")).length, cards.filter((c) => S.matches(c.words, "photo")).length);
     const find = (q) => cards.filter((c) => S.matches(c.words, q)).map((c) => c.slug).join(",");
-    check("search: every tool has search words", cards.length, 11);
-    check("search: empty shows everything", cards.filter((c) => S.matches(c.words, "")).length, 11);
+    check("search: every tool has search words", cards.length, 13);
+    check("search: empty shows everything", cards.filter((c) => S.matches(c.words, "")).length, 13);
     check("search: combine", find("combine"), "merge-pdf");
     check("search: shrink", find("shrink"), "compress-pdf");
     check("search: start of a word", find("comp"), "compress-pdf");
@@ -458,6 +458,64 @@ module.exports = async function pdfTests(check, expectAll) {
     check("watermark emoji", await W.addWatermark(src, { text: "OK 😀" }).then(() => "ok", (e) => e.message),
       "Some characters in your watermark can't be used. Stick to letters A to Z, numbers and common symbols.");
     check("watermark empty", await W.addWatermark(src, { text: "  " }).then(() => "ok", (e) => e.message), "Type the text for your watermark.");
+  }
+
+  // ---------------- Sign PDF (page example: a 3:1 signature at 30% of a Letter page)
+  {
+    const S = tool("pdf-sign");
+    expectAll("sign placement Letter example", S.placement(612, 792, 0.72, 0.85, 0.3, 3), { width: 183.6, height: 61.2, x: 348.84, y: 88.2 });
+    // Kept inside the page: centred on the right edge, it's pushed back in.
+    expectAll("sign placement kept on the page", S.placement(612, 792, 1, 0, 0.3, 3), { x: 428.4, y: 730.8 });
+    // A very tall signature is limited to the page height.
+    expectAll("sign placement tall picture", S.placement(200, 100, 0.5, 0.5, 1, 0.5), { width: 50, height: 100, x: 75, y: 0 });
+    expectAll("sign date under the signature", S.dateSpot({ x: 10, y: 100, width: 60, height: 20 }, 300), { size: 8, y: 88.8 });
+    check("sign date moves above near the bottom", S.dateSpot({ x: 10, y: 2, width: 60, height: 20 }, 300).y, 26.8);
+
+    const src = await makePdf(3);
+    const png = makePng(30, 10);
+    const out = await load(await S.signPdf(src, { png, aspect: 3, page: 2, cx: 0.5, cy: 0.5, widthShare: 0.3, dateText: "30 September 2026" }));
+    const images = out.getPages().map((pg) => {
+      const x = pg.node.lookup(N.of("Resources")).lookup(N.of("XObject"));
+      return x ? x.keys().length : 0;
+    });
+    check("sign picture on page 2 only", images.join(","), "0,1,0");
+    // Page 2 is 202 × 300: width 60.6, height 20.2, left 101 − 30.3 = 70.7, bottom 300 − 139.9 − 20.2 = 139.9
+    // Everything drawn on one page (pdf-lib adds a new content stream next to the page's own).
+    const pageText = (d, i) => {
+      const c = d.getPages()[i].node.lookup(N.of("Contents"));
+      const list = c instanceof L.PDFArray ? c.asArray().map((r) => d.context.lookup(r)) : [c];
+      return list.map((st) => Buffer.from(L.decodePDFRawStream(st).decode()).toString("latin1")).join("\n");
+    };
+    const cms = matrices(pageText(out, 1), "cm");
+    check("sign picture position", cms.includes("1,0,0,1,70.7,139.9"), true);
+    check("sign picture size", cms.includes("60.6,0,0,20.2,0,0"), true);
+    check("sign date written", streamText(out).includes(hex("30 September 2026").toLowerCase()), true);
+
+    // A sideways page (rotated 90°): the signature is placed on the page as the reader sees it.
+    const turned = await load(await S.signPdf(await makePdf(1, { rotate: [90] }), { png, aspect: 3, page: 1, cx: 0.5, cy: 0.5, widthShare: 0.2 }));
+    const tcms = matrices(pageText(turned, 0), "cm");
+    check("sign on a rotated page: position", tcms.includes("1,0,0,1,110.5,120"), true);
+    check("sign on a rotated page: turned with the page", tcms.includes("0,1,-1,0,0,0"), true);
+
+    check("sign without a signature", await S.signPdf(src, { png: null, page: 1 }).then(() => "ok", (e) => e.message), "Draw or type your signature first.");
+    check("sign page out of range", await S.signPdf(src, { png, aspect: 3, page: 5, cx: 0.5, cy: 0.5, widthShare: 0.3 }).then(() => "ok", (e) => e.message), "Choose a page from 1 to 3.");
+  }
+
+  // ---------------- PDF to text (page example: "Invoice" and "total" 3 points apart, 12-point text)
+  {
+    const X = tool("pdf-to-text");
+    const item = (str, x, y, width, extra) => ({ str, transform: [12, 0, 0, 12, x, y], width, height: 12, ...extra });
+    const text = X.itemsToText([
+      item("Invoice", 50, 700, 50), item("total", 103, 700, 30),
+      item("Line two", 50, 686, 60),
+      item("New para", 50, 650, 60),
+      item("Hel", 50, 636, 20), item("lo", 70, 636, 10)
+    ]);
+    check("pdf text: space, new line, paragraph, joined word", text, "Invoice total\nLine two\n\nNew para\nHello");
+    check("pdf text: end-of-line marks", X.itemsToText([item("One", 50, 700, 20, { hasEOL: true }), item("Two", 50, 700, 20)]), "One\nTwo");
+    check("pdf text: empty page", X.itemsToText([]), "");
+    check("pdf text: page headings", X.joinPages([{ number: 1, text: "A" }, { number: 3, text: "B" }], true), "--- Page 1 ---\nA\n\n--- Page 3 ---\nB\n");
+    check("pdf text: no headings", X.joinPages([{ number: 1, text: "A" }, { number: 2, text: "B" }], false), "A\n\nB\n");
   }
 
   // ---------------- Compress (page example: a 2,550 × 3,300 scan)

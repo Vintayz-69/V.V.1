@@ -1,0 +1,76 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="PDF to text tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="pdf-options">
+        <div class="field">
+          <label for="pick-pages">Pages<span class="hint">Empty = every page</span></label>
+          <div class="input-wrap"><input id="pick-pages" type="text" autocomplete="off" spellcheck="false" placeholder="All pages"></div>
+          <span class="error-msg"></span>
+        </div>
+        <div class="field check-field">
+        <label class="check"><input id="page-headings" type="checkbox"><span>Add a "Page 1" line before each page</span></label>
+      </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Get the text</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <div class="text-result" id="text-box" hidden>
+      <label for="text-out">The text from your PDF</label>
+      <textarea id="text-out" class="text-tool-input text-result-area" rows="12" readonly spellcheck="false"></textarea>
+      <button type="button" class="btn btn-sm" id="text-copy">Copy all the text</button>
+    </div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's read by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to get the text out of a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Pick the pages</strong> you want, such as 1-3 or 5, or leave it empty for every page.</li>
+      <li><strong>Press "Get the text".</strong> Copy it straight from the box, or download it as a .txt file.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>A PDF stores each piece of text with its position on the page. Your browser reads those pieces with pdf.js and puts them back in order: a new line where the text moves down the page, a blank line where there's a bigger gap (usually a new paragraph), and a space where there's a gap between words on the same line.</p>
+    <p>For example, two pieces of 12-point text on the same line, "Invoice" ending at 100 points across and "total" starting at 103, get a space between them, because the 3-point gap is more than 15% of the text size (1.8 points). A piece 14 points lower starts a new line, because that's more than half a line down.</p>
+
+    <h2>What it can't do</h2>
+    <ul>
+      <li><strong>Scanned pages:</strong> a scan or photo of a document is a picture, so there's no text to copy. You'd need OCR (text recognition) software for that.</li>
+      <li><strong>Layout:</strong> columns, tables and text boxes may come out in a slightly different order, and fonts, colours and pictures aren't kept.</li>
+      <li><strong>Protected PDFs:</strong> if a PDF needs a password to open, remove the password in the app that made it first.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is my PDF uploaded?</summary>
+        <p>No. The text is read by your own browser. The PDF never leaves your device, and nothing is stored after you close the page.</p>
+      </details>
+      <details>
+        <summary>Why is some text missing or in the wrong order?</summary>
+        <p>Some PDFs store text in an unusual order, or draw letters as shapes rather than text. The tool can only copy text the PDF really contains. If a page says it had no text, it's probably scanned.</p>
+      </details>
+      <details>
+        <summary>How do I count the words?</summary>
+        <p>Paste the text into our <a href="{{root}}education/word-counter/">word counter</a> to see words, characters and reading time.</p>
+      </details>
+    </div>
+  </div>

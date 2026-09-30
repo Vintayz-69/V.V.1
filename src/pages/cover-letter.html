@@ -1,0 +1,185 @@
+  <section class="invoice-tool" aria-label="Cover letter maker">
+    <div class="invoice-app" id="cl-app">
+      <form class="inv-form-panel" id="cl-form" novalidate>
+        <div class="inv-bar">
+          <div class="inv-bar-actions">
+            <button type="button" class="btn btn-primary" id="cl-pdf">{{icon:file}} Download PDF</button>
+            <button type="button" class="btn btn-sm" id="cl-copy">Copy as text</button>
+            <button type="button" class="btn btn-sm btn-ghost" id="cl-example">Show example</button>
+            <button type="button" class="btn btn-sm btn-ghost" id="cl-clear">Start blank</button>
+          </div>
+          <p class="cl-status" id="cl-status" role="status" aria-live="polite"></p>
+          <p class="rf-privacy">{{icon:lock}} <span><strong>Private:</strong> your letter is made in your browser. Nothing you type is uploaded or saved, so copy or download it before you close the page.</span></p>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="cl-country">Country you're applying in</label>
+              <div class="select-wrap">
+                <select id="cl-country">
+                  <option value="us">United States (Letter paper)</option>
+                  <option value="uk">United Kingdom (A4 paper)</option>
+                  <option value="ca">Canada (Letter paper)</option>
+                  <option value="au">Australia (A4 paper)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="cl-font">Font<span class="hint">Match your resume or CV</span></label>
+              <div class="select-wrap">
+                <select id="cl-font">
+                  <option value="sans">Sans serif (Helvetica)</option>
+                  <option value="serif">Serif (Times)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>About you</h3>
+          <div class="field">
+            <label for="cl-name">Your name</label>
+            <input type="text" id="cl-name" autocomplete="off">
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="cl-email">Email</label>
+              <input type="email" id="cl-email" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="cl-phone">Phone</label>
+              <input type="tel" id="cl-phone" autocomplete="off">
+            </div>
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="cl-town">Town or city<span class="hint">Optional. No need for your full address.</span></label>
+              <input type="text" id="cl-town" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="cl-date">Date</label>
+              <input type="date" id="cl-date">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Who you're writing to</h3>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="cl-recipient">Their name<span class="hint">With a title, e.g. Ms Anna Patel. Leave empty if you don't know it.</span></label>
+              <input type="text" id="cl-recipient" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="cl-recipientTitle">Their job title<span class="hint">Optional</span></label>
+              <input type="text" id="cl-recipientTitle" autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="cl-company">Company or organisation</label>
+            <input type="text" id="cl-company" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="cl-address">Company address<span class="hint">Optional. One line per row.</span></label>
+            <textarea id="cl-address" rows="2"></textarea>
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="cl-job">Job you're applying for</label>
+              <input type="text" id="cl-job" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="cl-reference">Job reference<span class="hint">Optional, from the advert</span></label>
+              <input type="text" id="cl-reference" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Your letter</h3>
+          <div class="field">
+            <label for="cl-opening">Opening<span class="hint">The job, where you saw it, and why it interests you</span></label>
+            <textarea id="cl-opening" rows="4"></textarea>
+          </div>
+          <div class="field">
+            <label for="cl-middle">Why you're a good fit<span class="hint">Your most relevant skills and results. Leave a blank line between paragraphs.</span></label>
+            <textarea id="cl-middle" rows="8"></textarea>
+          </div>
+          <div class="field">
+            <label for="cl-closing">Closing<span class="hint">Thank them, mention your resume or CV, and say you'd like to talk</span></label>
+            <textarea id="cl-closing" rows="4"></textarea>
+          </div>
+          <div class="field">
+            <label for="cl-signoff">Sign-off</label>
+            <div class="select-wrap">
+              <select id="cl-signoff">
+                <option value="auto" id="cl-signoff-auto">Automatic</option>
+                <option value="Yours sincerely,">Yours sincerely</option>
+                <option value="Yours faithfully,">Yours faithfully</option>
+                <option value="Sincerely,">Sincerely</option>
+                <option value="Kind regards,">Kind regards</option>
+                <option value="Best regards,">Best regards</option>
+              </select>
+            </div>
+          </div>
+          <p class="cl-words" id="cl-words"></p>
+          <ul class="cl-warnings" id="cl-warnings" hidden></ul>
+        </div>
+      </form>
+
+      <div class="inv-preview-panel">
+        <div class="inv-paper cl-paper" id="cl-paper" aria-label="Preview of your cover letter"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to write a cover letter</h2>
+    <ol class="steps">
+      <li><strong>Opening:</strong> say which job you're applying for and where you saw it, with the reference number if there is one. Add a line on what interests you about the job or the employer.</li>
+      <li><strong>Middle:</strong> show the skills and experience that match what the advert asks for, with real examples and results. Use different examples from your resume, and say why you want to work for this employer.</li>
+      <li><strong>Closing:</strong> thank them, mention that your resume or CV is attached, and say you'd welcome the chance to talk.</li>
+      <li><strong>Keep it short.</strong> The UK's National Careers Service says a cover letter is usually 3 to 5 paragraphs. The US Department of Labor's CareerOneStop suggests about 200 to 400 words.</li>
+      <li><strong>Write a new one for every job.</strong> Check the company name and the person's name are right, and proofread it before you send it.</li>
+    </ol>
+
+    <h2>Greeting and sign-off by country</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Country</th><th>You know their name</th><th>You don't know their name</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Country">United Kingdom</td><td data-label="You know their name">Dear Ms Patel … Yours sincerely</td><td data-label="You don't know their name">Dear Sir or Madam … Yours faithfully</td></tr>
+          <tr><td data-label="Country">United States and Canada</td><td data-label="You know their name">Dear Ms. Brooks … Sincerely</td><td data-label="You don't know their name">Dear Hiring Manager … Sincerely</td></tr>
+          <tr><td data-label="Country">Australia</td><td data-label="You know their name">Dear Ms Patel … Kind regards</td><td data-label="You don't know their name">Dear Hiring Manager … Kind regards</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The UK pairing (sincerely with a name, faithfully with "Sir or Madam") is the National Careers Service's advice. The others are common choices. You can pick any sign-off in the maker.</p>
+
+    <h2>Keep private details out</h2>
+    <p>You don't need your date of birth, marital status, nationality, a government ID number or bank details in a cover letter. The maker warns you if it spots one. Your town is enough: you don't need your full home address.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should I send a PDF or paste the text?</summary>
+        <p>Follow the job advert. If you can attach files, a PDF keeps your layout. If there's a text box on an application form, use "Copy as text" and paste it in.</p>
+      </details>
+      <details>
+        <summary>Is my letter saved anywhere?</summary>
+        <p>No. It's made in your browser and nothing is sent to us or stored on your device. Download the PDF or copy the text before you close the page.</p>
+      </details>
+      <details>
+        <summary>Can I use AI to help write it?</summary>
+        <p>CareerOneStop says it's fine to use AI tools for a first draft, as long as you then edit the letter so it reflects your own voice, skills and interest in the job. Check every fact before you send it.</p>
+      </details>
+      <details>
+        <summary>Do I still need a resume or CV?</summary>
+        <p>Yes. A cover letter goes with your resume or CV, not instead of it. Our <a href="{{root}}resume-maker/">resume and CV makers</a> follow each country's official careers advice.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://nationalcareers.service.gov.uk/careers-advice/covering-letter" rel="noopener">National Careers Service: how to write a cover letter</a>; <a href="https://www.careeronestop.org/JobSearch/Resumes/cover-letters.aspx" rel="noopener">CareerOneStop: cover letters</a>. Checked 30 September 2026. The example people and companies are made up.</p>
+  </div>

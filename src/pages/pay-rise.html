@@ -1,0 +1,109 @@
+  <section class="calculator" aria-label="Pay rise calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="mode">What do you know?</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="amount">My old and new pay</option>
+            <option value="percent">My old pay and the % raise</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="current">Current yearly pay<span class="hint">Before tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="current" type="text" inputmode="decimal" value="50000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="newPay">New yearly pay<span class="hint">Before tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="newPay" type="text" inputmode="decimal" value="53000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="percent">Pay rise<span class="hint">Use a minus sign for a pay cut</span></label>
+        <div class="input-wrap"><input id="percent" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from −100 to 1,000.</span>
+      </div>
+
+      <div class="field">
+        <label for="inflation">Inflation rate<span class="hint">Optional. How much prices rose over the year</span></label>
+        <div class="input-wrap"><input id="inflation" type="text" inputmode="decimal" value="3" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from −50 to 100, or leave it empty.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your pay rise</h2>
+      <div class="result-main"><span id="out-percent">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Extra a year</span><span id="out-increase">—</span></li>
+        <li><span>New yearly pay</span><span id="out-new">—</span></li>
+        <li class="key"><span>Extra a month</span><span id="out-monthly">—</span></li>
+        <li><span>Extra a week</span><span id="out-weekly">—</span></li>
+        <li class="key"><span>Real rise after inflation</span><span id="out-real">—</span></li>
+        <li><span>Pay needed to keep up with prices</span><span id="out-keepup">—</span></li>
+      </ul>
+      <p class="result-note" id="real-note"></p>
+      <p class="result-note">All figures are before tax. Your take-home pay rises by less, because part of the rise goes in tax.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose what you know:</strong> your old and new pay, or your old pay and the percentage you've been offered.</li>
+      <li><strong>Enter your pay before tax</strong>, as a yearly figure. For a monthly salary, multiply by 12. For an hourly wage, use our <a href="{{root}}freelance/hourly-to-annual-income-calculator/">hourly to annual calculator</a> first.</li>
+      <li><strong>Add inflation</strong> if you want to know whether the raise keeps up with rising prices. Use the latest yearly inflation figure for your country, such as CPI.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Pay rise %        = (new pay − old pay) ÷ old pay × 100
+New pay           = old pay × (1 + rise % ÷ 100)
+Extra a month     = (new pay − old pay) ÷ 12
+Real rise %       = (1 + rise %) ÷ (1 + inflation %) − 1
+Pay to keep up    = old pay × (1 + inflation %)</div>
+    <p>The real rise divides rather than subtracts: a 5% raise with 3% inflation is a real rise of 1.94%, not 2%.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$50,000 → $53,000       rise 6.00%;  $3,000 a year;  $250 a month
+  with 3% inflation      real rise 2.91%;  $1,500 more than keeping up ($51,500)
+£40,000 + 4.5%          new pay £41,800;  £1,800 a year;  £150 a month
+5% raise, 3% inflation  real rise 1.94%
+2% raise, 4% inflation  real rise −1.92%  (a real-terms pay cut)</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a real-terms pay cut?</summary>
+        <p>If prices rise faster than your pay, your pay buys less than it did, even though the number went up. A 2% raise in a year when prices rose 4% is a real-terms cut of about 1.9%.</p>
+      </details>
+      <details>
+        <summary>How much of my raise will I take home?</summary>
+        <p>Less than the full amount, because the extra pay is taxed at your top rate. In the UK, our <a href="{{root}}career/uk-take-home-pay-calculator/">take-home pay calculator</a> shows your pay after tax: try your old and new salaries to see the difference.</p>
+      </details>
+      <details>
+        <summary>Is a percentage or a flat raise better?</summary>
+        <p>It depends on your pay. A flat $2,000 raise is 5% on $40,000 but only 2.5% on $80,000. Compare both ways with this calculator before you negotiate.</p>
+      </details>
+    </div>
+  </div>

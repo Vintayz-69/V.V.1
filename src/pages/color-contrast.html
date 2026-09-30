@@ -1,0 +1,79 @@
+  <section class="calculator" aria-label="WCAG Color Contrast Checker">
+    <div class="calc-form">
+      <div class="field span-2">
+        <label for="fg-color">Text / Foreground Color</label>
+        <div class="inline-row">
+          <input type="color" id="fg-picker" value="#0f172a" class="color-swatch-input">
+          <div class="input-wrap grow"><span class="affix">HEX</span><input type="text" id="fg-color" value="#0f172a" maxlength="7"></div>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="bg-color">Background Color</label>
+        <div class="inline-row">
+          <input type="color" id="bg-picker" value="#ffffff" class="color-swatch-input">
+          <div class="input-wrap grow"><span class="affix">HEX</span><input type="text" id="bg-color" value="#ffffff" maxlength="7"></div>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="btn-swap-colors">{{icon:rotate}} Swap foreground &amp; background</button>
+        <span class="privacy-note">{{icon:lock}} Colors evaluated locally</span>
+      </div>
+
+      <!-- Live Preview -->
+      <div class="field span-2">
+        <label>Live Preview</label>
+        <div id="contrast-preview-box" class="contrast-preview">
+          <h3>Large Heading Text (18pt+)</h3>
+          <p>This is regular body text. Readable contrast ensures your website complies with legal accessibility standards (ADA in the US, Equality Act in the UK).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>WCAG 2.1 compliance</h2>
+      <div class="result-main"><span id="out-contrast-ratio">21.00 : 1</span> <small>contrast</small></div>
+      <ul class="result-list">
+        <li><span>Normal text (WCAG AA &ge; 4.5:1)</span><span id="badge-aa-normal" class="badge">Pass</span></li>
+        <li><span>Normal text (WCAG AAA &ge; 7.0:1)</span><span id="badge-aaa-normal" class="badge">Pass</span></li>
+        <li><span>Large text (WCAG AA &ge; 3.0:1)</span><span id="badge-aa-large" class="badge">Pass</span></li>
+        <li><span>Large text (WCAG AAA &ge; 4.5:1)</span><span id="badge-aaa-large" class="badge">Pass</span></li>
+        <li><span>UI components &amp; icons (&ge; 3.0:1)</span><span id="badge-aa-ui" class="badge">Pass</span></li>
+      </ul>
+      <p class="result-note">WCAG 2.1 Level AA is the legal benchmark for web accessibility across government and commercial websites.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Understanding WCAG accessibility ratios</h2>
+    <p>Web Content Accessibility Guidelines (WCAG) define how contrasting text must be compared to its background to ensure people with visual impairments or color blindness can read it comfortably:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Target Level</th><th>Required Ratio</th><th>Where it applies</th></tr></thead>
+        <tbody>
+          <tr><td><strong>WCAG AA (Normal)</strong></td><td>4.5 : 1</td><td>Body paragraphs, captions, input field text, subheadings under 18pt.</td></tr>
+          <tr><td><strong>WCAG AA (Large)</strong></td><td>3.0 : 1</td><td>Headings 18pt+ (24px) or bold text 14pt+ (18.66px).</td></tr>
+          <tr><td><strong>WCAG AAA (Enhanced)</strong></td><td>7.0 : 1</td><td>Highest tier of accessibility for maximum legibility.</td></tr>
+          <tr><td><strong>UI Components</strong></td><td>3.0 : 1</td><td>Input borders, active button outlines, and graphical icons.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How contrast ratio is calculated</h2>
+    <div class="formula">Luminance (L)    = 0.2126 × R + 0.7152 × G + 0.0722 × B (sRGB adjusted)
+Contrast Ratio   = (L1 + 0.05) ÷ (L2 + 0.05)
+Where L1 is the relative luminance of the lighter color, and L2 is the darker color.</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why is color contrast legally important?</summary>
+        <p>In the United States (ADA Title III), United Kingdom (Equality Act 2010), and European Union (European Accessibility Act), public-facing websites can face lawsuits if people with disabilities cannot read their content.</p>
+      </details>
+      <details>
+        <summary>Does pure black on pure white cause eye strain?</summary>
+        <p>While #000000 on #ffffff provides the maximum possible ratio (21:1), many modern designers use a very dark slate (such as #0f172a or #1e293b) to provide high contrast (&gt; 12:1) while softening contrast fatigue on OLED screens.</p>
+      </details>
+    </div>
+  </div>

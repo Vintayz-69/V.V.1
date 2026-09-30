@@ -1,0 +1,88 @@
+  <section class="calculator" aria-label="US Salaried Take-Home Pay Calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="salary">Annual Gross Salary<span class="hint">W-2 base pay before taxes</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="salary" type="text" inputmode="decimal" value="75000" autocomplete="off"></div>
+        <span class="error-msg">Enter an annual salary of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Federal Filing Status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single" selected>Single ($16,100 standard deduction)</option>
+            <option value="mfj">Married Filing Jointly ($32,200 standard deduction)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="stateRate">Estimated State Tax Rate<span class="hint">0% for TX, FL, WA, TN, NV</span></label>
+        <div class="input-wrap"><input id="stateRate" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 15%.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="preTax">Annual Pre-Tax Deductions<span class="hint">Traditional 401(k), 403(b), health insurance, HSA</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="preTax" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. Your salary data never leaves your device.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your estimated take-home pay</h2>
+      <div class="result-main"><span id="out-net-monthly">—</span> <small>net per month</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Bi-weekly paycheck (26/yr)</span><span id="out-net-biweekly">—</span></li>
+        <li class="key"><span>Annual take-home pay</span><span id="out-net-annual">—</span></li>
+        <li><span>Weekly paycheck (52/yr)</span><span id="out-net-weekly">—</span></li>
+        <li class="key"><span>Federal Income Tax</span><span id="out-fed-tax">—</span></li>
+        <li><span>FICA (Social Security &amp; Medicare)</span><span id="out-fica-tax">—</span></li>
+        <li><span>State Income Tax</span><span id="out-state-tax">—</span></li>
+        <li><span>Total effective tax rate</span><span id="out-effective-rate">—</span></li>
+      </ul>
+      <p class="result-note">Based on official IRS 2026 federal income tax brackets, standard deduction, and statutory FICA payroll rates.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>2026 US Federal Income Tax Brackets (Single Filers)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Taxable Income Bracket</th><th class="num">Marginal Rate</th><th>Tax Owed on Bracket</th></tr></thead>
+        <tbody>
+          <tr><td>$0 to $12,400</td><td class="num">10%</td><td>10% of amount</td></tr>
+          <tr><td>$12,400 to $50,400</td><td class="num">12%</td><td>$1,240 + 12% of excess over $12,400</td></tr>
+          <tr><td>$50,400 to $105,700</td><td class="num">22%</td><td>$5,800 + 22% of excess over $50,400</td></tr>
+          <tr><td>$105,700 to $201,775</td><td class="num">24%</td><td>$17,966 + 24% of excess over $105,700</td></tr>
+          <tr><td>$201,775 to $256,225</td><td class="num">32%</td><td>$41,024 + 32% of excess over $201,775</td></tr>
+          <tr><td>$256,225 to $640,600</td><td class="num">35%</td><td>$58,448 + 35% of excess over $256,225</td></tr>
+          <tr><td>Over $640,600</td><td class="num">37%</td><td>$192,979 + 37% of excess over $640,600</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How FICA payroll tax is deducted</h2>
+    <p>Every W-2 salaried employee in the United States pays mandatory FICA (Federal Insurance Contributions Act) payroll taxes, matched by their employer:</p>
+    <ul>
+      <li><strong>Social Security:</strong> 6.2% on gross earnings up to the 2026 wage base of $184,500. Wages above this limit are exempt from Social Security tax.</li>
+      <li><strong>Medicare:</strong> 1.45% on all earnings with no cap. High earners pay an Additional Medicare tax of 0.9% on wages over $200,000 (single) or $250,000 (married filing jointly).</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How do 401(k) contributions reduce my federal taxes?</summary>
+        <p>Pre-tax contributions to a traditional 401(k) or 403(b) retirement account are subtracted from your gross wages before federal and state income tax brackets are applied, immediately reducing your taxable income.</p>
+      </details>
+      <details>
+        <summary>Which US states have 0% personal income tax?</summary>
+        <p>As of 2026, Alaska, Florida, Nevada, New Hampshire, South Dakota, Tennessee, Texas, Washington, and Wyoming levy no state income tax on earned wages.</p>
+      </details>
+    </div>
+  </div>

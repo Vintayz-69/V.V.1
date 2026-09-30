@@ -1,0 +1,221 @@
+  <section class="invoice-tool" aria-label="Quote generator">
+    <div class="invoice-app" id="invoice-app" data-doc="quote">
+      <!-- Form Panel -->
+      <div class="inv-form-panel">
+        <div class="inv-bar">
+          <div class="inv-bar-actions">
+            <button type="button" class="btn btn-primary" id="btn-download-pdf">{{icon:file}} Download PDF</button>
+            <button type="button" class="btn btn-sm" id="btn-save-draft">{{icon:upload}} Save draft</button>
+            <input type="file" id="inv-file-draft" accept=".json" class="rf-file">
+            <label for="inv-file-draft" class="btn btn-sm">{{icon:refresh}} Open draft</label>
+            <button type="button" class="btn btn-sm btn-ghost" id="btn-reset-example">Reset example</button>
+          </div>
+          <p class="rf-privacy">{{icon:lock}} <span><strong>Privacy first:</strong> Your quote is created entirely in your browser. Nothing you type or download is ever uploaded or saved on our servers.</span></p>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-currency">Currency</label>
+              <div class="select-wrap">
+                <select id="inv-currency">
+                  <option value="USD">USD ($)</option>
+                  <option value="GBP" selected>GBP (£)</option>
+                  <option value="CAD">CAD (C$)</option>
+                  <option value="AUD">AUD (A$)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="inv-number">Quote number</label>
+              <input type="text" id="inv-number" value="QUO-2026-014" placeholder="e.g. QUO-001">
+            </div>
+          </div>
+
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-date">Quote date</label>
+              <input type="date" id="inv-date" value="2026-09-30">
+            </div>
+            <div class="field">
+              <label for="inv-due">Valid until</label>
+              <input type="date" id="inv-due" value="2026-10-30">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Your Business Info (From)</h3>
+          <div class="field">
+            <label for="inv-from-name">Your name or business</label>
+            <input type="text" id="inv-from-name" placeholder="e.g. Oak &amp; Pixel Studio" value="Oak &amp; Pixel Studio">
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-from-email">Email</label>
+              <input type="email" id="inv-from-email" placeholder="you@example.com" value="hello@oakandpixel.example.com">
+            </div>
+            <div class="field">
+              <label for="inv-from-address">City, state, country / tax ID</label>
+              <input type="text" id="inv-from-address" placeholder="Bristol, United Kingdom" value="Bristol, United Kingdom">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Client Info (Prepared For)</h3>
+          <div class="field">
+            <label for="inv-to-name">Client business or name</label>
+            <input type="text" id="inv-to-name" placeholder="e.g. Harbour Coffee Co." value="Harbour Coffee Co.">
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="inv-to-email">Client email</label>
+              <input type="email" id="inv-to-email" placeholder="client@example.com" value="owner@harbourcoffee.example.com">
+            </div>
+            <div class="field">
+              <label for="inv-to-address">Client location / billing address</label>
+              <input type="text" id="inv-to-address" placeholder="Bath, United Kingdom" value="Bath, United Kingdom">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3 id="inv-items-title">What you will do or supply</h3>
+          <div class="table-wrap">
+            <table class="inv-items-table" aria-labelledby="inv-items-title">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th class="num col-qty">Qty / Hrs</th>
+                  <th class="num col-rate">Rate (<span class="inv-cur-sym">$</span>)</th>
+                  <th class="num col-amount">Amount</th>
+                  <th class="col-del"><span class="visually-hidden">Remove</span></th>
+                </tr>
+              </thead>
+              <tbody id="inv-items-body"></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-sm btn-ghost btn-add-row" id="btn-add-item">{{icon:plus}} Add item or service</button>
+
+          <div class="inv-totals-grid">
+            <div class="field">
+              <label for="inv-discount">Discount %<span class="hint">Optional</span></label>
+              <input type="text" inputmode="decimal" id="inv-discount" value="0" placeholder="0">
+            </div>
+            <div class="field">
+              <label for="inv-tax">Tax %<span class="hint">VAT, GST or sales tax</span></label>
+              <input type="text" inputmode="decimal" id="inv-tax" value="20" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Terms &amp; Notes</h3>
+          <div class="field">
+            <label for="inv-notes">How long the quote is valid, deposit, what is included</label>
+            <textarea id="inv-notes" rows="4" placeholder="Valid for 30 days. 50% deposit to start. Includes two rounds of changes."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Preview Panel -->
+      <div class="inv-preview-panel">
+        <div class="inv-paper" id="invoice-paper">
+          <div class="inv-paper-header">
+            <div>
+              <h2 class="inv-paper-title">QUOTE</h2>
+              <div class="inv-paper-meta" id="prev-inv-num">QUO-2026-014</div>
+            </div>
+            <div class="inv-paper-dates">
+              <p><strong>Date:</strong> <span id="prev-inv-date">2026-09-30</span></p>
+              <p><strong>Valid until:</strong> <span id="prev-inv-due">2026-10-30</span></p>
+            </div>
+          </div>
+
+          <div class="inv-paper-parties">
+            <div>
+              <span class="inv-party-lbl">From</span>
+              <strong id="prev-sender-name">Oak &amp; Pixel Studio</strong>
+              <div id="prev-sender-email">hello@oakandpixel.example.com</div>
+              <div id="prev-sender-address">Bristol, United Kingdom</div>
+            </div>
+            <div>
+              <span class="inv-party-lbl">Prepared For</span>
+              <strong id="prev-client-name">Harbour Coffee Co.</strong>
+              <div id="prev-client-email">owner@harbourcoffee.example.com</div>
+              <div id="prev-client-address">Bath, United Kingdom</div>
+            </div>
+          </div>
+
+          <table class="inv-paper-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th class="num">Qty</th>
+                <th class="num">Rate</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody id="prev-items-list"></tbody>
+          </table>
+
+          <div class="inv-paper-summary">
+            <div class="inv-paper-totals">
+              <div class="row"><span>Subtotal:</span><span class="val" id="prev-subtotal">$0.00</span></div>
+              <div class="row" id="prev-discount-row"><span><span id="prev-discount-label">Discount</span>:</span><span class="val" id="prev-discount">-$0.00</span></div>
+              <div class="row" id="prev-tax-row"><span><span id="prev-tax-label">Tax</span>:</span><span class="val" id="prev-tax">$0.00</span></div>
+              <div class="row total"><span>Total:</span><span class="val" id="prev-total">$0.00</span></div>
+            </div>
+          </div>
+
+          <div class="inv-paper-notes" id="prev-notes-box">
+            <h4>Terms &amp; Notes</h4>
+            <div id="prev-notes"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="content">
+    <h2>How to make a quote</h2>
+    <ol class="steps">
+      <li><strong>Choose your currency</strong> and fill in your details and your client's.</li>
+      <li><strong>Set the quote date and "valid until" date.</strong> Prices and availability change, so say how long the quote stands.</li>
+      <li><strong>List the work or items</strong>, with quantities or hours and your rate. Add a discount or tax if they apply.</li>
+      <li><strong>Add your terms</strong>: what's included, how many rounds of changes, any deposit and when you'll invoice.</li>
+      <li><strong>Download the PDF</strong> and send it. When the client says yes, the <a href="{{root}}freelance/invoice-generator/">invoice generator</a> uses the same layout, so you can copy the lines across.</li>
+    </ol>
+
+    <h2>How the total is calculated</h2>
+    <div class="formula">Line total   = quantity × rate
+Subtotal     = all line totals added together
+Discount     = subtotal × discount %
+Tax          = (subtotal − discount) × tax %
+Total        = subtotal − discount + tax</div>
+
+    <h2>Worked example</h2>
+    <p>Oak &amp; Pixel Studio quotes a coffee shop for a 5-page website (£1,800.00), copywriting for 5 pages at £120.00 each (£600.00) and an online shop set-up (£650.00). The subtotal is <strong>£3,050.00</strong>. The studio is VAT-registered, so it adds 20% VAT of £610.00, for a total of <strong>£3,660.00</strong>.</p>
+
+    <h2>Quote or estimate: what's the difference?</h2>
+    <p>People often use the words loosely, so say clearly which you mean. A <strong>quote</strong> is usually a fixed price for the work described. An <strong>estimate</strong> is usually your best guess, which can change as the work goes on. If it's an estimate, say so in the notes, and say what could change the price.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is my quote saved online?</summary>
+        <p>No. It's made entirely in your browser, and nothing you type is sent to us. Use <em>Save draft</em> to download a small file to your own device, and <em>Open draft</em> to carry on later.</p>
+      </details>
+      <details>
+        <summary>Should I add VAT, GST or sales tax?</summary>
+        <p>Only if you're registered for it, or the law says you must charge it. Our <a href="{{root}}uk/vat-calculator/">UK VAT calculator</a>, <a href="{{root}}ca/gst-hst-calculator/">Canadian GST/HST calculator</a> and <a href="{{root}}au/gst-calculator/">Australian GST calculator</a> explain the rules and rates.</p>
+      </details>
+      <details>
+        <summary>How do I work out what to charge?</summary>
+        <p>Our <a href="{{root}}freelance/project-pricing-calculator/">project pricing calculator</a> turns your hours, costs and a safety buffer into a fixed price, and the <a href="{{root}}business/profit-margin-calculator/">profit margin calculator</a> checks what you keep.</p>
+      </details>
+    </div>
+  </div>

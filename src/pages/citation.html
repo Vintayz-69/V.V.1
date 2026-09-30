@@ -1,0 +1,174 @@
+  <section class="cite-tool" aria-label="Citation generator">
+    <form class="cite-form" id="cite-form" novalidate>
+      <div class="cite-top">
+        <div class="field">
+          <label for="style">Referencing style</label>
+          <div class="select-wrap">
+            <select id="style">
+              <option value="apa">APA 7th edition</option>
+              <option value="mla">MLA 9th edition</option>
+              <option value="harvard">Harvard</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="type">What are you citing?</label>
+          <div class="select-wrap">
+            <select id="type">
+              <option value="website">A web page</option>
+              <option value="book">A book</option>
+              <option value="journal">A journal article</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="cite-grid">
+        <div class="field span-2">
+          <label for="c-authors">Authors<span class="hint">One per line, as Last name, First name (for example: Shah, Priya)</span></label>
+          <textarea id="c-authors" class="text-tool-input cite-authors" rows="2" autocomplete="off" spellcheck="false"></textarea>
+        </div>
+        <div class="field span-2">
+          <label for="c-org">Or an organisation as the author<span class="hint">For example: World Health Organization. Leave empty if there are named authors.</span></label>
+          <input id="c-org" type="text" class="text-tool-input" autocomplete="off">
+        </div>
+        <div class="field span-2">
+          <label for="c-title">Title</label>
+          <input id="c-title" type="text" class="text-tool-input" autocomplete="off">
+        </div>
+        <div class="field span-2">
+          <label for="c-container" id="c-container-label">Website name</label>
+          <input id="c-container" type="text" class="text-tool-input" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c-year">Year published</label>
+          <input id="c-year" type="text" class="text-tool-input" inputmode="numeric" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c-date">Date published<span class="hint">Leave empty if the page has no date</span></label>
+          <input id="c-date" type="date" class="text-tool-input">
+        </div>
+        <div class="field">
+          <label for="c-edition">Edition<span class="hint">Only if not the first, e.g. 2</span></label>
+          <input id="c-edition" type="text" class="text-tool-input" inputmode="numeric" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c-publisher">Publisher</label>
+          <input id="c-publisher" type="text" class="text-tool-input" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c-volume">Volume</label>
+          <input id="c-volume" type="text" class="text-tool-input" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c-issue">Issue</label>
+          <input id="c-issue" type="text" class="text-tool-input" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c-pages">Pages<span class="hint">For example: 45-67</span></label>
+          <input id="c-pages" type="text" class="text-tool-input" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="c-doi">DOI<span class="hint">If it has one, e.g. 10.1234/abc</span></label>
+          <input id="c-doi" type="text" class="text-tool-input" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field span-2">
+          <label for="c-url">Web address (URL)</label>
+          <input id="c-url" type="url" class="text-tool-input" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="c-accessed">Date you viewed it<span class="hint">Harvard and MLA use this for web pages</span></label>
+          <input id="c-accessed" type="date" class="text-tool-input">
+        </div>
+      </div>
+      <div class="cite-form-actions">
+        <button type="button" class="btn btn-sm btn-ghost" id="cite-clear">Clear the boxes</button>
+        <span class="privacy-note">{{icon:lock}} Nothing you type leaves your device</span>
+      </div>
+    </form>
+
+    <div class="cite-output">
+      <h2>Your citation</h2>
+      <p class="cite-out" id="cite-out" aria-live="polite"></p>
+      <p class="cite-tip" id="apa-tip">APA uses sentence case for titles of books, articles and web pages: capitalise only the first word, the first word after a colon, and names.</p>
+      <div class="cite-buttons">
+        <button type="button" class="btn btn-primary btn-sm" id="cite-copy">Copy citation</button>
+        <button type="button" class="btn btn-sm" id="cite-add">Add to my list</button>
+      </div>
+
+      <div class="cite-list-wrap" id="list-wrap" hidden>
+        <div class="cite-list-head">
+          <h3 id="list-heading">Reference list</h3>
+          <span id="list-count"></span>
+        </div>
+        <ol class="cite-list" id="cite-list"></ol>
+        <div class="cite-buttons">
+          <button type="button" class="btn btn-sm" id="list-copy">Copy the whole list</button>
+          <button type="button" class="btn btn-sm btn-ghost" id="list-clear">Clear the list</button>
+        </div>
+        <p class="cite-tip">Your list is kept only while this page is open. Copy it into your work before you leave.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the citation generator</h2>
+    <ol class="steps">
+      <li><strong>Choose your style.</strong> Your teacher, course handbook or journal says which one to use.</li>
+      <li><strong>Choose what you're citing</strong>, then fill in the boxes. Leave out anything the source doesn't have.</li>
+      <li><strong>Copy the citation</strong> into your work. Italics are kept when you paste into Word or Google Docs.</li>
+      <li><strong>Building a reference list?</strong> Press "Add to my list" for each source. The list is sorted A to Z for you.</li>
+    </ol>
+
+    <h2>Examples</h2>
+    <p>The same journal article in each style (the authors and journal are made up):</p>
+    <div class="formula">APA 7:    Lee, A. M., & Okafor, D. (2025). Remote work and freelance income. Journal of Work
+          Studies, 12(3), 45–67. https://doi.org/10.1234/jws.2025.045
+
+MLA 9:    Lee, Anna M., and Daniel Okafor. “Remote Work and Freelance Income.” Journal of Work
+          Studies, vol. 12, no. 3, 2025, pp. 45-67, https://doi.org/10.1234/jws.2025.045.
+
+Harvard:  Lee, A.M. and Okafor, D. (2025) ‘Remote work and freelance income’, Journal of Work
+          Studies, 12(3), pp. 45–67. Available at: https://doi.org/10.1234/jws.2025.045.</div>
+    <p>In the real citation, the journal name (and in APA the volume number) is in italics.</p>
+
+    <h2>What each style looks like</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Style</th><th>Book</th><th>Web page</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Style">APA 7</td><td data-label="Book">Author, A. A. (Year). <i>Title of book</i> (2nd ed.). Publisher.</td><td data-label="Web page">Author, A. A. (Year, Month Day). <i>Title of page</i>. Site Name. URL</td></tr>
+          <tr><td data-label="Style">MLA 9</td><td data-label="Book">Last, First. <i>Title of Book</i>. 2nd ed., Publisher, Year.</td><td data-label="Web page">Last, First. “Title of Page.” <i>Site Name</i>, Day Month Year, URL. Accessed Day Month Year.</td></tr>
+          <tr><td data-label="Style">Harvard</td><td data-label="Book">Last, A. (Year) <i>Title of book</i>. 2nd edn. Publisher.</td><td data-label="Web page">Last, A. (Year) <i>Title of page</i>. Available at: URL (Accessed: Day Month Year).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What it doesn't do</h2>
+    <ul>
+      <li>It doesn't look anything up online. It formats what you type, so check the details against the source.</li>
+      <li>It doesn't change capital letters in titles. Type them the way your style wants: sentence case for APA and Harvard, title case for MLA.</li>
+      <li>Harvard has many versions. This follows a common version used by many UK universities. If your university's guide differs, follow the guide.</li>
+      <li>It doesn't make in-text citations, such as (Lee &amp; Okafor, 2025). Those use the author names and year from the reference.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What if there's no author?</summary>
+        <p>If an organisation wrote it, put the organisation's name in the organisation box. If there's truly no author, leave both empty: APA and Harvard then start with the title, and MLA starts with the title too.</p>
+      </details>
+      <details>
+        <summary>What if there's no date?</summary>
+        <p>Leave the date empty. APA writes (n.d.) and Harvard writes (no date). MLA leaves the date out and, for web pages, includes the date you viewed it.</p>
+      </details>
+      <details>
+        <summary>What is a DOI?</summary>
+        <p>A Digital Object Identifier: a permanent link for a journal article or book, starting with 10. You'll usually find it on the article's first page or web page. If a source has a DOI, use it instead of the web address.</p>
+      </details>
+      <details>
+        <summary>How do I count the words in my essay?</summary>
+        <p>Paste your text into our <a href="{{root}}education/word-counter/">word counter</a>. Check your course rules on whether the reference list counts towards the word limit.</p>
+      </details>
+    </div>
+  </div>

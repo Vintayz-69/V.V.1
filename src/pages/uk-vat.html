@@ -1,0 +1,101 @@
+  <section class="calculator" aria-label="VAT calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="mode">What do you want to do?</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="add">Add VAT to a price</option>
+            <option value="remove">Take VAT out of a price</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rate">VAT rate</label>
+        <div class="select-wrap">
+          <select id="rate">
+            <option value="standard">Standard rate (20%)</option>
+            <option value="reduced">Reduced rate (5%)</option>
+            <option value="zero">Zero rate (0%)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="amount" id="amount-label">Price excluding VAT</label>
+        <div class="input-wrap"><span class="affix">£</span><input id="amount" type="text" inputmode="decimal" value="1000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2 id="out-title">Price including VAT</h2>
+      <div class="result-main"><span id="out-main">—</span></div>
+      <ul class="result-list">
+        <li><span>Price excluding VAT</span><span id="out-before">—</span></li>
+        <li class="key"><span id="out-vat-label">VAT (20%)</span><span id="out-vat">—</span></li>
+        <li><span>Price including VAT</span><span id="out-after">—</span></li>
+      </ul>
+      <p class="result-note">Only charge VAT if you're VAT-registered. You must register once your taxable turnover for the last 12 months goes over £90,000.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose what you want to do.</strong> "Add VAT" turns a price before VAT into the price your customer pays. "Take VAT out" splits a VAT-inclusive total into the price and the VAT.</li>
+      <li><strong>Pick the rate.</strong> Most goods and services are 20%. Some, such as home energy and children's car seats, are 5%. Some, such as most food and children's clothes, are 0%.</li>
+      <li><strong>Type the amount.</strong> The result updates as you type.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Adding VAT:     VAT = price × rate             total = price × (1 + rate)
+Removing VAT:   price = total ÷ (1 + rate)     VAT = total − price
+
+At 20%, the VAT inside a VAT-inclusive total is one-sixth of it (total ÷ 6).
+At 5%, it is one twenty-first of it (total ÷ 21).</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">£1,000 excluding VAT at 20%  → VAT £200.00   → £1,200.00 including VAT
+£1,200 including VAT at 20%  → VAT £200.00   → £1,000.00 excluding VAT
+£59.99 including VAT at 20%  → VAT £10.00    → £49.99 excluding VAT
+£105 including VAT at 5%     → VAT £5.00     → £100.00 excluding VAT</div>
+
+    <h2>When you must register for VAT</h2>
+    <ul>
+      <li>When your total VAT taxable turnover for the last 12 months goes over <strong>£90,000</strong>. This is a rolling 12 months, not the tax year.</li>
+      <li>When you expect your turnover to go over £90,000 in the next 30 days alone.</li>
+      <li>Below £90,000 you can choose to register. Once registered, you must charge VAT on your sales and file VAT returns.</li>
+    </ul>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>The Flat Rate Scheme, where small businesses pay a fixed percentage of their turnover instead of the difference between VAT charged and paid.</li>
+      <li>Exempt sales (such as most insurance and some education and health services), which aren't the same as zero-rated sales.</li>
+      <li>Sales to customers outside the UK, and the reverse charge for building work and some services.</li>
+      <li>Mixed invoices where different items have different rates. Work those out one line at a time.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How do I work out the VAT from a total that includes VAT?</summary>
+        <p>At 20%, divide the total by 6. For example, a £240 invoice includes £40 of VAT, and the price before VAT is £200. Don't take 20% of the total: 20% of £240 is £48, which is too much.</p>
+      </details>
+      <details>
+        <summary>Do freelancers have to charge VAT?</summary>
+        <p>Only once you're VAT-registered. If your turnover is under £90,000 and you haven't chosen to register, don't add VAT to your invoices. Our <a href="{{root}}uk/self-employed-tax-calculator/">self-employed tax calculator</a> covers Income Tax and National Insurance, which are separate from VAT.</p>
+      </details>
+      <details>
+        <summary>Is the £90,000 based on profit or sales?</summary>
+        <p>Sales. It's your VAT taxable turnover: the total of everything you sell that isn't exempt from VAT, before taking off any costs.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/vat-rates" rel="noopener">GOV.UK: VAT rates</a>; <a href="https://www.gov.uk/vat-registration/when-to-register" rel="noopener">GOV.UK: when to register for VAT</a>. Checked 30 September 2026.</p>
+  </div>

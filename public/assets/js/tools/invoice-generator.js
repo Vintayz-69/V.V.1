@@ -1,4 +1,5 @@
-/* Freelance Invoice Generator — 100% browser-based invoice and PDF maker (LEGAL.md §9). */
+/* Freelance Invoice Generator and Quote Generator — 100% browser-based invoice, quote and PDF
+ * maker (LEGAL.md §9). The quote page uses the same script: <div id="invoice-app" data-doc="quote">. */
 (function () {
   "use strict";
 
@@ -31,7 +32,17 @@
   window.ToolNestCalc = calculate;
 
   // If running in Node test sandbox without full DOM, exit early.
-  if (!document.getElementById("invoice-app")) return;
+  var app = document.getElementById("invoice-app");
+  if (!app) return;
+
+  // Words that differ between an invoice and a quote (in the PDF and file names).
+  var KIND = app.getAttribute("data-doc") === "quote" ? "quote" : "invoice";
+  var WORDS = {
+    invoice: { title: "INVOICE", docName: "Invoice", number: "INV-001", dueLabel: "Due date: ", party: "BILLED TO:",
+               total: "Total Due:", notes: "PAYMENT INSTRUCTIONS & NOTES", draft: "invoice-draft" },
+    quote: { title: "QUOTE", docName: "Quote", number: "QUO-001", dueLabel: "Valid until: ", party: "PREPARED FOR:",
+             total: "Total:", notes: "TERMS & NOTES", draft: "quote-draft" }
+  }[KIND];
 
   var CURRENCIES = {
     USD: "$",
@@ -60,6 +71,31 @@
     taxPct: 0,
     notes: "Payment is appreciated within 14 days.\nDirect deposit / Wire details:\nBank: First National Bank\nAccount: 9876543210\nRouting / Swift: 123456789"
   };
+
+  var defaultQuote = {
+    currency: "GBP",
+    senderName: "Oak & Pixel Studio",
+    senderEmail: "hello@oakandpixel.example.com",
+    senderAddress: "Bristol, United Kingdom",
+    clientName: "Harbour Coffee Co.",
+    clientEmail: "owner@harbourcoffee.example.com",
+    clientAddress: "Bath, United Kingdom",
+    invoiceNumber: "QUO-2026-014",
+    invoiceDate: "2026-09-30",
+    dueDate: "2026-10-30",
+    items: [
+      { desc: "Website design (5 pages)", qty: 1, rate: 1800 },
+      { desc: "Copywriting, per page", qty: 5, rate: 120 },
+      { desc: "Online shop set-up", qty: 1, rate: 650 }
+    ],
+    discountPct: 0,
+    taxPct: 20,
+    notes: "This quote is valid for 30 days.\n50% deposit to start, balance on launch.\nPrices include two rounds of changes."
+  };
+  if (KIND === "quote") defaultInvoice = defaultQuote;
+  if (typeof window !== "undefined" && window.ToolNest && window.ToolNest.initialCurrency) {
+    defaultInvoice.currency = window.ToolNest.initialCurrency();
+  }
 
   var state = JSON.parse(JSON.stringify(defaultInvoice));
 
@@ -175,7 +211,7 @@
     document.getElementById("prev-client-email").textContent = state.clientEmail || "";
     document.getElementById("prev-client-address").textContent = state.clientAddress || "";
 
-    document.getElementById("prev-inv-num").textContent = state.invoiceNumber || "INV-001";
+    document.getElementById("prev-inv-num").textContent = state.invoiceNumber || WORDS.number;
     document.getElementById("prev-inv-date").textContent = state.invoiceDate || "—";
     document.getElementById("prev-inv-due").textContent = state.dueDate || "—";
 
@@ -246,7 +282,7 @@
       var rgb = window.PDFLib.rgb;
 
       var pdfDoc = await PDFDocument.create();
-      pdfDoc.setTitle("Invoice " + (state.invoiceNumber || ""));
+      pdfDoc.setTitle(WORDS.docName + " " + (state.invoiceNumber || ""));
       var page = pdfDoc.addPage(A4);
       var font = await pdfDoc.embedFont(StandardFonts.Helvetica);
       var fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -319,11 +355,11 @@
 
       // Header
       y -= 20;
-      text("INVOICE", margin, 24, fontBold, navy);
+      text(WORDS.title, margin, 24, fontBold, navy);
       textRight("Date: " + (state.invoiceDate || ""), right, 10, font, textDark);
       y -= 16;
-      text(state.invoiceNumber || "INV-001", margin, 11, font, subtle);
-      textRight("Due date: " + (state.dueDate || ""), right, 10, fontBold, navy);
+      text(state.invoiceNumber || WORDS.number, margin, 11, font, subtle);
+      textRight(WORDS.dueLabel + (state.dueDate || ""), right, 10, fontBold, navy);
       y -= 34;
       page.drawLine({ start: { x: margin, y: y }, end: { x: right, y: y }, thickness: 1, color: borderGray });
       y -= 25;
@@ -332,7 +368,7 @@
       var colW = 240;
       var toX = margin + 260;
       text("FROM:", margin, 9, fontBold, subtle);
-      text("BILLED TO:", toX, 9, fontBold, subtle);
+      text(WORDS.party, toX, 9, fontBold, subtle);
       y -= 16;
       var fromLines = wrap(state.senderName || "Your Business", fontBold, 12, colW);
       var toLines = wrap(state.clientName || "Client Business", fontBold, 12, colW);
@@ -407,14 +443,14 @@
       }
       page.drawLine({ start: { x: totX, y: y + 4 }, end: { x: right, y: y + 4 }, thickness: 1, color: borderGray });
       y -= 12;
-      text("Total Due:", totX, 12, fontBold, navy);
+      text(WORDS.total, totX, 12, fontBold, navy);
       textRight(formatMoney(calcRes.total), amountRight, 13, fontBold, navy);
       y -= 35;
 
       // Payment instructions and notes (wrapped, continuing on a new page if needed)
       if (state.notes && state.notes.trim()) {
         room(40);
-        text("PAYMENT INSTRUCTIONS & NOTES", margin, 9, fontBold, subtle);
+        text(WORDS.notes, margin, 9, fontBold, subtle);
         y -= 14;
         wrap(state.notes, font, 9, width).forEach(function (ln) {
           room(12);
@@ -428,7 +464,7 @@
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
       a.href = url;
-      a.download = (state.invoiceNumber || "Invoice").replace(/[\\/:*?"<>|]+/g, "-") + ".pdf";
+      a.download = (state.invoiceNumber || WORDS.docName).replace(/[\\/:*?"<>|]+/g, "-") + ".pdf";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -453,7 +489,7 @@
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
     a.href = url;
-    a.download = (state.invoiceNumber || "invoice-draft") + ".json";
+    a.download = (state.invoiceNumber || WORDS.draft) + ".json";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -466,7 +502,7 @@
     reader.onload = function (e) {
       try {
         var parsed = JSON.parse(e.target.result);
-        if (!parsed || typeof parsed !== "object") throw new Error("this is not an invoice draft");
+        if (!parsed || typeof parsed !== "object") throw new Error("this is not a draft file");
         // Start from the example's shape so a partial or older draft still opens.
         var next = JSON.parse(JSON.stringify(defaultInvoice));
         Object.keys(next).forEach(function (k) {

@@ -1,0 +1,116 @@
+  <section class="calculator" aria-label="Overtime pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rate">Your normal hourly rate</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="20" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="regular">Normal hours this week</label>
+        <div class="input-wrap"><input id="regular" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0 to 168.</span>
+      </div>
+
+      <div class="field">
+        <label for="overtime">Overtime hours<span class="hint">Paid at the overtime rate</span></label>
+        <div class="input-wrap"><input id="overtime" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0 to 168.</span>
+      </div>
+
+      <div class="field">
+        <label for="overtimeRate">Overtime rate<span class="hint">1.5 means time and a half</span></label>
+        <div class="input-wrap"><input id="overtimeRate" type="text" inputmode="decimal" value="1.5" autocomplete="off"><span class="affix">× pay</span></div>
+        <span class="error-msg">Enter a number from 1 to 5.</span>
+      </div>
+
+      <div class="field">
+        <label for="double">Double-time hours<span class="hint">Optional, paid at 2 × your rate</span></label>
+        <div class="input-wrap"><input id="double" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0 to 168.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="weeks">Weeks like this<span class="hint">Use 1 for one week, or more to see a total</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="numeric" value="1" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter weeks from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your pay this week</h2>
+      <div class="result-main"><span id="out-weekly">—</span></div>
+      <ul class="result-list">
+        <li><span>Normal pay</span><span id="out-regular">—</span></li>
+        <li><span>Overtime rate</span><span id="out-ot-rate">—</span></li>
+        <li class="key"><span>Overtime pay</span><span id="out-ot">—</span></li>
+        <li><span>Double-time pay</span><span id="out-double">—</span></li>
+        <li class="key"><span>Extra from overtime</span><span id="out-extra">—</span></li>
+        <li><span>Hours worked</span><span id="out-hours">—</span></li>
+        <li><span>Average per hour</span><span id="out-average">—</span></li>
+        <li><span id="out-yearly-label">Total for 1 week</span><span id="out-yearly">—</span></li>
+      </ul>
+      <p class="result-note">Before tax. Your contract or employer sets which hours count as overtime and the rate.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How it's calculated</h2>
+    <div class="formula">Normal pay       = hourly rate × normal hours
+Overtime pay     = hourly rate × overtime rate × overtime hours
+Double-time pay  = hourly rate × 2 × double-time hours
+Weekly pay       = normal pay + overtime pay + double-time pay
+Average per hour = weekly pay ÷ all hours worked</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$20 an hour, 40 hours + 5 at time and a half:
+  800.00 + 20 × 1.5 × 5 = 800.00 + 150.00          = $950.00  (average $21.11 an hour)
+
+£15 an hour, 37.5 hours + 4 at 1.5× + 2 at double time:
+  562.50 + 90.00 + 60.00                            = £712.50
+
+A$32 an hour, 38 hours + 6 at time and a quarter:
+  1,216.00 + 32 × 1.25 × 6 = 1,216.00 + 240.00     = A$1,456.00</div>
+
+    <h2>When overtime has to be paid</h2>
+    <ul>
+      <li><strong>United States:</strong> under the federal Fair Labor Standards Act, non-exempt employees must get at least time and a half for hours over 40 in a workweek. Federal law doesn't require overtime for weekends, holidays or days over 8 hours, though some states do.</li>
+      <li><strong>United Kingdom:</strong> employers don't have to pay extra for overtime, but your average pay for all the hours you work mustn't fall below the National Minimum Wage. Your contract sets any overtime rate.</li>
+      <li><strong>Canada and Australia:</strong> overtime rules are set by each province, or by awards and agreements. Check your employment standards office or Fair Work.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is time and a half?</summary>
+        <p>Your normal hourly rate plus half of it again: 1.5 times your rate. At $20 an hour, time and a half is $30 an hour.</p>
+      </details>
+      <details>
+        <summary>I'm on a salary. How do I find my hourly rate?</summary>
+        <p>Use our <a href="{{root}}career/salary-to-hourly-calculator/">salary to hourly calculator</a>, then enter that rate here. Many salaried jobs don't pay overtime, so check your contract.</p>
+      </details>
+      <details>
+        <summary>How do I track the hours I've worked?</summary>
+        <p>Our <a href="{{root}}freelance/timesheet-calculator/">timesheet calculator</a> adds up start and finish times, takes off breaks and can split hours over a weekly limit into overtime.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.dol.gov/agencies/whd/overtime" rel="noopener">US Department of Labor: overtime pay</a>; <a href="https://www.gov.uk/overtime-your-rights" rel="noopener">GOV.UK: overtime, your rights</a>. Checked 30 September 2026.</p>
+  </div>

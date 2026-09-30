@@ -29,12 +29,12 @@ We build **one section at a time**. The next stage starts only after the current
 
 | Stage | Section | URL | Status |
 |---|---|---|---|
-| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/ca/`, `/au/` | 🟢 Built (31 tools, including Invoice Generator) |
-| 2 | Salary and career calculators | `/career/` | 🟢 Active (Salary to Hourly Calculator) |
-| Extra | PDF tools (merge, split, compress, convert…) | `/pdf/` | 🟢 Built (11 tools), waiting to launch |
-| 3 | Resume maker and cover letter tools | `/resume-maker/` | 🟡 Resume makers built (US, UK, Canada, Australia); cover letters planned |
-| 4 | Business tools (invoices, margins, sales tax) | `/business/` | 🟢 Active (Profit Margin, Break-Even, Payment Fees) |
-| 5 | Health, education, unit converters, and more | `/education/` | 🟢 Active (Word Counter, College GPA) |
+| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/ca/`, `/au/` | 🟢 Built (34 tools, including Invoice Generator, Timesheet, Business Days and UK VAT) |
+| 2 | Salary and career calculators | `/career/` | 🟢 Active (Salary to Hourly, Pay Rise, Overtime, UK Take-Home Pay, UK Holiday Entitlement, UK Redundancy Pay) |
+| Extra | PDF tools (merge, split, compress, convert…) | `/pdf/` | 🟢 Built (13 tools, including Sign PDF and PDF to Text), waiting to launch |
+| 3 | Resume maker and cover letter tools | `/resume-maker/` | 🟢 Resume makers (US, UK, Canada, Australia) and Cover Letter Maker built |
+| 4 | Business tools (invoices, margins, sales tax) | `/business/` | 🟢 Active (Profit Margin, Break-Even, Payment Fees, Quote Generator) |
+| 5 | Health, education, unit converters, and more | `/education/` | 🟢 Active (Word Counter, Citation Generator, College GPA, UK Degree Classification, Final Grade) |
 
 ---
 
@@ -325,3 +325,7 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 | 2026-09-29 | Header menu reordered: Home, Calculators, PDF tools, Resume, Country (a drop-down with US, UK, Canada and Australia that works without JavaScript and stores nothing), About, Rate calculator. Checked in Chrome from 360px to 1280px: no overflow, and the menu works with mouse, keyboard and Escape. |
 | 2026-09-29 | New logo and favicon: a gold serif "T" whose foot is the open jaw of a wrench, in a thin gold frame on navy, drawn by hand as SVG in `build.py` (our own work, no licence needed). Replaces the blue bar-chart mark in the header, footer and browser tab. |
 | 2026-09-30 | Expanded audience reach across 3 new fields: launched Stage 1 Phase D (Freelance Invoice Generator with browser PDF export and draft persistence), Stage 2 (`/career/`: Salary to Hourly Calculator), Stage 4 (`/business/`: Profit Margin & Markup, Break-Even Analysis, Payment Processing Fee Calculator), and Stage 5 (`/education/`: Word Counter & Readability Analyzer, College 4.0 GPA Calculator). 66 pages, 749 automated tests passing. |
+| 2026-09-30 | Filled the gaps in every section with 15 new tools: UK VAT calculator, UK take-home pay (PAYE with student loans and pension), UK holiday entitlement, UK statutory redundancy pay, pay rise, overtime, timesheet, business days (US and UK public holidays), quote generator, cover letter maker, citation generator (APA, MLA, Harvard), UK degree classification, final grade, Sign PDF and PDF to Text. New official figures (VAT, student loans, holiday, redundancy cap, bank holidays) checked on GOV.UK and OPM and stored in `public/assets/data/`. 81 pages, 939 automated tests passing; every new page checked in Chrome at 390px and 1280px under the real security headers. |
+| 2026-09-30 | Built Part 1 (New Sectors: Developer Tools `/dev/` [JSON Formatter, WCAG Color Contrast], Personal Finance `/finance/` [Compound Interest, Mortgage Calculator], Health & Fitness `/health/` [TDEE, WHO BMI], Everyday Utilities `/tools/` [Tip & Bill Split, Universal Unit Converter]), Part 2 (Deepened Career & Business: US Salaried Take-Home Pay 2026 with official IRS/FICA rates, E-Commerce ROAS & Break-Even Calculator), and Ref Img (One-Click Print / PDF Summary for all calculators via `@media print`). 95 pages built, 1,052 automated tests passing (0 failed). |
+| 2026-09-30 | International SEO Architecture: built localized country URLs under `/us/`, `/uk/`, `/ca/`, `/au/`, and a dedicated `/global/` hub for all 22 core multi-currency calculators (110 localized calculator pages + `/global/` hub = 206 total pages). Features bidirectional `hreflang` alternates (`en-US`, `en-GB`, `en-CA`, `en-AU`, `x-default`), self-referential canonicals, pre-rendered localized currencies/affixes, Country navigation menu with Worldwide (Global) entry, and localized JSON-LD breadcrumbs and offers. All 1,052 automated tests passing (0 failed). |
+

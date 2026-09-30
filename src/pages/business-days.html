@@ -1,0 +1,118 @@
+  <section class="calculator" aria-label="Business days calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="mode">What do you want to do?</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="between">Count working days between two dates</option>
+            <option value="add">Add working days to a date</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="region">Public holidays to skip</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="england-and-wales">England and Wales</option>
+            <option value="scotland">Scotland</option>
+            <option value="northern-ireland">Northern Ireland</option>
+            <option value="us">United States (federal)</option>
+            <option value="none">None, weekends only</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="start">Start date</label>
+        <div class="input-wrap"><input id="start" type="date" value="2026-10-01"></div>
+        <span class="error-msg">Choose a start date.</span>
+      </div>
+
+      <div class="field">
+        <label for="end">End date</label>
+        <div class="input-wrap"><input id="end" type="date" value="2026-10-31"></div>
+        <span class="error-msg">Choose an end date.</span>
+      </div>
+
+      <div class="field">
+        <label for="count">Working days to add<span class="hint">Use a minus sign to go back</span></label>
+        <div class="input-wrap"><input id="count" type="text" inputmode="numeric" value="10" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter a whole number from −3,650 to 3,650.</span>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="includeStart" type="checkbox" checked><span>Count the start date as a working day</span></label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your dates stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2 id="out-title">Working days</h2>
+      <div class="result-main"><span id="out-main">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span id="out-a-label">Calendar days</span><span id="out-a">—</span></li>
+        <li><span id="out-b-label">Weekend days</span><span id="out-b">—</span></li>
+        <li><span id="out-c-label">Public holidays on weekdays</span><span id="out-c">—</span></li>
+      </ul>
+      <div class="bd-holidays" id="holidays-wrap" hidden>
+        <p class="bd-holidays-title">Public holidays skipped</p>
+        <ul class="bd-holiday-list" id="out-holidays"></ul>
+      </div>
+      <p class="result-note" id="coverage-note" hidden></p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose what you want to do.</strong> Count the working days between two dates (for example, to check how long a project really has), or add working days to a date (for example, "payment due within 10 working days").</li>
+      <li><strong>Choose the public holidays to skip.</strong> The UK has three sets of bank holidays. The US option uses federal holidays, which many businesses follow but some don't.</li>
+      <li><strong>Pick your dates.</strong> When counting, choose whether the start date itself counts.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Working day = Monday to Friday, and not a public holiday in the region you chose
+Counting    = the working days from the start date to the end date
+              (the end date always counts; the start date if you tick the box)
+Adding      = step forward one day at a time from the start date (which isn't counted),
+              skipping weekends and public holidays, until enough working days have passed</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">1 to 31 October 2026, England and Wales       = 22 working days
+1 to 31 October 2026, United States           = 21 working days (Columbus Day, 12 October)
+10 working days after Friday 18 December 2026:
+  England and Wales  →  Wednesday 6 January 2027
+                        (skips Christmas Day, Boxing Day on 28 December and New Year's Day)
+  Scotland           →  Thursday 7 January 2027 (also skips 4 January)
+  United States      →  Tuesday 5 January 2027</div>
+
+    <h2>Holidays included</h2>
+    <ul>
+      <li><strong>UK bank holidays</strong> for England and Wales, Scotland and Northern Ireland, from 2026 to the end of 2028, from GOV.UK's official list.</li>
+      <li><strong>US federal holidays</strong> for 2026 and 2027 as observed by federal offices, from the US Office of Personnel Management. State holidays aren't included.</li>
+      <li>Outside those years, only weekends are skipped, and the result tells you.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What's the difference between business days and working days?</summary>
+        <p>Usually nothing: both mean Monday to Friday, not counting public holidays. Some contracts define them differently, so check the wording in yours.</p>
+      </details>
+      <details>
+        <summary>Why is Boxing Day on 28 December 2026?</summary>
+        <p>In 2026, 26 December is a Saturday, so the bank holiday moves to the next weekday, Monday 28 December. These moved days are called substitute days.</p>
+      </details>
+      <details>
+        <summary>Can I use this for invoice payment terms?</summary>
+        <p>Yes. Choose "Add working days to a date", enter your invoice date and the number of days. If a UK business client pays late, our <a href="{{root}}freelance/late-payment-interest-calculator/">late payment interest calculator</a> shows what you can claim.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/bank-holidays" rel="noopener">GOV.UK: UK bank holidays</a>; <a href="https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/" rel="noopener">US Office of Personnel Management: federal holidays</a>. Checked 30 September 2026.</p>
+  </div>

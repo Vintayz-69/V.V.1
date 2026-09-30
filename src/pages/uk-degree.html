@@ -1,0 +1,115 @@
+  <section class="calculator" aria-label="UK degree classification calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="year2">Second-year average<span class="hint">Your average mark, out of 100</span></label>
+        <div class="input-wrap"><input id="year2" type="text" inputmode="decimal" value="62" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a mark from 0 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="year3">Final-year average<span class="hint">Leave empty to see what you need</span></label>
+        <div class="input-wrap"><input id="year3" type="text" inputmode="decimal" value="68" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a mark from 0 to 100, or leave it empty.</span>
+      </div>
+
+      <div class="field">
+        <label for="preset">How your university weights the years<span class="hint">Check your course handbook</span></label>
+        <div class="select-wrap">
+          <select id="preset">
+            <option value="66.6667">1:2 (final year counts double)</option>
+            <option value="75">1:3 (final year counts triple)</option>
+            <option value="60">40:60</option>
+            <option value="70">30:70</option>
+            <option value="50">50:50 (equal)</option>
+            <option value="100">Final year only</option>
+            <option value="custom">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="finalWeight">Final year's share of your degree</label>
+        <div class="input-wrap"><input id="finalWeight" type="text" inputmode="decimal" value="66.7" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from 0 to 100.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your marks stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your degree</h2>
+      <div class="result-main"><span id="out-class">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Overall mark</span><span id="out-mark">—</span></li>
+        <li><span>Weighting</span><span id="out-weight">—</span></li>
+      </ul>
+      <p class="result-note">Most UK universities use these boundaries, but each sets its own rules, including for marks just below a boundary.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Final-year average you need</h2>
+    <p>Based on your second-year mark and the weighting above:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Degree class</th><th class="num">Final-year average needed</th></tr></thead>
+        <tbody id="needed-body"><tr><td colspan="2">Enter your marks above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>The usual boundaries</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Degree class</th><th class="num">Overall mark</th></tr></thead>
+        <tbody>
+          <tr><td>First-class honours (1st)</td><td class="num">70 and above</td></tr>
+          <tr><td>Upper second-class honours (2:1)</td><td class="num">60 to 69</td></tr>
+          <tr><td>Lower second-class honours (2:2)</td><td class="num">50 to 59</td></tr>
+          <tr><td>Third-class honours (3rd)</td><td class="num">40 to 49</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Overall mark  = second-year average × second-year share
+              + final-year average × final-year share
+
+Needed in final year = (class boundary − second-year average × second-year share)
+                       ÷ final-year share</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">62 in year 2, 68 in year 3, weighted 1:2:
+  (62 × 1 + 68 × 2) ÷ 3                   = 66.0  → 2:1
+  For a First: (70 × 3 − 62) ÷ 2          = 74.0 needed in year 3
+
+58 in year 2, 72 in year 3, weighted 40:60:
+  58 × 0.4 + 72 × 0.6 = 23.2 + 43.2       = 66.4  → 2:1
+
+71 in the final year only                 = 71.0  → First</div>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Your university's own rules for borderline marks (for example, 68 or 69), such as looking at how many credits you got at the higher class.</li>
+      <li>Rules that drop your lowest module marks, or weight modules by credits within a year. Work out each year's average first, then enter it here.</li>
+      <li>Integrated master's degrees with a fourth year, and degrees from outside the UK.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does first year count?</summary>
+        <p>At most UK universities, first year only needs a pass and doesn't count towards your degree class. Some courses are different, so check your course handbook or degree regulations.</p>
+      </details>
+      <details>
+        <summary>Where do I find my university's weighting?</summary>
+        <p>Search your university's website for "degree classification" or "academic regulations", or look in your course handbook. It's often given as a ratio such as 1:2 or 40:60.</p>
+      </details>
+      <details>
+        <summary>What if I study in the US?</summary>
+        <p>US colleges use grade point averages instead. Use our <a href="{{root}}education/gpa-calculator/">GPA calculator</a>.</p>
+      </details>
+    </div>
+  </div>

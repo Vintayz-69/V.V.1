@@ -1,0 +1,96 @@
+  <section class="calculator" aria-label="Tip and bill split calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="bill">Bill Amount (Pre-Tip)<span class="hint">Food and drinks total</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="bill" type="text" inputmode="decimal" value="85.00" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="tipPct">Tip Percentage</label>
+        <div class="inline-row tip-presets">
+          <button type="button" class="btn btn-sm tip-preset" data-tip="10">10%</button>
+          <button type="button" class="btn btn-sm tip-preset" data-tip="15">15%</button>
+          <button type="button" class="btn btn-sm tip-preset active" data-tip="18">18%</button>
+          <button type="button" class="btn btn-sm tip-preset" data-tip="20">20%</button>
+          <button type="button" class="btn btn-sm tip-preset" data-tip="25">25%</button>
+        </div>
+        <div class="input-wrap"><input id="tipPct" type="text" inputmode="decimal" value="18" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage between 0% and 100%.</span>
+      </div>
+
+      <div class="field">
+        <label for="split">Split Between (People)<span class="hint">Number of diners</span></label>
+        <div class="input-wrap"><input id="split" type="text" inputmode="numeric" value="2" autocomplete="off"><span class="affix">people</span></div>
+        <span class="error-msg">Enter between 1 and 100.</span>
+      </div>
+
+      <div class="field field-end">
+        <label class="check-label">
+          <input type="checkbox" id="roundUp">
+          <span>Round total up to next whole dollar</span>
+        </label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. Runs in your browser.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Amount per person</h2>
+      <div class="result-main"><span id="out-per-person">—</span> <small>each to pay</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Total tip amount</span><span id="out-tip-total">—</span></li>
+        <li class="key"><span>Total bill with tip</span><span id="out-bill-total">—</span></li>
+        <li><span>Tip per person</span><span id="out-per-person-tip">—</span></li>
+        <li><span>Effective tip percentage</span><span id="out-effective-pct">—</span></li>
+      </ul>
+      <p class="result-note">Evenly splits food, drinks and gratuity without awkward bill-sharing maths at the dinner table.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>International tipping guide</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Country</th><th>Customary Tip</th><th>Local Etiquette</th></tr></thead>
+        <tbody>
+          <tr><td><strong>United States</strong></td><td>18% – 22%</td><td>Standard in sit-down restaurants where servers earn sub-minimum tipped wages.</td></tr>
+          <tr><td><strong>Canada</strong></td><td>15% – 20%</td><td>Expected in table-service restaurants, bars, and taxis.</td></tr>
+          <tr><td><strong>United Kingdom</strong></td><td>10% – 12.5%</td><td>Optional; check if an optional "Service Charge" (often 12.5%) is already added to the bill.</td></tr>
+          <tr><td><strong>Australia</strong></td><td>0% – 10%</td><td>Not expected as hospitality staff receive legally mandated award wages, but 5–10% appreciated for exceptional service.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How the bill split is calculated</h2>
+    <div class="formula">Tip Amount   = Bill × (Tip % ÷ 100)
+Total Bill   = Bill + Tip Amount
+Each Person  = Total Bill ÷ Number of People</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should you tip on pre-tax or post-tax totals?</summary>
+        <p>Traditional etiquette suggests calculating the tip percentage on the subtotal before sales tax is added, though many electronic card payment terminals default to post-tax totals.</p>
+      </details>
+      <details>
+        <summary>What should you do if an automatic service charge is already included?</summary>
+        <p>If the receipt already itemizes a "Discretionary Service Charge" (common in London and high-end restaurants worldwide), you do not need to add an additional tip unless you choose to reward extraordinary service.</p>
+      </details>
+    </div>
+  </div>

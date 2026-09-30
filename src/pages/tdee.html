@@ -1,0 +1,129 @@
+  <section class="calculator" aria-label="TDEE and daily calorie calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="gender">Biological Sex</label>
+        <div class="select-wrap">
+          <select id="gender">
+            <option value="male" selected>Male (+5 kcal factor)</option>
+            <option value="female">Female (-161 kcal factor)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="age">Age<span class="hint">Years (15–100)</span></label>
+        <div class="input-wrap"><input id="age" type="text" inputmode="numeric" value="30" autocomplete="off"><span class="affix">yrs</span></div>
+        <span class="error-msg">Enter an age between 15 and 100.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="unit">Measurement System</label>
+        <div class="select-wrap">
+          <select id="unit">
+            <option value="metric" selected>Metric (Kilograms &amp; Centimeters)</option>
+            <option value="imperial">Imperial (Pounds, Feet &amp; Inches)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Metric inputs -->
+      <div class="field metric-field">
+        <label for="weightKg">Weight<span class="hint">In kilograms</span></label>
+        <div class="input-wrap"><input id="weightKg" type="text" inputmode="decimal" value="80" autocomplete="off"><span class="affix">kg</span></div>
+        <span class="error-msg">Enter between 25 and 300 kg.</span>
+      </div>
+
+      <div class="field metric-field">
+        <label for="heightCm">Height<span class="hint">In centimeters</span></label>
+        <div class="input-wrap"><input id="heightCm" type="text" inputmode="decimal" value="180" autocomplete="off"><span class="affix">cm</span></div>
+        <span class="error-msg">Enter between 90 and 250 cm.</span>
+      </div>
+
+      <!-- Imperial inputs -->
+      <div class="field imperial-field" style="display: none;">
+        <label for="weightLbs">Weight<span class="hint">In pounds</span></label>
+        <div class="input-wrap"><input id="weightLbs" type="text" inputmode="decimal" value="176" autocomplete="off"><span class="affix">lbs</span></div>
+        <span class="error-msg">Enter between 55 and 660 lbs.</span>
+      </div>
+
+      <div class="field imperial-field" style="display: none;">
+        <label>Height (Feet &amp; Inches)</label>
+        <div style="display: flex; gap: 8px;">
+          <div class="input-wrap" style="flex: 1;"><input id="heightFt" type="text" inputmode="numeric" value="5" autocomplete="off"><span class="affix">ft</span></div>
+          <div class="input-wrap" style="flex: 1;"><input id="heightIn" type="text" inputmode="numeric" value="11" autocomplete="off"><span class="affix">in</span></div>
+        </div>
+        <span class="error-msg">Enter a valid height.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="activity">Physical Activity Level</label>
+        <div class="select-wrap">
+          <select id="activity">
+            <option value="1.2">Sedentary (Desk job, little to no exercise) — 1.2x</option>
+            <option value="1.375">Light Exercise (Workout 1–3 days/week) — 1.375x</option>
+            <option value="1.55" selected>Moderate Exercise (Workout 3–5 days/week) — 1.55x</option>
+            <option value="1.725">Heavy Exercise (Hard exercise 6–7 days/week) — 1.725x</option>
+            <option value="1.9">Athlete / Laborer (Physical work or 2x/day training) — 1.9x</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. Health data stays on your device.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Daily energy expenditure</h2>
+      <div class="result-main"><span id="out-tdee">—</span> <small>maintenance calories</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Basal Metabolic Rate (BMR)</span><span id="out-bmr">—</span></li>
+        <li class="key"><span>Moderate fat loss (-500 kcal)</span><span id="out-weight-loss">—</span></li>
+        <li><span>Mild fat loss (-250 kcal)</span><span id="out-mild-loss">—</span></li>
+        <li class="key"><span>Muscle gain surplus (+250 kcal)</span><span id="out-mild-gain">—</span></li>
+        <li><span>Fast gain surplus (+500 kcal)</span><span id="out-weight-gain">—</span></li>
+      </ul>
+      <p class="result-note">Calculated using the clinically validated Mifflin-St Jeor formula, widely recognized in clinical nutrition as the most accurate predictive equation for metabolic rate.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Balanced macronutrient targets</h2>
+    <p>To support your maintenance intake, here is an example balanced split (30% protein, 40% carbohydrate, 30% healthy fats):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Macronutrient</th><th class="num">Daily Grams</th><th class="num">Calories Provided</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Protein (4 kcal/g)</strong></td><td class="num" id="out-macro-protein">—</td><td class="num">30% of total</td></tr>
+          <tr><td><strong>Carbohydrates (4 kcal/g)</strong></td><td class="num" id="out-macro-carbs">—</td><td class="num">40% of total</td></tr>
+          <tr><td><strong>Dietary Fats (9 kcal/g)</strong></td><td class="num" id="out-macro-fat">—</td><td class="num">30% of total</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How TDEE is calculated</h2>
+    <p>Your Total Daily Energy Expenditure (TDEE) is the total number of calories your body burns in a 24-hour day through cellular function, digestion, and movement.</p>
+    <div class="formula">Step 1: Basal Metabolic Rate (BMR) via Mifflin-St Jeor:
+  Men:   BMR = (10 × weight_kg) + (6.25 × height_cm) - (5 × age) + 5
+  Women: BMR = (10 × weight_kg) + (6.25 × height_cm) - (5 × age) - 161
+
+Step 2: Total Daily Expenditure:
+  TDEE = BMR × Activity Multiplier</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the difference between BMR and TDEE?</summary>
+        <p>BMR (Basal Metabolic Rate) is the minimum energy required to keep vital organs functioning if you rested in bed all day. TDEE accounts for all physical activity, walking, workouts, and digestion on top of your BMR.</p>
+      </details>
+      <details>
+        <summary>How large should a calorie deficit be for sustainable fat loss?</summary>
+        <p>A 500 kcal daily deficit translates to approximately 3,500 kcal per week, resulting in roughly 0.5 kg (1 lb) of fat loss per week, which is considered safe, sustainable, and preserves muscle mass.</p>
+      </details>
+      <details>
+        <summary>Is this medical advice?</summary>
+        <p>No. This calculator provides mathematical estimations based on scientific population formulas. Consult a registered dietitian or medical professional before beginning any extreme dietary change.</p>
+      </details>
+    </div>
+  </div>

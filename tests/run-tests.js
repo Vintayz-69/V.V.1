@@ -625,6 +625,340 @@ function loadResume(country) {
   }), { totalCredits: 6, totalPoints: 12, gpa: 2.0, standing: "About C" });
 }
 
+// ---------------- UK VAT (page examples)
+{
+  const calc = load("uk-vat", ["data/tax-uk.js"]);
+  expectAll("UK VAT add 20%", calc({ mode: "add", amount: 1000, rate: "standard" }), { vat: 200, after: 1200 });
+  expectAll("UK VAT remove 20%", calc({ mode: "remove", amount: 1200, rate: "standard" }), { before: 1000, vat: 200 });
+  expectAll("UK VAT remove £59.99", calc({ mode: "remove", amount: 59.99, rate: "standard" }), { before: 49.99, vat: 10 });
+  expectAll("UK VAT remove 5%", calc({ mode: "remove", amount: 105, rate: "reduced" }), { before: 100, vat: 5 });
+  check("UK VAT one-sixth rule", calc({ mode: "remove", amount: 240, rate: "standard" }).vat, 40);
+  expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
+}
+
+// ---------------- UK take-home pay, PAYE 2026 to 2027 (page examples)
+{
+  const calc = load("uk-take-home", UK_LIBS);
+  const sam = { salary: 35000, region: "ruk", pensionPct: 5, pensionType: "net", plan: "plan2", postgraduate: false };
+  expectAll("UK PAYE Sam", calc(sam), { pension: 1750, taxable: 20680, incomeTax: 4136, ni: 1794.4, studentLoan: 505.35, takeHome: 26814.25, monthly: 2234.52 });
+  // FAQ: salary sacrifice saves 1,750 × 8% NI and 1,750 × 9% student loan
+  const sac = calc({ ...sam, pensionType: "sacrifice" });
+  check("UK PAYE sacrifice NI saving", 1794.4 - sac.ni, 140);
+  check("UK PAYE sacrifice loan saving", 505.35 - sac.studentLoan, 157.5);
+  expectAll("UK PAYE £60k", calc({ salary: 60000, region: "ruk", pensionPct: 0, pensionType: "net", plan: "none", postgraduate: false }),
+    { incomeTax: 11432, ni: 3210.6, takeHome: 45357.4 });
+  // £110,000 with 10% salary sacrifice: pay 99,000 keeps the full allowance
+  expectAll("UK PAYE £110k sacrifice", calc({ salary: 110000, region: "ruk", pensionPct: 10, pensionType: "sacrifice", plan: "none", postgraduate: false }),
+    { personalAllowance: 12570, incomeTax: 27032, ni: 3990.6, takeHome: 67977.4 });
+  // Scotland £30,000: 3,967 × 19% + 12,989 × 20% + 474 × 21%
+  expectAll("UK PAYE Scotland £30k", calc({ salary: 30000, region: "scotland", pensionPct: 0, pensionType: "net", plan: "none", postgraduate: false }),
+    { incomeTax: 3451.07, ni: 1394.4, takeHome: 25154.53 });
+  check("UK PAYE Plan 2 + Postgraduate", calc({ salary: 35000, region: "ruk", pensionPct: 0, pensionType: "net", plan: "plan2", postgraduate: true }).studentLoan, 1345.35);
+  check("UK PAYE Plan 1", calc({ salary: 30000, region: "ruk", pensionPct: 0, pensionType: "net", plan: "plan1", postgraduate: false }).studentLoan, 279);
+  check("UK PAYE below Plan 5 threshold", calc({ salary: 24000, region: "ruk", pensionPct: 0, pensionType: "net", plan: "plan5", postgraduate: false }).studentLoan, 0);
+}
+
+// ---------------- UK holiday entitlement (page examples)
+{
+  const calc = load("uk-holiday", ["data/employment-uk.js"]);
+  check("UK holiday 5 days", calc({ mode: "days", days: 5 }).entitlement, 28);
+  check("UK holiday 3 days", calc({ mode: "days", days: 3 }).entitlement, 16.8);
+  expectAll("UK holiday 6 days capped", calc({ mode: "days", days: 6 }), { entitlement: 28, capped: true });
+  expectAll("UK holiday 30 hours over 4 days", calc({ mode: "hours", hours: 30, days: 4 }), { entitlement: 168, days: 22.4, capped: false });
+  check("UK holiday hours cap (60 h over 6 days)", calc({ mode: "hours", hours: 60, days: 6 }).entitlement, 280);
+  check("UK holiday irregular 30 hours (3.621)", Math.round(calc({ mode: "irregular", worked: 30 }).entitlement * 1000), 3621);
+  check("UK holiday leaving after 6 months", calc({ mode: "days", days: 5, fraction: 0.5 }).entitlement, 14);
+}
+
+// ---------------- UK statutory redundancy pay (page examples)
+{
+  const calc = load("uk-redundancy", ["data/employment-uk.js"]);
+  expectAll("redundancy age 45, 10 years, £600", calc({ age: 45, years: 10, weekly: 600 }), { weeks: 12, pay: 7200, capped: false });
+  expectAll("redundancy age 30, 8 years, capped", calc({ age: 30, years: 8, weekly: 900 }), { weeks: 8, weeklyUsed: 751, pay: 6008 });
+  expectAll("redundancy age 24, 5 years", calc({ age: 24, years: 5, weekly: 400 }), { weeks: 3.5, pay: 1400 });
+  expectAll("redundancy maximum", calc({ age: 62, years: 25, weekly: 800 }), { counted: 20, weeks: 30, pay: 22530 });
+  expectAll("redundancy under 2 years", calc({ age: 30, years: 1, weekly: 500 }), { qualifies: false, pay: 0 });
+  // GOV.UK ready reckoner cells: age 41 with 2 years = 2 weeks; age 42 with 2 years = 2.5 weeks
+  check("redundancy age 41, 2 years", calc({ age: 41, years: 2, weekly: 100 }).weeks, 2);
+  check("redundancy age 42, 2 years", calc({ age: 42, years: 2, weekly: 100 }).weeks, 2.5);
+}
+
+// ---------------- Pay rise (page examples)
+{
+  const calc = load("pay-rise");
+  expectAll("pay rise $50k to $53k", calc({ mode: "amount", current: 50000, newPay: 53000, inflation: 3 }),
+    { percent: 6, increase: 3000, monthly: 250, real: 2.91, keepUp: 51500, versusInflation: 1500 });
+  expectAll("pay rise £40k + 4.5%", calc({ mode: "percent", current: 40000, percent: 4.5, inflation: null }), { newPay: 41800, increase: 1800, monthly: 150, real: null });
+  check("pay rise 5% vs 3% inflation", calc({ mode: "percent", current: 100, percent: 5, inflation: 3 }).real, 1.94);
+  check("pay rise 2% vs 4% inflation", calc({ mode: "percent", current: 100, percent: 2, inflation: 4 }).real, -1.92);
+}
+
+// ---------------- Overtime (page examples)
+{
+  const calc = load("overtime");
+  expectAll("overtime $20, 40 + 5", calc({ rate: 20, regular: 40, overtime: 5, overtimeRate: 1.5, double: 0, weeks: 1 }),
+    { regularPay: 800, overtimePay: 150, weekly: 950, average: 21.11 });
+  expectAll("overtime £15 with double time", calc({ rate: 15, regular: 37.5, overtime: 4, overtimeRate: 1.5, double: 2, weeks: 1 }),
+    { regularPay: 562.5, overtimePay: 90, doublePay: 60, weekly: 712.5 });
+  expectAll("overtime A$32 time and a quarter", calc({ rate: 32, regular: 38, overtime: 6, overtimeRate: 1.25, double: 0, weeks: 4 }),
+    { regularPay: 1216, overtimePay: 240, weekly: 1456, yearly: 5824 });
+}
+
+// ---------------- Timesheet (page examples)
+{
+  const T = load("timesheet");
+  check("timesheet parse 9:00", T.parseTime("9:00"), 540);
+  check("timesheet parse 5:30pm", T.parseTime("5:30pm"), 1050);
+  check("timesheet parse 12am", T.parseTime("12am"), 0);
+  check("timesheet parse 0930", T.parseTime("0930"), 570);
+  check("timesheet rejects 25:00", T.parseTime("25:00"), null);
+  check("timesheet rejects 9:75", T.parseTime("9:75"), null);
+  check("timesheet day 9:00-17:30 less 30", T.rowMinutes({ start: "09:00", end: "17:30", breakMin: "30" }), 480);
+  check("timesheet night shift", T.rowMinutes({ start: "22:00", end: "06:00", breakMin: "30" }), 450);
+  check("timesheet 8:15-16:45 less 45", T.rowMinutes({ start: "8:15", end: "16:45", breakMin: "45" }), 465);
+  check("timesheet bad break not counted", T.rowMinutes({ start: "9:00", end: "17:00", breakMin: "abc" }), null);
+  check("timesheet h:mm", T.hhmm(465), "7:45");
+  const day = { start: "09:00", end: "17:30", breakMin: "30" };
+  expectAll("timesheet five days at $25", T.calculate({ rows: [day, day, day, day, day, { start: "", end: "", breakMin: "" }], rate: 25, overtimeAfter: null, overtimeRate: 1.5 }),
+    { hours: 40, pay: 1000 });
+  const long = { start: "08:00", end: "17:00", breakMin: "" };
+  expectAll("timesheet 45 hours, overtime after 40", T.calculate({ rows: [long, long, long, long, long], rate: 18, overtimeAfter: 40, overtimeRate: 1.5 }),
+    { hours: 45, regularHours: 40, overtimeHours: 5, pay: 855 });
+}
+
+// ---------------- Business days (page examples)
+{
+  const B = load("business-days", ["data/holidays.js"]);
+  check("business days Oct 2026 England", B.countBetween("2026-10-01", "2026-10-31", "england-and-wales", true).days, 22);
+  expectAll("business days Oct 2026 US", B.countBetween("2026-10-01", "2026-10-31", "us", true), { days: 21, weekends: 9, calendarDays: 31 });
+  check("business days start not counted", B.countBetween("2026-10-01", "2026-10-31", "none", false).days, 21);
+  check("business days backwards", B.countBetween("2026-10-31", "2026-10-01", "none", true).days, -22);
+  check("add 10 days England", B.addDays("2026-12-18", 10, "england-and-wales").date, "2027-01-06");
+  check("add 10 days England skips 3 holidays", B.addDays("2026-12-18", 10, "england-and-wales").holidays.length, 3);
+  check("add 10 days Scotland", B.addDays("2026-12-18", 10, "scotland").date, "2027-01-07");
+  check("add 10 days US", B.addDays("2026-12-18", 10, "us").date, "2027-01-05");
+  check("add -1 day from Monday", B.addDays("2026-10-05", -1, "none").date, "2026-10-02");
+  check("holidays outside the list flagged", B.addDays("2027-12-20", 10, "us").uncovered, true);
+  check("holidays inside the list not flagged", B.countBetween("2026-10-01", "2026-10-31", "us", true).uncovered, false);
+}
+
+// ---------------- UK degree classification (page examples)
+{
+  const D = load("uk-degree");
+  const a = D.calculate({ year2: 62, year3: 68, finalWeight: 200 / 3 });
+  check("degree 62/68 at 1:2 mark", a.mark, 66);
+  check("degree 62/68 at 1:2 class", a.classification, "Upper second-class honours (2:1)");
+  check("degree first needs 74", a.needed[70], 74);
+  const b = D.calculate({ year2: 58, year3: 72, finalWeight: 60 });
+  check("degree 58/72 at 40:60 mark", b.mark, 66.4);
+  check("degree final year only", D.calculate({ year2: 50, year3: 71, finalWeight: 100 }).classification, "First-class honours (1st)");
+  check("degree boundary 70 is a First", D.classify(70), "First-class honours (1st)");
+  check("degree 39.99 below pass", D.classify(39.99), "Below the usual pass mark of 40");
+  check("degree 1:2 preset rounding", D.calculate({ year2: 70, year3: 70, finalWeight: 66.6667 }).classification, "First-class honours (1st)");
+}
+
+// ---------------- Final grade (page examples)
+{
+  const calc = load("final-grade");
+  check("final grade 78/25/80", calc({ current: 78, weight: 25, target: 80 }).needed, 86);
+  check("final grade 72/40/70", calc({ current: 72, weight: 40, target: 70 }).needed, 67);
+  const c = calc({ current: 85, weight: 30, target: 90 });
+  check("final grade 85/30/90", c.needed, 101.67);
+  check("final grade 85/30/90 not possible", c.possible, false);
+  check("final grade best case", c.gradeWith(100), 89.5);
+}
+
+// ---------------- Citation generator (page examples)
+{
+  const C = load("citation");
+  const article = { type: "journal", authors: "Lee, Anna M.\nOkafor, Daniel", title: "Remote work and freelance income", container: "Journal of Work Studies",
+    year: "2025", volume: "12", issue: "3", pages: "45-67", doi: "10.1234/jws.2025.045" };
+  check("cite APA journal", C.plain(C.cite("apa", article)),
+    "Lee, A. M., & Okafor, D. (2025). Remote work and freelance income. Journal of Work Studies, 12(3), 45–67. https://doi.org/10.1234/jws.2025.045");
+  check("cite APA journal italics", C.html(C.cite("apa", article)),
+    "Lee, A. M., &amp; Okafor, D. (2025). Remote work and freelance income. <i>Journal of Work Studies</i>, <i>12</i>(3), 45–67. https://doi.org/10.1234/jws.2025.045");
+  check("cite MLA journal", C.plain(C.cite("mla", { ...article, title: "Remote Work and Freelance Income" })),
+    "Lee, Anna M., and Daniel Okafor. “Remote Work and Freelance Income.” Journal of Work Studies, vol. 12, no. 3, 2025, pp. 45-67, https://doi.org/10.1234/jws.2025.045.");
+  check("cite Harvard journal", C.plain(C.cite("harvard", article)),
+    "Lee, A.M. and Okafor, D. (2025) ‘Remote work and freelance income’, Journal of Work Studies, 12(3), pp. 45–67. Available at: https://doi.org/10.1234/jws.2025.045.");
+
+  const book = { type: "book", authors: "Priya Shah\nTom Walker", title: "Working for yourself: A practical guide", year: "2024", edition: "2", publisher: "Northbridge Press" };
+  check("cite APA book", C.plain(C.cite("apa", book)), "Shah, P., & Walker, T. (2024). Working for yourself: A practical guide (2nd ed.). Northbridge Press.");
+  check("cite MLA book", C.plain(C.cite("mla", book)), "Shah, Priya, and Tom Walker. Working for yourself: A practical guide. 2nd ed., Northbridge Press, 2024.");
+  check("cite Harvard book", C.plain(C.cite("harvard", book)), "Shah, P. and Walker, T. (2024) Working for yourself: A practical guide. 2nd edn. Northbridge Press.");
+
+  const web = { type: "website", org: "National Careers Service", title: "How to write a cover letter", container: "GOV.UK",
+    url: "https://nationalcareers.service.gov.uk/careers-advice/covering-letter", accessed: "2026-09-30" };
+  check("cite APA web page, no date", C.plain(C.cite("apa", web)),
+    "National Careers Service. (n.d.). How to write a cover letter. GOV.UK. https://nationalcareers.service.gov.uk/careers-advice/covering-letter");
+  check("cite MLA web page", C.plain(C.cite("mla", web)),
+    "National Careers Service. “How to write a cover letter.” GOV.UK, nationalcareers.service.gov.uk/careers-advice/covering-letter. Accessed 30 Sept. 2026.");
+  check("cite Harvard web page", C.plain(C.cite("harvard", web)),
+    "National Careers Service (no date) How to write a cover letter. Available at: https://nationalcareers.service.gov.uk/careers-advice/covering-letter (Accessed: 30 September 2026).");
+  check("cite APA dated web page", C.plain(C.cite("apa", { type: "website", authors: "Jones, Kim", title: "Pricing your work", container: "Freelance Weekly", date: "2026-03-05", url: "https://example.com/p" })),
+    "Jones, K. (2026, March 5). Pricing your work. Freelance Weekly. https://example.com/p");
+  check("cite APA no author", C.plain(C.cite("apa", { type: "book", title: "Style guide", year: "2020", publisher: "Acme" })), "Style guide. (2020). Acme.");
+  check("cite MLA three authors", C.plain(C.cite("mla", { type: "book", authors: "A, Ann\nB, Bob\nC, Cy", title: "T", publisher: "P", year: "2020" })), "A, Ann, et al. T. P, 2020.");
+  check("cite Harvard four authors", C.plain(C.cite("harvard", { type: "book", authors: "A, Ann\nB, Bob\nC, Cy\nD, Di", title: "T", year: "2020", publisher: "P" })), "A, A. et al. (2020) T. P.");
+  check("cite APA 21 authors", C.plain(C.cite("apa", { type: "book", authors: Array.from({ length: 21 }, (_, i) => "N" + i + ", A").join("\n"), title: "T", year: "2020" })).startsWith("N0, A., N1, A.") &&
+    C.plain(C.cite("apa", { type: "book", authors: Array.from({ length: 21 }, (_, i) => "N" + i + ", A").join("\n"), title: "T", year: "2020" })).includes("N18, A., . . . N20, A. (2020)"), true);
+  check("cite initials with hyphen", C.initials("Jean-Paul"), "J.-P.");
+  check("cite HTML is escaped", C.html(C.cite("apa", { type: "book", title: "<b>x</b>", year: "2020" })).includes("&lt;b&gt;"), true);
+}
+
+// ---------------- Cover letter maker (shared resume engine)
+{
+  const sandbox = { window: {}, document: { getElementById: () => null } };
+  vm.createContext(sandbox);
+  for (const file of ["js/resume.js", "js/tools/cover-letter.js"]) vm.runInContext(fs.readFileSync(path.join(JS, file), "utf8"), sandbox);
+  const L = sandbox.window.ToolNestCalc;
+  const uk = { ...L.EXAMPLES.uk, country: "uk", date: "2026-09-30" };
+  check("cover letter UK greeting, named", L.greeting(uk), "Dear Ms Anna Patel,");
+  check("cover letter UK sign-off, named", L.signOff(uk), "Yours sincerely,");
+  check("cover letter UK, no name", L.greeting({ ...uk, recipient: "" }) + " " + L.signOff({ ...uk, recipient: "" }), "Dear Sir or Madam, Yours faithfully,");
+  check("cover letter US", L.greeting({ country: "us" }) + " " + L.signOff({ country: "us" }), "Dear Hiring Manager, Sincerely,");
+  check("cover letter chosen sign-off", L.signOff({ ...uk, signOff: "Best regards," }), "Best regards,");
+  check("cover letter UK date", L.formatDate("2026-09-30", "uk"), "30 September 2026");
+  check("cover letter US date", L.formatDate("2026-09-30", "us"), "September 30, 2026");
+  const text = L.text(uk).split("\n");
+  check("cover letter text starts with name", text[0], "Hannah Clarke");
+  check("cover letter text has subject", text.includes("Application for Senior Marketing Executive (reference MK-204)"), true);
+  check("cover letter text ends with name", text[text.length - 1], "Hannah Clarke");
+  check("cover letter example has no privacy warnings", L.warnings(uk).length + L.warnings({ ...L.EXAMPLES.us, country: "us" }).length, 0);
+  check("cover letter spots a date of birth", L.warnings({ ...uk, middle: "Date of birth: 1 May 1990" }).length, 1);
+  check("cover letter UK example word count in range", L.wordCount(uk) >= 200 && L.wordCount(uk) <= 400, true);
+  check("cover letter US example word count in range", L.wordCount(L.EXAMPLES.us) >= 200 && L.wordCount(L.EXAMPLES.us) <= 400, true);
+  check("cover letter file name", L.fileName("Zoë O'Brien"), "Zoe-OBrien-Cover-Letter");
+  const fake = (t, f, s) => t.length * s * 0.5;
+  check("cover letter example fits one page", L.layout(uk, { font: "sans" }, fake).pages.length, 1);
+  check("cover letter UK paper A4", L.layout(uk, {}, fake).size.join("x"), "595.28x841.89");
+  check("cover letter US paper Letter", L.layout({ ...uk, country: "us" }, {}, fake).size.join("x"), "612x792");
+  check("cover letter long letter runs on", L.layout({ ...uk, middle: Array(12).fill(L.EXAMPLES.uk.middle).join("\n\n") }, {}, fake).pages.length > 1, true);
+}
+
+// ---------------- Quote generator (same script as the invoice generator; page example)
+{
+  const calc = load("invoice-generator");
+  expectAll("quote Oak & Pixel", calc({ items: [{ qty: 1, rate: 1800 }, { qty: 5, rate: 120 }, { qty: 1, rate: 650 }], discountPct: 0, taxPct: 20 }),
+    { subtotal: 3050, tax: 610, total: 3660 });
+}
+
+// ---------------- Compound interest
+{
+  const calc = load("compound-interest");
+  expectAll("compound-interest 10yr lump", calc({ principal: 10000, monthlyDeposit: 0, rate: 7, years: 10, frequency: 12 }),
+    { totalInvested: 10000, futureValue: 20096.61, totalInterest: 10096.61 });
+  expectAll("compound-interest 5yr monthly", calc({ principal: 5000, monthlyDeposit: 200, rate: 6, years: 5, frequency: 12 }),
+    { totalInvested: 17000, futureValue: 20698.26, totalInterest: 3698.26 });
+  expectAll("compound-interest zero rate", calc({ principal: 1000, monthlyDeposit: 100, rate: 0, years: 2, frequency: 12 }),
+    { totalInvested: 3400, futureValue: 3400, totalInterest: 0 });
+}
+
+// ---------------- Mortgage payment
+{
+  const calc = load("mortgage");
+  expectAll("mortgage $400k standard", calc({ homePrice: 400000, downPayment: 80000, rate: 6.5, termYears: 30, propertyTax: 4000, homeInsurance: 1200 }),
+    { loanAmount: 320000, monthlyPI: 2022.62, monthlyTax: 333.33, monthlyInsurance: 100, totalMonthly: 2455.95, totalInterest: 408142.36 });
+  expectAll("mortgage $250k 15-yr", calc({ homePrice: 250000, downPayment: 50000, rate: 5.0, termYears: 15, propertyTax: 0, homeInsurance: 0 }),
+    { loanAmount: 200000, monthlyPI: 1581.59, totalMonthly: 1581.59, totalInterest: 84685.71 });
+  expectAll("mortgage zero interest", calc({ homePrice: 100000, downPayment: 10000, rate: 0, termYears: 10, propertyTax: 0, homeInsurance: 0 }),
+    { loanAmount: 90000, monthlyPI: 750, totalMonthly: 750, totalInterest: 0 });
+}
+
+// ---------------- TDEE & Calorie Deficit
+{
+  const calc = load("tdee");
+  expectAll("tdee male 30 moderate", calc({ unit: "metric", gender: "male", age: 30, weightKg: 80, heightCm: 180, activity: 1.55 }),
+    { bmr: 1780, tdee: 2759, weightLoss: 2259, mildLoss: 2509, mildGain: 3009, weightGain: 3259 });
+  expectAll("tdee female 25 sedentary", calc({ unit: "metric", gender: "female", age: 25, weightKg: 60, heightCm: 165, activity: 1.2 }),
+    { bmr: 1345, tdee: 1614, weightLoss: 1114, mildLoss: 1364 });
+  const imp = calc({ unit: "imperial", gender: "male", age: 40, weightLbs: 176.37, heightFt: 5, heightIn: 10.866, activity: 1.375 });
+  check("tdee imperial BMR", imp.bmr, 1730);
+  check("tdee imperial TDEE", imp.tdee, 2379);
+}
+
+// ---------------- BMI Calculator
+{
+  const calc = load("bmi");
+  expectAll("bmi metric healthy", calc({ unit: "metric", weightKg: 70, heightCm: 175 }),
+    { bmi: 22.86, category: "Normal (Healthy)", minWeightKg: 56.7, maxWeightKg: 76.3, prime: 0.91 });
+  expectAll("bmi metric obese", calc({ unit: "metric", weightKg: 95, heightCm: 175 }),
+    { bmi: 31.02, category: "Obese (Class I)", prime: 1.24 });
+  const imp = calc({ unit: "imperial", weightLbs: 150, heightFt: 5, heightIn: 8 });
+  check("bmi imperial score", imp.bmi, 22.81);
+  check("bmi imperial category", imp.category, "Normal (Healthy)");
+}
+
+// ---------------- JSON Formatter
+{
+  const calc = load("json-formatter");
+  const valid = calc({ text: '{"name":"Alice","skills":["js","css"]}' });
+  check("json-formatter valid status", valid.valid, true);
+  check("json-formatter key count", valid.keys, 2);
+  check("json-formatter beautified", valid.pretty.includes('  "name": "Alice"'), true);
+  const invalid = calc({ text: '{"broken": json}' });
+  check("json-formatter invalid status", invalid.valid, false);
+  const empty = calc({ text: '   ' });
+  check("json-formatter empty status", empty.valid, false);
+}
+
+// ---------------- WCAG Color Contrast
+{
+  const calc = load("color-contrast");
+  expectAll("color-contrast black on white", calc({ fg: "#000000", bg: "#ffffff" }),
+    { ratio: 21, aaNormal: true, aaaNormal: true, aaLarge: true, aaaLarge: true, aaUI: true });
+  const mid = calc({ fg: "#777777", bg: "#ffffff" });
+  check("color-contrast mid grey ratio", mid.ratio, 4.48);
+  check("color-contrast mid grey fails AA normal", mid.aaNormal, false);
+  check("color-contrast mid grey passes AA large", mid.aaLarge, true);
+  const same = calc({ fg: "#ffffff", bg: "#ffffff" });
+  check("color-contrast same color ratio", same.ratio, 1);
+  check("color-contrast same color fails AA", same.aaNormal, false);
+}
+
+// ---------------- Tip & Bill Split
+{
+  const calc = load("tip");
+  expectAll("tip $100 20% 2 split", calc({ bill: 100, tipPct: 20, split: 2, roundUp: false }),
+    { tipAmount: 20, total: 120, perPersonTotal: 60, perPersonTip: 10 });
+  expectAll("tip $85.50 18% 3 split", calc({ bill: 85.50, tipPct: 18, split: 3, roundUp: false }),
+    { tipAmount: 15.39, total: 100.89, perPersonTotal: 33.63 });
+  expectAll("tip round up", calc({ bill: 42.30, tipPct: 15, split: 1, roundUp: true }),
+    { tipAmount: 6.70, total: 49.00, perPersonTotal: 49.00, effectivePct: 15.8 });
+}
+
+// ---------------- Universal Unit Converter
+{
+  const calc = load("unit-converter");
+  check("unit-converter miles to km", calc({ category: "length", value: 10, from: "mi", to: "km" }).result, 16.09);
+  check("unit-converter lbs to kg", calc({ category: "weight", value: 150, from: "lb", to: "kg" }).result, 68.04);
+  check("unit-converter celsius to fahrenheit", calc({ category: "temperature", value: 100, from: "c", to: "f" }).result, 212);
+  check("unit-converter fahrenheit to celsius", calc({ category: "temperature", value: 32, from: "f", to: "c" }).result, 0);
+  check("unit-converter gallons to liters", calc({ category: "volume", value: 5, from: "gal_us", to: "l" }).result, 18.93);
+}
+
+// ---------------- US Salaried Take-Home Pay
+{
+  const calc = load("us-take-home-pay", ["data/tax-us.js"]);
+  expectAll("us-take-home-pay $75k single", calc({ salary: 75000, status: "single", preTax: 0, stateRate: 0 }),
+    { taxableIncome: 58900, fedTax: 7670, totalFica: 5737.5, totalTaxes: 13407.5, netAnnual: 61592.5, netMonthly: 5132.71, netBiweekly: 2368.94 });
+  expectAll("us-take-home-pay $120k with 401k & state tax", calc({ salary: 120000, status: "single", preTax: 5000, stateRate: 5 }),
+    { fedTax: 16470, totalFica: 9180, stateTax: 5750, totalTaxes: 31400, netAnnual: 83600, netMonthly: 6966.67, netBiweekly: 3215.38 });
+  expectAll("us-take-home-pay $50k mfj", calc({ salary: 50000, status: "mfj", preTax: 0, stateRate: 0 }),
+    { taxableIncome: 17800, fedTax: 1780, totalFica: 3825, netAnnual: 44395 });
+}
+
+// ---------------- E-Commerce ROAS & Break-Even
+{
+  const calc = load("roas");
+  expectAll("roas 4x profitable campaign", calc({ adSpend: 2000, revenue: 8000, cogs: 40, otherExpenses: 500, orders: 100 }),
+    { roas: 4.0, roasPct: 400, netProfit: 2300, netMargin: 28.8, breakEvenRoas: 1.67, cpa: 20, aov: 80 });
+  expectAll("roas 2.5x slim margin", calc({ adSpend: 1000, revenue: 2500, cogs: 50, otherExpenses: 0, orders: 50 }),
+    { roas: 2.5, roasPct: 250, netProfit: 250, netMargin: 10.0, breakEvenRoas: 2.0, cpa: 20, aov: 50 });
+  expectAll("roas 1.0x loss campaign", calc({ adSpend: 500, revenue: 500, cogs: 30, otherExpenses: 0, orders: 10 }),
+    { roas: 1.0, roasPct: 100, netProfit: -150, breakEvenRoas: 1.43 });
+}
+
 // Real PDFs with pdf-lib, run in Node's own context (pdf-lib rejects objects from a vm sandbox).
 // Page counts must match the worked examples on each page.
 async function resumePdfTests() {

@@ -1,0 +1,76 @@
+  <section class="calculator" aria-label="Final grade calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="current">Your grade so far<span class="hint">Before the final exam</span></label>
+        <div class="input-wrap"><input id="current" type="text" inputmode="decimal" value="78" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a grade from 0 to 150.</span>
+      </div>
+
+      <div class="field">
+        <label for="weight">How much the final is worth<span class="hint">Its share of the course grade</span></label>
+        <div class="input-wrap"><input id="weight" type="text" inputmode="decimal" value="25" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from 1 to 100.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="target">The course grade you want</label>
+        <div class="input-wrap"><input id="target" type="text" inputmode="decimal" value="80" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a grade from 0 to 150.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your grades stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>You need on the final</h2>
+      <div class="result-main"><span id="out-needed">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>With 100% on the final</span><span id="out-best">—</span></li>
+        <li><span>With 0% on the final</span><span id="out-zero">—</span></li>
+      </ul>
+      <p class="result-note" id="out-verdict"></p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your course grade for different final scores</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Final exam score</th><th class="num">Course grade</th></tr></thead>
+        <tbody id="grade-table-body"><tr><td colspan="2">Enter your grades above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Course grade   = grade so far × (1 − final's share) + final score × final's share
+Score needed   = (grade wanted − grade so far × (1 − final's share)) ÷ final's share</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">78% so far, final worth 25%, want 80%:
+  (80 − 78 × 0.75) ÷ 0.25 = (80 − 58.5) ÷ 0.25     = 86.0% needed
+
+72% so far, final worth 40%, want 70%:
+  (70 − 72 × 0.6) ÷ 0.4 = (70 − 43.2) ÷ 0.4        = 67.0% needed
+
+85% so far, final worth 30%, want 90%:
+  (90 − 85 × 0.7) ÷ 0.3 = (90 − 59.5) ÷ 0.3        = 101.7% needed (not reachable)</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What if my grade uses letters?</summary>
+        <p>Use the percentage behind the letter. Your course syllabus says which percentages earn which letters, because each teacher or school sets their own scale.</p>
+      </details>
+      <details>
+        <summary>What if the final is split into parts?</summary>
+        <p>Add up the shares of every part still to come, and treat them as one final. The score you need is then the average you need across those parts.</p>
+      </details>
+      <details>
+        <summary>How do I work out my overall GPA?</summary>
+        <p>Once you have your course grades, our <a href="{{root}}education/gpa-calculator/">GPA calculator</a> works out your semester or cumulative GPA on a 4.0 scale.</p>
+      </details>
+    </div>
+  </div>

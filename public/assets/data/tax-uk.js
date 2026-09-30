@@ -12,6 +12,12 @@
  *   Vehicle flat rates:             https://www.gov.uk/simpler-income-tax-simplified-expenses/vehicles
  *   Employee mileage (bikes):       https://www.gov.uk/expenses-and-benefits-business-travel-mileage/rules-for-tax
  *   Working from home flat rates:   https://www.gov.uk/simpler-income-tax-simplified-expenses/working-from-home
+ *   Student and Postgraduate Loan thresholds (checked 2026-09-30):
+ *                                   https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027
+ *                                   https://www.gov.uk/repaying-your-student-loan/what-you-pay
+ *   VAT rates and registration threshold (checked 2026-09-30):
+ *                                   https://www.gov.uk/vat-rates
+ *                                   https://www.gov.uk/vat-registration/when-to-register
  *
  * TO UPDATE: before 6 April each year, replace the figures, change `taxYear` and `checked`,
  * then run `node tests/run-tests.js` and fix the worked examples.
@@ -57,5 +63,19 @@ window.ToolNestTaxUK = {
   },
 
   // Working from home flat rates: [minimum hours in the month, £ per month]. Under 25 hours: not allowed.
-  workFromHome: [[101, 26], [51, 18], [25, 10]]
+  workFromHome: [[101, 26], [51, 18], [25, 10]],
+
+  // Student loan repayments through PAYE: a share of yearly earnings above the plan's threshold.
+  // A Postgraduate Loan is repaid at the same time as any other plan.
+  studentLoans: {
+    plan1: { threshold: 26900, rate: 0.09 },
+    plan2: { threshold: 29385, rate: 0.09 },
+    plan4: { threshold: 33795, rate: 0.09 },
+    plan5: { threshold: 25000, rate: 0.09 },
+    postgraduate: { threshold: 21000, rate: 0.06 }
+  },
+
+  // VAT: standard rate since 4 January 2011. Register when taxable turnover for the last 12 months
+  // goes over the threshold, or is expected to in the next 30 days.
+  vat: { standard: 0.20, reduced: 0.05, zero: 0, registrationThreshold: 90000 }
 };

@@ -1,0 +1,71 @@
+  <section class="calculator" aria-label="Universal Unit Converter">
+    <div class="calc-form" id="converter-form">
+      <div class="field span-2">
+        <label for="conv-category">Measurement Category</label>
+        <div class="select-wrap">
+          <select id="conv-category">
+            <option value="length" selected>Length &amp; Distance</option>
+            <option value="weight">Weight &amp; Mass</option>
+            <option value="temperature">Temperature</option>
+            <option value="volume">Volume &amp; Capacity</option>
+            <option value="area">Area &amp; Land</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="conv-value">Value to Convert</label>
+        <div class="input-wrap"><input id="conv-value" type="text" inputmode="decimal" value="10" autocomplete="off"></div>
+      </div>
+
+      <div class="field">
+        <label for="conv-from">Convert From</label>
+        <div class="select-wrap"><select id="conv-from"></select></div>
+      </div>
+
+      <div class="field">
+        <label for="conv-to">Convert To</label>
+        <div class="select-wrap"><select id="conv-to"></select></div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="btn-swap-units">{{icon:rotate}} Swap units</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. Converted locally in your browser.</span>
+      </div>
+    </div>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Conversion result</h2>
+      <div class="result-main"><span id="out-convert-result">16.0934</span></div>
+      <p id="out-convert-equation" class="convert-equation">10 Miles (mi) = 16.0934 Kilometers (km)</p>
+      <p class="result-note">Conversions utilize standard International System of Units (SI) and US Customary / Imperial conversion factors.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Common metric &amp; imperial reference factors</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Measurement</th><th>Standard Conversion Factor</th><th>Practical Rule of Thumb</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Miles to Kilometers</strong></td><td>1 mi = 1.60934 km</td><td>Multiply miles by 1.6 (e.g. 50 mi &approx; 80 km)</td></tr>
+          <tr><td><strong>Inches to Centimeters</strong></td><td>1 in = 2.54 cm</td><td>Multiply inches by 2.5</td></tr>
+          <tr><td><strong>Pounds to Kilograms</strong></td><td>1 lb = 0.453592 kg</td><td>Divide pounds by 2.2 (e.g. 150 lbs &approx; 68 kg)</td></tr>
+          <tr><td><strong>US Gallons to Liters</strong></td><td>1 gal = 3.78541 L</td><td>Multiply gallons by 3.8</td></tr>
+          <tr><td><strong>Celsius to Fahrenheit</strong></td><td>°F = (°C × 9/5) + 32</td><td>Double °C and add 30 for a quick rough estimate</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the difference between a US gallon and an Imperial gallon?</summary>
+        <p>A US liquid gallon is exactly 3.785411784 liters, whereas an Imperial gallon (historically used in the UK and Canada) is significantly larger at exactly 4.54609 liters (approx. 20% larger).</p>
+      </details>
+      <details>
+        <summary>What is the base unit used for conversions?</summary>
+        <p>All length measurements are mathematically normalized through the SI base meter (m), mass through the kilogram (kg), and volume through the liter (L) to ensure maximum floating-point precision.</p>
+      </details>
+    </div>
+  </div>

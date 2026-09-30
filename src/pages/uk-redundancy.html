@@ -1,0 +1,106 @@
+  <section class="calculator" aria-label="UK statutory redundancy pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="age">Your age when you're made redundant<span class="hint">In whole years</span></label>
+        <div class="input-wrap"><input id="age" type="text" inputmode="numeric" value="45" autocomplete="off"><span class="affix">years</span></div>
+        <span class="error-msg">Enter an age from 16 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="years">Full years you've worked there<span class="hint">Count only complete years</span></label>
+        <div class="input-wrap"><input id="years" type="text" inputmode="numeric" value="10" autocomplete="off"><span class="affix">years</span></div>
+        <span class="error-msg">Enter years from 0 to 80.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="weekly">Your weekly pay before tax<span class="hint">Your average over the 12 weeks before your redundancy notice</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="weekly" type="text" inputmode="decimal" value="600" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Statutory redundancy pay</h2>
+      <div class="result-main"><span id="out-pay">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Weeks' pay</span><span id="out-weeks">—</span></li>
+        <li><span>Weekly pay used</span><span id="out-weekly">—</span></li>
+        <li><span>Years counted</span><span id="out-years">—</span></li>
+      </ul>
+      <p class="result-note" id="out-note">This is the legal minimum. Your contract may give you more.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your years, counted back</h2>
+    <p>Each full year of service, counting back from the date you're made redundant, earns weeks' pay by the age you were for the whole of that year:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Year of service</th><th class="num">Your age that year</th><th class="num">Weeks' pay</th></tr></thead>
+        <tbody id="years-body"><tr><td colspan="3">Enter your details above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>The rules (England, Scotland and Wales)</h2>
+    <ul>
+      <li>You need <strong>2 years or more</strong> with your employer to qualify.</li>
+      <li>For each full year of service you get: <strong>half a week's pay</strong> for each year you were under 22, <strong>one week's pay</strong> for each year you were 22 to 40, and <strong>one and a half weeks' pay</strong> for each year you were 41 or older.</li>
+      <li>Only the last <strong>20 years</strong> count.</li>
+      <li>Weekly pay is capped. If you were made redundant on or after 6 April 2026, it's capped at <strong>£751</strong>, so the most you can get is <strong>£22,530</strong>.</li>
+    </ul>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">For each of your last full years of service (up to 20):
+  aged 41 or over for the whole year  →  1.5 weeks
+  aged 22 to 40                       →  1 week
+  under 22                            →  0.5 weeks
+
+Redundancy pay = total weeks × weekly pay (no more than £751)</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">Age 45, 10 years, £600 a week:
+  4 years at 41–44 × 1.5 = 6 weeks;  6 years at 35–40 × 1 = 6 weeks
+  12 weeks × £600                                    = £7,200.00
+
+Age 30, 8 years, £900 a week (capped at £751):
+  8 years at 22–29 × 1 = 8 weeks;  8 × £751           = £6,008.00
+
+Age 24, 5 years, £400 a week:
+  2 years at 22–23 × 1 = 2 weeks;  3 years at 19–21 × 0.5 = 1.5 weeks
+  3.5 weeks × £400                                   = £1,400.00
+
+Age 62, 25 years, £800 a week:
+  only 20 years count, all at 42–61 × 1.5 = 30 weeks
+  30 × £751                                          = £22,530.00 (the maximum)</div>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Northern Ireland, which has different limits. See <a href="https://www.nidirect.gov.uk/articles/redundancy-pay" rel="noopener">nidirect: redundancy pay</a>.</li>
+      <li>Extra redundancy pay in your contract (enhanced redundancy), notice pay, and pay for holiday you haven't taken.</li>
+      <li>Tax. Statutory redundancy pay under £30,000 isn't taxable, but other parts of what you're paid when you leave, such as holiday pay and unpaid wages, can be. See <a href="https://www.gov.uk/redundant-your-rights/tax-and-national-insurance" rel="noopener">GOV.UK: tax and National Insurance on redundancy</a>.</li>
+      <li>Whether you're really redundant or were chosen fairly. <a href="https://www.acas.org.uk/redundancy" rel="noopener">Acas</a> gives free advice on this.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What counts as weekly pay?</summary>
+        <p>Your average pay before tax over the 12 weeks before the day you got your redundancy notice. If your pay varies, your employer works out the average. If you work regular hours, it's usually your normal weekly wage.</p>
+      </details>
+      <details>
+        <summary>Why does the age for each year matter?</summary>
+        <p>The law gives more for years worked when you were older. A year only counts at the higher rate if you were that age for the whole year, which is why the table uses the age you'd reached at the start of each year.</p>
+      </details>
+      <details>
+        <summary>Can I get less than this?</summary>
+        <p>No. Statutory redundancy pay is the legal minimum if you qualify. Your employer can pay more, and your contract may promise more.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Source:</strong> <a href="https://www.gov.uk/redundant-your-rights/redundancy-pay" rel="noopener">GOV.UK: redundancy pay</a>. Checked 30 September 2026.</p>
+  </div>

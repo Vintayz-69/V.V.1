@@ -4068,7 +4068,8 @@ main .section[hidden],
 
 .inv-card .field + .field,
 .inv-card .inv-grid-2 + .inv-grid-2,
-.inv-card .field + .inv-grid-2 {
+.inv-card .field + .inv-grid-2,
+.inv-card .inv-grid-2 + .field {
   margin-top: 14px;
 }
 
@@ -4090,3 +4091,588 @@ main .section[hidden],
   .col-credits { width: 58px; }
   .col-del { width: 30px; }
 }
+
+/* ---------- Tools added 30 September 2026 ----------
+   Timesheet, business days, citation generator, cover letter maker, sign PDF and PDF to text.
+   All sizes and positions live here: the Content-Security-Policy blocks style="" attributes
+   (positions set from JavaScript use the style property, which the policy allows). */
+
+.calc-form [hidden],
+.calc-results [hidden],
+.cite-tool [hidden],
+.invoice-app [hidden] {
+  display: none !important;
+}
+
+/* Timesheet: a table of days inside the calculator form. */
+.ts-table th[scope="row"] {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: left;
+  white-space: nowrap;
+}
+.ts-table thead th {
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--muted);
+  text-align: left;
+}
+.ts-table thead th.num,
+.ts-table td.num {
+  text-align: right;
+}
+.ts-table input {
+  min-width: 0;
+}
+.ts-table .ts-break {
+  text-align: right;
+}
+.ts-total {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  white-space: nowrap;
+  width: 56px;
+}
+.ts-day-short {
+  display: none;
+}
+.ts-row.is-invalid input {
+  border-color: var(--red-600);
+  background: rgba(185, 28, 28, 0.06);
+}
+.ts-error {
+  margin: 8px 0 0;
+  color: var(--red-600);
+  font-size: 0.85rem;
+}
+.ts-error:empty {
+  display: none;
+}
+.ts-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+@media (max-width: 600px) {
+  .ts-day-long,
+  .ts-unit {
+    display: none;
+  }
+  .ts-day-short {
+    display: inline;
+  }
+  .ts-total {
+    width: 44px;
+  }
+}
+
+/* Business days: the list of holidays skipped, inside the dark results panel. */
+.bd-holidays {
+  margin-top: 18px;
+}
+.bd-holidays-title {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+.bd-holiday-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.bd-holiday-list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2px 12px;
+  padding: 7px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.88rem;
+  color: #cbd5e1;
+}
+.bd-holiday-list li span:last-child {
+  color: #fff;
+}
+
+/* Citation generator: the form on the left, the citation on the right. */
+.cite-tool {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 24px;
+  align-items: start;
+  margin: 32px 0 8px;
+}
+.cite-form,
+.cite-output {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
+}
+.cite-output {
+  position: sticky;
+  top: 84px;
+}
+.cite-top,
+.cite-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
+}
+.cite-top {
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.cite-grid .span-2 {
+  grid-column: 1 / -1;
+}
+.cite-form input.text-tool-input {
+  height: 50px;
+  min-height: 0;
+  padding: 0 14px;
+  resize: none;
+}
+.cite-form input[type="date"].text-tool-input {
+  color-scheme: light;
+}
+[data-theme="dark"] .cite-form input[type="date"].text-tool-input {
+  color-scheme: dark;
+}
+.cite-form textarea.cite-authors {
+  min-height: 76px;
+}
+.cite-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+.cite-form-actions .privacy-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.83rem;
+  color: var(--subtle);
+}
+.cite-form-actions .privacy-note .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--green-600);
+}
+.cite-output h2,
+.cite-list-head h3 {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue-600);
+}
+/* A hanging indent, the way reference lists are laid out. */
+.cite-out,
+.cite-list li {
+  padding-left: 2em;
+  text-indent: -2em;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+.cite-out {
+  margin: 0;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-right: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+}
+.cite-out.is-empty {
+  color: var(--subtle);
+  text-indent: 0;
+}
+.cite-tip {
+  margin: 12px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.cite-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.cite-list-wrap {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.cite-list-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.cite-list-head span {
+  font-size: 0.85rem;
+  color: var(--subtle);
+}
+.cite-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cite-list li + li {
+  margin-top: 10px;
+}
+@media (max-width: 960px) {
+  .cite-tool {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cite-output {
+    position: static;
+  }
+}
+@media (max-width: 600px) {
+  .cite-top,
+  .cite-grid {
+    grid-template-columns: 1fr;
+  }
+  .cite-form,
+  .cite-output {
+    padding: 18px;
+  }
+}
+
+/* Cover letter maker: reuses the invoice layout; the preview is a letter on paper. */
+.cl-status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--green-600);
+}
+.cl-status:empty {
+  display: none;
+}
+.cl-status.is-error {
+  color: var(--red-600);
+}
+.cl-words {
+  margin: 12px 0 0;
+  font-size: 0.85rem;
+  color: var(--subtle);
+}
+.cl-warnings {
+  margin: 12px 0 0;
+  padding: 12px 14px 12px 32px;
+  border-radius: var(--radius-sm);
+  background: var(--amber-50);
+  border: 1px solid var(--amber-300);
+  font-size: 0.88rem;
+}
+.cl-paper {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.cl-paper.cl-serif {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 0.92rem;
+}
+.cl-paper > * {
+  margin: 0;
+}
+.cl-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.cl-contact {
+  color: #475569;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+[data-theme="dark"] .cl-contact {
+  color: #a6b2c6;
+}
+.cl-subject {
+  font-weight: 700;
+}
+.cl-gap {
+  height: 0.85em;
+}
+.cl-sign {
+  height: 2.2em;
+}
+
+/* Sign PDF */
+.sign-steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 22px;
+  align-items: start;
+}
+.sign-panel {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.sign-heading {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.sign-pad {
+  display: block;
+  width: 100%;
+  height: 170px;
+  background: #fff;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: crosshair;
+  touch-action: none; /* so drawing doesn't scroll the page */
+}
+.sign-pad-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.sign-pad-hint,
+.sign-stage-hint,
+.sign-need {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.sign-need {
+  color: var(--blue-600);
+  font-weight: 600;
+}
+.sign-page-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+.sign-page-field {
+  flex: 1 1 auto;
+  max-width: 200px;
+}
+.sign-page-bar .icon-btn {
+  margin-bottom: 4px;
+}
+.sign-stage {
+  position: relative;
+  max-width: 560px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: #fff;
+  line-height: 0;
+  cursor: pointer;
+  user-select: none;
+}
+.sign-stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sign-stage.no-preview {
+  min-height: 200px;
+}
+.sign-marker {
+  position: absolute;
+  outline: 2px dashed var(--blue-600);
+  outline-offset: 2px;
+  touch-action: none;
+  cursor: move;
+}
+.sign-marker:focus-visible {
+  outline: 3px solid var(--blue-600);
+}
+.sign-marker img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.sign-date-preview {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 2px;
+  font: 11px/1.2 Helvetica, Arial, sans-serif;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+.sign-range {
+  width: 100%;
+  accent-color: var(--blue-600);
+}
+@media (max-width: 800px) {
+  .sign-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* PDF to text: the text box shown under the result. */
+.text-result {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.text-result label {
+  font-weight: 600;
+  font-size: 0.93rem;
+}
+.text-result-area {
+  min-height: 260px;
+  font-family: var(--mono);
+  font-size: 14px;
+}
+.text-result .btn {
+  justify-self: start;
+}
+
+/* ---------- One-Click Print & PDF Summary (@media print) ---------- */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .nav-cta,
+  .theme-switch,
+  .form-actions,
+  .btn,
+  .result-bar,
+  .content,
+  .calc-form .error-msg,
+  .faq,
+  .related-grid,
+  .country-grid,
+  .hero-actions,
+  .trust-list,
+  .preview-wrap,
+  .rf-bar,
+  .inv-bar,
+  .pdf-drop,
+  .pdf-actions,
+  .nav-menu {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .calculator::before {
+    content: "ToolNest by Vintayz · vintayz.com · Summary Report";
+    display: block;
+    font-size: 14pt;
+    font-weight: 800;
+    color: #0b1b34 !important;
+    border-bottom: 2pt solid #0b1b34;
+    padding-bottom: 6pt;
+    margin-bottom: 16pt;
+  }
+
+  .calculator {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20pt !important;
+    page-break-inside: avoid;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .calc-form {
+    border: 1pt solid #cbd5e1 !important;
+    padding: 14pt !important;
+    border-radius: 4pt !important;
+  }
+
+  .calc-results {
+    border: 1pt solid #cbd5e1 !important;
+    padding: 14pt !important;
+    border-radius: 4pt !important;
+    background: #f8fafc !important;
+  }
+
+  .result-main {
+    font-size: 22pt !important;
+    font-weight: 800 !important;
+    color: #0b1b34 !important;
+    margin-bottom: 12pt !important;
+  }
+
+  .result-list li {
+    border-bottom: 1pt solid #e2e8f0 !important;
+    padding: 5pt 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  .field input,
+  .field select {
+    border: 1pt solid #94a3b8 !important;
+    padding: 4pt 6pt !important;
+    font-size: 10pt !important;
+  }
+
+  .table-wrap,
+  table {
+    page-break-inside: avoid;
+    width: 100% !important;
+  }
+
+  th, td {
+    padding: 4pt 6pt !important;
+    border-bottom: 1pt solid #cbd5e1 !important;
+  }
+}
+
+/* Small layout helpers for the colour contrast, JSON, tip and unit tools
+   (moved out of inline style="" attributes, which the Content-Security-Policy blocks). */
+.inline-row { display: flex; gap: 8px; }
+.inline-row > .grow { flex: 1; }
+.tip-presets { flex-wrap: wrap; margin-bottom: 8px; }
+.color-swatch-input { width: 48px; height: 44px; padding: 2px; border-radius: var(--radius-sm); cursor: pointer; }
+.contrast-preview { padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); transition: all 0.2s ease; }
+.contrast-preview h3 { margin: 0 0 8px; font-size: 1.3rem; }
+.contrast-preview p { margin: 0; font-size: 1rem; line-height: 1.5; }
+.json-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.json-head label { margin: 0; }
+.json-input { font-family: var(--mono); font-size: 14px; line-height: 1.5; }
+.json-error { margin-top: 10px; color: var(--red-600); font-family: var(--mono); font-size: 13px; }
+.json-error[hidden] { display: none; }
+.field-end { display: flex; flex-direction: column; justify-content: flex-end; }
+.check-label { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 10px 0; }
+.check-label input { width: 18px; height: 18px; cursor: pointer; }
+.convert-equation { font-weight: 500; color: var(--text); margin-bottom: 12px; }

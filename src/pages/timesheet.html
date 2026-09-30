@@ -1,0 +1,127 @@
+  <section class="calculator calculator-wide" aria-label="Timesheet calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <p class="field-title" id="ts-title">Your week<span class="hint">Times like 9:00, 17:30 or 5:30pm. Leave days off empty.</span></p>
+        <div class="table-wrap">
+          <table class="inv-items-table ts-table" aria-labelledby="ts-title">
+            <thead>
+              <tr>
+                <th scope="col">Day</th>
+                <th scope="col">Start</th>
+                <th scope="col">Finish</th>
+                <th scope="col" class="num">Break <span class="ts-unit">(min)</span></th>
+                <th scope="col" class="num">Hours</th>
+              </tr>
+            </thead>
+            <tbody id="ts-body"></tbody>
+          </table>
+        </div>
+        <p class="ts-error" id="ts-error" role="status"></p>
+        <div class="ts-actions">
+          <button type="button" class="btn btn-sm btn-ghost" id="ts-clear">Clear all days</button>
+          <button type="button" class="btn btn-sm btn-ghost" id="ts-copy">Copy timesheet</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rate">Hourly rate</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="25" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="overtimeAfter">Overtime after<span class="hint">Optional. Hours in the week before overtime starts</span></label>
+        <div class="input-wrap"><input id="overtimeAfter" type="text" inputmode="decimal" value="" placeholder="No overtime" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0 to 168, or leave it empty.</span>
+      </div>
+
+      <div class="field">
+        <label for="overtimeRate">Overtime rate<span class="hint">1.5 means time and a half</span></label>
+        <div class="input-wrap"><input id="overtimeRate" type="text" inputmode="decimal" value="1.5" autocomplete="off"><span class="affix">× rate</span></div>
+        <span class="error-msg">Enter a number from 1 to 5.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your times stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Hours this week</h2>
+      <div class="result-main"><span id="out-hours">—</span> <small>hours</small></div>
+      <ul class="result-list">
+        <li class="key"><span>In hours and minutes</span><span id="out-hhmm">—</span></li>
+        <li><span>Normal hours</span><span id="out-regular">—</span></li>
+        <li><span>Overtime hours</span><span id="out-ot">—</span></li>
+        <li class="key"><span>Pay for the week</span><span id="out-pay">—</span></li>
+      </ul>
+      <p class="result-note">A finish time earlier than the start time counts as the next morning, for night shifts.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Type your start and finish times</strong> for each day you worked. Use the 24-hour clock (17:30) or am and pm (5:30pm).</li>
+      <li><strong>Add your unpaid break</strong> for each day, in minutes. Leave it empty if you didn't take one, or if your breaks are paid.</li>
+      <li><strong>Enter your hourly rate</strong> to see your pay. If overtime starts after a set number of hours in the week, add that and the overtime rate.</li>
+      <li><strong>Copy the timesheet</strong> to paste it into an email, a spreadsheet or an invoice.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Hours for a day   = finish − start − break
+                    (add 24 hours if the finish is before the start)
+Hours for a week  = the days added together
+Decimal hours     = minutes ÷ 60           (7 h 30 min = 7.5 hours)
+Pay               = normal hours × rate + overtime hours × rate × overtime rate</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">9:00 to 17:30 with a 30-minute break      = 8 h 00 min = 8.00 hours
+Five days like that at $25 an hour          = 40.00 hours → $1,000.00
+Night shift 22:00 to 06:00, 30-minute break = 7 h 30 min = 7.50 hours
+8:15 to 16:45, 45-minute break              = 7 h 45 min = 7.75 hours
+45 hours at £18, overtime after 40 at 1.5×  = 40 × 18 + 5 × 27 = £855.00</div>
+
+    <h2>Minutes to decimal hours</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Minutes</th><th class="num">Decimal hours</th></tr></thead>
+        <tbody>
+          <tr><td>15 minutes</td><td class="num">0.25</td></tr>
+          <tr><td>20 minutes</td><td class="num">0.33</td></tr>
+          <tr><td>30 minutes</td><td class="num">0.5</td></tr>
+          <tr><td>40 minutes</td><td class="num">0.67</td></tr>
+          <tr><td>45 minutes</td><td class="num">0.75</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why is 7 hours 30 minutes shown as 7.5?</summary>
+        <p>Pay is worked out on decimal hours, where 30 minutes is half an hour (0.5), not 0.30. Both are shown, so you can use whichever your client or employer asks for.</p>
+      </details>
+      <details>
+        <summary>Is my timesheet saved?</summary>
+        <p>No. Nothing is stored on your device or sent to us, so the times are gone when you close the page. Use "Copy timesheet" to keep a copy in your own email, notes or spreadsheet.</p>
+      </details>
+      <details>
+        <summary>I'm a freelancer. How do I bill these hours?</summary>
+        <p>Put the total hours and your rate into our <a href="{{root}}freelance/invoice-generator/">invoice generator</a>. To check your rate covers tax, time off and unpaid admin, use the <a href="{{root}}freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a>.</p>
+      </details>
+    </div>
+  </div>

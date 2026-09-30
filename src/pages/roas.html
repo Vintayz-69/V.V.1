@@ -1,0 +1,85 @@
+  <section class="calculator" aria-label="E-commerce ROAS calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="adSpend">Total Advertising Spend<span class="hint">Meta, Google, TikTok ad costs</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="adSpend" type="text" inputmode="decimal" value="2000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="revenue">Attributed Ad Revenue<span class="hint">Sales generated from ads</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="revenue" type="text" inputmode="decimal" value="8000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="cogs">Cost of Goods Sold (COGS)<span class="hint">Product &amp; shipping cost (% of price)</span></label>
+        <div class="input-wrap"><input id="cogs" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 100%.</span>
+      </div>
+
+      <div class="field">
+        <label for="otherExpenses">Other Campaign Costs<span class="hint">Agency fees, creative tools, software</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="otherExpenses" type="text" inputmode="decimal" value="500" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="orders">Number of Orders / Conversions<span class="hint">Optional: to calculate CPA and AOV</span></label>
+        <div class="input-wrap"><input id="orders" type="text" inputmode="numeric" value="100" autocomplete="off"><span class="affix">orders</span></div>
+        <span class="error-msg">Enter 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. Campaign figures stay on your device.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Campaign ROAS &amp; profitability</h2>
+      <div class="result-main"><span id="out-roas">—</span> <small>return on ad spend</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Real net profit after ads</span><span id="out-net-profit">—</span></li>
+        <li class="key"><span>Net campaign profit margin</span><span id="out-net-margin">—</span></li>
+        <li class="key"><span>Break-even ROAS required</span><span id="out-breakeven-roas">—</span></li>
+        <li><span>Cost per Acquisition (CPA)</span><span id="out-cpa">—</span></li>
+        <li><span>Average Order Value (AOV)</span><span id="out-aov">—</span></li>
+      </ul>
+      <p class="result-note">Unlike standard dashboard ROAS which only shows gross revenue, this calculator subtracts product manufacturing costs to reveal actual net cash profits.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How ROAS and break-even ROAS are calculated</h2>
+    <div class="formula">ROAS (Return on Ad Spend) = Ad Revenue ÷ Ad Spend
+Break-Even ROAS           = 1 ÷ [ 1 - (COGS % ÷ 100) ]
+Net Campaign Profit       = Revenue - Product COGS - Ad Spend - Other Expenses</div>
+
+    <h2>Why a high ROAS can still lose money</h2>
+    <p>Many digital media buyers celebrate a 2.5x ROAS in Facebook Ads Manager or Google Ads without factoring in unit economics. If your product margins are slim (for example, COGS is 65%), your break-even ROAS is <code>1 ÷ (1 - 0.65) = 2.86x</code>. In that scenario, running ads at a 2.5x ROAS actually loses money on every sale!</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is considered a "good" ROAS?</summary>
+        <p>A good ROAS depends entirely on your gross profit margin. High-margin digital products (85%+ margin) can scale profitably at 1.5x to 2.0x ROAS, while physical consumer goods with 50% margins generally require 3.0x to 4.0x+ ROAS to cover shipping, handling, and overhead.</p>
+      </details>
+      <details>
+        <summary>What is the difference between ROAS and ROI?</summary>
+        <p>ROAS measures gross revenue generated per dollar of ad spend (Revenue / Ad Spend). ROI (Return on Investment) measures net profit earned relative to total costs including production, staffing, and overhead [(Net Profit / Total Investment) × 100%].</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,56 @@
+  <section class="calculator" aria-label="JSON Formatter and Validator">
+    <div class="calc-form text-tool-form">
+      <div class="field span-2">
+        <div class="json-head">
+          <label for="json-input">JSON Input or Paste</label>
+          <span id="out-json-status" class="badge muted">Waiting for input</span>
+        </div>
+        <textarea id="json-input" rows="14" placeholder='Paste your JSON here, e.g. {"key": "value"}...' class="json-input"></textarea>
+        <div id="json-error-box" class="rf-noscript json-error" hidden></div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-primary" id="btn-beautify">{{icon:code}} Beautify (2 spaces)</button>
+        <button type="button" class="btn btn-sm" id="btn-minify">Minify / Compact</button>
+        <button type="button" class="btn btn-sm" id="btn-copy-json">Copy to clipboard</button>
+        <button type="button" class="btn btn-sm btn-ghost" id="btn-clear-json">{{icon:trash}} Clear</button>
+        <button type="button" class="btn btn-sm btn-ghost" id="btn-sample-json">Load sample</button>
+        <span class="privacy-note">{{icon:lock}} 100% private. Nothing you paste leaves your device.</span>
+      </div>
+    </div>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>JSON details</h2>
+      <div class="result-main"><span id="out-json-keys">0</span> <small>total keys</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Input length</span><span id="out-json-size">0 chars</span></li>
+        <li class="key"><span>Minification compression</span><span id="out-json-saved">0%</span></li>
+      </ul>
+      <p class="result-note">Formatting and syntax validation are performed entirely in your browser using standard JavaScript ECMAScript JSON engines.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Why use a private, client-side JSON formatter?</h2>
+    <p>Many online JSON formatters upload your text to their servers, where sensitive API keys, customer emails, internal database records, or passwords can be logged and stored. ToolNest parses and formats JSON <strong>entirely in your browser memory</strong>. Not a single byte is transmitted to us or anyone else.</p>
+
+    <h2>How to format and validate your JSON</h2>
+    <ol class="steps">
+      <li><strong>Paste or type your JSON code</strong> into the editor above.</li>
+      <li><strong>Check the live status badge:</strong> If there is a syntax error (such as a missing bracket, unquoted key, or trailing comma), the exact error message will appear immediately.</li>
+      <li><strong>Click "Beautify"</strong> to indent nested keys with 2 spaces for easy reading, or <strong>"Minify"</strong> to strip whitespace and reduce payload size for production APIs.</li>
+      <li><strong>Click "Copy to clipboard"</strong> to grab the clean code with one click.</li>
+    </ol>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What causes common JSON parsing errors?</summary>
+        <p>The most common JSON errors are: (1) trailing commas after the last item in an object or array, (2) single quotes instead of double quotes around keys and strings, and (3) missing closing braces or brackets.</p>
+      </details>
+      <details>
+        <summary>Does this tool work with large files?</summary>
+        <p>Yes. Because parsing happens directly on your device's CPU with standard browser native JSON engines, it easily handles large files of several megabytes with near-instant speed.</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,145 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Sign PDF tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="sign-steps">
+        <div class="sign-panel">
+          <h2 class="sign-heading">1. Your signature</h2>
+          <fieldset class="choice-group">
+            <legend class="visually-hidden">How to add your signature</legend>
+            <div class="choices">
+              <div class="choice"><input class="visually-hidden" type="radio" name="sign-mode" id="sign-mode-draw" value="draw" checked><label for="sign-mode-draw">Draw it</label></div>
+              <div class="choice"><input class="visually-hidden" type="radio" name="sign-mode" id="sign-mode-type" value="type"><label for="sign-mode-type">Type it</label></div>
+            </div>
+          </fieldset>
+
+          <div id="sign-draw-box">
+            <canvas class="sign-pad" id="sign-pad" aria-label="Signature pad: draw your signature with your mouse, pen or finger"></canvas>
+            <div class="sign-pad-bar">
+              <span class="sign-pad-hint">Sign above with your mouse, pen or finger</span>
+              <button type="button" class="btn btn-sm btn-quiet" id="sign-clear">Clear</button>
+            </div>
+          </div>
+
+          <div id="sign-type-box" hidden>
+            <div class="field">
+              <label for="sign-typed">Type your name</label>
+              <div class="input-wrap"><input id="sign-typed" type="text" maxlength="60" autocomplete="off" spellcheck="false"></div>
+            </div>
+            <div class="field">
+              <label for="sign-font">Style</label>
+              <div class="select-wrap">
+                <select id="sign-font">
+                  <option value="script">Handwriting style</option>
+                  <option value="serif">Classic italic</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="sign-colour">Ink colour</label>
+            <div class="select-wrap">
+              <select id="sign-colour">
+                <option value="black">Black</option>
+                <option value="blue">Blue</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="sign-panel" id="sign-place" hidden>
+          <h2 class="sign-heading">2. Place it on the page</h2>
+          <div class="sign-page-bar">
+            <button type="button" class="icon-btn" id="sign-prev" aria-label="Previous page" title="Previous page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <div class="field sign-page-field">
+              <label for="sign-page">Page</label>
+              <div class="input-wrap"><input id="sign-page" type="number" min="1" step="1" inputmode="numeric" value="1"><span class="affix" id="sign-page-count"></span></div>
+              <span class="error-msg"></span>
+            </div>
+            <button type="button" class="icon-btn" id="sign-next" aria-label="Next page" title="Next page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+          <p class="sign-need" id="sign-need">Draw or type your signature first, then tap the page where it should go.</p>
+          <div class="sign-stage" id="sign-stage">
+            <canvas id="sign-page-canvas" aria-hidden="true"></canvas>
+            <div class="sign-marker" id="sign-marker" tabindex="0" role="img" aria-label="Your signature on the page. Use the arrow keys to move it." hidden>
+              <img id="sign-marker-img" alt="">
+              <span class="sign-date-preview" id="sign-date-preview" hidden></span>
+            </div>
+          </div>
+          <p class="sign-stage-hint">Tap or drag on the page to move your signature. With a keyboard, select it and use the arrow keys.</p>
+          <div class="pdf-options">
+            <div class="field">
+              <label for="sign-size">Signature size</label>
+              <input id="sign-size" class="sign-range" type="range" min="10" max="60" step="1" value="30">
+            </div>
+            <div class="field check-field">
+        <label class="check"><input id="sign-date" type="checkbox"><span>Add today's date under it</span></label>
+      </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run" disabled>Sign and save PDF</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your PDF and your signature stay on your device. Nothing is uploaded or saved.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to sign a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Draw your signature</strong> with your mouse, a pen or your finger, or type your name.</li>
+      <li><strong>Tap the page where it should go.</strong> It opens on the last page, where signatures usually go; change the page number to sign somewhere else. Adjust the size, and add today's date if you need it.</li>
+      <li><strong>Press "Sign and save PDF"</strong> and download the signed copy.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>Your signature is cropped to just the ink, saved as a see-through picture, and added to the page at the spot you chose. The picture keeps its shape: the size setting is its width as a share of the page, and its height follows. Everything else on the page is left exactly as it was.</p>
+
+    <h2>Example</h2>
+    <p>A signature three times as wide as it is tall, set to 30% of a US Letter page (612 × 792 points), centred 72% of the way across and 85% of the way down:</p>
+    <div class="formula">Width            =  30% × 612                    =  183.6 points
+Height           =  183.6 ÷ 3                    =   61.2 points
+Left edge        =  72% × 612 − 183.6 ÷ 2        =  348.84 points from the left
+Bottom edge      =  792 − (85% × 792 + 61.2 ÷ 2)  =   88.2 points from the bottom</div>
+
+    <h2>Is it legally binding?</h2>
+    <p>This tool adds a picture of your signature to the PDF, which is what many people mean by "signing a PDF". Whether that's accepted depends on the document and on who you're sending it to: many everyday forms and letters accept it, but some documents need a wet-ink signature, a witness, or a certified digital signature. If you're not sure, ask the person or organisation who sent it. This isn't legal advice.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is my signature stored anywhere?</summary>
+        <p>No. It's drawn and added to the PDF by your own browser. It's never sent to us, and nothing is kept after you close the page.</p>
+      </details>
+      <details>
+        <summary>Can I sign on more than one page?</summary>
+        <p>Sign one page, download the PDF, then open the signed copy and sign the next page.</p>
+      </details>
+      <details>
+        <summary>The PDF already has a digital signature. Can I add mine?</summary>
+        <p>Any change to a PDF, including this one, breaks existing certified digital signatures. If a document has been digitally signed by someone else, check with them before changing it.</p>
+      </details>
+      <details>
+        <summary>Can someone copy my signature from the PDF?</summary>
+        <p>Anyone who has the PDF can see your signature, just like on paper. Only send signed documents to people you trust, and consider adding the date so it's clear when you signed.</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,111 @@
+  <section class="calculator" aria-label="UK holiday entitlement calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="mode">How do you work?</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="days">The same number of days each week</option>
+            <option value="hours">The same number of hours each week</option>
+            <option value="irregular">Irregular hours, or only part of the year</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="days">Days you work each week</label>
+        <div class="input-wrap"><input id="days" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter days from 0.5 to 7.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours you work each week</label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="37.5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0.5 to 168.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="worked">Hours you worked in the pay period<span class="hint">Not counting any holiday you took</span></label>
+        <div class="input-wrap"><input id="worked" type="text" inputmode="decimal" value="30" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours of 0 or more.</span>
+      </div>
+
+      <div class="field span-2 check-field" id="part-year-wrap">
+        <label class="check"><input id="partYear" type="checkbox"><span>I'm starting or leaving part way through the leave year</span></label>
+      </div>
+
+      <div class="field span-2">
+        <label for="months">Months you work in this leave year</label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="decimal" value="6" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter months from 0 to 12.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2 id="out-title">Your holiday each year</h2>
+      <div class="result-main"><span id="out-main">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Worked out as</span><span id="out-weeks">—</span></li>
+      </ul>
+      <p class="result-note" id="out-detail">Your employer can include bank holidays in this.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>The rules</h2>
+    <ul>
+      <li>Almost all workers are entitled to at least <strong>5.6 weeks' paid holiday</strong> a year.</li>
+      <li>Statutory paid holiday is <strong>capped at 28 days</strong>. Someone working 6 days a week still gets 28 days.</li>
+      <li>Your employer <strong>can include bank holidays</strong> in the 5.6 weeks. Many full-time jobs give 20 days plus the 8 bank holidays in England and Wales.</li>
+      <li>Part-time workers get 5.6 times their working week. Someone working 3 days a week gets at least 16.8 days.</li>
+      <li>For leave years starting on or after 1 April 2024, <strong>irregular hours and part-year workers</strong> build up holiday at <strong>12.07% of the hours they work</strong> in each pay period.</li>
+    </ul>
+    <p>Your contract can give you more than this, but not less.</p>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Fixed days:       holiday = days a week × 5.6        (no more than 28 days)
+Fixed hours:      holiday = hours a week × 5.6       (no more than 28 of your average days)
+Irregular hours:  holiday = hours worked × 12.07%
+Part of the year: holiday = full-year holiday × months worked ÷ 12
+
+12.07% comes from 5.6 weeks of holiday ÷ 46.4 working weeks (52 − 5.6).</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">5 days a week           →  5 × 5.6 = 28 days
+3 days a week           →  3 × 5.6 = 16.8 days
+6 days a week           →  6 × 5.6 = 33.6, capped at 28 days
+30 hours over 4 days    →  30 × 5.6 = 168 hours (22.4 days of 7.5 hours)
+30 hours worked, irregular  →  30 × 12.07% = 3.621 hours
+5 days a week, leaving after 6 months  →  28 × 6 ÷ 12 = 14 days</div>
+    <p>GOV.UK's own example rounds the 3.621 hours for an irregular hours worker up to 4 hours.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Holiday pay (how much you're paid for each day off), including rolled-up holiday pay.</li>
+      <li>Carrying holiday over into the next leave year, and holiday during sick leave or family leave.</li>
+      <li>Extra holiday your contract gives you. Check your contract or staff handbook.</li>
+      <li>Northern Ireland, which has its own employment law. The 5.6 weeks and 28-day cap are the same, but check <a href="https://www.nidirect.gov.uk/articles/holiday-entitlements" rel="noopener">nidirect</a> for the details.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do bank holidays count as part of my holiday?</summary>
+        <p>They can. The law lets your employer count bank holidays as part of your 5.6 weeks, and there's no legal right to paid time off on a bank holiday. Your contract says whether bank holidays are extra or included.</p>
+      </details>
+      <details>
+        <summary>I'm self-employed. Does this apply to me?</summary>
+        <p>No. Holiday entitlement is for employees and workers. If you're a freelancer, the holidays you take are unpaid, so our <a href="{{root}}freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a> helps you build time off into your prices.</p>
+      </details>
+      <details>
+        <summary>Who counts as an irregular hours worker?</summary>
+        <p>Someone whose paid hours change from week to week, such as a zero-hours contract. A part-year worker is someone who only works part of the year and isn't paid for the weeks in between, such as some school-term roles.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/holiday-entitlement-rights" rel="noopener">GOV.UK: holiday entitlement</a>; <a href="https://www.gov.uk/holiday-entitlement-rights/calculate-leave-entitlement" rel="noopener">GOV.UK: calculate leave entitlement</a>. Checked 30 September 2026.</p>
+  </div>

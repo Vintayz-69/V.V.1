@@ -15,6 +15,7 @@ Placeholders you can use inside src/pages files:
   {{cards:GROUP}}     cards for live tools in a group (pricing, income, pdf-organize…)
   {{featured:PARENT}} cards for the tools marked featured=True in a section (e.g. pdf)
   {{soon:GROUP}}      "coming soon" cards (planning, tax)
+  {{tool:KEY}}        one card for a single tool, e.g. {{tool:uk-vat}} (to show a tool on a second hub)
 """
 import hashlib
 import html
@@ -243,6 +244,13 @@ TOOLS = {
         short="Find the contract rate that matches a salary plus 12% super and paid leave.",
         icon="briefcase", group="au-tax", parent="australia",
     ),
+    "uk-vat": dict(
+        path="uk/vat-calculator/",
+        name="VAT Calculator UK (20%)",
+        card="VAT calculator",
+        short="Add 20% or 5% VAT to a price, or take the VAT out of a total, with the £90,000 registration rule.",
+        icon="formula", group="uk-tax", parent="uk", keywords="value added tax add remove reverse inclusive exclusive",
+    ),
     "au-voluntary-super": dict(
         path="au/voluntary-super-contribution-calculator/",
         name="Voluntary Super Contribution Calculator (2026–27)",
@@ -308,6 +316,14 @@ TOOLS = {
         icon="file", group="pdf-convert", parent="pdf", keywords="image photo picture png jpeg webp gif scan screenshot convert make",
         go="Open tool", featured=True,
     ),
+    "pdf-to-text": dict(
+        path="pdf/pdf-to-text/",
+        name="PDF to Text Converter",
+        card="PDF to text",
+        short="Copy the words out of a PDF, or save them as a plain text file.",
+        icon="text", group="pdf-convert", parent="pdf", keywords="txt extract copy words convert plain text notepad",
+        go="Open tool",
+    ),
     "pdf-to-jpg": dict(
         path="pdf/pdf-to-jpg/",
         name="PDF to JPG Converter",
@@ -340,6 +356,14 @@ TOOLS = {
         icon="droplet", group="pdf-edit", parent="pdf", keywords="stamp draft confidential copy sample mark",
         go="Open tool",
     ),
+    "pdf-sign": dict(
+        path="pdf/sign-pdf/",
+        name="Sign a PDF",
+        card="Sign PDF",
+        short="Draw or type your signature, place it on the page and save the signed PDF.",
+        icon="pen", group="pdf-edit", parent="pdf", keywords="signature esign e-sign fill sign initial autograph",
+        go="Open tool", featured=True,
+    ),
 
     # Resume and CV makers: one per country, all built in the visitor's browser (assets/js/resume.js).
     "resume-us": dict(
@@ -370,6 +394,13 @@ TOOLS = {
         short="An Australian resume on A4 with key skills and referees, following Workforce Australia's template.",
         icon="resume", group="resume", parent="resume", go="Open builder",
     ),
+    "cover-letter": dict(
+        path="resume-maker/cover-letter-maker/",
+        name="Cover Letter Maker",
+        card="Cover letter maker",
+        short="Write a cover letter laid out for the US, UK, Canada or Australia, and download it as a PDF.",
+        icon="file", group="resume", parent="resume", go="Open maker",
+    ),
 
     # Invoice Generator (Stage 1 Phase D)
     "invoice-generator": dict(
@@ -378,6 +409,20 @@ TOOLS = {
         card="Freelance invoice generator",
         short="Create, customize and download professional freelance invoices as PDFs. No sign-up, no watermarks, files stay on your device.",
         icon="receipt", group="income", parent="freelance", go="Create invoice",
+    ),
+    "timesheet": dict(
+        path="freelance/timesheet-calculator/",
+        name="Timesheet Calculator",
+        card="Timesheet calculator",
+        short="Add up a week of start and finish times, less breaks, and see what to bill at your hourly rate.",
+        icon="clock", group="income", parent="freelance",
+    ),
+    "business-days": dict(
+        path="freelance/business-days-calculator/",
+        name="Business Days Calculator",
+        card="Business days calculator",
+        short="Count working days between two dates, or add working days to a date, skipping US or UK public holidays.",
+        icon="calendar", group="planning", parent="freelance",
     ),
 
     # Business tools (Stage 4)
@@ -402,6 +447,13 @@ TOOLS = {
         short="Work out card processing fees, your net payout, and how much to invoice to cover the fee.",
         icon="card", group="business-ops", parent="business",
     ),
+    "quote-generator": dict(
+        path="business/quote-generator/",
+        name="Quote and Estimate Generator",
+        card="Quote generator",
+        short="Make a clear price quote or estimate for a client and download it as a PDF. No sign-up.",
+        icon="file", group="business-ops", parent="business", go="Create quote",
+    ),
 
     # Career tools (Stage 2)
     "salary-to-hourly": dict(
@@ -410,6 +462,41 @@ TOOLS = {
         card="Salary to hourly calculator",
         short="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates.",
         icon="clock", group="career-salary", parent="career",
+    ),
+    "pay-rise": dict(
+        path="career/pay-rise-calculator/",
+        name="Pay Rise Calculator",
+        card="Pay rise calculator",
+        short="See your raise as a percentage and in money, and whether it beats inflation.",
+        icon="trending", group="career-salary", parent="career", keywords="raise salary increase percentage inflation",
+    ),
+    "overtime": dict(
+        path="career/overtime-calculator/",
+        name="Overtime Pay Calculator",
+        card="Overtime calculator",
+        short="Work out weekly pay with time-and-a-half and double-time hours.",
+        icon="clock", group="career-salary", parent="career", keywords="time and a half double time extra hours",
+    ),
+    "uk-take-home": dict(
+        path="career/uk-take-home-pay-calculator/",
+        name="UK Take-Home Pay Calculator (2026/27)",
+        card="UK take-home pay calculator",
+        short="Your salary after Income Tax, National Insurance, student loan and pension for 2026 to 2027.",
+        icon="receipt", group="career-country", parent="career", keywords="salary after tax paye net pay wage",
+    ),
+    "uk-holiday": dict(
+        path="career/uk-holiday-entitlement-calculator/",
+        name="UK Holiday Entitlement Calculator",
+        card="UK holiday entitlement calculator",
+        short="Your minimum paid holiday in days or hours, including part-time and irregular hours.",
+        icon="sunrise", group="career-country", parent="career", keywords="annual leave days off part time",
+    ),
+    "uk-redundancy": dict(
+        path="career/uk-redundancy-pay-calculator/",
+        name="UK Statutory Redundancy Pay Calculator",
+        card="UK redundancy pay calculator",
+        short="Work out the legal minimum redundancy pay from your age, service and weekly pay.",
+        icon="briefcase", group="career-country", parent="career", keywords="redundant laid off severance",
     ),
 
     # Student and writing tools (Stage 5)
@@ -420,6 +507,13 @@ TOOLS = {
         short="Count words, characters, sentences, estimated reading time, speaking time, and Flesch readability grade level.",
         icon="type-icon", group="education-writing", parent="education", go="Open tool",
     ),
+    "citation": dict(
+        path="education/citation-generator/",
+        name="Citation Generator (APA, MLA, Harvard)",
+        card="Citation generator",
+        short="Make APA 7, MLA 9 and Harvard references for websites, books and journal articles.",
+        icon="book", group="education-writing", parent="education", go="Open tool", keywords="reference bibliography works cited cite",
+    ),
     "gpa-calculator": dict(
         path="education/gpa-calculator/",
         name="College GPA Calculator (4.0 Scale)",
@@ -427,11 +521,108 @@ TOOLS = {
         short="Calculate semester and cumulative college GPA on a 4.0 scale, weighted by course credits.",
         icon="award", group="education-gpa", parent="education",
     ),
+    "uk-degree": dict(
+        path="education/uk-degree-classification-calculator/",
+        name="UK Degree Classification Calculator",
+        card="UK degree calculator",
+        short="Work out your degree mark and class (First, 2:1, 2:2) and the final-year marks you need.",
+        icon="award", group="education-gpa", parent="education", keywords="first 2:1 honours university grade",
+    ),
+    "final-grade": dict(
+        path="education/final-grade-calculator/",
+        name="Final Grade Calculator",
+        card="Final grade calculator",
+        short="Find the score you need on your final exam to get the course grade you want.",
+        icon="percent", group="education-gpa", parent="education", keywords="exam score need what do i need",
+    ),
+
+    # Personal Finance (Part 1)
+    "compound-interest": dict(
+        path="finance/compound-interest-calculator/",
+        name="Compound Interest Calculator",
+        card="Compound interest calculator",
+        short="See how regular deposits and compound interest grow your investments over time, with a year-by-year schedule.",
+        icon="trending", group="finance-invest", parent="finance", keywords="investment future value savings return growth",
+    ),
+    "mortgage": dict(
+        path="finance/mortgage-calculator/",
+        name="Mortgage Payment Calculator",
+        card="Mortgage payment calculator",
+        short="Calculate monthly principal, interest, taxes and insurance payments for fixed-rate home loans.",
+        icon="home-icon", group="finance-invest", parent="finance", keywords="home loan house property payment amortization",
+    ),
+
+    # Health & Fitness (Part 1)
+    "tdee-calculator": dict(
+        path="health/tdee-calculator/",
+        name="TDEE & Calorie Deficit Calculator",
+        card="TDEE calculator",
+        short="Find your Total Daily Energy Expenditure (TDEE) and target calories for fat loss or muscle gain using the Mifflin-St Jeor formula.",
+        icon="activity", group="health-fitness", parent="health", keywords="calories bmr maintenance energy expenditure metabolism fat loss deficit",
+    ),
+    "bmi-calculator": dict(
+        path="health/bmi-calculator/",
+        name="Body Mass Index (BMI) Calculator",
+        card="BMI calculator",
+        short="Check your Body Mass Index against WHO classifications and find your healthy weight range. Metric and imperial.",
+        icon="scales", group="health-fitness", parent="health", keywords="body mass index weight health who underweight overweight obese",
+    ),
+
+    # Developer Tools (Part 1)
+    "json-formatter": dict(
+        path="dev/json-formatter/",
+        name="JSON Formatter & Validator",
+        card="JSON formatter & validator",
+        short="Beautify, minify, and validate JSON code 100% locally in your browser with instant syntax error highlighting.",
+        icon="code", group="dev-tools", parent="dev", go="Open tool", keywords="json beautify minify format validate syntax pretify",
+    ),
+    "color-contrast": dict(
+        path="dev/color-contrast-checker/",
+        name="WCAG Color Contrast Checker",
+        card="Color contrast checker",
+        short="Check text and background color combinations against WCAG 2.1 AA and AAA legal web accessibility standards.",
+        icon="palette", group="dev-tools", parent="dev", go="Open tool", keywords="wcag accessibility contrast ratio ada compliance color palette",
+    ),
+
+    # Everyday Utilities (Part 1)
+    "tip-calculator": dict(
+        path="tools/tip-calculator/",
+        name="Tip & Bill Split Calculator",
+        card="Tip & bill split calculator",
+        short="Evenly split restaurant bills, work out custom gratuity percentages, and round up totals cleanly.",
+        icon="receipt", group="everyday-tools", parent="everyday", keywords="tip gratuity bill split restaurant dining food",
+    ),
+    "unit-converter": dict(
+        path="tools/unit-converter/",
+        name="Universal Unit Converter",
+        card="Universal unit converter",
+        short="Convert between metric and imperial measurements for length, weight, temperature, volume and area.",
+        icon="formula", group="everyday-tools", parent="everyday", go="Open tool", keywords="convert metric imperial length weight temperature celsius fahrenheit kg lbs miles km",
+    ),
+
+    # Career Deepening (Part 2)
+    "us-salaried-pay": dict(
+        path="career/us-take-home-pay-calculator/",
+        name="US Take-Home Pay Calculator (2026)",
+        card="US take-home pay calculator",
+        short="Calculate your net W-2 paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax.",
+        icon="receipt", group="career-country", parent="career", keywords="us salary take home pay net paycheck w2 federal tax fica 2026",
+    ),
+
+    # Business Deepening (Part 2)
+    "roas-calculator": dict(
+        path="business/roas-calculator/",
+        name="E-Commerce ROAS & Break-Even Calculator",
+        card="ROAS calculator",
+        short="Calculate Return On Ad Spend, break-even ROAS based on product profit margins, and true campaign net profits.",
+        icon="target", group="business-pricing", parent="business", keywords="roas return on ad spend ecommerce advertising meta google ads profit break even",
+    ),
 }
 
 # Sections a tool can live in: key -> (breadcrumb name, path, header nav key).
 PARENTS = {
     "freelance": ("Freelancer Tools", "freelance/", "tools"),
+    "global": ("Global Tools", "global/", "global"),
     "us": ("United States", "us/", "us"),
     "uk": ("United Kingdom", "uk/", "uk"),
     "canada": ("Canada", "ca/", "ca"),
@@ -441,7 +632,128 @@ PARENTS = {
     "business": ("Business Tools", "business/", "business"),
     "career": ("Career & Salary", "career/", "career"),
     "education": ("Education & Writing", "education/", "education"),
+    "dev": ("Developer Tools", "dev/", "dev"),
+    "finance": ("Personal Finance", "finance/", "finance"),
+    "health": ("Health & Fitness", "health/", "health"),
+    "everyday": ("Everyday Utilities", "tools/", "everyday"),
 }
+
+# Regional definitions for country-specific & global SEO clusters
+REGIONS = {
+    "us": {
+        "prefix": "us/",
+        "parent": "us",
+        "lang": "en-US",
+        "currency": "USD",
+        "symbol": "$",
+        "country_name": "United States",
+        "adjective": "US",
+        "badge": "{{flag:us}} Built for the US (USD)",
+        "og_locale": "en_US",
+    },
+    "uk": {
+        "prefix": "uk/",
+        "parent": "uk",
+        "lang": "en-GB",
+        "currency": "GBP",
+        "symbol": "£",
+        "country_name": "United Kingdom",
+        "adjective": "UK",
+        "badge": "{{flag:uk}} Built for the UK (GBP)",
+        "og_locale": "en_GB",
+    },
+    "ca": {
+        "prefix": "ca/",
+        "parent": "canada",
+        "lang": "en-CA",
+        "currency": "CAD",
+        "symbol": "C$",
+        "country_name": "Canada",
+        "adjective": "Canadian",
+        "badge": '<span class="code">CA</span> Canada (CAD)',
+        "og_locale": "en_CA",
+    },
+    "au": {
+        "prefix": "au/",
+        "parent": "australia",
+        "lang": "en-AU",
+        "currency": "AUD",
+        "symbol": "A$",
+        "country_name": "Australia",
+        "adjective": "Australian",
+        "badge": '<span class="code">AU</span> Australia (AUD)',
+        "og_locale": "en_AU",
+    },
+    "global": {
+        "prefix": "global/",
+        "parent": "global",
+        "lang": "x-default",
+        "currency": "USD",
+        "symbol": "$",
+        "country_name": "Global",
+        "adjective": "Global",
+        "badge": "{{icon:globe}} Worldwide / Multi-Currency",
+        "og_locale": "en_US",
+    },
+}
+
+# The 22 core multi-currency calculators that have regional variants in all 5 regions
+REGIONAL_TOOL_KEYS = [
+    "hourly-rate", "day-rate", "project-pricing", "hourly-to-annual", "billable-hours",
+    "emergency-fund", "retirement-savings", "income-smoothing", "invoice-generator", "timesheet",
+    "business-days", "profit-margin", "break-even", "payment-fee", "quote-generator",
+    "salary-to-hourly", "pay-rise", "overtime", "compound-interest", "mortgage",
+    "roas-calculator", "tip-calculator"
+]
+
+REGIONAL_TOOL_SLUGS = {
+    k: TOOLS[k]["path"].strip("/").split("/")[-1]
+    for k in REGIONAL_TOOL_KEYS
+}
+
+
+def make_regional_desc(tkey, r, tool_meta, base_desc):
+    curr = REGIONS[r]["currency"]
+    sym = REGIONS[r]["symbol"]
+    card = tool_meta["card"].lower()
+
+    if r == "us":
+        if "invoice" in tkey:
+            return f"Create and download professional freelance invoices in US Dollars ({sym} {curr}). Free PDF, no sign-up, no watermark, runs 100% in your browser."
+        if "quote" in tkey:
+            return f"Create professional price quotes and estimates in US Dollars ({sym} {curr}). Download clean PDF quotes with zero server uploads."
+        return f"Free {card} in US Dollars ({sym} {curr}). Calculate your rates, costs and margins for US freelancers, contractors and businesses. 100% private in browser."
+
+    elif r == "uk":
+        if "invoice" in tkey:
+            return f"Create and download professional UK freelance invoices in British Pounds ({sym} {curr}). Free PDF, no sign-up, no watermark, files stay on your device."
+        if "quote" in tkey:
+            return f"Make professional quotes and estimates in British Pounds ({sym} {curr}). Download clean PDF quotes for UK clients without sign-up."
+        return f"Free {card} in British Pounds ({sym} {curr}). Built for UK sole traders, contractors and small businesses. Accurate calculations with zero sign-up."
+
+    elif r == "ca":
+        if "invoice" in tkey:
+            return f"Create professional Canadian freelance invoices in Canadian Dollars ({sym} {curr}). Free PDF download, no watermark, runs entirely on your device."
+        if "quote" in tkey:
+            return f"Make clear quotes and estimates in Canadian Dollars ({sym} {curr}) for clients across Canadian provinces. Free PDF, no sign-up."
+        return f"Free {card} in Canadian Dollars ({sym} {curr}). Plan your rates, profits and finances for Canadian freelancers and business owners."
+
+    elif r == "au":
+        if "invoice" in tkey:
+            return f"Create professional Australian invoices in Australian Dollars ({sym} {curr}). Free PDF download, no sign-up, no watermark, 100% private in browser."
+        if "quote" in tkey:
+            return f"Generate professional quotes and estimates in Australian Dollars ({sym} {curr}) for Australian clients. Instant PDF download."
+        return f"Free {card} in Australian Dollars ({sym} {curr}). Designed for Australian sole traders, contractors and freelancers. Instant and private in your browser."
+
+    elif r == "global":
+        if "invoice" in tkey:
+            return f"Create professional multi-currency invoices in USD, GBP, CAD or AUD. Download watermark-free PDFs directly from your browser."
+        if "quote" in tkey:
+            return f"Make professional multi-currency quotes and estimates in USD, GBP, CAD or AUD. Free PDF download, 100% private."
+        return f"Free {card} with multi-currency support in USD, GBP, CAD and AUD. Fast, private and accurate calculation directly inside your browser."
+
+    return base_desc
+
 
 SOON = {
 }
@@ -456,6 +768,7 @@ PDF_DAY = "2026-09-29"
 RESUME_CHIPS = ["{{icon:check}} Free, no sign-up, no watermark", "{{icon:lock}} Nothing you type leaves your device"]
 RESUME_LIBS = ["js/resume.js"]
 RESUME_DAY = "2026-09-29"
+NEW_DAY = "2026-09-30"  # tools added on 30 September 2026
 
 PAGES = [
     dict(path="", src="home.html", kind="home", nav="home", updated=PDF_DAY,
@@ -468,13 +781,20 @@ PAGES = [
          intro="Free calculators to help freelancers and self-employed people price their work, plan their income and get paid on time.",
          chips=TOOL_CHIPS + [CURRENCY_CHIP]),
 
-    dict(path="us/", src="us.html", kind="section", nav="us",
+    dict(path="global/", src="global.html", kind="section", nav="global", region="global",
+         title="Global Money & Multi-Currency Calculators | ToolNest by Vintayz",
+         description="Free global calculators for freelancers and businesses in USD, GBP, CAD and AUD: hourly rate, day rate, compound interest, mortgage and invoice generator.",
+         h1="Global & Multi-Currency Calculators",
+         intro="Free multi-currency tools for international freelancers, remote contractors, and digital businesses. Calculate anywhere in USD, GBP, CAD, or AUD.",
+         chips=[CURRENCY_CHIP, "{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
+
+    dict(path="us/", src="us.html", kind="section", nav="us", region="us",
          title="US Freelancer Calculators for 1099 Workers | ToolNest by Vintayz",
          description="Free 2026 tax calculators for US freelancers and 1099 contractors: self-employment tax, quarterly estimates, take-home pay and more.",
          h1="Freelancer Calculators for the United States",
          intro="Free tools for 1099 contractors and self-employed people in the US, plus what's different about freelancing in America.",
          chips=["{{flag:us}} Built for the US", "{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
-    dict(path="uk/", src="uk.html", kind="section", nav="uk",
+    dict(path="uk/", src="uk.html", kind="section", nav="uk", region="uk",
          title="UK Self-Employed & Contractor Calculators | ToolNest by Vintayz",
          description="Free 2026/27 calculators for UK sole traders and contractors: self-employed tax and NI, payments on account, sole trader vs Ltd and more.",
          h1="Calculators for the Self-Employed in the UK",
@@ -597,13 +917,20 @@ PAGES = [
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
          related=["uk-mileage", "uk-self-employed-tax", "billable-hours"]),
 
-    dict(path="ca/", src="canada.html", kind="section", nav="ca",
+    dict(tool="uk-vat", src="uk-vat.html", script="uk-vat.js", libs=["data/tax-uk.js"], updated=NEW_DAY,
+         title="VAT Calculator UK: Add or Remove 20% VAT | ToolNest by Vintayz",
+         description="Add 20% or 5% VAT to a price, or work out the VAT in a VAT-inclusive total. Includes when you must register for VAT (£90,000).",
+         intro="Add VAT to a price, or work out how much VAT is inside a total, at the UK's 20% standard or 5% reduced rate.",
+         chips=["{{flag:uk}} UK VAT rates"] + TOOL_CHIPS,
+         related=["uk-self-employed-tax", "quote-generator", "invoice-generator"]),
+
+    dict(path="ca/", src="canada.html", kind="section", nav="ca", region="ca",
          title="Self-Employed Tax Calculators for Canada | ToolNest by Vintayz",
          description="Free 2026 calculators for self-employed Canadians: federal tax and CPP, tax instalments, employee vs contractor and GST/HST.",
          h1="Calculators for the Self-Employed in Canada",
          intro="Free tools for freelancers and sole proprietors in Canada, built on official 2026 CRA figures.",
          chips=["{{icon:globe}} Built for Canada", "{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
-    dict(path="au/", src="australia.html", kind="section", nav="au",
+    dict(path="au/", src="australia.html", kind="section", nav="au", region="au",
          title="Sole Trader Tax Calculators for Australia | ToolNest by Vintayz",
          description="Free 2026–27 calculators for Australian sole traders: income tax and Medicare levy, GST, employee vs contractor and voluntary super.",
          h1="Calculators for Sole Traders in Australia",
@@ -722,6 +1049,12 @@ PAGES = [
          intro="Turn photos, scans and screenshots into a single PDF, one picture per page. JPG, PNG, WebP and GIF all work.",
          chips=PDF_CHIPS,
          related=["pdf-to-jpg", "pdf-merge", "pdf-compress"]),
+    dict(tool="pdf-to-text", src="pdf-to-text.html", script="pdf-to-text.js", libs=PDF_LIBS, updated=NEW_DAY,
+         title="PDF to Text Converter, Free and Private | ToolNest by Vintayz",
+         description="Copy the text out of a PDF or save it as a .txt file. Free, no sign-up, and your PDF is read in your browser, never uploaded.",
+         intro="Copy the words out of a PDF, or save them as a plain text file you can open anywhere.",
+         chips=PDF_CHIPS,
+         related=["pdf-to-jpg", "pdf-extract-pages", "word-counter"]),
     dict(tool="pdf-to-jpg", src="pdf-to-jpg.html", script="pdf-to-jpg.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="PDF to JPG Converter, Free and Private | ToolNest by Vintayz",
          description="Save PDF pages as high-quality JPG or PNG pictures, at up to 300 DPI. Free, no sign-up, and your PDF is converted in your browser, not uploaded.",
@@ -740,6 +1073,12 @@ PAGES = [
          intro="Stamp a word or phrase such as DRAFT or CONFIDENTIAL across the pages of a PDF.",
          chips=PDF_CHIPS,
          related=["pdf-page-numbers", "pdf-compress", "pdf-merge"]),
+    dict(tool="pdf-sign", src="pdf-sign.html", script="pdf-sign.js", libs=PDF_LIBS, updated=NEW_DAY,
+         title="Sign a PDF Free, Without Uploading | ToolNest by Vintayz",
+         description="Draw or type your signature and place it on any page of a PDF, with the date if you like. Free, and your PDF and signature never leave your device.",
+         intro="Draw or type your signature, put it where it belongs on the page, and save the signed PDF.",
+         chips=PDF_CHIPS,
+         related=["pdf-merge", "pdf-watermark", "pdf-compress"]),
 
     dict(path="resume-maker/", src="resume-maker.html", kind="section", nav="resume", updated=RESUME_DAY,
          title="Free Resume & CV Maker by Country | ToolNest by Vintayz",
@@ -771,6 +1110,12 @@ PAGES = [
          intro="Create an Australian resume and download it as a PDF. It follows Workforce Australia's resume template, and nothing you type leaves your device.",
          chips=["{{icon:globe}} Australian format, A4"] + RESUME_CHIPS,
          related=["resume-uk", "resume-us", "resume-ca"]),
+    dict(tool="cover-letter", src="cover-letter.html", script="cover-letter.js", libs=RESUME_LIBS, updated=NEW_DAY,
+         title="Free Cover Letter Maker (PDF) | ToolNest by Vintayz",
+         description="Write a cover letter for the US, UK, Canada or Australia and download it as a PDF. The right greeting and sign-off for each country. Nothing is uploaded.",
+         intro="Write a cover letter with the right layout, greeting and sign-off for the country you're applying in, and download it as a PDF.",
+         chips=["{{icon:globe}} US · UK · Canada · Australia"] + RESUME_CHIPS,
+         related=["resume-us", "resume-uk", "resume-ca"]),
 
     # Hub pages
     dict(path="business/", src="business.html", kind="section", nav="business",
@@ -799,6 +1144,18 @@ PAGES = [
          intro="Generate clean, professional invoices and download them as PDFs. Runs completely in your browser with zero server uploads.",
          chips=[CURRENCY_CHIP, "{{icon:lock}} Files never leave your device", "{{icon:check}} Free, no watermark"],
          related=["hourly-rate", "late-payment", "project-pricing"]),
+    dict(tool="timesheet", src="timesheet.html", script="timesheet.js", updated=NEW_DAY,
+         title="Timesheet Calculator: Add Up Hours and Pay | ToolNest by Vintayz",
+         description="Add up a week of start and finish times, less breaks, including night shifts. See total hours, overtime and pay. Free, in USD, GBP, CAD or AUD.",
+         intro="Enter your start and finish times for each day. The calculator takes off your breaks, adds up the hours and works out your pay.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["invoice-generator", "billable-hours", "overtime"]),
+    dict(tool="business-days", src="business-days.html", script="business-days.js", libs=["data/holidays.js"], updated=NEW_DAY,
+         title="Business Days Calculator (US & UK Holidays) | ToolNest by Vintayz",
+         description="Count working days between two dates, or add working days to a date. Skips weekends and US federal or UK bank holidays for 2026 to 2028.",
+         intro="Count the working days between two dates, or find the date a number of working days from now, skipping weekends and public holidays.",
+         chips=["{{icon:globe}} US federal and UK bank holidays"] + TOOL_CHIPS,
+         related=["late-payment", "invoice-generator", "timesheet"]),
 
     # Business Tools
     dict(tool="profit-margin", src="profit-margin.html", script="profit-margin.js",
@@ -821,6 +1178,12 @@ PAGES = [
          intro="Calculate payment gateway processing fees, see your net payout, and find the gross-up amount to charge to cover transaction fees.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["profit-margin", "invoice-generator", "project-pricing"]),
+    dict(tool="quote-generator", src="quote-generator.html", script="invoice-generator.js", libs=["vendor/pdf-lib/pdf-lib.min.js"], updated=NEW_DAY,
+         title="Quote and Estimate Generator, Free PDF | ToolNest by Vintayz",
+         description="Make a professional quote or estimate for a client and download it as a PDF, free. No sign-up, no watermark, and your details never leave your device.",
+         intro="Make a clear quote or estimate for a client, with line items, tax and terms, and download it as a PDF.",
+         chips=[CURRENCY_CHIP, "{{icon:lock}} Files never leave your device", "{{icon:check}} Free, no watermark"],
+         related=["invoice-generator", "project-pricing", "profit-margin"]),
 
     # Career Tools
     dict(tool="salary-to-hourly", src="salary-to-hourly.html", script="salary-to-hourly.js",
@@ -829,6 +1192,36 @@ PAGES = [
          intro="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates based on your work schedule.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["hourly-to-annual", "us-1099-vs-w2", "billable-hours"]),
+    dict(tool="pay-rise", src="pay-rise.html", script="pay-rise.js", updated=NEW_DAY,
+         title="Pay Rise Calculator: Percent, Amount and Inflation | ToolNest by Vintayz",
+         description="Work out a pay rise as a percentage or in money, see the extra you get each month, and check whether it beats inflation. Free, in USD, GBP, CAD or AUD.",
+         intro="See how big a raise really is: as a percentage, in money each month and week, and after inflation.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["salary-to-hourly", "uk-take-home", "overtime"]),
+    dict(tool="overtime", src="overtime.html", script="overtime.js", updated=NEW_DAY,
+         title="Overtime Pay Calculator: Time and a Half | ToolNest by Vintayz",
+         description="Work out overtime pay at time and a half and double time, your total weekly pay and your average hourly rate. Free, in USD, GBP, CAD or AUD.",
+         intro="Work out your pay for a week with overtime, at time and a half, double time or your own rate.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["salary-to-hourly", "timesheet", "pay-rise"]),
+    dict(tool="uk-take-home", src="uk-take-home.html", script="uk-take-home.js", libs=["data/tax-uk.js", "js/uk-tax.js"], updated=NEW_DAY,
+         title="UK Take-Home Pay Calculator 2026/27 (PAYE) | ToolNest by Vintayz",
+         description="Work out your salary after tax for 2026 to 2027: Income Tax, National Insurance, student loan and pension. Monthly and weekly take-home pay, including Scotland.",
+         intro="See what you take home from your salary in 2026 to 2027 after Income Tax, National Insurance, student loan repayments and your pension.",
+         chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
+         related=["pay-rise", "uk-holiday", "uk-self-employed-tax"]),
+    dict(tool="uk-holiday", src="uk-holiday.html", script="uk-holiday.js", libs=["data/employment-uk.js"], updated=NEW_DAY,
+         title="UK Holiday Entitlement Calculator | ToolNest by Vintayz",
+         description="Work out your statutory holiday: 5.6 weeks a year, up to 28 days. For full-time, part-time, hours-based and irregular hours workers (12.07%).",
+         intro="Work out the minimum paid holiday you're entitled to in the UK, in days or hours, including part-time and irregular hours.",
+         chips=["{{flag:uk}} UK employment rules"] + TOOL_CHIPS,
+         related=["uk-take-home", "uk-redundancy", "business-days"]),
+    dict(tool="uk-redundancy", src="uk-redundancy.html", script="uk-redundancy.js", libs=["data/employment-uk.js"], updated=NEW_DAY,
+         title="UK Redundancy Pay Calculator (2026) | ToolNest by Vintayz",
+         description="Work out statutory redundancy pay in England, Scotland and Wales from your age, years of service and weekly pay, with the £751 weekly cap from April 2026.",
+         intro="Work out the minimum redundancy pay the law gives you in England, Scotland and Wales.",
+         chips=["{{flag:uk}} England, Scotland and Wales"] + TOOL_CHIPS,
+         related=["uk-take-home", "uk-holiday", "emergency-fund"]),
 
     # Student & Writing Tools
     dict(tool="word-counter", src="word-counter.html", script="word-counter.js",
@@ -837,13 +1230,128 @@ PAGES = [
          intro="Analyze text metrics, character counts, reading time, and reading grade level directly inside your browser.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
          related=["gpa-calculator", "resume-us", "invoice-generator"]),
+    dict(tool="citation", src="citation.html", script="citation.js", updated=NEW_DAY,
+         title="Citation Generator: APA, MLA and Harvard | ToolNest by Vintayz",
+         description="Make APA 7th, MLA 9th and Harvard references for websites, books and journal articles, and build a reference list. Free, and nothing is uploaded.",
+         intro="Fill in the details of your source and get a reference in APA, MLA or Harvard style, ready to copy into your work.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
+         related=["word-counter", "uk-degree", "gpa-calculator"]),
 
     dict(tool="gpa-calculator", src="gpa-calculator.html", script="gpa-calculator.js",
          title="College GPA Calculator (4.0 Scale) | ToolNest by Vintayz",
          description="Calculate your semester or cumulative college GPA on a 4.0 scale, weighted by course credits. Free, private and easy to use on your phone.",
          intro="Calculate your college semester and cumulative grade point average on a standard 4.0 scale with credit weighting.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
-         related=["word-counter", "salary-to-hourly"]),
+         related=["word-counter", "final-grade", "citation"]),
+    dict(tool="uk-degree", src="uk-degree.html", script="uk-degree.js", updated=NEW_DAY,
+         title="UK Degree Classification Calculator | ToolNest by Vintayz",
+         description="Work out your UK degree mark and class (First, 2:1, 2:2, Third) from your second and final year averages, and the final-year marks you need.",
+         intro="Work out your overall degree mark and classification, and what you need in your final year for a First or a 2:1.",
+         chips=["{{flag:uk}} UK universities"] + TOOL_CHIPS,
+         related=["final-grade", "citation", "word-counter"]),
+    dict(tool="final-grade", src="final-grade.html", script="final-grade.js", updated=NEW_DAY,
+         title="Final Grade Calculator: What Do I Need on My Final? | ToolNest by Vintayz",
+         description="Find the score you need on your final exam to reach the course grade you want, and see the grade you'd get for different exam scores.",
+         intro="Find out what you need to score on your final exam to get the overall grade you want.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
+         related=["gpa-calculator", "uk-degree", "citation"]),
+
+    # New Hub pages (Part 1)
+    dict(path="finance/", src="finance.html", kind="section", nav="finance",
+         title="Personal Finance & Investing Calculators | ToolNest by Vintayz",
+         description="Free personal finance calculators: compound interest, regular investment savings, and fixed-rate mortgage payments.",
+         h1="Personal Finance & Investing",
+         intro="Plan your wealth, project long-term investment growth, and calculate monthly mortgage payments privately.",
+         chips=TOOL_CHIPS + [CURRENCY_CHIP]),
+    dict(path="health/", src="health.html", kind="section", nav="health",
+         title="Health & Fitness Calculators | ToolNest by Vintayz",
+         description="Free health and nutrition calculators: TDEE daily energy expenditure, calorie deficit targets, and WHO Body Mass Index.",
+         h1="Health & Fitness Calculators",
+         intro="Calculate your daily calorie needs for fat loss or muscle gain and evaluate Body Mass Index safely and privately.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Health data never leaves your device"]),
+    dict(path="dev/", src="dev.html", kind="section", nav="dev",
+         title="Developer & Web Accessibility Tools | ToolNest by Vintayz",
+         description="Free client-side developer tools: format and minify JSON safely, and check WCAG 2.1 AA/AAA color contrast ratios.",
+         h1="Developer & Design Tools",
+         intro="Private browser utilities for developers and designers. Validate JSON payloads and verify web accessibility compliance.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Code never uploaded to servers"]),
+    dict(path="tools/", src="tools-hub.html", kind="section", nav="everyday",
+         title="Everyday Utilities & Quick Calculators | ToolNest by Vintayz",
+         description="Free everyday utilities: tip and bill split calculator, and universal metric to imperial unit converter.",
+         h1="Everyday Utilities & Quick Tools",
+         intro="Fast, private everyday calculators to split dinner bills and convert length, weight, temperature, and volume.",
+         chips=TOOL_CHIPS + [CURRENCY_CHIP]),
+
+    # Tool pages (Part 1 & Part 2)
+    dict(tool="compound-interest", src="compound-interest.html", script="compound-interest.js", updated=NEW_DAY,
+         title="Compound Interest Calculator: Savings Growth | ToolNest by Vintayz",
+         description="Calculate compound interest with regular monthly deposits, annual returns and a year-by-year growth table. Free in USD, GBP, CAD, AUD.",
+         intro="See how compound interest and regular monthly contributions grow your savings over time, with a year-by-year schedule.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["mortgage", "retirement-savings", "emergency-fund"]),
+
+    dict(tool="mortgage", src="mortgage.html", script="mortgage.js", updated=NEW_DAY,
+         title="Mortgage Payment Calculator (Principal & Interest) | ToolNest by Vintayz",
+         description="Work out monthly mortgage repayments, total interest and loan amortization for 15, 20 and 30-year terms. Pure math, no lender ads.",
+         intro="Calculate your fixed monthly mortgage payment, interest breakdown, and total cost of borrowing over the full loan term.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["compound-interest", "emergency-fund", "hourly-to-annual"]),
+
+    dict(tool="tdee-calculator", src="tdee.html", script="tdee.js", updated=NEW_DAY,
+         title="TDEE Calculator: Daily Calorie Expenditure | ToolNest by Vintayz",
+         description="Calculate your Total Daily Energy Expenditure (TDEE) and calorie deficit for fat loss using the Mifflin-St Jeor formula. Free and private.",
+         intro="Work out how many calories your body burns every day, and find your daily targets for healthy fat loss or muscle gain.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Health data stays on your device"],
+         related=["bmi-calculator", "unit-converter", "timesheet"]),
+
+    dict(tool="bmi-calculator", src="bmi.html", script="bmi.js", updated=NEW_DAY,
+         title="BMI Calculator: Body Mass Index & Healthy Weight | ToolNest by Vintayz",
+         description="Calculate Body Mass Index (BMI) using World Health Organization guidelines, and find your healthy weight range. Metric and imperial.",
+         intro="Check your Body Mass Index against WHO international standards and discover your recommended healthy weight range.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Health data stays on your device"],
+         related=["tdee-calculator", "unit-converter", "emergency-fund"]),
+
+    dict(tool="json-formatter", src="json-formatter.html", script="json-formatter.js", updated=NEW_DAY,
+         title="JSON Formatter, Validator & Minifier Online | ToolNest by Vintayz",
+         description="Format, prettify, minify and validate JSON data instantly. 100% private in your browser with zero server uploads.",
+         intro="Format and validate your JSON data with 2-space indentation or minify it for production. Runs entirely in your browser memory.",
+         chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
+         related=["color-contrast", "word-counter", "unit-converter"]),
+
+    dict(tool="color-contrast", src="color-contrast.html", script="color-contrast.js", updated=NEW_DAY,
+         title="WCAG Color Contrast Checker (AA & AAA) | ToolNest by Vintayz",
+         description="Check foreground and background color contrast ratios against WCAG 2.1 Level AA and AAA accessibility standards. Live preview.",
+         intro="Test foreground and background color pairs against WCAG 2.1 accessibility benchmarks to ensure digital compliance.",
+         chips=["{{icon:lock}} Evaluated locally", "{{icon:check}} WCAG 2.1 standards"],
+         related=["json-formatter", "word-counter", "profit-margin"]),
+
+    dict(tool="tip-calculator", src="tip.html", script="tip.js", updated=NEW_DAY,
+         title="Tip & Bill Split Calculator: Even Diners Split | ToolNest by Vintayz",
+         description="Calculate tips (10% to 25%) and evenly split the bill between friends. Optional round-up to nearest dollar. Free, in USD, GBP, CAD, AUD.",
+         intro="Evenly split food and drinks bills with tips, with quick preset buttons and an optional round-up toggle.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["unit-converter", "profit-margin", "payment-fee"]),
+
+    dict(tool="unit-converter", src="unit-converter.html", script="unit-converter.js", updated=NEW_DAY,
+         title="Universal Unit Converter: Length, Weight, Temp | ToolNest by Vintayz",
+         description="Convert between metric and imperial units for length (mi to km), weight (lbs to kg), temperature (°C to °F), volume and area.",
+         intro="Convert instantly between metric and imperial measurement systems with standard scientific precision.",
+         chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Converted locally"],
+         related=["tip-calculator", "bmi-calculator", "timesheet"]),
+
+    dict(tool="us-salaried-pay", src="us-take-home-pay.html", script="us-take-home-pay.js", libs=["data/tax-us.js"], updated=NEW_DAY,
+         title="US Take-Home Pay Calculator 2026 (W-2 Salary) | ToolNest by Vintayz",
+         description="Calculate your net paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax. Monthly and bi-weekly.",
+         intro="See what you take home from your annual W-2 salary in 2026 after federal income tax, FICA payroll taxes, and state taxes.",
+         chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
+         related=["salary-to-hourly", "pay-rise", "us-take-home"]),
+
+    dict(tool="roas-calculator", src="roas.html", script="roas.js", updated=NEW_DAY,
+         title="E-Commerce ROAS Calculator: Break-Even Ad Spend | ToolNest by Vintayz",
+         description="Calculate Return On Ad Spend (ROAS) and break-even ROAS from product margins to see real net profit from ad campaigns.",
+         intro="Find your campaign ROAS, break-even ROAS based on cost of goods sold, and true net profit after advertising spend.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["profit-margin", "break-even", "payment-fee"]),
 
     dict(path="about/", src="about.html", kind="legal", nav="about", updated=PDF_DAY,
          title="About ToolNest by Vintayz", h1="About ToolNest",
@@ -851,16 +1359,31 @@ PAGES = [
     dict(path="contact/", src="contact.html", kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
-    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated="2026-09-30",
+    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated="2026-10-01",
          title="Privacy Policy | ToolNest by Vintayz", h1="Privacy Policy",
          description="How ToolNest handles personal information, cookies and analytics, and your privacy rights in the UK, the US and India."),
     dict(path="terms/", src="terms.html", kind="legal", updated=PDF_DAY,
          title="Terms of Use | ToolNest by Vintayz", h1="Terms of Use",
          description="The terms that apply when you use the ToolNest website and calculators."),
-    dict(path="disclaimer/", src="disclaimer.html", kind="legal", updated=PDF_DAY,
+    dict(path="disclaimer/", src="disclaimer.html", kind="legal", updated=NEW_DAY,
          title="Disclaimer | ToolNest by Vintayz", h1="Disclaimer",
          description="ToolNest calculators provide estimates for planning only and are not tax, legal or financial advice."),
 ]
+
+# Switched off for now (owner's decision, 2026-10-01). The source files are kept so they can come back.
+# Country copies: near-identical pages risk Google's "scaled content abuse" rule (LEGAL.md section 2).
+# Health tools: LEGAL.md section 2 says tools never ask for health information.
+REGIONAL_COPIES = False
+HEALTH_TOOLS = False
+if not HEALTH_TOOLS:
+    for key in ("tdee-calculator", "bmi-calculator"):
+        del TOOLS[key]
+PAGES[:] = [p for p in PAGES
+            if not (not HEALTH_TOOLS and (p.get("path") == "health/" or p.get("tool") in ("tdee-calculator", "bmi-calculator")))
+            and not (not REGIONAL_COPIES and p.get("path") == "global/")]
+for p in PAGES:
+    if "related" in p:
+        p["related"] = [r for r in p["related"] if r in TOOLS]
 
 # Fill in tool page defaults from TOOLS.
 for p in PAGES:
@@ -872,6 +1395,64 @@ for p in PAGES:
         p.setdefault("parent", t.get("parent", "freelance"))
         p.setdefault("nav", PARENTS[p["parent"]][2])
     p.setdefault("updated", TODAY)
+
+# Build a lookup of base page definitions for regional tools
+base_tool_pages = {}
+for p in PAGES:
+    if "tool" in p and p["tool"] in REGIONAL_TOOL_KEYS:
+        base_tool_pages[p["tool"]] = p
+
+# Set up hreflang cluster for each tool and create regional pages
+regional_pages = []
+for tkey in (REGIONAL_TOOL_KEYS if REGIONAL_COPIES else []):
+    base = base_tool_pages.get(tkey)
+    if not base:
+        continue
+    slug = REGIONAL_TOOL_SLUGS[tkey]
+    tool_meta = TOOLS[tkey]
+
+    cluster = {
+        "en-US": f"us/{slug}/",
+        "en-GB": f"uk/{slug}/",
+        "en-CA": f"ca/{slug}/",
+        "en-AU": f"au/{slug}/",
+        "x-default": f"global/{slug}/",
+    }
+
+    # Point the base page canonical to global and attach hreflang cluster
+    base["canonical"] = f"{DOMAIN}/global/{slug}/"
+    base["hreflang_cluster"] = cluster
+
+    for r, reg_info in REGIONS.items():
+        rpath = f"{reg_info['prefix']}{slug}/"
+        rtitle = f"{tool_meta['name']} ({reg_info['adjective']} - {reg_info['currency']}) | {BRAND}"
+        rdesc = make_regional_desc(tkey, r, tool_meta, base["description"])
+
+        reg_page = dict(
+            path=rpath,
+            tool=tkey,
+            src=base["src"],
+            script=base.get("script"),
+            libs=base.get("libs", []),
+            kind="tool",
+            parent=reg_info["parent"],
+            nav=PARENTS[reg_info["parent"]][2],
+            region=r,
+            default_currency=reg_info["currency"],
+            currency_symbol=reg_info["symbol"],
+            og_locale=reg_info["og_locale"],
+            hreflang_cluster=cluster,
+            title=rtitle,
+            description=rdesc,
+            h1=tool_meta["name"],
+            intro=base.get("intro", ""),
+            chips=[reg_info["badge"]] + TOOL_CHIPS,
+            related=base.get("related", []),
+            updated=base.get("updated", TODAY),
+        )
+        regional_pages.append(reg_page)
+
+PAGES.extend(regional_pages)
 
 # ---------------------------------------------------------------- Icons (drawn for this site)
 
@@ -914,6 +1495,17 @@ ICONS = {
     "card": '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>',
     "type-icon": '<polyline points="4 7 4 4 20 4 20 7"/><line x1="12" y1="4" x2="12" y2="20"/>',
     "award": '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>',
+    "pen": '<path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3M4 20h16"/>',
+    "text": '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8.5 12h7M8.5 15h7M8.5 18h4"/>',
+    "book": '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M8 7.5h8"/>',
+    "code": '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+    "palette": '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.5-.74 1.5-1.5 0-.41-.17-.8-.44-1.09-.27-.3-.44-.68-.44-1.09 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/>',
+    "dollar": '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+    "home-icon": '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+    "heart": '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+    "activity": '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+    "scales": '<path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1zM2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1zM7 21h10M12 3v18M3 7h18"/>',
+    "target": '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
 }
 
 
@@ -937,6 +1529,8 @@ _flag_count = [0]
 def flag(code, decorative=False):
     """Simplified US and UK flags, drawn as SVG (emoji flags don't show on Windows).
     decorative=True hides the flag from screen readers when the country name is written next to it."""
+    if code == "global":
+        return icon("globe")
     _flag_count[0] += 1
     n = _flag_count[0]
     if code == "us":
@@ -965,11 +1559,14 @@ def depth_of(path):
     return len([s for s in path.split("/") if s])
 
 
-def tool_card(slug, up):
+def tool_card(slug, up, region=None):
     t = TOOLS[slug]
+    tool_path = t["path"]
+    if REGIONAL_COPIES and region and region in REGIONS and slug in REGIONAL_TOOL_SLUGS:
+        tool_path = f"{REGIONS[region]['prefix']}{REGIONAL_TOOL_SLUGS[slug]}/"
     # Words the hub search box matches against (assets/js/tool-search.js).
     words = html.escape(" ".join([t["name"], t["card"], t["short"], t.get("keywords", "")]).lower(), quote=True)
-    return f"""<li><a class="card" href="{up}{t['path']}" data-search="{words}">
+    return f"""<li><a class="card" href="{up}{tool_path}" data-search="{words}">
   <div class="card-top"><span class="card-icon">{icon(t['icon'])}</span><span class="badge">Free</span></div>
   <h3>{t['card']}</h3>
   <p>{t['short']}</p>
@@ -985,7 +1582,8 @@ def soon_card(name, short, icon_name):
 </div></li>"""
 
 
-def expand(text, up):
+def expand(text, up, page=None):
+    region = page.get("region") if page else None
     def sub(m):
         key, arg = m.group(1), m.group(2)
         if key == "root":
@@ -995,11 +1593,13 @@ def expand(text, up):
         if key == "flag":
             return flag(arg)
         if key == "cards":
-            return "\n".join(tool_card(s, up) for s, t in TOOLS.items() if t["group"] == arg)
+            return "\n".join(tool_card(s, up, region) for s, t in TOOLS.items() if t["group"] == arg)
         if key == "featured":
-            return "\n".join(tool_card(s, up) for s, t in TOOLS.items() if t.get("parent") == arg and t.get("featured"))
+            return "\n".join(tool_card(s, up, region) for s, t in TOOLS.items() if t.get("parent") == arg and t.get("featured"))
         if key == "soon":
             return "\n".join(soon_card(*c) for c in SOON[arg])
+        if key == "tool":
+            return tool_card(arg, up, region)
         raise KeyError(m.group(0))
     return re.sub(r"\{\{(\w+)(?::([\w-]+))?\}\}", sub, text)
 
@@ -1012,6 +1612,19 @@ APP_CATEGORY = {
     "business": "BusinessApplication",
     "education": "EducationalApplication",
     "invoice-generator": "BusinessApplication",
+    "quote-generator": "BusinessApplication",
+    "timesheet": "BusinessApplication",
+    "business-days": "BusinessApplication",
+    "dev": "DeveloperApplication",
+    "health": "HealthApplication",
+    "everyday": "UtilitiesApplication",
+    "finance": "FinanceApplication",
+    "json-formatter": "DeveloperApplication",
+    "color-contrast": "DesignApplication",
+    "bmi-calculator": "HealthApplication",
+    "tdee-calculator": "HealthApplication",
+    "tip-calculator": "UtilitiesApplication",
+    "unit-converter": "UtilitiesApplication",
 }
 
 
@@ -1028,11 +1641,12 @@ def json_ld(page):
         items.append({"@type": "ListItem", "position": len(items) + 1, "name": page["h1"]})
         graph.append({"@type": "BreadcrumbList", "itemListElement": items})
     if page["kind"] == "tool":
+        curr = page.get("default_currency", "USD")
         graph.append({
             "@type": "WebApplication", "name": page["h1"], "url": url,
             "applicationCategory": APP_CATEGORY.get(page["tool"], APP_CATEGORY.get(page["parent"], "FinanceApplication")),
             "operatingSystem": "Any",
-            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": curr},
         })
     data = json.dumps({"@context": "https://schema.org", "@graph": graph}, indent=2, ensure_ascii=False)
     return f'<script type="application/ld+json">\n{data}\n</script>'
@@ -1040,13 +1654,24 @@ def json_ld(page):
 
 # The header's Calculators menu: (nav key, name, path, icon).
 CALC_SECTIONS = [("tools", "Freelance calculators", "freelance/", "briefcase"),
+                 ("finance", "Personal finance", "finance/", "dollar"),
                  ("business", "Business tools", "business/", "trending"),
                  ("career", "Career &amp; salary", "career/", "clock"),
+                 ("health", "Health &amp; fitness", "health/", "heart"),
+                 ("dev", "Developer tools", "dev/", "code"),
+                 ("everyday", "Everyday tools", "tools/", "formula"),
                  ("education", "Writing &amp; study", "education/", "award")]
+if not HEALTH_TOOLS:
+    CALC_SECTIONS = [s for s in CALC_SECTIONS if s[0] != "health"]
 
 # The header's Country menu: (nav key, name, path). US and UK have drawn flags; the others show a code.
-COUNTRIES = [("us", "United States", "us/"), ("uk", "United Kingdom", "uk/"),
-             ("ca", "Canada", "ca/"), ("au", "Australia", "au/")]
+COUNTRIES = [("global", "Worldwide (Global)", "global/"),
+             ("us", "United States", "us/"),
+             ("uk", "United Kingdom", "uk/"),
+             ("ca", "Canada", "ca/"),
+             ("au", "Australia", "au/")]
+if not REGIONAL_COPIES:
+    COUNTRIES = [c for c in COUNTRIES if c[0] != "global"]
 
 
 def header(page, up):
@@ -1057,7 +1682,12 @@ def header(page, up):
         return ' aria-current="page"' if nav == name else ""
 
     def country(key, name, path):
-        mark = flag(key, decorative=True) if key in ("us", "uk") else f'<span class="code" aria-hidden="true">{key.upper()}</span>'
+        if key in ("us", "uk"):
+            mark = flag(key, decorative=True)
+        elif key == "global":
+            mark = icon("globe")
+        else:
+            mark = f'<span class="code" aria-hidden="true">{key.upper()}</span>'
         return f'<li><a href="{up}{path}"{cur(key)}>{mark}{name}</a></li>'
 
     countries = "\n".join("              " + country(*c) for c in COUNTRIES)
@@ -1114,6 +1744,16 @@ def footer(up):
                          for t in TOOLS.values()
                          if t["group"] in group and (t.get("featured") or not featured_only))
 
+    global_link = f'          <li><a href="{up}global/">Worldwide (Global)</a></li>\n' if REGIONAL_COPIES else ""
+    health_nav = (f"""      <nav aria-label="Health and fitness">
+        <h2>Health &amp; Fitness</h2>
+        <ul>
+{links(('health-fitness',))}
+          <li><a href="{up}health/">All health tools</a></li>
+        </ul>
+      </nav>
+""" if HEALTH_TOOLS else "")
+
     return f"""<footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
@@ -1136,7 +1776,7 @@ def footer(up):
       <nav aria-label="Countries">
         <h2>Countries</h2>
         <ul>
-          <li><a href="{up}us/">United States</a></li>
+{global_link}          <li><a href="{up}us/">United States</a></li>
           <li><a href="{up}uk/">United Kingdom</a></li>
           <li><a href="{up}ca/">Canada</a></li>
           <li><a href="{up}au/">Australia</a></li>
@@ -1166,7 +1806,7 @@ def footer(up):
       <nav aria-label="Career tools">
         <h2>Career &amp; Salary</h2>
         <ul>
-{links(('career-salary',))}
+{links(('career-salary', 'career-country'))}
           <li><a href="{up}career/">All career tools</a></li>
         </ul>
       </nav>
@@ -1175,6 +1815,27 @@ def footer(up):
         <ul>
 {links(('education-writing', 'education-gpa'))}
           <li><a href="{up}education/">All study tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Personal finance">
+        <h2>Finance</h2>
+        <ul>
+{links(('finance-invest',))}
+          <li><a href="{up}finance/">All finance tools</a></li>
+        </ul>
+      </nav>
+{health_nav}      <nav aria-label="Developer tools">
+        <h2>Developer</h2>
+        <ul>
+{links(('dev-tools',))}
+          <li><a href="{up}dev/">All developer tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Everyday tools">
+        <h2>Everyday Tools</h2>
+        <ul>
+{links(('everyday-tools',))}
+          <li><a href="{up}tools/">All everyday tools</a></li>
         </ul>
       </nav>
       <nav aria-label="Company">
@@ -1270,10 +1931,13 @@ def page_hero(page, up):
 
 
 def related(page, up):
-    cards = "\n".join(tool_card(s, up) for s in page.get("related", []))
+    region = page.get("region")
+    cards = "\n".join(tool_card(s, up, region) for s in page.get("related", []))
+    pname, ppath, _ = PARENTS[page['parent']]
+    all_label = f"All {pname.replace('Freelancer Tools', 'freelancer').replace('PDF Tools', 'PDF').replace('Resume & CV Maker', 'resume and CV')} tools"
     return f"""<section class="section">
     <div class="section-head"><div><span class="kicker">Keep going</span><h2>Related tools</h2></div>
-      <a class="btn btn-sm" href="{up}{PARENTS[page['parent']][1]}">All {PARENTS[page['parent']][0].replace('Freelancer Tools', 'freelancer').replace('PDF Tools', 'PDF').replace('Resume & CV Maker', 'resume and CV')} tools</a></div>
+      <a class="btn btn-sm" href="{up}{ppath}">{all_label}</a></div>
     <ul class="card-grid">
 {cards}
     </ul>
@@ -1332,18 +1996,49 @@ def asset(rel):
     return f"assets/{rel}?v={_asset_versions[rel]}"
 
 
+def apply_currency_defaults(html_text, curr, sym):
+    if not curr:
+        return html_text
+
+    def select_sub(m):
+        tag_open = m.group(1)
+        select_content = m.group(2)
+        select_content = re.sub(r'\s+selected(?:="selected")?', '', select_content)
+        pattern = rf'(<option\s+[^>]*value="{curr}"[^>]*)>'
+        select_content = re.sub(pattern, r'\1 selected>', select_content)
+        return f'{tag_open}{select_content}</select>'
+
+    html_text = re.sub(r'(<select[^>]*id="(?:inv-)?currency"[^>]*>)([\s\S]*?)</select>', select_sub, html_text)
+
+    if sym:
+        html_text = re.sub(
+            r'(<span[^>]*\bdata-currency-symbol\b[^>]*>)[^<]*(</span>)',
+            rf'\g<1>{sym}\2',
+            html_text
+        )
+    return html_text
+
+
 def render(page):
     up = "../" * depth_of(page["path"])
     with open(os.path.join(SRC, page["src"]), encoding="utf-8") as f:
         body = f.read()
-    main_html = expand(main_content(page, up, body), up)
-    canonical = f"{DOMAIN}/{page['path']}"
+    main_html = expand(main_content(page, up, body), up, page)
+    if page.get("default_currency"):
+        main_html = apply_currency_defaults(main_html, page["default_currency"], page.get("currency_symbol"))
+    canonical = page.get("canonical") or f"{DOMAIN}/{page['path']}"
     scripts = [f'<script src="{up}{asset("js/common.js")}"></script>']
     for lib in page.get("libs", []):
         scripts.append(f'<script src="{up}{asset(lib)}"></script>')
     if page.get("script"):
         scripts.append(f'<script src="{up}{asset("js/tools/" + page["script"])}"></script>')
     scripts_html = "\n".join(scripts)
+
+    hreflang_tags = ""
+    if "hreflang_cluster" in page:
+        cluster = page["hreflang_cluster"]
+        lines = [f'<link rel="alternate" hreflang="{lang}" href="{DOMAIN}/{rpath}">' for lang, rpath in cluster.items()]
+        hreflang_tags = "\n" + "\n".join(lines)
 
     verify = ""
     if page["kind"] == "home":
@@ -1354,6 +2049,8 @@ def render(page):
     if ADSENSE_PUBLISHER_ID:  # AdSense asks for this on every page
         verify += f'<meta name="google-adsense-account" content="{ADSENSE_PUBLISHER_ID}">\n'
 
+    og_loc = page.get("og_locale", "en_US")
+
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1361,14 +2058,14 @@ def render(page):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{page['title']}</title>
 <meta name="description" content="{page['description']}">
-<link rel="canonical" href="{canonical}">
+<link rel="canonical" href="{canonical}">{hreflang_tags}
 <meta name="theme-color" content="#0b1b34">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{BRAND}">
 <meta property="og:title" content="{page.get('h1', page['title'])}">
 <meta property="og:description" content="{page['description']}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="{og_loc}">
 <meta property="og:image" content="{DOMAIN}/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
