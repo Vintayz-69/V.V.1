@@ -1,0 +1,82 @@
+  <section class="calculator game" aria-label="Reaction time test">
+    <div class="game-area">
+      <button type="button" class="reaction-pad is-idle" id="reaction-pad" aria-describedby="reaction-help">
+        <span class="reaction-title" id="reaction-title" aria-live="assertive">Tap to start</span>
+        <span class="reaction-sub" id="reaction-sub">Click, tap, or press Space when the box turns green.</span>
+      </button>
+      <p class="visually-hidden" id="reaction-help">The box shows "Wait for green" while you wait and "Tap now" when it turns green.</p>
+      <div class="game-toolbar">
+        <button type="button" class="btn btn-sm" id="reaction-reset">{{icon:refresh}} Start over</button>
+        <span class="privacy-note">{{icon:lock}} Timed in your browser. Nothing is saved.</span>
+      </div>
+    </div>
+
+    <div class="calc-results">
+      <h2>Your times</h2>
+      <div class="result-main"><span id="reaction-average">—</span> <small>average</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Best</span><span id="reaction-best">—</span></li>
+        <li><span>Slowest</span><span id="reaction-slowest">—</span></li>
+        <li><span>Tries</span><span id="reaction-round">0 / 5</span></li>
+        <li><span>Best average this visit</span><span id="reaction-session-best">—</span></li>
+      </ul>
+      <ul class="result-list reaction-list" id="reaction-list"></ul>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the reaction time test</h2>
+    <ol class="steps">
+      <li><strong>Tap the box</strong> (or press Space) to start. It turns red and says "Wait for green".</li>
+      <li><strong>Wait.</strong> After a random pause of 1.5 to 4.5 seconds, the box turns green and says "Tap now!".</li>
+      <li><strong>Tap as fast as you can.</strong> Your time shows in milliseconds (ms). 1,000 ms is one second.</li>
+      <li><strong>Do it five times.</strong> You then get your average, best and slowest time.</li>
+    </ol>
+    <p>If you tap before the box turns green, that try doesn't count. Tap again to redo it.</p>
+
+    <h2>How your result is worked out</h2>
+    <p>Each try measures the time from the moment the box turns green to the moment your tap or key press reaches the page. Your result is the average of your five tries.</p>
+    <div class="formula">
+      <p><strong>Average</strong> = total of your 5 times ÷ 5</p>
+    </div>
+
+    <h2>Worked example</h2>
+    <p>Alex's five tries are 300 ms, 250 ms, 350 ms, 280 ms and 320 ms.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Result</th><th>Working</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Average</td><td>(300 + 250 + 350 + 280 + 320) ÷ 5 = 1,500 ÷ 5</td><td><strong>300 ms</strong></td></tr>
+          <tr><td>Best</td><td>Fastest try</td><td>250 ms</td></tr>
+          <tr><td>Slowest</td><td>Slowest try</td><td>350 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Why your time can change</h2>
+    <ul>
+      <li><strong>Your device.</strong> Screens, mice, keyboards and touch screens each add a small delay before the page sees your tap. A result on your phone and on your laptop may differ.</li>
+      <li><strong>Tiredness and focus.</strong> Most people react more slowly when tired or distracted.</li>
+      <li><strong>Practice.</strong> Your first few tries are often slower while you get used to the test.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a good reaction time?</summary>
+        <p>The fairest comparison is with yourself. Because every device adds its own delay, comparing your number with someone on a different screen isn't exact. Take the test a few times on the same device and see whether your average improves.</p>
+      </details>
+      <details>
+        <summary>Is this a medical or driving test?</summary>
+        <p>No. It is a simple game for fun. It can't tell you whether you are fit to drive or work. If you are worried about your reactions, speak to a doctor.</p>
+      </details>
+      <details>
+        <summary>Why does the wait before green change each time?</summary>
+        <p>The pause is random, between 1.5 and 4.5 seconds, so you can't guess when to tap. You have to react to the colour change.</p>
+      </details>
+      <details>
+        <summary>Can I use it without a mouse?</summary>
+        <p>Yes. Use Tab to reach the box, then press Space or Enter to start and to react. The words in the box change as well as the colour.</p>
+      </details>
+    </div>
+  </div>

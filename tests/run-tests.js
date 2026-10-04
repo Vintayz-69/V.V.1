@@ -959,6 +959,321 @@ function loadResume(country) {
     { roas: 1.0, roasPct: 100, netProfit: -150, breakEvenRoas: 1.43 });
 }
 
+// ================ Tools added 5 October 2026 (one per section)
+
+// ---------------- Freelance retainer
+{
+  const calc = load("retainer");
+  // Page example: $75 × 20 h, 10% off, 6 months, client uses 16 h.
+  expectAll("retainer page example", calc({ rate: 75, hours: 20, discount: 10, months: 6, used: 16 }),
+    { full: 1500, fee: 1350, saving: 150, effective: 67.5, atUsage: 84.38, contract: 8100, unused: 4 });
+  expectAll("retainer no discount", calc({ rate: 100, hours: 10, discount: 0, months: 12, used: 10 }),
+    { fee: 1000, effective: 100, atUsage: 100, contract: 12000 });
+  expectAll("retainer over-used", calc({ rate: 60, hours: 35, discount: 15, months: 3, used: 40 }),
+    { full: 2100, fee: 1785, saving: 315, contract: 5355, atUsage: 44.63, unused: 0 });
+}
+
+// ---------------- Customer lifetime value
+{
+  const calc = load("customer-lifetime-value");
+  // Page example: $50 orders, 4 a year, 60% margin, 3 years, $120 to win.
+  expectAll("clv page example", calc({ order: 50, orders: 4, margin: 60, years: 3, cac: 120 }),
+    { yearly: 200, lifetimeRevenue: 600, clv: 360, ratio: 3, payback: 12, net: 240 });
+  expectAll("clv subscription", calc({ order: 30, orders: 12, margin: 40, years: 2, cac: 100 }),
+    { yearly: 360, lifetimeRevenue: 720, clv: 288, ratio: 2.88, payback: 8.33, net: 188 });
+  expectAll("clv big ticket", calc({ order: 1000, orders: 1, margin: 25, years: 5, cac: 500 }),
+    { clv: 1250, ratio: 2.5, payback: 24, net: 750 });
+  expectAll("clv no cost, no margin", calc({ order: 10, orders: 1, margin: 0, years: 1, cac: 0 }),
+    { clv: 0, ratio: null, payback: null });
+}
+
+// ---------------- Job offer comparison
+{
+  const calc = load("job-offer");
+  // Page example: remote £50,000 at 37.5 h vs £55,000 + £5,000 bonus, 45 h, 200 days at £15 and 1.5 h.
+  const a = { salary: 50000, bonus: 0, benefits: 0, hours: 37.5, days: 0, cost: 0, time: 0 };
+  const b = { salary: 55000, bonus: 5000, benefits: 0, hours: 45, days: 200, cost: 15, time: 1.5 };
+  const r = calc({ a, b });
+  expectAll("job offer A", r.a, { value: 50000, hours: 1950, hourly: 25.64 });
+  expectAll("job offer B", r.b, { pay: 60000, commuteCost: 3000, value: 57000, hours: 2640, hourly: 21.59 });
+  expectAll("job offer gaps", r, { valueGap: 7000, hourlyGap: -4.05 });
+  const c = calc({ a: { salary: 60000, bonus: 3000, benefits: 2000, hours: 40, days: 220, cost: 10, time: 1 },
+                   b: { salary: 64000, bonus: 0, benefits: 1000, hours: 40, days: 0, cost: 0, time: 0 } });
+  expectAll("job offer commute A", c.a, { value: 62800, hours: 2300, hourly: 27.3 });
+  expectAll("job offer remote B", c.b, { value: 65000, hourly: 31.25 });
+  expectAll("job offer same", calc({ a, b: a }), { valueGap: 0, hourlyGap: 0 });
+}
+
+// ---------------- Weighted grade
+{
+  const calc = load("weighted-grade");
+  // Page example: final exam (25%) not taken yet.
+  expectAll("weighted grade page example", calc({ rows: [{ weight: 20, score: 92 }, { weight: 15, score: 85 }, { weight: 25, score: 78 }, { weight: 15, score: 88 }, { weight: 25, score: "" }] }),
+    { average: 85.13, totalWeight: 75, earned: 63.85, remaining: 25 });
+  expectAll("weighted grade even split", calc({ rows: [{ weight: 50, score: 80 }, { weight: 50, score: 90 }] }), { average: 85, totalWeight: 100, remaining: 0 });
+  expectAll("weighted grade 30/70", calc({ rows: [{ weight: 30, score: 100 }, { weight: 70, score: 70 }] }), { average: 79, earned: 79 });
+  expectAll("weighted grade empty", calc({ rows: [{ weight: "", score: "" }] }), { average: 0, totalWeight: 0 });
+}
+
+// ---------------- Savings goal (checked against a month-by-month simulation)
+{
+  const calc = load("savings-goal");
+  expectAll("savings goal page example", calc({ goal: 20000, current: 2000, months: 36, rate: 4 }),
+    { monthly: 464.77, deposits: 16731.54, interest: 1268.46, noInterest: 500, reached: false });
+  expectAll("savings goal no interest", calc({ goal: 10000, current: 0, months: 24, rate: 0 }), { monthly: 416.67, interest: 0 });
+  expectAll("savings goal 5 years", calc({ goal: 50000, current: 5000, months: 60, rate: 5 }), { monthly: 640.87, deposits: 38452.33 });
+  expectAll("savings goal already reached", calc({ goal: 1000, current: 1000, months: 12, rate: 3 }), { monthly: 0, reached: true, interest: 30.42 });
+}
+
+// ---------------- Unix timestamp converter
+{
+  const C = load("unix-timestamp");
+  check("timestamp 0", C.toDate(0, "auto").iso, "1970-01-01T00:00:00.000Z");
+  check("timestamp page example (seconds)", C.toDate(1700000000, "auto").iso, "2023-11-14T22:13:20.000Z");
+  check("timestamp milliseconds detected", C.toDate(1700000000000, "auto").unit, "ms");
+  check("timestamp milliseconds", C.toDate(1700000000000, "auto").iso, "2023-11-14T22:13:20.000Z");
+  check("timestamp out of range", C.toDate(1e14, "s"), null);
+  check("timestamp forced seconds", C.toDate(1700000000000, "s").unit, "s");
+  check("timestamp 2038 limit", C.toDate(2147483647, "s").iso, "2038-01-19T03:14:07.000Z");
+  check("timestamp negative", C.toDate(-86400, "auto").iso, "1969-12-31T00:00:00.000Z");
+  check("date to timestamp UTC", C.fromDate({ y: 2026, mo: 10, d: 5, h: 12, mi: 0, s: 0 }, "utc").seconds, 1791201600);
+  check("date to timestamp 2038", C.fromDate({ y: 2038, mo: 1, d: 19, h: 3, mi: 14, s: 7 }, "utc").seconds, 2147483647);
+  check("relative past", C.relative(-3 * 86400000), "3 days ago");
+  check("relative future", C.relative(2 * 3600000 + 5000), "in 2 hours");
+  check("relative now", C.relative(400), "just now");
+  // Page text: weekdays of the worked examples.
+  const weekday = (ts) => new Intl.DateTimeFormat("en-GB", { weekday: "long", timeZone: "UTC" }).format(new Date(C.toDate(ts, "auto").ms));
+  check("timestamp weekdays", [0, 1700000000, 2147483647].map(weekday).join(","), "Thursday,Tuesday,Tuesday");
+}
+
+// ---------------- Percentage calculator
+{
+  const calc = load("percentage");
+  check("percent of", calc({ mode: "of", a: 15, b: 80 }).result, 12);
+  check("percent what", calc({ mode: "what", a: 30, b: 120 }).result, 25);
+  check("percent change up", calc({ mode: "change", a: 50, b: 65 }).result, 30);
+  check("percent change down", calc({ mode: "change", a: 80, b: 60 }).result, -25);
+  check("percent change from 0", calc({ mode: "change", a: 0, b: 10 }).result, null);
+  expectAll("percent adjust", calc({ mode: "adjust", a: 15, b: 200 }), { up: 230, down: 170, amount: 30 });
+  check("percent what of 0", calc({ mode: "what", a: 5, b: 0 }).result, null);
+  check("percent of decimals", calc({ mode: "of", a: 17.5, b: 64 }).result, 11.2);
+  // Page text: 230 minus 15% is 195.50, and 230 ÷ 1.15 = 200.
+  check("percent up then down", calc({ mode: "adjust", a: 15, b: 230 }).down, 195.5);
+  check("percent undo a rise", Math.round(230 / 1.15 * 100) / 100, 200);
+}
+
+// ---------------- US federal tax brackets (2026)
+{
+  const calc = load("us-tax-bracket", US_LIBS);
+  // Page example: single, $75,000, standard deduction $16,100.
+  const r = calc({ income: 75000, status: "single", itemized: null });
+  expectAll("us brackets page example", r, { deduction: 16100, taxable: 58900, tax: 7670, marginal: 0.22, effective: 10.23, toNextBracket: 46800, band: 2 });
+  check("us brackets page rows", r.rows.slice(0, 3).map((x) => x.tax).join(","), "1240,4560,1870");
+  expectAll("us brackets mfj $150k", calc({ income: 150000, status: "mfj", itemized: null }), { taxable: 117800, tax: 15340, marginal: 0.22 });
+  expectAll("us brackets below deduction", calc({ income: 10000, status: "single", itemized: null }), { taxable: 0, tax: 0, marginal: 0.1, effective: 0 });
+  expectAll("us brackets hoh itemized", calc({ income: 300000, status: "hoh", itemized: 30000 }), { taxable: 270000, tax: 61461, marginal: 0.35 });
+  expectAll("us brackets top", calc({ income: 1000000, status: "single", itemized: null }), { toNextBracket: null, marginal: 0.37 });
+}
+
+// ---------------- UK dividend tax (2026 to 2027)
+{
+  const calc = load("uk-dividend-tax", UK_LIBS);
+  // Page example: £12,570 salary + £40,000 dividends.
+  expectAll("uk dividends page example", calc({ other: 12570, dividends: 40000, region: "ruk" }),
+    { allowanceUsed: 500, basic: 37200, higher: 2300, dividendTax: 4821.25, otherTax: 0, keep: 35178.75, effective: 12.05 });
+  expectAll("uk dividends only", calc({ other: 0, dividends: 20000, region: "ruk" }),
+    { paOnDividends: 12570, basic: 6930, dividendTax: 744.98 });
+  expectAll("uk dividends higher rate", calc({ other: 60000, dividends: 10000, region: "ruk" }),
+    { basic: 0, higher: 9500, dividendTax: 3396.25 });
+  expectAll("uk dividends allowance taper", calc({ other: 100000, dividends: 20000, region: "ruk" }),
+    { personalAllowance: 2570, higher: 19500, dividendTax: 6971.25 });
+  expectAll("uk dividends within allowance", calc({ other: 30000, dividends: 500, region: "ruk" }), { dividendTax: 0, allowanceUsed: 500 });
+  // Scotland: dividends use UK-wide bands, so the dividend tax is the same; only tax on the salary differs.
+  check("uk dividends Scotland same dividend tax", calc({ other: 40000, dividends: 10000, region: "scotland" }).dividendTax,
+    calc({ other: 40000, dividends: 10000, region: "ruk" }).dividendTax);
+}
+
+// ---------------- Canada CPP and EI (2026, employees outside Quebec)
+{
+  const calc = load("ca-cpp-ei", ["data/tax-ca.js"]);
+  // Page example: $60,000 paid every two weeks.
+  expectAll("ca cpp ei page example", calc({ salary: 60000, periods: 26 }),
+    { cpp: 3361.75, cpp2: 0, ei: 978, employee: 4339.75, perPeriod: 166.91, employerEi: 1369.2, employer: 4730.95 });
+  expectAll("ca cpp ei maximums", calc({ salary: 100000, periods: 12 }),
+    { cpp: 4230.45, cpp2: 416, ei: 1123.07, employee: 5769.52, cppMax: 4230.45, cpp2Max: 416, eiMax: 1123.07 });
+  expectAll("ca cpp ei low income", calc({ salary: 3000, periods: 52 }), { cpp: 0, ei: 48.9, employee: 48.9 });
+}
+
+// ---------------- Australia take-home pay (2026–27)
+{
+  const calc = load("au-take-home", AU_LIBS);
+  // Page example: $90,000 plus super.
+  expectAll("au take-home page example", calc({ salary: 90000, includesSuper: false }),
+    { basic: 17520, lito: 0, incomeTax: 17520, medicare: 1800, total: 19320, takeHome: 70680, monthly: 5890, fortnightly: 2718.46, weekly: 1359.23, superAmount: 10800 });
+  expectAll("au take-home $40k with LITO", calc({ salary: 40000, includesSuper: false }),
+    { basic: 3270, lito: 575, incomeTax: 2695, medicare: 800, takeHome: 36505 });
+  expectAll("au take-home package incl. super", calc({ salary: 112000, includesSuper: true }),
+    { base: 100000, superAmount: 12000, incomeTax: 20520, medicare: 2000, takeHome: 77480 });
+}
+
+// ---------------- Brain games (/games/)
+const GAME_LIBS = ["js/games-common.js"];
+function loadGameHelpers() {
+  const sandbox = { window: {} };
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(path.join(JS, "js/games-common.js"), "utf8"), sandbox);
+  return sandbox.window.ToolNestGames;
+}
+{
+  // Shared helpers. Fisher-Yates with a "random" that always gives 0, worked by hand:
+  // [1,2,3,4] → swap 3↔0 [4,2,3,1] → swap 2↔0 [3,2,4,1] → swap 1↔0 [2,3,4,1]
+  const G = loadGameHelpers();
+  check("games shuffle by hand", G.shuffle([1, 2, 3, 4], () => 0).join(","), "2,3,4,1");
+  check("games shuffle leaves original alone", (() => { const a = [1, 2, 3]; G.shuffle(a, () => 0); return a.join(","); })(), "1,2,3");
+  check("games formatTime 75s", G.formatTime(75), "1:15");
+  check("games formatTime 3725s", G.formatTime(3725), "1:02:05");
+  check("games formatTime 0", G.formatTime(0), "0:00");
+  const r1 = G.makeRng(42), r2 = G.makeRng(42);
+  check("games seeded rng repeats", [r1(), r1(), r1()].join() === [r2(), r2(), r2()].join(), true);
+  check("games rng in range", Array.from({ length: 1000 }, G.makeRng(7)).every((x) => x >= 0 && x < 1), true);
+}
+{
+  const T = load("typing-test", GAME_LIBS);
+  // (7 ÷ 5) ÷ 0.1 minutes = 14 WPM
+  expectAll("typing perfect short", T.score("the cat", "the cat", 6), { correct: 7, errors: 0, wpm: 14, rawWpm: 14, accuracy: 100 });
+  // Page worked example: 300 typed, 285 correct, 1 minute → 57 WPM, raw 60, 95%
+  expectAll("typing page example", T.score("a".repeat(300), "a".repeat(285) + "b".repeat(15), 60),
+    { typed: 300, correct: 285, errors: 15, wpm: 57, rawWpm: 60, accuracy: 95 });
+  // Page: the same 285 correct characters in 30 seconds → 114 WPM
+  expectAll("typing page 30-second example", T.score("a".repeat(285), "a".repeat(285), 30), { wpm: 114, accuracy: 100 });
+  // One wrong letter in five, 1 minute: (4 ÷ 5) = 0.8 → 1 WPM, 80%
+  expectAll("typing one mistake", T.score("hello", "hxllo", 60), { correct: 4, errors: 1, wpm: 1, accuracy: 80 });
+  expectAll("typing nothing typed", T.score("hello", "", 0), { typed: 0, wpm: 0, accuracy: 100 });
+  check("typing extra characters ignored", T.score("hi", "hi there", 60).typed, 2);
+  const text = T.buildText();
+  check("typing passages are plain keyboard characters", /^[\x20-\x7e]+$/.test(text), true);
+  check("typing passages have no double spaces", text.includes("  "), false);
+  check("typing text uses every passage", T.PASSAGES.every((p) => text.includes(p)), true);
+  check("typing text long enough for 2 minutes at 150 WPM", text.length >= 150 * 5 * 2, true);
+}
+{
+  const R = load("reaction-time");
+  // Page worked example: (300 + 250 + 350 + 280 + 320) ÷ 5 = 300
+  expectAll("reaction page example", R.summary([300, 250, 350, 280, 320]), { count: 5, average: 300, best: 250, slowest: 350 });
+  expectAll("reaction rounds half up", R.summary([199, 200]), { average: 200, best: 199, slowest: 200 });
+  expectAll("reaction no tries", R.summary([]), { count: 0, average: 0 });
+  check("reaction shortest wait", R.randomWait(() => 0), 1500);
+  check("reaction middle wait", R.randomWait(() => 0.5), 3000);
+  check("reaction longest wait under 4.5s", R.randomWait(() => 0.9999) <= 4500, true);
+}
+{
+  const S = load("sudoku", GAME_LIBS);
+  const grid = Array(81).fill(0);
+  grid[0] = 5; // row 1, column 1
+  check("sudoku same row blocked", S.canPlace(grid, 8, 5), false);
+  check("sudoku same column blocked", S.canPlace(grid, 72, 5), false);
+  check("sudoku same box blocked", S.canPlace(grid, 20, 5), false);
+  check("sudoku elsewhere allowed", S.canPlace(grid, 40, 5), true);
+  grid[8] = 5;
+  check("sudoku conflict found", S.conflicts(grid).join(","), "0,8");
+  // A known valid grid: row r is 1..9 shifted by (3r + r div 3).
+  const full = Array.from({ length: 81 }, (_, i) => { const r = Math.floor(i / 9), c = i % 9; return ((r * 3 + Math.floor(r / 3) + c) % 9) + 1; });
+  check("sudoku pattern grid is solved", S.isSolved(full), true);
+  const holes = full.slice();
+  [0, 10, 20, 40, 60, 80].forEach((i) => { holes[i] = 0; });
+  check("sudoku solves back to the pattern", S.solve(holes).join(""), full.join(""));
+  check("sudoku few holes: one solution", S.countSolutions(holes, 2), 1);
+  check("sudoku empty grid: many solutions", S.countSolutions(Array(81).fill(0), 2), 2);
+  check("sudoku grid with a repeated number has no solution", S.solve(grid), null); // two 5s in row 1
+  const { makeRng } = loadGameHelpers();
+  for (const [level, seed] of [["easy", 1], ["medium", 2], ["hard", 3]]) {
+    const g = S.generate(level, makeRng(seed));
+    const given = g.puzzle.filter(Boolean).length;
+    check(`sudoku ${level} clue count matches`, given, g.clues);
+    check(`sudoku ${level} has exactly one solution`, S.countSolutions(g.puzzle, 2), 1);
+    check(`sudoku ${level} solution is valid`, S.isSolved(g.solution), true);
+    check(`sudoku ${level} givens match solution`, g.puzzle.every((v, i) => !v || v === g.solution[i]), true);
+    check(`sudoku ${level} reaches its target`, level === "hard" ? given <= 30 : given === S.CLUES[level], true);
+  }
+}
+{
+  const M = load("number-merge");
+  // Page scoring table
+  const a = M.slideLine([2, 2, 2, 2]);
+  check("merge 2·2·2·2 left", a.line.join(","), "4,4,0,0");
+  check("merge 2·2·2·2 points", a.score, 8);
+  const b = M.slideLine([2, 2, 4, 0]);
+  check("merge 2·2·4 left (no double join)", b.line.join(","), "4,4,0,0");
+  check("merge 2·2·4 points", b.score, 4);
+  const c = M.slideLine([4, 0, 4, 8]);
+  check("merge 4·_·4·8 left", c.line.join(","), "8,8,0,0");
+  check("merge 4·_·4·8 points", c.score, 8);
+  check("merge single tile slides", M.slideLine([0, 0, 0, 2]).line.join(","), "2,0,0,0");
+  const row = [2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const right = M.move(row, "right");
+  check("merge move right", right.grid.slice(0, 4).join(","), "0,0,2,4");
+  check("merge move right points", right.score, 4);
+  const col = [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0];
+  check("merge move up", [0, 4, 8, 12].map((i) => M.move(col, "up").grid[i]).join(","), "4,4,0,0");
+  check("merge move down", [0, 4, 8, 12].map((i) => M.move(col, "down").grid[i]).join(","), "0,0,4,4");
+  check("merge merged cells marked", M.move([2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "left").merged.join(","), "0,1");
+  check("merge nothing moves", M.move([2, 4, 8, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "left").moved, false);
+  const stuck = [2, 4, 2, 4, 4, 2, 4, 2, 2, 4, 2, 4, 4, 2, 4, 2];
+  check("merge checkerboard is stuck", M.canMove(stuck), false);
+  check("merge empty cell can move", M.canMove(stuck.map((v, i) => (i === 5 ? 0 : v))), true);
+  check("merge equal neighbours can move", M.canMove(stuck.map((v, i) => (i === 1 ? 2 : v))), true);
+  const g1 = M.emptyGrid();
+  check("merge new tile cell", M.addTile(g1, () => 0), 0);
+  check("merge new tile is 2", g1[0], 2);
+  const g2 = M.emptyGrid();
+  check("merge new tile 4 at last cell", M.addTile(g2, () => 0.95) + ":" + g2[15], "15:4");
+}
+{
+  const Mem = load("memory-match", GAME_LIBS);
+  // [0,0,1,1] with "random" 0: swap 3↔0 [1,0,1,0], swap 2↔0 [1,0,1,0], swap 1↔0 [0,1,1,0]
+  check("memory deal by hand", Mem.deal(2, () => 0).join(","), "0,1,1,0");
+  const deck = Mem.deal(12);
+  check("memory 12 pairs makes 24 cards", deck.length, 24);
+  check("memory every picture twice", Array.from({ length: 12 }, (_, i) => deck.filter((d) => d === i).length).every((n) => n === 2), true);
+  // Page scoring table
+  check("memory 8 pairs in 16 moves", Mem.rating(8, 16), 50);
+  check("memory 12 pairs in 20 moves", Mem.rating(12, 20), 60);
+  check("memory perfect game", Mem.rating(8, 8), 100);
+  check("memory 8 pairs in 24 moves", Mem.rating(8, 24), 33);
+}
+
+// ---------------- Resignation letter maker (shared resume engine)
+{
+  const sandbox = { window: {}, document: { getElementById: () => null } };
+  vm.createContext(sandbox);
+  for (const file of ["js/resume.js", "js/tools/resignation-letter.js"]) vm.runInContext(fs.readFileSync(path.join(JS, file), "utf8"), sandbox);
+  const L = sandbox.window.ToolNestCalc;
+  const uk = { ...L.EXAMPLE, country: "uk" };
+  // Page example: letter dated 5 October 2026, last day 2 November 2026.
+  check("resignation opening", L.opening(uk),
+    "Please accept this letter as formal notice of my resignation from my position as Operations Coordinator at Harbourline Logistics. My last working day will be 2 November 2026.");
+  check("resignation notice days", L.noticeDays(uk), 28);
+  check("resignation notice missing date", L.noticeDays({ ...uk, lastDay: "" }), null);
+  check("resignation US date format", L.opening({ ...uk, country: "us" }).endsWith("November 2, 2026."), true);
+  check("resignation no last day", L.opening({ ...uk, lastDay: "" }).endsWith("Harbourline Logistics."), true);
+  check("resignation UK greeting, named", L.greeting(uk) + " " + L.signOff(uk), "Dear Ms Priya Shah, Yours sincerely,");
+  check("resignation UK, no name", L.greeting({ ...uk, recipient: "" }) + " " + L.signOff({ ...uk, recipient: "" }), "Dear Sir or Madam, Yours faithfully,");
+  check("resignation Australia", L.greeting({ country: "au" }) + " " + L.signOff({ country: "au" }), "Dear Manager, Kind regards,");
+  const text = L.text(uk).split("\n");
+  check("resignation text starts with name", text[0], "Sam Taylor");
+  check("resignation text subject", text.includes("Resignation: Operations Coordinator"), true);
+  check("resignation text ends with name", text[text.length - 1], "Sam Taylor");
+  check("resignation thanks paragraph optional", L.text({ ...uk, thanks: false }).includes("Thank you for the support"), false);
+  check("resignation handover paragraph optional", L.text({ ...uk, handover: true }).includes("handover smooth"), true);
+  check("resignation example has no privacy warnings", L.warnings(uk).length, 0);
+  check("resignation spots bank details", L.warnings({ ...uk, extra: "Please pay my final salary to sort code 12-34-56" }).length >= 1, true);
+  check("resignation file name", L.fileName("Zoë O'Brien"), "Zoe-OBrien-Resignation-Letter");
+  const fake = (t, f, s) => t.length * s * 0.5;
+  check("resignation example fits one page", L.layout(uk, { font: "sans" }, fake).pages.length, 1);
+  check("resignation UK paper A4", L.layout(uk, {}, fake).size.join("x"), "595.28x841.89");
+  check("resignation US paper Letter", L.layout({ ...uk, country: "us" }, {}, fake).size.join("x"), "612x792");
+}
+
 // Real PDFs with pdf-lib, run in Node's own context (pdf-lib rejects objects from a vm sandbox).
 // Page counts must match the worked examples on each page.
 async function resumePdfTests() {

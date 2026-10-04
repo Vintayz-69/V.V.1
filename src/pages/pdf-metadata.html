@@ -1,0 +1,110 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Edit PDF properties tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <fieldset class="choice-group">
+        <legend>What do you want to do?</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="meta-mode" id="meta-mode-edit" value="edit" checked><label for="meta-mode-edit">Edit properties<small>Change the title, author and other details</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="meta-mode" id="meta-mode-remove" value="remove"><label for="meta-mode-remove">Remove all properties<small>Strip names, apps and dates before sharing</small></label></div>
+        </div>
+      </fieldset>
+
+      <form class="pdf-options" id="meta-form" novalidate>
+        <div class="field span-2">
+          <label for="meta-title">Title<span class="hint">Shown in the browser tab or reader's title bar</span></label>
+          <input id="meta-title" type="text" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="meta-author">Author</label>
+          <input id="meta-author" type="text" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="meta-subject">Subject</label>
+          <input id="meta-subject" type="text" autocomplete="off">
+        </div>
+        <div class="field span-2">
+          <label for="meta-keywords">Keywords<span class="hint">Words that help people search for the file</span></label>
+          <input id="meta-keywords" type="text" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="meta-creator">Created with<span class="hint">The app the document was written in</span></label>
+          <input id="meta-creator" type="text" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="meta-producer">PDF made by<span class="hint">The app that turned it into a PDF</span></label>
+          <input id="meta-producer" type="text" autocomplete="off">
+        </div>
+        <p class="work-note span-2">Leave a box empty to remove that property.</p>
+      </form>
+      <p class="work-note" id="meta-dates"></p>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Save PDF</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your file stays on your device. It's read and changed by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to edit or remove PDF properties</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF.</strong> You'll see its current title, author and the other properties stored inside it.</li>
+      <li><strong>Edit the boxes</strong>, or choose "Remove all properties" to clean the file before you share it.</li>
+      <li><strong>Press "Save PDF"</strong> and download the new copy.</li>
+    </ol>
+
+    <h2>What are PDF properties?</h2>
+    <p>Most PDFs carry hidden details about themselves, often called metadata. You can see them in your PDF reader under File → Properties. They often include:</p>
+    <ul>
+      <li><strong>Title, subject and keywords</strong>, which readers and search tools may show.</li>
+      <li><strong>Author</strong>, which is often filled in automatically from the name on your computer account.</li>
+      <li><strong>Created with and PDF made by</strong>: the names and versions of the apps used.</li>
+      <li><strong>Created and last changed dates</strong>, to the second.</li>
+    </ul>
+    <p>Many PDFs also hold a second copy of these details in a format called XMP. This tool removes that copy whenever you save, so old values can't stay hidden in the file.</p>
+
+    <h2>Example</h2>
+    <p>A report exported from a word processor has these properties. "Remove all properties" clears every one of them:</p>
+    <div class="formula">Title          Q3 report draft v7      →  (removed)
+Author         jsmith-laptop           →  (removed)
+Created with   Writer App              →  (removed)
+Created        12 Aug 2026, 09:14      →  (removed)
+Pages          3                       →  3, unchanged</div>
+
+    <h2>What this tool doesn't change</h2>
+    <ul>
+      <li>The <strong>pages themselves</strong>: text, pictures, links and forms stay exactly as they were.</li>
+      <li>Names or details <strong>written on the pages</strong>, or inside comments, attachments and pictures (for example, camera details in a photo). Check those separately before sharing a sensitive file.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why remove metadata before sharing a PDF?</summary>
+        <p>The author name, app names and exact dates can reveal more than you mean to, such as who wrote a document, when, or that it started life as an old draft. Removing them shares only what's on the pages.</p>
+      </details>
+      <details>
+        <summary>Does editing the properties reduce quality?</summary>
+        <p>No. Only the properties change. Every page is kept exactly as it was.</p>
+      </details>
+      <details>
+        <summary>Why can't I change my PDF?</summary>
+        <p>If the PDF has a password or security settings that stop it being changed, this tool can't edit it. Remove the protection in the app that made it first (you'll need the password).</p>
+      </details>
+    </div>
+  </div>

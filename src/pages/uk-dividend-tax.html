@@ -1,0 +1,102 @@
+  <section class="calculator" aria-label="Dividend tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="dividends">Dividends in 2026 to 2027</label>
+        <div class="input-wrap"><span class="affix">£</span><input id="dividends" type="text" inputmode="decimal" value="40000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="other">Other income<span class="hint">Salary, self-employed profit or pension, before tax</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="other" type="text" inputmode="decimal" value="12570" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="region">Where you pay Income Tax<span class="hint">Only changes the tax on your other income</span></label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated tax on your dividends</h2>
+      <div class="result-main"><span id="out-tax">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Dividends you keep</span><span id="out-keep">—</span></li>
+        <li><span>Effective rate on dividends</span><span id="out-effective">—</span></li>
+        <li><span>Covered by your Personal Allowance</span><span id="out-pa">—</span></li>
+        <li><span>Taxed at 0% (dividend allowance)</span><span id="out-allowance">—</span></li>
+        <li><span>At the dividend basic rate</span><span id="out-basic">—</span></li>
+        <li><span>At the dividend higher rate</span><span id="out-higher">—</span></li>
+        <li><span>At the dividend additional rate</span><span id="out-additional">—</span></li>
+        <li><span>Income Tax on your other income</span><span id="out-other-tax">—</span></li>
+      </ul>
+      <p class="result-note">Amounts in each band are dividends, not tax. The rates for 2026 to 2027 are 10.75%, 35.75% and 39.35%.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the dividends</strong> you expect to receive in the 2026 to 2027 tax year (6 April 2026 to 5 April 2027).</li>
+      <li><strong>Enter your other income</strong>, such as a director's salary, a job, self-employed profit or a pension.</li>
+      <li><strong>Choose where you pay Income Tax.</strong> Dividends are taxed at the same rates across the UK, but Scotland's rates apply to your other income.</li>
+      <li><strong>Read the tax on your dividends</strong>, and how much falls in each band.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Personal Allowance  £12,570, used by other income first
+                    (reduced by £1 for every £2 of total income over £100,000)
+Dividend allowance  first £500 of dividends taxed at 0%, but it still uses up band space
+Dividends sit on top of your other income in the UK tax bands:
+  basic rate band (up to £37,700 taxable)   10.75%
+  higher rate band (up to £125,140)          35.75%
+  above that                                 39.35%</div>
+
+    <h2>Worked example</h2>
+    <p>Jess runs her own limited company. In 2026 to 2027 she pays herself a salary of £12,570 and takes £40,000 in dividends. She lives in England.</p>
+    <div class="formula">Salary £12,570 uses the whole Personal Allowance, so no Income Tax on it.
+
+Dividends                                   £40,000
+First £500 at 0% (dividend allowance)       £500 × 0%        = £0
+Basic rate band: £37,700 − £500 = £37,200   £37,200 × 10.75% = £3,999.00
+The rest: £40,000 − £37,700 = £2,300        £2,300 × 35.75%  = £822.25
+Dividend tax                                                 = £4,821.25</div>
+    <p>Jess pays about <strong>£4,821.25</strong> in dividend tax, an effective rate of 12.05% on her dividends, and keeps £35,178.75.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Savings interest and its allowances, capital gains, and other income such as rent.</li>
+      <li>Pension contributions, Gift Aid and Marriage Allowance, which can change your bands or allowance.</li>
+      <li>Dividends held in an ISA, which are tax-free and don't need to be entered.</li>
+      <li>National Insurance on your salary, and Corporation Tax your company pays before paying dividends. Our <a href="{{root}}uk/sole-trader-vs-limited-company-calculator/">sole trader vs limited company calculator</a> includes those.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does the £500 dividend allowance reduce my income?</summary>
+        <p>No. The first £500 of dividends is taxed at 0%, but it still counts as income and uses up part of your basic or higher rate band. That's why the example's basic rate band holds £37,200 of taxed dividends, not £37,700.</p>
+      </details>
+      <details>
+        <summary>I live in Scotland. Are my dividends taxed differently?</summary>
+        <p>No. Dividend tax rates and bands are the same across the UK. Scottish Income Tax rates apply only to your other income, such as a salary.</p>
+      </details>
+      <details>
+        <summary>How do I pay dividend tax?</summary>
+        <p>GOV.UK explains how to report dividends, including when you need to fill in a Self Assessment tax return. See the official <a href="https://www.gov.uk/tax-on-dividends" rel="noopener">tax on dividends</a> page.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026 to 2027):</strong> <a href="https://www.gov.uk/tax-on-dividends" rel="noopener">GOV.UK: tax on dividends</a>, <a href="https://www.gov.uk/income-tax-rates" rel="noopener">GOV.UK: Income Tax rates and Personal Allowance</a>, <a href="https://www.gov.uk/scottish-income-tax" rel="noopener">GOV.UK: Scottish Income Tax</a>. Figures checked 28 September 2026.</p>
+  </div>

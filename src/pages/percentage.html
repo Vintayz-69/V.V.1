@@ -1,0 +1,97 @@
+  <section class="pct-tool" id="pct-tool" aria-label="Percentage calculator">
+    <form class="pct-card" data-pct="of" novalidate>
+      <h2>What is X% of Y?</h2>
+      <div class="pct-row">
+        <label class="visually-hidden" for="of-a">Percentage</label>
+        <div class="input-wrap"><input id="of-a" data-a type="text" inputmode="decimal" value="15" autocomplete="off"><span class="affix">%</span></div>
+        <span class="pct-word">of</span>
+        <label class="visually-hidden" for="of-b">Number</label>
+        <div class="input-wrap"><input id="of-b" data-b type="text" inputmode="decimal" value="80" autocomplete="off"></div>
+      </div>
+      <p class="pct-result" aria-live="polite"><span data-out>—</span></p>
+      <p class="pct-say" data-say></p>
+    </form>
+
+    <form class="pct-card" data-pct="what" novalidate>
+      <h2>X is what % of Y?</h2>
+      <div class="pct-row">
+        <label class="visually-hidden" for="what-a">Part</label>
+        <div class="input-wrap"><input id="what-a" data-a type="text" inputmode="decimal" value="30" autocomplete="off"></div>
+        <span class="pct-word">is what % of</span>
+        <label class="visually-hidden" for="what-b">Whole</label>
+        <div class="input-wrap"><input id="what-b" data-b type="text" inputmode="decimal" value="120" autocomplete="off"></div>
+      </div>
+      <p class="pct-result" aria-live="polite"><span data-out>—</span></p>
+      <p class="pct-say" data-say></p>
+    </form>
+
+    <form class="pct-card" data-pct="change" novalidate>
+      <h2>Percentage change from X to Y</h2>
+      <div class="pct-row">
+        <label class="visually-hidden" for="change-a">From</label>
+        <div class="input-wrap"><input id="change-a" data-a type="text" inputmode="decimal" value="50" autocomplete="off"></div>
+        <span class="pct-word">to</span>
+        <label class="visually-hidden" for="change-b">To</label>
+        <div class="input-wrap"><input id="change-b" data-b type="text" inputmode="decimal" value="65" autocomplete="off"></div>
+      </div>
+      <p class="pct-result" aria-live="polite"><span data-out>—</span></p>
+      <p class="pct-say" data-say></p>
+    </form>
+
+    <form class="pct-card" data-pct="adjust" novalidate>
+      <h2>Add or take off X% from Y</h2>
+      <div class="pct-row">
+        <label class="visually-hidden" for="adjust-a">Percentage</label>
+        <div class="input-wrap"><input id="adjust-a" data-a type="text" inputmode="decimal" value="15" autocomplete="off"><span class="affix">%</span></div>
+        <span class="pct-word">on</span>
+        <label class="visually-hidden" for="adjust-b">Number</label>
+        <div class="input-wrap"><input id="adjust-b" data-b type="text" inputmode="decimal" value="200" autocomplete="off"></div>
+      </div>
+      <p class="pct-result" aria-live="polite"><span data-out>—</span></p>
+      <p class="pct-say" data-say></p>
+    </form>
+    <p class="pct-privacy">{{icon:lock}} Worked out in your browser. Nothing you type is sent anywhere.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Pick the question</strong> that matches what you want to know. Each box works on its own.</li>
+      <li><strong>Type your two numbers.</strong> The answer updates as you type, with a sentence explaining it.</li>
+      <li><strong>Decimals and negative numbers work</strong>, for example 17.5% or a change from −20 to 10.</li>
+    </ol>
+
+    <h2>How each one is calculated</h2>
+    <div class="formula">X% of Y              = X ÷ 100 × Y
+X is what % of Y     = X ÷ Y × 100
+Change from X to Y   = (Y − X) ÷ X × 100
+Y plus X%            = Y × (1 + X ÷ 100)
+Y minus X%           = Y × (1 − X ÷ 100)</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">15% of 80            = 15 ÷ 100 × 80        = 12
+30 is what % of 120  = 30 ÷ 120 × 100       = 25%
+50 to 65             = (65 − 50) ÷ 50 × 100 = +30%
+80 to 60             = (60 − 80) ÷ 80 × 100 = −25%
+200 plus 15%         = 200 × 1.15           = 230
+200 minus 15%        = 200 × 0.85           = 170</div>
+
+    <h2>A common trap: up then down</h2>
+    <p>Adding a percentage and then taking the same percentage off does not get you back where you started. 200 plus 15% is 230, but 230 minus 15% is 195.50, because the second 15% is worked out on a bigger number. To undo a 15% rise, divide by 1.15 instead: 230 ÷ 1.15 = 200.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What's the difference between percent and percentage points?</summary>
+        <p>If an interest rate goes from 4% to 5%, it has risen by 1 percentage point, but by 25% (because 1 is a quarter of 4). Use the "percentage change" box for the second kind.</p>
+      </details>
+      <details>
+        <summary>Why can't I work out a change from 0?</summary>
+        <p>A percentage change divides by the starting number, and you can't divide by 0. Any rise from nothing is an infinite percentage, so it's clearer to give the actual difference instead.</p>
+      </details>
+      <details>
+        <summary>How do I remove sales tax or VAT from a price?</summary>
+        <p>Divide by 1 plus the rate, as in the trap above. For the UK, our <a href="{{root}}uk/vat-calculator/">VAT calculator</a> does this for you with the official rates.</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,178 @@
+  <section class="invoice-tool" aria-label="Resignation letter maker">
+    <div class="invoice-app" id="rl-app">
+      <form class="inv-form-panel" id="rl-form" novalidate>
+        <div class="inv-bar">
+          <div class="inv-bar-actions">
+            <button type="button" class="btn btn-primary" id="rl-pdf">{{icon:file}} Download PDF</button>
+            <button type="button" class="btn btn-sm" id="rl-copy">Copy as text</button>
+            <button type="button" class="btn btn-sm btn-ghost" id="rl-example">Show example</button>
+            <button type="button" class="btn btn-sm btn-ghost" id="rl-clear">Start blank</button>
+          </div>
+          <p class="cl-status" id="rl-status" role="status" aria-live="polite"></p>
+          <p class="rf-privacy">{{icon:lock}} <span><strong>Private:</strong> your letter is made in your browser. Nothing you type is uploaded or saved, so copy or download it before you close the page.</span></p>
+        </div>
+
+        <div class="inv-card">
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="rl-country">Country you work in</label>
+              <div class="select-wrap">
+                <select id="rl-country">
+                  <option value="us">United States (Letter paper)</option>
+                  <option value="uk">United Kingdom (A4 paper)</option>
+                  <option value="ca">Canada (Letter paper)</option>
+                  <option value="au">Australia (A4 paper)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="rl-font">Font</label>
+              <div class="select-wrap">
+                <select id="rl-font">
+                  <option value="sans">Sans serif (Helvetica)</option>
+                  <option value="serif">Serif (Times)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>About you</h3>
+          <div class="field">
+            <label for="rl-name">Your name</label>
+            <input type="text" id="rl-name" autocomplete="off">
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="rl-email">Email<span class="hint">Optional</span></label>
+              <input type="email" id="rl-email" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="rl-phone">Phone<span class="hint">Optional</span></label>
+              <input type="tel" id="rl-phone" autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="rl-town">Town or city<span class="hint">Optional. No need for your full address.</span></label>
+            <input type="text" id="rl-town" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="inv-card">
+          <h3>Your job</h3>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="rl-recipient">Your manager's name<span class="hint">With a title, e.g. Ms Priya Shah</span></label>
+              <input type="text" id="rl-recipient" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="rl-company">Employer</label>
+              <input type="text" id="rl-company" autocomplete="off">
+            </div>
+          </div>
+          <div class="field">
+            <label for="rl-job">Your job title</label>
+            <input type="text" id="rl-job" autocomplete="off">
+          </div>
+          <div class="inv-grid-2">
+            <div class="field">
+              <label for="rl-date">Date of the letter</label>
+              <input type="date" id="rl-date">
+            </div>
+            <div class="field">
+              <label for="rl-lastDay">Your last working day<span class="hint">Check the notice in your contract</span></label>
+              <input type="date" id="rl-lastDay">
+            </div>
+          </div>
+          <p class="cl-words" id="rl-notice"></p>
+        </div>
+
+        <div class="inv-card">
+          <h3>Your letter</h3>
+          <div class="field">
+            <label for="rl-reason">Why you're leaving<span class="hint">Optional. One or two positive sentences, or leave it empty.</span></label>
+            <textarea id="rl-reason" rows="3"></textarea>
+          </div>
+          <div class="field check-field">
+            <label class="check"><input type="checkbox" id="rl-thanks" checked><span>Thank your employer</span></label>
+          </div>
+          <div class="field check-field">
+            <label class="check"><input type="checkbox" id="rl-handover" checked><span>Offer to help with the handover</span></label>
+          </div>
+          <div class="field">
+            <label for="rl-extra">Anything else<span class="hint">Optional, e.g. returning equipment or a forwarding email. Leave a blank line between paragraphs.</span></label>
+            <textarea id="rl-extra" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <label for="rl-signoff">Sign-off</label>
+            <div class="select-wrap">
+              <select id="rl-signoff">
+                <option value="auto" id="rl-signoff-auto">Automatic</option>
+                <option value="Yours sincerely,">Yours sincerely</option>
+                <option value="Yours faithfully,">Yours faithfully</option>
+                <option value="Sincerely,">Sincerely</option>
+                <option value="Kind regards,">Kind regards</option>
+                <option value="Best regards,">Best regards</option>
+              </select>
+            </div>
+          </div>
+          <ul class="cl-warnings" id="rl-warnings" hidden></ul>
+        </div>
+      </form>
+
+      <div class="inv-preview-panel">
+        <div class="inv-paper cl-paper" id="rl-paper" aria-label="Preview of your resignation letter"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to write a resignation letter</h2>
+    <ol class="steps">
+      <li><strong>Say clearly that you're resigning</strong>, from which job, and give your last working day. This is the part that matters most.</li>
+      <li><strong>Keep any reason short and positive</strong>, or leave it out. You don't have to explain why you're leaving.</li>
+      <li><strong>Thank your employer and offer to help with the handover.</strong> It helps you leave on good terms and get a good reference.</li>
+      <li><strong>Sign, date and keep a copy.</strong> Many people tell their manager in person first, then hand over or email the letter.</li>
+    </ol>
+
+    <h2>Example letter</h2>
+    <p>Sam is leaving an operations job, with a letter dated 5 October 2026 and a last working day of 2 November 2026. That's 28 days, or 4 weeks, of notice. The maker writes:</p>
+    <div class="formula">Dear Ms Priya Shah,
+
+Please accept this letter as formal notice of my resignation from
+my position as Operations Coordinator at Harbourline Logistics.
+My last working day will be 2 November 2026.
+
+I have accepted a role that will let me focus on supply chain
+planning, which is the direction I want my career to take.
+
+Thank you for the support and the opportunities I've had during my
+time here. …
+
+Yours sincerely,
+Sam Taylor</div>
+
+    <h2>How much notice do I need to give?</h2>
+    <p>It depends on your contract and where you work. Read your contract or employee handbook first: it usually says how much notice you must give and how to give it. Notice rules differ between the US, the UK, Canada and Australia, and between US states and Canadian provinces. Your HR team or an official employment advice service in your country can confirm what applies to you.</p>
+
+    <h2>Keep private details out</h2>
+    <p>A resignation letter doesn't need your date of birth, an ID number or bank details. The maker warns you if it spots one. If your final pay needs to go to a new account, give those details through your employer's payroll process instead.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should I email my resignation or hand it in?</summary>
+        <p>Follow your employer's process if they have one. Many people tell their manager in person or on a call first, then send the letter by email or hand in a signed copy, so there's a written record of the date.</p>
+      </details>
+      <details>
+        <summary>Is my letter saved anywhere?</summary>
+        <p>No. It's made in your browser and nothing is sent to us or stored on your device. Download the PDF or copy the text before you close the page.</p>
+      </details>
+      <details>
+        <summary>Can I take back a resignation?</summary>
+        <p>There's no guarantee your employer will agree, and the rules depend on your contract and where you work. Be sure before you send it, and keep the tone friendly in case you want to return one day.</p>
+      </details>
+    </div>
+    <p class="sources">The example person and company are made up.</p>
+  </div>

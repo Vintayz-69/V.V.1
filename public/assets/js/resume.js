@@ -1184,8 +1184,52 @@
     };
   }
 
+  /*
+   * Lays out a plain letter (cover letter, resignation letter) on pages for makePdf().
+   * blocks: [{ kind: "name" | "contact" | "line" | "subject" | "para" | "gap" | "sign", text }]
+   * opts: { paper: "letter" | "a4", font: "sans" | "serif" }. measure(text, font, size) → width.
+   * Returns { size: [w, h], family, pages: [{ runs: [{ t, f, s, c, x, y }], rules: [] }], dropped },
+   * where y is the baseline measured down from the top of the page.
+   */
+  function letterLayout(blocks, opts, measure) {
+    var size = PAPER[opts.paper];
+    var margin = 72;
+    var body = 11;
+    var lead = 15;
+    var width = size[0] - margin * 2;
+    var pages = [{ runs: [], rules: [] }];
+    var page = pages[0];
+    var y = margin;
+    var dropped = [];
+
+    function put(text, font, s, colour, step) {
+      if (y + step > size[1] - margin) {
+        page = { runs: [], rules: [] };
+        pages.push(page);
+        y = margin;
+      }
+      y += step;
+      page.runs.push({ t: text, f: font, s: s, c: colour, x: margin, y: y });
+    }
+
+    blocks.forEach(function (b) {
+      var text = b.text ? clean(b.text, dropped) : "";
+      if (b.kind === "gap") { y += lead * 0.6; return; }
+      if (b.kind === "sign") { y += lead * 2.2; return; }
+      if (b.kind === "name") { put(text, "bold", 16, "ink", 16); y += 4; return; }
+      if (b.kind === "contact") {
+        wrap(text, width, function (t) { return measure(t, "regular", body - 1); }).forEach(function (l) { put(l, "regular", body - 1, "soft", lead - 1); });
+        return;
+      }
+      var font = b.kind === "subject" ? "bold" : "regular";
+      wrap(text, width, function (t) { return measure(t, font, body); }).forEach(function (l) { put(l, font, body, "ink", lead); });
+    });
+    return { size: size, family: opts.font === "serif" ? "serif" : "sans", pages: pages, dropped: dropped };
+  }
+
   window.ToolNestResume = {
     PAPER: PAPER,
+    letterLayout: letterLayout,
     clean: clean,
     tags: tags,
     lines: lines,

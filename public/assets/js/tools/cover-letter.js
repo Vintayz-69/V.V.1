@@ -123,49 +123,10 @@
     return body ? body.split(/\s+/).length : 0;
   }
 
-  /*
-   * Lays the letter out on pages for js/resume.js makePdf(). measure(text, font, size) → width.
-   * Returns { size: [w, h], family, pages: [{ runs: [{ t, f, s, c, x, y }], rules: [] }] }, where
-   * y is the baseline measured down from the top of the page.
-   */
+  // Lays the letter out on pages for js/resume.js makePdf(). measure(text, font, size) → width.
   function layout(data, opts, measure) {
     var country = COUNTRIES[data.country] ? data.country : "us";
-    var size = R.PAPER[COUNTRIES[country].paper];
-    var W = size[0];
-    var Hh = size[1];
-    var margin = 72;
-    var body = 11;
-    var lead = 15;
-    var width = W - margin * 2;
-    var pages = [{ runs: [], rules: [] }];
-    var page = pages[0];
-    var y = margin;
-    var dropped = [];
-
-    function newPage() {
-      page = { runs: [], rules: [] };
-      pages.push(page);
-      y = margin;
-    }
-    function put(text, font, s, colour, step) {
-      if (y + step > Hh - margin) newPage();
-      y += step;
-      page.runs.push({ t: text, f: font, s: s, c: colour, x: margin, y: y });
-    }
-
-    build(data).forEach(function (b) {
-      var text = b.text ? R.clean(b.text, dropped) : "";
-      if (b.kind === "gap") { y += lead * 0.6; return; }
-      if (b.kind === "sign") { y += lead * 2.2; return; }
-      if (b.kind === "name") { put(text, "bold", 16, "ink", 16); y += 4; return; }
-      if (b.kind === "contact") {
-        R.wrap(text, width, function (t) { return measure(t, "regular", body - 1); }).forEach(function (l) { put(l, "regular", body - 1, "soft", lead - 1); });
-        return;
-      }
-      var font = b.kind === "subject" ? "bold" : "regular";
-      R.wrap(text, width, function (t) { return measure(t, font, body); }).forEach(function (l) { put(l, font, body, "ink", lead); });
-    });
-    return { size: size, family: opts.font === "serif" ? "serif" : "sans", pages: pages, dropped: dropped };
+    return R.letterLayout(build(data), { paper: COUNTRIES[country].paper, font: opts.font }, measure);
   }
 
   function warnings(data) {

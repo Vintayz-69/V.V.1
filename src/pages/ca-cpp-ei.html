@@ -1,0 +1,92 @@
+  <section class="calculator" aria-label="CPP and EI calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="salary">Yearly employment income for 2026<span class="hint">Salary or wages before deductions</span></label>
+        <div class="input-wrap"><span class="affix">C$</span><input id="salary" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="periods">How often you're paid</label>
+        <div class="select-wrap">
+          <select id="periods">
+            <option value="52">Weekly (52 pays)</option>
+            <option value="26" selected>Every two weeks (26 pays)</option>
+            <option value="24">Twice a month (24 pays)</option>
+            <option value="12">Monthly (12 pays)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your CPP and EI for 2026</h2>
+      <div class="result-main"><span id="out-employee">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>About the same each pay</span><span id="out-period">—</span></li>
+        <li><span>CPP (base and first additional)</span><span id="out-cpp">—</span></li>
+        <li><span>CPP2 (second additional)</span><span id="out-cpp2">—</span></li>
+        <li><span>EI premiums</span><span id="out-ei">—</span></li>
+        <li><span>Your employer pays on top</span><span id="out-employer">—</span></li>
+        <li><span>Total paid in for you</span><span id="out-total">—</span></li>
+      </ul>
+      <p class="result-note">For employees outside Quebec. Payroll spreads these over the year, so once you reach a maximum, the deductions stop until January.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your yearly salary or wages</strong> for 2026, before any deductions.</li>
+      <li><strong>Choose how often you're paid</strong> to see roughly what comes off each paycheque.</li>
+      <li><strong>Read your CPP, CPP2 and EI</strong>, and what your employer pays for you on top.</li>
+    </ol>
+
+    <h2>How it's calculated (2026)</h2>
+    <div class="formula">CPP    = (income up to $74,600 − $3,500 basic exemption) × 5.95%
+CPP2   = (income between $74,600 and $85,000) × 4%
+EI     = (income up to $68,900) × 1.63%
+Employer pays the same CPP and CPP2, and 1.4 × your EI</div>
+
+    <h2>Worked example</h2>
+    <p>Ravi earns $60,000 in 2026 in Ontario and is paid every two weeks.</p>
+    <div class="formula">CPP    = (60,000 − 3,500) × 5.95%   = 56,500 × 5.95%  = $3,361.75
+CPP2   = $0 (income is below $74,600)
+EI     = 60,000 × 1.63%                                = $978.00
+Total  = 3,361.75 + 978.00                             = $4,339.75 a year
+Each pay = 4,339.75 ÷ 26                               = about $166.91
+
+Employer: 3,361.75 + 978.00 × 1.4 = 3,361.75 + 1,369.20 = $4,730.95</div>
+    <p>About <strong>$166.91</strong> comes off each of Ravi's paycheques for CPP and EI. At $100,000 or more, you'd reach every 2026 maximum: $4,230.45 CPP, $416.00 CPP2 and $1,123.07 EI.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Quebec, where employees pay into the Quebec Pension Plan (QPP) and Quebec's own parental insurance, with a different EI rate.</li>
+      <li>Self-employed people, who pay both halves of CPP and usually no EI. Use our <a href="{{root}}ca/self-employed-tax-calculator/">self-employed tax calculator</a>.</li>
+      <li>Income tax deductions, and how the basic exemption is spread across pay periods by payroll, which can move a few cents between paycheques.</li>
+      <li>Having more than one job in a year: each employer deducts separately, and any overpayment is refunded when you file your return.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is CPP2?</summary>
+        <p>CPP2 is the second additional Canada Pension Plan contribution. It applies only to earnings between the yearly maximum pensionable earnings ($74,600 in 2026) and the higher second ceiling ($85,000 in 2026).</p>
+      </details>
+      <details>
+        <summary>Why did my CPP or EI deductions stop late in the year?</summary>
+        <p>You reached the yearly maximum. Deductions start again in January. Higher earners reach the EI maximum first, because EI stops at $68,900 of insurable earnings.</p>
+      </details>
+      <details>
+        <summary>Do I get CPP and EI back on my tax return?</summary>
+        <p>Not usually, but they lower your income tax: part of your CPP gives you a tax credit and the rest is a deduction, and EI premiums give you a tax credit. If you paid too much, for example from two jobs, the CRA refunds the extra.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026):</strong> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/canada-pension-plan-cpp/cpp-contribution-rates-maximums-exemptions.html" rel="noopener">CRA: CPP contribution rates, maximums and exemptions</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/calculating-deductions/making-deductions/second-additional-cpp-contribution-rates-maximums.html" rel="noopener">CRA: CPP2 rates and maximums</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/employment-insurance-ei/ei-premium-rates-maximums.html" rel="noopener">CRA: EI premium rates and maximums</a>. Figures checked 28 September 2026.</p>
+  </div>

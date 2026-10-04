@@ -1,0 +1,120 @@
+  <section class="calculator" aria-label="Federal tax bracket calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="income">Yearly income for 2026<span class="hint">Wages and other ordinary income, after pre-tax deductions such as a traditional 401(k)</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="income" type="text" inputmode="decimal" value="75000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="dedType">Deduction</label>
+        <div class="select-wrap">
+          <select id="dedType">
+            <option value="standard">Standard deduction</option>
+            <option value="itemized">I'll itemize</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2" hidden>
+        <label for="itemized">Your itemized deductions<span class="hint">From Schedule A</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="itemized" type="text" inputmode="decimal" value="20000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated federal income tax</h2>
+      <div class="result-main"><span id="out-tax">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Your tax bracket (marginal rate)</span><span id="out-marginal">—</span></li>
+        <li class="key"><span>Effective rate on your income</span><span id="out-effective">—</span></li>
+        <li><span>Taxable income</span><span id="out-taxable">—</span></li>
+        <li><span>Deduction used</span><span id="out-deduction">—</span></li>
+        <li><span>Next bracket starts after</span><span id="out-next">—</span></li>
+        <li><span>About the same each month</span><span id="out-monthly">—</span></li>
+      </ul>
+      <p class="result-note">Only the income inside each bracket is taxed at that bracket's rate, so moving into a higher bracket never leaves you with less after federal income tax.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your income in each 2026 bracket</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bracket</th><th class="num">Your income in it</th><th class="num">Tax</th></tr></thead>
+        <tbody id="brackets-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+    <p>The highlighted row is your top bracket. The table shows the 2026 brackets for the filing status you chose.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your yearly income</strong> for 2026, after pre-tax deductions such as a traditional 401(k) or HSA.</li>
+      <li><strong>Choose your filing status.</strong></li>
+      <li><strong>Choose the standard deduction</strong>, or enter your total itemized deductions if they're bigger.</li>
+      <li><strong>Read your tax, your bracket and your effective rate</strong>, and see how much of your income falls in each bracket.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Taxable income  = income − deduction (not below 0)
+Tax             = each slice of taxable income × its bracket's rate, added up
+Marginal rate   = the rate of the highest bracket you reach
+Effective rate  = tax ÷ income × 100</div>
+
+    <h2>Worked example</h2>
+    <p>Taylor is single and earns $75,000 in 2026, taking the standard deduction of $16,100.</p>
+    <div class="formula">Taxable income  = 75,000 − 16,100                  = $58,900
+
+10% on the first $12,400           = 12,400 × 10%  = $1,240
+12% on $12,400 – $50,400           = 38,000 × 12%  = $4,560
+22% on $50,400 – $58,900           =  8,500 × 22%  = $1,870
+Tax                                                 = $7,670
+
+Effective rate  = 7,670 ÷ 75,000                    = 10.23%</div>
+    <p>Taylor is in the <strong>22% bracket</strong>, but only $8,500 is taxed at 22%. The estimated federal income tax is <strong>$7,670</strong>, an effective rate of 10.23%.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Tax credits (such as the Child Tax Credit), which reduce the tax shown here.</li>
+      <li>Long-term capital gains and qualified dividends, which have their own lower rates.</li>
+      <li>Social Security and Medicare (FICA), self-employment tax, the Alternative Minimum Tax, and state and local income tax.</li>
+      <li>Other deductions, such as the qualified business income deduction for the self-employed.</li>
+    </ul>
+    <p>Self-employed? Our <a href="{{root}}us/freelancer-take-home-pay-calculator/">freelancer take-home pay calculator</a> adds self-employment tax. On a W-2 salary? Try the <a href="{{root}}career/us-take-home-pay-calculator/">US take-home pay calculator</a>.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Will a raise push me into a higher bracket and cost me money?</summary>
+        <p>No. Only the part of your income above the bracket's starting point is taxed at the higher rate. Everything below it is taxed exactly as before, so a raise always leaves you with more after federal income tax.</p>
+      </details>
+      <details>
+        <summary>What's the difference between marginal and effective tax rate?</summary>
+        <p>Your marginal rate is the rate on your last (and next) dollar of taxable income. Your effective rate is your total tax divided by your income, which is always lower because the first dollars are taxed at lower rates or not at all.</p>
+      </details>
+      <details>
+        <summary>Should I itemize or take the standard deduction?</summary>
+        <p>Most people take whichever is bigger. Itemized deductions include things like mortgage interest, state and local taxes (up to a limit) and charitable gifts. A tax professional can help if you're not sure.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" rel="noopener">IRS: tax inflation adjustments for tax year 2026</a>, <a href="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf" rel="noopener">IRS Rev. Proc. 2025-32</a>. Figures checked 28 September 2026.</p>
+  </div>

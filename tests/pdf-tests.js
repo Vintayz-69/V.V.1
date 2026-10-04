@@ -190,17 +190,19 @@ module.exports = async function pdfTests(check, expectAll) {
       .map((m) => ({ slug: m[1].split("/").slice(-2, -1)[0], words: m[2] }));
     const cards = read("card");
     const bars = read("tool-bar");
-    check("search: a bar for every tool", bars.length, 13);
+    check("search: a bar for every tool", bars.length, 15);
     check("search: bars list popular tools first", bars.slice(0, 6).map((b) => b.slug).join(","), "merge-pdf,split-pdf,rotate-pdf,jpg-to-pdf,pdf-to-jpg,compress-pdf");
     check("search: bars and cards find the same tools", bars.filter((b) => S.matches(b.words, "photo")).length, cards.filter((c) => S.matches(c.words, "photo")).length);
     const find = (q) => cards.filter((c) => S.matches(c.words, q)).map((c) => c.slug).join(",");
-    check("search: every tool has search words", cards.length, 13);
-    check("search: empty shows everything", cards.filter((c) => S.matches(c.words, "")).length, 13);
+    check("search: every tool has search words", cards.length, 15);
+    check("search: empty shows everything", cards.filter((c) => S.matches(c.words, "")).length, 15);
     check("search: combine", find("combine"), "merge-pdf");
     check("search: shrink", find("shrink"), "compress-pdf");
+    check("search: metadata", find("metadata"), "edit-pdf-metadata");
     check("search: start of a word", find("comp"), "compress-pdf");
     check("search: photo", find("photo"), "jpg-to-pdf,pdf-to-jpg");
     check("search: reorder", find("reorder"), "rearrange-pdf-pages");
+    check("search: font", find("font"), "add-text-to-pdf");
     check("search: a question", find("How to compress my PDFs"), "compress-pdf");
     check("search: two words", find("jpeg export"), "pdf-to-jpg");
     check("search: nothing", find("spreadsheet"), "");
@@ -283,6 +285,50 @@ module.exports = async function pdfTests(check, expectAll) {
     const left = await load(await rotate(src, [-90]));
     check("rotate left from 0", left.getPages()[0].getRotation().angle, 270);
     check("rotate keeps pages", ids(out), "1,2,3,4");
+  }
+
+  // ---------------- Edit PDF properties (metadata)
+  {
+    const M = tool("pdf-metadata");
+    const src = await makePdf(3, {
+      edit: (doc) => {
+        doc.setTitle("Old title");
+        doc.setAuthor("Jane Secretname");
+        doc.setSubject("Budget");
+        doc.setKeywords(["draft", "q3"]);
+        doc.setCreator("Writer App");
+        doc.setProducer("Maker 1.0");
+        const xmp = doc.context.stream("<x:xmpmeta>xmp-author-secretname</x:xmpmeta>", { Type: "Metadata", Subtype: "XML" });
+        doc.catalog.set(N.of("Metadata"), doc.context.register(xmp));
+      }
+    });
+    // Everything left in a PDF as text: every object, plus every decoded stream.
+    const utf16 = (t) => Buffer.from(t, "utf16le").swap16().toString("hex").toUpperCase();
+    const everything = (doc) => doc.context.enumerateIndirectObjects().map(([, o]) => o.toString()).join("\n") + streamText(doc);
+    const leaks = (doc) => /secretname/i.test(everything(doc)) || everything(doc).includes(utf16("Secretname"));
+    check("metadata test PDF has the secret to start with", leaks(await load(src)), true);
+
+    const props = await M.readProperties(src);
+    check("metadata read", [props.title, props.author, props.subject, props.keywords, props.creator, props.producer].join("|"),
+      "Old title|Jane Secretname|Budget|draft q3|Writer App|Maker 1.0");
+    check("metadata read finds XMP", props.xmp, true);
+
+    const edited = await load(await M.editProperties(src, { ...props, title: "Quarterly report", author: "" }));
+    check("metadata edit: new title", edited.getTitle(), "Quarterly report");
+    check("metadata edit: blank author removed", edited.getAuthor(), undefined);
+    check("metadata edit: other fields kept", `${edited.getSubject()}|${edited.getKeywords()}`, "Budget|draft q3");
+    check("metadata edit: XMP copy removed", edited.catalog.get(N.of("Metadata")), undefined);
+    check("metadata edit: old author gone from the file", leaks(edited), false);
+    check("metadata edit: pages untouched", ids(edited), "1,2,3");
+
+    // Opened without pdf-lib's own metadata update, which would add a producer and dates back.
+    const cleaned = await L.PDFDocument.load(await M.editProperties(src, { removeAll: true }), { updateMetadata: false });
+    check("metadata remove all: no properties", cleaned.getInfoDict().keys().length, 0);
+    check("metadata remove all: no dates", `${cleaned.getCreationDate()}|${cleaned.getModificationDate()}`, "undefined|undefined");
+    check("metadata remove all: nothing left in the file", leaks(cleaned), false);
+    check("metadata remove all: pages untouched", ids(cleaned), "1,2,3");
+    const unicode = await load(await M.editProperties(src, { title: "Résumé – 2026 ✓", author: "Zoë" }));
+    check("metadata non-English text", `${unicode.getTitle()}|${unicode.getAuthor()}`, "Résumé – 2026 ✓|Zoë");
   }
 
   // ---------------- Rearrange (page example: 4, 3, 2, 1 → reversed)
@@ -499,6 +545,77 @@ module.exports = async function pdfTests(check, expectAll) {
 
     check("sign without a signature", await S.signPdf(src, { png: null, page: 1 }).then(() => "ok", (e) => e.message), "Draw or type your signature first.");
     check("sign page out of range", await S.signPdf(src, { png, aspect: 3, page: 5, cx: 0.5, cy: 0.5, widthShare: 0.3 }).then(() => "ok", (e) => e.message), "Choose a page from 1 to 3.");
+  }
+
+  // ---------------- Add text (page example: "Paid in full" / "Thank you", 12-point Helvetica, centred, on Letter)
+  {
+    const T = tool("pdf-add-text");
+    const m = T.measure(L.StandardFontEmbedder.for(L.StandardFonts.Helvetica), ["Paid in full", "Thank you"]);
+    check("add text widths at size 1", m.widths.map((w) => w.toFixed(3)).join(" "), "4.573 4.649");
+    check("add text Helvetica above and below the line", `${m.ascent.toFixed(3)} ${m.descent.toFixed(3)}`, "0.718 0.207");
+    const ex = T.textLayout(612, 792, { x: 0.1, y: 0.1, size: 12, align: "center", ...m });
+    expectAll("add text page example box", ex, { width: 55.79, height: 25.5, left: 61.2, top: 79.2, fits: true });
+    expectAll("add text page example line 1", ex.lines[0], { x: 61.66, y: 704.18, width: 54.88 });
+    expectAll("add text page example line 2", ex.lines[1], { x: 61.2, y: 689.78 });
+
+    // 200 × 100 page, lines 50 and 30 wide at size 10, height 7 + 3 + 12 = 22. Asked for 90% across and
+    // 95% down, the box is pushed back to 200 − 50 = 150 and 100 − 22 = 78. Right-aligned: line 2 starts at 170.
+    const metrics = { widths: [5, 3], ascent: 0.7, descent: 0.3 };
+    const kept = T.textLayout(200, 100, { x: 0.9, y: 0.95, size: 10, align: "right", ...metrics });
+    expectAll("add text kept on the page", kept, { left: 150, top: 78, width: 50, height: 22, fits: true });
+    check("add text right-aligned lines", kept.lines.map((l) => `${round(l.x)}/${round(l.y)}`).join(" "), "150/15 170/3");
+    const left = T.textLayout(200, 100, { x: 0.1, y: 0.1, size: 10, align: "left", ...metrics });
+    check("add text left-aligned lines", left.lines.map((l) => `${round(l.x)}/${round(l.y)}`).join(" "), "20/83 20/71");
+    expectAll("add text wider than the page", T.textLayout(200, 100, { x: 0.5, y: 0, size: 10, align: "left", widths: [30], ascent: 0.7, descent: 0.3 }),
+      { left: 0, width: 300, fits: false });
+
+    check("add text lines tidied", JSON.stringify(T.splitLines("\n\nOne  \r\n\tTwo\n\nThree\n\n")), '["One","    Two","","Three"]');
+    check("add text colour", T.hexToRgb("#1a3fa6").map((v) => Math.round(v * 255)).join(","), "26,63,166");
+    check("add text bad colour is black", T.hexToRgb("blue").join(","), "0,0,0");
+    check("add text fonts", [T.fontName("serif", true, true), T.fontName("mono", false, false), T.fontName("sans", true, false), T.fontName("?", false, true)].join(" "),
+      "TimesRomanBoldItalic Courier HelveticaBold HelveticaOblique");
+    check("add text unusable characters", T.unusableCharacters("Café £5 “ok” € 😀 ✓ 😀", L).join(" "), "😀 ✓");
+
+    const box = (extra) => ({ x: 0.1, y: 0.1, size: 12, font: "sans", bold: false, italic: false, underline: false, colour: "#000000", align: "left", ...extra });
+    const src = await makePdf(3);
+    const out = await load(await T.addText(src, [
+      box({ page: 2, text: "Hello", bold: true, underline: true, colour: "#c0161b" }),
+      box({ page: 3, text: "Line A\nLine B", x: 0.5, y: 0.5, size: 10, font: "serif", italic: true }),
+      box({ page: 1, text: "  \n " })
+    ]));
+    const content = (d, i) => {
+      const c = d.getPages()[i].node.lookup(N.of("Contents"));
+      const list = c instanceof L.PDFArray ? c.asArray().map((r) => d.context.lookup(r)) : [c];
+      return list.map((st) => Buffer.from(L.decodePDFRawStream(st).decode()).toString("latin1")).join("\n");
+    };
+    const fonts = (d, i) => {
+      const f = d.getPages()[i].node.lookup(N.of("Resources")).lookup(N.of("Font"));
+      return [...new Set(f.values().map((r) => d.context.lookup(r).lookup(N.of("BaseFont")).asString()))].sort().join(",");
+    };
+    check("add text: empty box leaves page 1 alone", content(out, 0) === content(await load(src), 0), true);
+    check("add text: fonts used", [1, 2].map((i) => fonts(out, i)).join(" | "), "/Helvetica,/Helvetica-Bold | /Helvetica,/Times-Italic");
+    // Page 2 is 202 × 300: left 20.2, baseline 300 − 30 − 0.718 × 12 = 261.38, underline 1.2 lower.
+    const p2 = content(out, 1);
+    check("add text: written", p2.toLowerCase().includes(hex("Hello")), true);
+    check("add text: position", matrices(p2, "Tm").includes("1,0,0,1,20.2,261.38"), true);
+    // Bold "Hello" is 2.445 × 12 = 29.34 points wide, so the underline ends at 20.2 + 29.34 = 49.54.
+    check("add text: underline", /20\.2\d* 260\.18\d* m\s+49\.54\d* 260\.18\d* l/.test(p2), true);
+    check("add text: red", /0\.75\d* 0\.08\d* 0\.10\d* rg/.test(p2), true);
+    // Page 3 is 203 × 300, Times 10 point: left 101.5, baselines 300 − 150 − 6.83 = 143.17, then 12 lower.
+    const p3 = matrices(content(out, 2), "Tm");
+    check("add text: two lines", ["1,0,0,1,101.5,143.17", "1,0,0,1,101.5,131.17"].every((t) => p3.includes(t)), true);
+
+    // A sideways page (201 × 300, turned 90°) is 300 × 201 to the reader. Left 30, baseline 201 − 20.1 − 7.18 = 173.72,
+    // which is 201 − 173.72 = 27.28 across and 30 up on the unturned page.
+    const turned = await load(await T.addText(await makePdf(1, { rotate: [90] }), [box({ page: 1, text: "Hi", size: 10 })]));
+    check("add text on a rotated page", matrices(content(turned, 0), "Tm").includes("0,1,-1,0,27.28,30"), true);
+
+    const fail = (boxes) => T.addText(src, boxes).then(() => "ok", (e) => e.message);
+    check("add text: nothing typed", await fail([box({ page: 1, text: " " })]), "Type some text first.");
+    check("add text: emoji", await fail([box({ page: 1, text: "Hi 😀" })]),
+      "These characters can't be used: 😀. Use letters A to Z (accents are fine), numbers and common symbols.");
+    check("add text: page out of range", await fail([box({ page: 5, text: "Hi" })]), "Choose a page from 1 to 3.");
+    check("add text: size too big", await fail([box({ page: 1, text: "Hi", size: 300 })]), "Choose a text size from 4 to 200.");
   }
 
   // ---------------- PDF to text (page example: "Invoice" and "total" 3 points apart, 12-point text)

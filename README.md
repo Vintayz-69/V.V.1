@@ -29,12 +29,13 @@ We build **one section at a time**. The next stage starts only after the current
 
 | Stage | Section | URL | Status |
 |---|---|---|---|
-| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/ca/`, `/au/` | 🟢 Built (34 tools, including Invoice Generator, Timesheet, Business Days and UK VAT) |
-| 2 | Salary and career calculators | `/career/` | 🟢 Active (Salary to Hourly, Pay Rise, Overtime, UK Take-Home Pay, UK Holiday Entitlement, UK Redundancy Pay) |
-| Extra | PDF tools (merge, split, compress, convert…) | `/pdf/` | 🟢 Built (13 tools, including Sign PDF and PDF to Text), waiting to launch |
-| 3 | Resume maker and cover letter tools | `/resume-maker/` | 🟢 Resume makers (US, UK, Canada, Australia) and Cover Letter Maker built |
-| 4 | Business tools (invoices, margins, sales tax) | `/business/` | 🟢 Active (Profit Margin, Break-Even, Payment Fees, Quote Generator) |
-| 5 | Health, education, unit converters, and more | `/education/` | 🟢 Active (Word Counter, Citation Generator, College GPA, UK Degree Classification, Final Grade) |
+| 1 | Freelancer money tools | `/freelance/`, `/us/`, `/uk/`, `/ca/`, `/au/` | 🟢 Built (39 tools, including Invoice Generator, Timesheet, Business Days, UK VAT, Retainer, and new US, UK, Canada and Australia tools) |
+| 2 | Salary and career calculators | `/career/` | 🟢 Active (Salary to Hourly, Pay Rise, Overtime, Job Offer Comparison, UK Take-Home Pay, UK Holiday Entitlement, UK Redundancy Pay) |
+| Extra | PDF tools (merge, split, compress, convert…) | `/pdf/` | 🟢 Built (15 tools, including Sign PDF, Add Text, Edit PDF Properties and PDF to Text), waiting to launch |
+| 3 | Resume maker and cover letter tools | `/resume-maker/` | 🟢 Resume makers (US, UK, Canada, Australia), Cover Letter Maker and Resignation Letter Maker built |
+| 4 | Business tools (invoices, margins, sales tax) | `/business/` | 🟢 Active (Profit Margin, Break-Even, Payment Fees, ROAS, Customer Lifetime Value, Quote Generator) |
+| 5 | Health, education, unit converters, and more | `/education/` | 🟢 Active (Word Counter, Citation Generator, College GPA, Weighted Grade, UK Degree Classification, Final Grade) |
+| Extra | Brain games (to bring in more visitors) | `/games/` | 🟢 Built (Typing Speed Test, Reaction Time Test, Sudoku, Number Merge Puzzle, Memory Match) |
 
 ---
 
@@ -329,3 +330,5 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 | 2026-09-30 | Built Part 1 (New Sectors: Developer Tools `/dev/` [JSON Formatter, WCAG Color Contrast], Personal Finance `/finance/` [Compound Interest, Mortgage Calculator], Health & Fitness `/health/` [TDEE, WHO BMI], Everyday Utilities `/tools/` [Tip & Bill Split, Universal Unit Converter]), Part 2 (Deepened Career & Business: US Salaried Take-Home Pay 2026 with official IRS/FICA rates, E-Commerce ROAS & Break-Even Calculator), and Ref Img (One-Click Print / PDF Summary for all calculators via `@media print`). 95 pages built, 1,052 automated tests passing (0 failed). |
 | 2026-09-30 | International SEO Architecture: built localized country URLs under `/us/`, `/uk/`, `/ca/`, `/au/`, and a dedicated `/global/` hub for all 22 core multi-currency calculators (110 localized calculator pages + `/global/` hub = 206 total pages). Features bidirectional `hreflang` alternates (`en-US`, `en-GB`, `en-CA`, `en-AU`, `x-default`), self-referential canonicals, pre-rendered localized currencies/affixes, Country navigation menu with Worldwide (Global) entry, and localized JSON-LD breadcrumbs and offers. All 1,052 automated tests passing (0 failed). |
 
+| 2026-10-05 | Added `/games/` (Brain Games): Typing Speed Test (WPM and accuracy, our own practice passages), Reaction Time Test (average of 5 tries), Sudoku (new puzzle each time with exactly one solution, three levels, notes, hints, check), Number Merge Puzzle (2048-style, swipe or arrow keys, one undo) and Memory Match (16 or 24 cards). Shared helpers in `assets/js/games-common.js`. Added to the Calculators menu, the footer and the homepage. Nothing is stored. Tests cover every number on the game pages; all pages checked in Chrome at 390px and 1280px, light and dark, under the real security headers. |
+| 2026-10-05 | One new tool in every section: Retainer Calculator (`/freelance/`), Customer Lifetime Value (`/business/`), Job Offer Comparison (`/career/`), Weighted Grade (`/education/`), Savings Goal (`/finance/`), Unix Timestamp Converter (`/dev/`), Percentage Calculator (`/tools/`), Edit PDF Properties (`/pdf/`), Resignation Letter Maker (`/resume-maker/`), Federal Tax Bracket Calculator 2026 (`/us/`), Dividend Tax Calculator 2026/27 (`/uk/`), CPP and EI Calculator 2026 (`/ca/`) and Take-Home Pay Calculator 2026–27 (`/au/`). Country tools use only the existing official data files. The cover letter's page layout moved into `resume.js` (`letterLayout`) so both letter makers share it. Every worked example is checked in `tests/run-tests.js` or `tests/pdf-tests.js`. |

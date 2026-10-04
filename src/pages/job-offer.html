@@ -1,0 +1,154 @@
+  <section class="calculator" aria-label="Job offer comparison calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="field-title span-2 offer-title">Offer A</p>
+      <div class="field">
+        <label for="a-salary">Yearly salary</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="a-salary" type="text" inputmode="decimal" value="50000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="a-bonus">Yearly bonus<span class="hint">Expected, 0 if none</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="a-bonus" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="a-benefits">Other benefits a year<span class="hint">e.g. employer pension or retirement match</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="a-benefits" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="a-hours">Working hours a week</label>
+        <div class="input-wrap"><input id="a-hours" type="text" inputmode="decimal" value="37.5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 1 and 100 hours.</span>
+      </div>
+      <div class="field">
+        <label for="a-days">Commuting days a year<span class="hint">0 if fully remote</span></label>
+        <div class="input-wrap"><input id="a-days" type="text" inputmode="numeric" value="0" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter between 0 and 366 days.</span>
+      </div>
+      <div class="field">
+        <label for="a-cost">Commuting cost a day<span class="hint">Return trip</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="a-cost" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field span-2">
+        <label for="a-time">Commuting time a day<span class="hint">Return trip, in hours (1.5 = 90 minutes)</span></label>
+        <div class="input-wrap"><input id="a-time" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 0 and 12 hours.</span>
+      </div>
+
+      <p class="field-title span-2 offer-title">Offer B</p>
+      <div class="field">
+        <label for="b-salary">Yearly salary</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="b-salary" type="text" inputmode="decimal" value="55000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="b-bonus">Yearly bonus<span class="hint">Expected, 0 if none</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="b-bonus" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="b-benefits">Other benefits a year<span class="hint">e.g. employer pension or retirement match</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="b-benefits" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="b-hours">Working hours a week</label>
+        <div class="input-wrap"><input id="b-hours" type="text" inputmode="decimal" value="45" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 1 and 100 hours.</span>
+      </div>
+      <div class="field">
+        <label for="b-days">Commuting days a year<span class="hint">0 if fully remote</span></label>
+        <div class="input-wrap"><input id="b-days" type="text" inputmode="numeric" value="200" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter between 0 and 366 days.</span>
+      </div>
+      <div class="field">
+        <label for="b-cost">Commuting cost a day<span class="hint">Return trip</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="b-cost" type="text" inputmode="decimal" value="15" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field span-2">
+        <label for="b-time">Commuting time a day<span class="hint">Return trip, in hours (1.5 = 90 minutes)</span></label>
+        <div class="input-wrap"><input id="b-time" type="text" inputmode="decimal" value="1.5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 0 and 12 hours.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Pays more per hour of your time</h2>
+      <div class="result-main"><span id="out-verdict">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Offer A per hour (incl. commute)</span><span id="out-a-hourly">—</span></li>
+        <li class="key"><span>Offer B per hour (incl. commute)</span><span id="out-b-hourly">—</span></li>
+        <li><span>Offer A a year after commuting costs</span><span id="out-a-value">—</span></li>
+        <li><span>Offer B a year after commuting costs</span><span id="out-b-value">—</span></li>
+        <li><span>Offer A commute a year (cost · time)</span><span id="out-a-commute">—</span></li>
+        <li><span>Offer B commute a year (cost · time)</span><span id="out-b-commute">—</span></li>
+        <li><span>More money a year</span><span id="out-gap">—</span></li>
+      </ul>
+      <p class="result-note" id="offer-note">This compares money and time only.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter each offer's pay:</strong> salary, any bonus you can realistically expect, and the yearly value of benefits such as an employer pension or retirement match.</li>
+      <li><strong>Enter the hours</strong> each job expects each week, including regular unpaid overtime.</li>
+      <li><strong>Enter the commute:</strong> how many days a year you'd travel, what each return trip costs and how long it takes.</li>
+      <li><strong>Compare</strong> the money left each year and, more tellingly, what each job pays for every hour of your time.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Commuting cost   = commuting days × cost a day
+Yearly value     = salary + bonus + benefits − commuting cost
+Hours given      = hours a week × 52 + commuting days × commuting hours a day
+Pay per hour     = yearly value ÷ hours given</div>
+    <p>Everything is before tax. Tax usually takes a bigger share of the higher offer, so the gap after tax is often smaller than shown here.</p>
+
+    <h2>Worked example</h2>
+    <p>Alex has two offers. Offer A is a fully remote job paying £50,000 for 37.5 hours a week. Offer B pays £55,000 plus a £5,000 bonus, but expects 45 hours a week and an office commute 200 days a year, costing £15 and taking 1.5 hours a day.</p>
+    <div class="formula">Offer A  value  = 50,000                          = £50,000
+         hours  = 37.5 × 52                       = 1,950
+         per hour = 50,000 ÷ 1,950                = £25.64
+
+Offer B  commuting cost = 200 × 15                = £3,000
+         value  = 55,000 + 5,000 − 3,000          = £57,000
+         hours  = 45 × 52 + 200 × 1.5 = 2,340 + 300 = 2,640
+         per hour = 57,000 ÷ 2,640                = £21.59</div>
+    <p>Offer B leaves Alex £7,000 more a year, but Offer A pays about <strong>£4.05 more for every hour</strong> of Alex's time, and gives back 690 hours a year.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why count commuting time?</summary>
+        <p>Time spent travelling to work is time you can't use for anything else, even though it isn't paid. Counting it shows what each job really pays for the hours it takes from your week.</p>
+      </details>
+      <details>
+        <summary>How do I value benefits like health insurance?</summary>
+        <p>Use what the benefit would cost you to buy yourself, or what the employer says it pays for it. If you wouldn't use a benefit, leave it out.</p>
+      </details>
+      <details>
+        <summary>Should I just take the offer that pays more per hour?</summary>
+        <p>Not necessarily. This calculator compares money and time. The work itself, the people, job security, flexibility and chances to progress matter too, and only you can weigh those.</p>
+      </details>
+    </div>
+  </div>

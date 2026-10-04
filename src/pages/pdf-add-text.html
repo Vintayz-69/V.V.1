@@ -1,0 +1,157 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Add text to PDF tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a PDF</label>
+      <p class="dropzone-hint">or drop it here</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon">{{icon:file}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <div class="sign-steps">
+        <div class="sign-panel">
+          <h2 class="sign-heading">1. Place your text</h2>
+          <div class="sign-page-bar">
+            <button type="button" class="icon-btn" id="tt-prev" aria-label="Previous page" title="Previous page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <div class="field sign-page-field">
+              <label for="tt-page">Page</label>
+              <div class="input-wrap"><input id="tt-page" type="number" min="1" step="1" inputmode="numeric" value="1"><span class="affix" id="tt-page-count"></span></div>
+              <span class="error-msg"></span>
+            </div>
+            <button type="button" class="icon-btn" id="tt-next" aria-label="Next page" title="Next page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+          <p class="sign-need" id="tt-where" aria-live="polite"></p>
+          <div class="sign-stage tt-stage" id="tt-stage">
+            <canvas id="tt-page-canvas" aria-hidden="true"></canvas>
+            <canvas class="tt-overlay" id="tt-overlay" aria-hidden="true"></canvas>
+            <div id="tt-markers"></div>
+          </div>
+          <p class="sign-stage-hint">Tap the page to move your text there, or drag it. Tap another text box to edit it. With a keyboard, select a box and use the arrow keys.</p>
+        </div>
+
+        <div class="sign-panel">
+          <h2 class="sign-heading">2. Type and style it</h2>
+          <div class="field">
+            <label for="tt-text">Text<span class="hint">Press Enter for a new line</span></label>
+            <textarea id="tt-text" class="rf-textarea" rows="3" autocomplete="off" placeholder="Type your text"></textarea>
+            <span class="error-msg"></span>
+          </div>
+          <p class="sign-stage-hint" id="tt-fit" hidden>This text is bigger than the page. Make it smaller, or press Enter to split it into shorter lines.</p>
+
+          <div class="tt-format">
+            <div class="field">
+              <label for="tt-font">Font</label>
+              <div class="select-wrap">
+                <select id="tt-font">
+                  <option value="sans">Sans serif (Helvetica)</option>
+                  <option value="serif">Serif (Times)</option>
+                  <option value="mono">Typewriter (Courier)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="tt-size">Size</label>
+              <div class="input-wrap"><input id="tt-size" type="number" min="4" max="200" step="1" inputmode="decimal" value="14"><span class="affix">pt</span></div>
+              <span class="error-msg"></span>
+            </div>
+            <fieldset class="choice-group">
+              <legend>Style</legend>
+              <div class="choices">
+                <div class="choice"><input class="visually-hidden" type="checkbox" id="tt-bold"><label class="tt-bold-label" for="tt-bold">Bold</label></div>
+                <div class="choice"><input class="visually-hidden" type="checkbox" id="tt-italic"><label class="tt-italic-label" for="tt-italic">Italic</label></div>
+                <div class="choice"><input class="visually-hidden" type="checkbox" id="tt-underline"><label class="tt-underline-label" for="tt-underline">Underline</label></div>
+              </div>
+            </fieldset>
+            <fieldset class="choice-group">
+              <legend>Line up</legend>
+              <div class="choices">
+                <div class="choice"><input class="visually-hidden" type="radio" name="tt-align" id="tt-align-left" value="left" checked><label for="tt-align-left">Left</label></div>
+                <div class="choice"><input class="visually-hidden" type="radio" name="tt-align" id="tt-align-center" value="center"><label for="tt-align-center">Centre</label></div>
+                <div class="choice"><input class="visually-hidden" type="radio" name="tt-align" id="tt-align-right" value="right"><label for="tt-align-right">Right</label></div>
+              </div>
+            </fieldset>
+            <fieldset class="choice-group span-2">
+              <legend>Colour</legend>
+              <div class="tt-colours">
+                <button type="button" class="tt-swatch tt-swatch-black" data-colour="#000000" aria-pressed="true" aria-label="Black" title="Black"></button>
+                <button type="button" class="tt-swatch tt-swatch-grey" data-colour="#555555" aria-pressed="false" aria-label="Grey" title="Grey"></button>
+                <button type="button" class="tt-swatch tt-swatch-blue" data-colour="#1a3fa6" aria-pressed="false" aria-label="Blue" title="Blue"></button>
+                <button type="button" class="tt-swatch tt-swatch-red" data-colour="#c0161b" aria-pressed="false" aria-label="Red" title="Red"></button>
+                <button type="button" class="tt-swatch tt-swatch-green" data-colour="#16793a" aria-pressed="false" aria-label="Green" title="Green"></button>
+                <label class="tt-custom" for="tt-colour"><input id="tt-colour" type="color" value="#000000"><span>Any colour</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="tt-box-bar">
+            <button type="button" class="btn btn-sm btn-quiet" id="tt-add">{{icon:plus}} Add another text box</button>
+            <button type="button" class="btn btn-sm btn-quiet" id="tt-delete">{{icon:trash}} Delete this box</button>
+          </div>
+          <p class="sign-stage-hint" id="tt-count" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run" disabled>Save PDF with text</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another PDF</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your PDF and your text stay on your device. Nothing is uploaded or saved.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to add text to a PDF</h2>
+    <ol class="steps">
+      <li><strong>Choose your PDF</strong>, or drag it onto the box.</li>
+      <li><strong>Tap the page where the text should go</strong>, and type it. Press Enter to start a new line.</li>
+      <li><strong>Style it:</strong> pick the font, size, colour, bold, italic or underline, and how the lines line up.</li>
+      <li><strong>Add more text boxes</strong> on the same page or other pages if you need them. Each box keeps its own style.</li>
+      <li><strong>Press "Save PDF with text"</strong> and download the new copy.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>Your text is written onto the page with the fonts every PDF reader has built in: Helvetica, Times and Courier, each in plain, bold, italic and bold italic. Because it's real text, not a picture, it stays sharp when you zoom in, and it can be searched and copied.</p>
+    <p>The text box is as wide as its longest line. "Line up" sets where shorter lines sit inside it: on the left, in the centre or on the right. Lines are 1.2 times the text size apart, and the box is always kept on the page. Everything else on the page is left exactly as it was, and your file never leaves your device.</p>
+
+    <h2>Example</h2>
+    <p>Two lines, "Paid in full" and "Thank you", in 12-point Helvetica, centred, with the box's top-left corner 10% across and 10% down a US Letter page (612 × 792 points). At size 1, Helvetica reaches 0.718 above the line and 0.207 below it, "Paid in full" is 4.573 wide and "Thank you" is 4.649 wide.</p>
+    <div class="formula">Box width          =  4.649 × 12                   =   55.79 points
+Box height         =  (0.718 + 0.207) × 12 + 14.4   =   25.5 points
+Box left edge      =  10% × 612                    =   61.2 points
+Box top edge       =  10% × 792                    =   79.2 points down
+Line 1 baseline    =  792 − 79.2 − 0.718 × 12       =  704.18 points up
+Line 2 baseline    =  704.18 − 1.2 × 12             =  689.78 points up
+Line 1 starts at   =  61.2 + (55.79 − 54.88) ÷ 2    =   61.66 points from the left</div>
+    <p>"Thank you" is the longer line, so it sets the box width and starts at the box's left edge. "Paid in full" (4.573 × 12 = 54.88 points) is moved right by half the difference to centre it.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I fill in a PDF form with this?</summary>
+        <p>Yes. Tap each blank space, type your answer, and use the size setting to fit the box. If the form has its own fillable boxes, typing into them in a PDF reader is often easier, but this tool works on any PDF, including scanned forms.</p>
+      </details>
+      <details>
+        <summary>Can I change or delete text that's already in the PDF?</summary>
+        <p>No. This tool adds new text on top of the page. It doesn't edit or remove what's already there. Putting new text over old text doesn't delete the old text: it's still in the file and can be copied out.</p>
+      </details>
+      <details>
+        <summary>Which characters can I use?</summary>
+        <p>Letters A to Z (including accented letters like é and ü), numbers and common symbols such as £, €, &amp; and curly quotes. The built-in PDF fonts can't write other alphabets or emoji; the tool tells you if your text has any.</p>
+      </details>
+      <details>
+        <summary>Why does the text look slightly different in the preview?</summary>
+        <p>The preview uses the closest font on your device, such as Arial for Helvetica. Sizes, line breaks and positions are worked out with the PDF fonts' own measurements, so the saved PDF matches the preview closely.</p>
+      </details>
+      <details>
+        <summary>Does it work on landscape or sideways pages?</summary>
+        <p>Yes. Each page is measured the way you read it, so your text is always the right way up where you put it.</p>
+      </details>
+    </div>
+  </div>

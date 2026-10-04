@@ -1,0 +1,111 @@
+  <section class="calculator game" aria-label="Sudoku puzzle">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="sudoku-level">Difficulty</label>
+          <div class="select-wrap"><select id="sudoku-level">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+              </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="sudoku-new">{{icon:refresh}} New puzzle</button>
+      </div>
+
+      <div class="sudoku-board" id="sudoku-board" role="group" aria-label="Sudoku grid. Use the arrow keys to move and type 1 to 9 to fill a square."></div>
+
+      <div class="sudoku-pad" role="group" aria-label="Number pad">
+        <button type="button" class="btn" data-sudoku-num="1">1</button>
+        <button type="button" class="btn" data-sudoku-num="2">2</button>
+        <button type="button" class="btn" data-sudoku-num="3">3</button>
+        <button type="button" class="btn" data-sudoku-num="4">4</button>
+        <button type="button" class="btn" data-sudoku-num="5">5</button>
+        <button type="button" class="btn" data-sudoku-num="6">6</button>
+        <button type="button" class="btn" data-sudoku-num="7">7</button>
+        <button type="button" class="btn" data-sudoku-num="8">8</button>
+        <button type="button" class="btn" data-sudoku-num="9">9</button>
+      </div>
+      <div class="sudoku-actions">
+        <button type="button" class="btn btn-sm" id="sudoku-notes" aria-pressed="false">{{icon:pen}} Notes</button>
+        <button type="button" class="btn btn-sm" data-sudoku-num="0">{{icon:trash}} Erase</button>
+        <button type="button" class="btn btn-sm" id="sudoku-hint">{{icon:target}} Hint</button>
+        <button type="button" class="btn btn-sm" id="sudoku-check">{{icon:check}} Check</button>
+      </div>
+      <p class="game-status" id="sudoku-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="calc-results">
+      <h2>This puzzle</h2>
+      <div class="result-main"><span id="sudoku-time">0:00</span> <small>time</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Difficulty</span><span id="sudoku-level-out">Medium</span></li>
+        <li><span>Squares filled</span><span id="sudoku-filled">0 / 81</span></li>
+        <li><span>Hints used</span><span id="sudoku-hints">0</span></li>
+      </ul>
+      <p class="result-note">The timer starts with your first move. Squares that break a rule turn red. Press Check to compare your numbers with the solution.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play Sudoku</h2>
+    <ol class="steps">
+      <li><strong>The goal:</strong> fill every empty square so each row, each column and each 3&times;3 box contains the numbers 1 to 9, with no number repeated.</li>
+      <li><strong>Pick a square</strong> by tapping it, or move with the arrow keys.</li>
+      <li><strong>Enter a number</strong> with the number pad or your keyboard. Tap the same number again, or press Erase, to clear it.</li>
+      <li><strong>Use Notes</strong> to pencil in small numbers you think might fit. Press N on a keyboard to switch notes on and off.</li>
+    </ol>
+
+    <h2>What the buttons do</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Button</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Notes</strong></td><td>Numbers you enter become small pencil marks instead of answers. Placing an answer removes that number from the notes in its row, column and box.</td></tr>
+          <tr><td><strong>Hint</strong></td><td>Fills in the selected square with the right number. If that square is already right, it fills the first wrong or empty square instead.</td></tr>
+          <tr><td><strong>Check</strong></td><td>Tells you how many of your numbers don't match the solution, without showing which ones.</td></tr>
+          <tr><td><strong>New puzzle</strong></td><td>Makes a fresh puzzle at the chosen difficulty.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How the puzzles are made</h2>
+    <p>Each puzzle is made in your browser when you press New puzzle. We fill a complete, valid grid at random, then remove numbers one by one. After each removal we check the puzzle still has <strong>exactly one solution</strong>; if it would have two, the number goes back. So you never need to guess.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Difficulty</th><th>Numbers given at the start</th></tr></thead>
+        <tbody>
+          <tr><td>Easy</td><td>40</td></tr>
+          <tr><td>Medium</td><td>32</td></tr>
+          <tr><td>Hard</td><td>26 (sometimes a few more, if removing more would allow a second solution)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Tips for solving</h2>
+    <ul>
+      <li><strong>Look for the last empty square</strong> in a row, column or box. Only one number can go there.</li>
+      <li><strong>Scan one number at a time.</strong> Pick a number, say 5, and look at each box. If every square but one is blocked by a 5 in the same row or column, the 5 goes in that square.</li>
+      <li><strong>Use notes on harder puzzles.</strong> When a square has only one possible note left, that is its answer.</li>
+      <li><strong>Pairs help.</strong> If two squares in a row can only be 3 or 7, then no other square in that row can be 3 or 7.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does every puzzle have only one answer?</summary>
+        <p>Yes. Before a puzzle is shown, it is checked to make sure there is exactly one way to complete it, so you can always solve it by logic.</p>
+      </details>
+      <details>
+        <summary>Why does a square turn red?</summary>
+        <p>Red means the same number appears twice in that square's row, column or box. A number can also be wrong without turning red, because it may break no rule yet but still not match the solution. Use Check to find out.</p>
+      </details>
+      <details>
+        <summary>Can I save a puzzle and finish it later?</summary>
+        <p>No. We don't use cookies or browser storage, so the puzzle is gone if you close or reload the page. Leave the tab open if you want to come back to it.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. Tab to the grid, move with the arrow keys, type 1 to 9 to fill a square, press Backspace or Delete to clear it, and press N to switch notes on or off.</p>
+      </details>
+    </div>
+  </div>

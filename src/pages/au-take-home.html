@@ -1,0 +1,90 @@
+  <section class="calculator" aria-label="Take-home pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="salary">Yearly salary for 2026–27<span class="hint">Before tax</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="salary" type="text" inputmode="decimal" value="90000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="includesSuper" type="checkbox"><span>This amount includes super<span class="hint">Tick if your offer is a "package" or "total remuneration" figure</span></span></label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your take-home pay</h2>
+      <div class="result-main"><span id="out-take">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Per fortnight</span><span id="out-fortnight">—</span></li>
+        <li><span>Per month</span><span id="out-month">—</span></li>
+        <li><span>Per week</span><span id="out-week">—</span></li>
+        <li><span>Salary before super</span><span id="out-base">—</span></li>
+        <li><span>Income tax after offsets</span><span id="out-tax">—</span></li>
+        <li><span>Low income tax offset</span><span id="out-lito">—</span></li>
+        <li><span>Medicare levy (2%)</span><span id="out-medicare">—</span></li>
+        <li><span>Effective rate</span><span id="out-rate">—</span></li>
+        <li class="key"><span>Super your employer pays (12%)</span><span id="out-super">—</span></li>
+      </ul>
+      <p class="result-note">Super goes into your super fund, not your bank account, so it isn't part of your take-home pay.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your yearly salary</strong> for the 2026–27 income year (1 July 2026 to 30 June 2027).</li>
+      <li><strong>Tick the box if the figure includes super.</strong> Job ads and offers sometimes quote a package that already includes the 12% super guarantee.</li>
+      <li><strong>Read your take-home pay</strong> per year, fortnight, month and week.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Salary before super = package ÷ 1.12  (only if the amount includes super)
+Basic tax           = 2026–27 resident rates on the salary
+Low income offset   = $700, reduced above $37,500 (to $0 at $66,667)
+Income tax          = basic tax − low income offset (not below $0)
+Medicare levy       = 2% × salary
+Take-home pay       = salary − income tax − Medicare levy
+Super               = 12% × salary, paid into your fund on top</div>
+
+    <h2>Worked example</h2>
+    <p>Ben earns a salary of $90,000 plus super in 2026–27, with no other income.</p>
+    <div class="formula">Basic tax       = (45,000 − 18,200) × 15% + (90,000 − 45,000) × 30%
+                = 4,020 + 13,500                   = $17,520
+Low income offset = $0 (salary over $66,667)
+Medicare levy   = 90,000 × 2%                      = $1,800
+Take-home pay   = 90,000 − 17,520 − 1,800          = $70,680
+Per fortnight   = 70,680 ÷ 26                      = $2,718.46
+Super           = 90,000 × 12%                     = $10,800</div>
+    <p>Ben takes home <strong>$70,680</strong> a year, about $2,718.46 a fortnight or $5,890 a month. His employer also pays $10,800 into his super fund.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Lower incomes:</strong> people on low incomes pay a reduced Medicare levy, or none. This calculator applies the full 2%, so on a low income it may show too much tax. The ATO's Medicare levy page explains the reduction.</li>
+      <li>The Medicare levy surcharge for higher earners without private hospital cover.</li>
+      <li>HELP and other study loan repayments, salary sacrifice, other income, deductions and other offsets.</li>
+      <li>Foreign residents and working holiday makers, who have different rates. The exact amount withheld from each pay follows the ATO's tax tables and can differ a little.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is super taken out of my salary?</summary>
+        <p>Usually not. If your salary is quoted "plus super", your employer pays super on top. If it's a "package" or "total remuneration" figure, super is part of it. Tick the box to work back to the salary before super.</p>
+      </details>
+      <details>
+        <summary>Why is my pay slip slightly different?</summary>
+        <p>Employers withhold tax using the ATO's tax tables, which round amounts for each pay period. Any difference between tax withheld and tax owed is settled when you lodge your tax return.</p>
+      </details>
+      <details>
+        <summary>I'm a sole trader. Does this apply to me?</summary>
+        <p>The tax rates are the same, but no one withholds tax for you and you may get the small business income tax offset. Use our <a href="{{root}}au/sole-trader-tax-calculator/">sole trader tax calculator</a> instead.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026–27):</strong> <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents" rel="noopener">ATO resident tax rates</a>, <a href="https://treasury.gov.au/policy-topics/taxation/budget2026-27" rel="noopener">Treasury: 2026–27 tax changes</a>, <a href="https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/low-income-tax-offset" rel="noopener">low income tax offset</a>, <a href="https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy" rel="noopener">Medicare levy</a>, <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/super-guarantee" rel="noopener">super guarantee</a>. Figures checked 28 September 2026.</p>
+  </div>

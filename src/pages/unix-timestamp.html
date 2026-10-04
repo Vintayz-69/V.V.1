@@ -1,0 +1,103 @@
+  <section class="calculator" id="ts-tool" aria-label="Unix timestamp converter">
+    <div class="calc-form ts-forms">
+      <form class="ts-part span-2" id="ts-form" novalidate>
+        <h2 class="field-title">Timestamp to date</h2>
+        <div class="field">
+          <label for="ts-input">Unix timestamp</label>
+          <div class="inline-row">
+            <div class="input-wrap grow"><input id="ts-input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false"></div>
+            <button type="button" class="btn btn-sm" id="ts-now">Now</button>
+          </div>
+          <span class="error-msg">Enter a whole number of seconds or milliseconds.</span>
+        </div>
+        <div class="field">
+          <label for="ts-unit">Unit</label>
+          <div class="select-wrap">
+            <select id="ts-unit">
+              <option value="auto">Detect (12+ digits = milliseconds)</option>
+              <option value="s">Seconds</option>
+              <option value="ms">Milliseconds</option>
+            </select>
+          </div>
+        </div>
+      </form>
+
+      <form class="ts-part span-2" id="dt-form" novalidate>
+        <h2 class="field-title">Date to timestamp</h2>
+        <div class="ts-grid">
+          <div class="field">
+            <label for="dt-date">Date</label>
+            <div class="input-wrap"><input id="dt-date" type="date"></div>
+          </div>
+          <div class="field">
+            <label for="dt-time">Time</label>
+            <div class="input-wrap"><input id="dt-time" type="time" step="1"></div>
+          </div>
+          <div class="field ts-span">
+            <label for="dt-zone">Time zone of this date</label>
+            <div class="select-wrap">
+              <select id="dt-zone">
+                <option value="local" id="dt-zone-local">My time zone</option>
+                <option value="utc">UTC (GMT)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <ul class="result-list ts-out">
+          <li class="key"><span>Seconds</span><span><span id="out-seconds">—</span> <button type="button" class="btn btn-sm btn-ghost" id="copy-seconds">Copy</button></span></li>
+          <li><span>Milliseconds</span><span id="out-ms">—</span></li>
+        </ul>
+      </form>
+
+      <p class="privacy-note span-2">{{icon:lock}} Converted in your browser. Nothing is sent anywhere.</p>
+    </div>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Date and time (UTC)</h2>
+      <div class="result-main ts-main"><span id="out-utc">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Your time (<span id="ts-zone-name">local</span>)</span><span id="out-local">—</span></li>
+        <li><span>ISO 8601</span><span><span id="out-iso">—</span> <button type="button" class="btn btn-sm ts-copy" id="copy-iso">Copy</button></span></li>
+        <li><span>Relative</span><span id="out-relative">—</span></li>
+        <li><span>Read as</span><span id="out-unit">—</span></li>
+      </ul>
+      <p class="result-note">Your time zone comes from your device's settings.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this converter</h2>
+    <ol class="steps">
+      <li><strong>Paste a timestamp</strong> in the first box, or press "Now" for the current one. You'll see the date in UTC and in your own time zone.</li>
+      <li><strong>Leave the unit on "Detect"</strong> unless you know it. Timestamps with 12 or more digits are read as milliseconds, as JavaScript and many APIs use.</li>
+      <li><strong>To go the other way</strong>, pick a date and time, say which time zone it's in, and copy the timestamp.</li>
+    </ol>
+
+    <h2>What is a Unix timestamp?</h2>
+    <p>A Unix timestamp (also called epoch time or POSIX time) counts the seconds since 00:00:00 UTC on 1 January 1970, not counting leap seconds. It's the same number everywhere in the world at the same moment, which is why computers use it to store times. Negative numbers are dates before 1970.</p>
+    <div class="formula">Date (UTC)     = 1 January 1970 00:00:00 + timestamp seconds
+Milliseconds   = seconds × 1,000</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">0               →  Thursday 1 January 1970, 00:00:00 UTC
+1700000000      →  Tuesday 14 November 2023, 22:13:20 UTC
+1700000000000   →  the same moment, written in milliseconds
+2147483647      →  Tuesday 19 January 2038, 03:14:07 UTC
+5 October 2026, 12:00:00 UTC  →  1791201600</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What happens in 2038?</summary>
+        <p>Older systems store timestamps as a signed 32-bit number, whose largest value is 2,147,483,647: 03:14:07 UTC on 19 January 2038. One second later those systems overflow. Modern systems use 64-bit numbers and are not affected.</p>
+      </details>
+      <details>
+        <summary>Why is my converted time an hour out?</summary>
+        <p>Usually the time zone. A timestamp is always UTC; your local time depends on your device's time zone and daylight saving time. When converting a date to a timestamp, make sure you've chosen the time zone the date was written in.</p>
+      </details>
+      <details>
+        <summary>Does the timestamp include leap seconds?</summary>
+        <p>No. Unix time treats every day as exactly 86,400 seconds, so leap seconds are not counted.</p>
+      </details>
+    </div>
+  </div>

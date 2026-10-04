@@ -1,0 +1,99 @@
+  <section class="calculator game" aria-label="Typing speed test">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="typing-length">Test length</label>
+          <div class="select-wrap"><select id="typing-length">
+              <option value="30">30 seconds</option>
+              <option value="60" selected>1 minute</option>
+              <option value="120">2 minutes</option>
+              </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="typing-restart">{{icon:refresh}} Restart</button>
+      </div>
+
+      <div class="typing-passage" id="typing-passage"></div>
+
+      <div class="field">
+        <label for="typing-input">Type the passage here<span class="hint">Mistakes show in red. You can go back and fix them.</span></label>
+        <textarea id="typing-input" class="text-tool-input typing-input" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Start typing to begin…"></textarea>
+      </div>
+      <p class="game-status" id="typing-status" role="status" aria-live="polite"></p>
+      <p class="privacy-note game-privacy">{{icon:lock}} What you type stays in your browser. Nothing is sent or saved.</p>
+    </div>
+
+    <div class="calc-results">
+      <h2>Your speed</h2>
+      <div class="result-main"><span id="typing-wpm">0</span> <small>WPM</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Time left</span><span id="typing-time">1:00</span></li>
+        <li class="key"><span>Accuracy</span><span id="typing-accuracy">100%</span></li>
+        <li><span>Raw speed (with mistakes)</span><span id="typing-raw">0</span></li>
+        <li><span>Mistakes</span><span id="typing-errors">0</span></li>
+        <li><span>Best this visit</span><span id="typing-best">—</span></li>
+      </ul>
+      <p class="result-note">WPM counts every 5 correct characters, including spaces, as one word. Your best score is forgotten when you leave the page.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the typing test</h2>
+    <ol class="steps">
+      <li><strong>Pick a test length:</strong> 30 seconds for a quick check, 1 minute for the usual test, or 2 minutes for a steadier result.</li>
+      <li><strong>Start typing</strong> in the box. The timer starts with your first letter.</li>
+      <li><strong>Watch the passage:</strong> correct letters turn green and mistakes turn red. Backspace lets you fix them.</li>
+      <li><strong>See your result</strong> when the time runs out: words per minute, accuracy and your best score this visit.</li>
+    </ol>
+
+    <h2>How your score is worked out</h2>
+    <p>Typing tests measure "words" as 5 characters, so long and short words count fairly. Spaces and punctuation count as characters too.</p>
+    <div class="formula">
+      <p><strong>WPM</strong> = (correct characters ÷ 5) ÷ minutes</p>
+      <p><strong>Raw WPM</strong> = (all typed characters ÷ 5) ÷ minutes</p>
+      <p><strong>Accuracy</strong> = correct characters ÷ typed characters × 100</p>
+    </div>
+    <p>Only characters that match the passage count towards your WPM, so rushing and leaving mistakes lowers your score. A mistake you go back and fix no longer counts against you.</p>
+
+    <h2>Worked example</h2>
+    <p>Sam takes the 1-minute test and types 300 characters. 285 of them match the passage and 15 are mistakes.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Working</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>WPM</td><td>(285 ÷ 5) ÷ 1 minute</td><td><strong>57 WPM</strong></td></tr>
+          <tr><td>Raw WPM</td><td>(300 ÷ 5) ÷ 1 minute</td><td>60 WPM</td></tr>
+          <tr><td>Accuracy</td><td>285 ÷ 300 × 100</td><td>95%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>If Sam had taken the 30-second test and typed the same 285 correct characters, the score would be (285 ÷ 5) ÷ 0.5 = <strong>114 WPM</strong>, because the same work was done in half the time.</p>
+
+    <h2>Tips to type faster</h2>
+    <ul>
+      <li><strong>Accuracy first.</strong> Fixing mistakes takes longer than typing a little slower. Speed comes with practice once your fingers know where to go.</li>
+      <li><strong>Keep your fingers on the home row</strong> (A S D F and J K L ;) and return to it after each key.</li>
+      <li><strong>Look at the screen, not your hands.</strong> It feels slower at first but pays off.</li>
+      <li><strong>Practise little and often.</strong> A few minutes a day helps more than one long session a week.</li>
+      <li><strong>Sit comfortably</strong> with your wrists relaxed and your screen at eye level.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a good typing speed?</summary>
+        <p>It depends on what you need it for. Some jobs, such as data entry or transcription, ask for a minimum speed in the job advert, so check the advert for the number they expect. For everyday work, steady and accurate typing matters more than a high top speed.</p>
+      </details>
+      <details>
+        <summary>Why is my speed lower than on other typing tests?</summary>
+        <p>Typing tests count words and mistakes in different ways. Some ignore mistakes or use easier word lists. Ours only counts characters that match the passage, and the passages are real sentences with capital letters and punctuation, so the score can be a little lower.</p>
+      </details>
+      <details>
+        <summary>Can I use this result in a job application?</summary>
+        <p>You can mention it, but employers who need a certain speed usually run their own test. Use this tool to practise and to see how you are improving.</p>
+      </details>
+      <details>
+        <summary>Is what I type saved or sent anywhere?</summary>
+        <p>No. Your typing is compared with the passage inside your browser and is gone when you close or reload the page. We don't use cookies or browser storage.</p>
+      </details>
+    </div>
+  </div>

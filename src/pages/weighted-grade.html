@@ -1,0 +1,80 @@
+  <section class="calculator" aria-label="Weighted grade calculator">
+    <div class="calc-form">
+      <div class="field span-2">
+        <p class="field-title" id="wg-title">Your grade categories<span class="hint">Weights come from your syllabus or course handbook. Leave the score empty for work you haven't done yet.</span></p>
+        <div class="table-wrap">
+          <table class="inv-items-table gpa-table" aria-labelledby="wg-title">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th class="num col-credits">Weight %</th>
+                <th class="num col-credits">Score %</th>
+                <th class="col-del"><span class="visually-hidden">Remove</span></th>
+              </tr>
+            </thead>
+            <tbody id="wg-body"></tbody>
+          </table>
+        </div>
+        <p class="json-error" id="wg-error" role="alert" hidden></p>
+        <button type="button" class="btn btn-sm btn-ghost btn-add-row" id="wg-add">{{icon:plus}} Add category</button>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="wg-reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your grades stay on your device</span>
+      </div>
+    </div>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your grade so far</h2>
+      <div class="result-main"><span id="out-average">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Weights entered</span><span id="out-weight">—</span></li>
+        <li><span>Points earned</span><span id="out-earned">—</span></li>
+        <li><span>Still to be graded</span><span id="out-remaining">—</span></li>
+      </ul>
+      <p class="result-note">Want to know what you need on the rest? Try the <a href="{{root}}education/final-grade-calculator/">final grade calculator</a>.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Add a row for each part of your grade</strong>, such as homework, quizzes, exams and projects.</li>
+      <li><strong>Enter each part's weight</strong> as a percentage of the whole course. You'll find these in your syllabus.</li>
+      <li><strong>Enter your score</strong> in each part as a percentage. Leave it empty if it hasn't been graded yet.</li>
+      <li><strong>Read your grade so far.</strong> It only counts the parts you've been graded on.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Points for a part = weight × score ÷ 100
+Grade so far      = total points ÷ total weight of graded parts × 100</div>
+    <p>Dividing by the weight of the graded parts (not by 100) gives your average on the work done so far. Once every part has a score, the weights add up to 100 and this is your final course grade.</p>
+
+    <h2>Worked example</h2>
+    <p>Jordan's course is graded on homework (20%), quizzes (15%), a midterm (25%), a project (15%) and a final exam (25%). The final hasn't happened yet.</p>
+    <div class="formula">Homework   20 × 92% = 18.40
+Quizzes    15 × 85% = 12.75
+Midterm    25 × 78% = 19.50
+Project    15 × 88% = 13.20
+Total               = 63.85 points out of 75
+
+Grade so far = 63.85 ÷ 75 × 100 = 85.13%</div>
+    <p>Jordan's grade so far is <strong>85.13%</strong>, with 25% of the course (the final) still to come.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What if my weights don't add up to 100%?</summary>
+        <p>That's fine while some work is still to come: the calculator averages only what you've entered. If the weights add up to more than 100%, it warns you, because the syllabus weights have probably been typed in wrong.</p>
+      </details>
+      <details>
+        <summary>My course uses points, not percentages. What do I enter?</summary>
+        <p>Turn each part into a percentage first: points you earned ÷ points available × 100. For the weight, use the share of total course points that part is worth.</p>
+      </details>
+      <details>
+        <summary>What letter grade is my percentage?</summary>
+        <p>Grade boundaries differ between schools, colleges and even courses, so check your syllabus for the scale your course uses.</p>
+      </details>
+    </div>
+  </div>

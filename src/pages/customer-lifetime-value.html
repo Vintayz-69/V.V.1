@@ -1,0 +1,114 @@
+  <section class="calculator" aria-label="Customer lifetime value calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="order">Average order value<span class="hint">What a customer spends per order</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="order" type="text" inputmode="decimal" value="50" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="orders">Orders per customer a year</label>
+        <div class="input-wrap"><input id="orders" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">orders</span></div>
+        <span class="error-msg">Enter a number above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="margin">Gross margin<span class="hint">Share of each sale left after the cost of the product</span></label>
+        <div class="input-wrap"><input id="margin" type="text" inputmode="decimal" value="60" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 100%.</span>
+      </div>
+
+      <div class="field">
+        <label for="years">How long a customer stays<span class="hint">On average</span></label>
+        <div class="input-wrap"><input id="years" type="text" inputmode="decimal" value="3" autocomplete="off"><span class="affix">years</span></div>
+        <span class="error-msg">Enter between 0.1 and 50 years.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="cac">Cost to win a new customer<span class="hint">Marketing and sales spend ÷ new customers (also called CAC)</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="cac" type="text" inputmode="decimal" value="120" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Customer lifetime value</h2>
+      <div class="result-main"><span id="out-clv">—</span> <small>gross profit</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Value to cost ratio (LTV:CAC)</span><span id="out-ratio">—</span></li>
+        <li class="key"><span>Months to earn back the cost</span><span id="out-payback">—</span></li>
+        <li><span>Profit per customer after the cost to win them</span><span id="out-net">—</span></li>
+        <li><span>Spend per customer a year</span><span id="out-yearly">—</span></li>
+        <li><span>Spend per customer over their lifetime</span><span id="out-revenue">—</span></li>
+      </ul>
+      <p class="result-note" id="clv-note">Each customer brings in at least as much gross profit as they cost to win.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter what a typical customer spends</strong> per order and how many orders they place in a year. Your sales records will show both.</li>
+      <li><strong>Enter your gross margin</strong>: the percentage of each sale left after paying for the product or service itself.</li>
+      <li><strong>Enter how long customers usually stay</strong>, and what you spend on marketing and sales to win each new one.</li>
+      <li><strong>Compare the lifetime value with the cost</strong> to see whether winning customers pays off, and how fast.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Spend a year       = average order × orders a year
+Lifetime spend     = spend a year × years they stay
+Lifetime value     = lifetime spend × gross margin %
+LTV:CAC ratio      = lifetime value ÷ cost to win them
+Months to pay back = cost to win them ÷ (spend a year × margin % ÷ 12)</div>
+    <p>This uses gross profit, not total sales, because the cost of the product has to be paid before any money is left to cover marketing.</p>
+
+    <h2>Worked example</h2>
+    <p>A small online tea shop sells $50 orders. A typical customer orders 4 times a year and stays for 3 years. The shop keeps 60% of each sale after the cost of the tea, and spends about $120 on ads to win each new customer.</p>
+    <div class="formula">Spend a year       = 50 × 4            = $200
+Lifetime spend     = 200 × 3           = $600
+Lifetime value     = 600 × 60%         = $360
+LTV:CAC ratio      = 360 ÷ 120         = 3 : 1
+Months to pay back = 120 ÷ (200 × 60% ÷ 12) = 120 ÷ 10 = 12 months</div>
+    <p>Each customer brings in <strong>$360</strong> of gross profit over their lifetime, three times what it costs to win them. It takes a year of orders to earn back the $120, leaving $240 after that.</p>
+
+    <h2>Ways to raise lifetime value</h2>
+    <ul>
+      <li><strong>Keep customers longer:</strong> good service, reminders and subscriptions all add years.</li>
+      <li><strong>Raise order value:</strong> bundles, add-ons or free delivery above a minimum spend.</li>
+      <li><strong>Improve margin:</strong> better supplier prices or a small price rise.</li>
+      <li><strong>Win customers more cheaply:</strong> referrals and search traffic often cost less than ads.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What does an LTV:CAC ratio below 1 mean?</summary>
+        <p>Each customer costs more to win than they bring in as gross profit, so every new customer loses money. A ratio of exactly 1 means you only break even, before paying any other business costs such as rent or wages.</p>
+      </details>
+      <details>
+        <summary>How do I work out how long customers stay?</summary>
+        <p>Look at past customers: how long between their first and last order? If you know the share of customers you lose each year (your churn rate), an estimate is 1 ÷ churn rate. For example, losing 25% a year suggests customers stay about 4 years.</p>
+      </details>
+      <details>
+        <summary>Should I use revenue or profit?</summary>
+        <p>Profit gives a more honest answer, which is why this calculator uses gross margin. Some people quote lifetime value as revenue, so check which one is meant when you compare figures.</p>
+      </details>
+    </div>
+  </div>

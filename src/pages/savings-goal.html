@@ -1,0 +1,100 @@
+  <section class="calculator" aria-label="Savings goal calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="goal">Savings goal<span class="hint">e.g. a deposit, a car or a sabbatical</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="goal" type="text" inputmode="decimal" value="20000" autocomplete="off"></div>
+        <span class="error-msg">Enter a goal above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="current">Saved already</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="current" type="text" inputmode="decimal" value="2000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="months">Time to reach it<span class="hint" id="months-years">That's 3 years.</span></label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="numeric" value="36" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter between 1 and 600 months.</span>
+      </div>
+
+      <div class="field">
+        <label for="rate">Interest rate a year<span class="hint">Your savings account rate; 0 for none</span></label>
+        <div class="input-wrap"><input id="rate" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 30%.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Save each month</h2>
+      <div class="result-main"><span id="out-monthly">—</span> <small>/ month</small></div>
+      <ul class="result-list">
+        <li class="key"><span>About the same each week</span><span id="out-weekly">—</span></li>
+        <li><span>Total you pay in</span><span id="out-deposits">—</span></li>
+        <li><span>Interest earned</span><span id="out-interest">—</span></li>
+        <li><span>Monthly amount with no interest</span><span id="out-no-interest">—</span></li>
+      </ul>
+      <p class="result-note" id="goal-note">Interest is an assumption. Real savings rates change, so check your progress now and then.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your goal</strong> and anything you've already saved towards it.</li>
+      <li><strong>Choose how many months</strong> you want to reach it in.</li>
+      <li><strong>Enter the yearly interest rate</strong> your savings earn, or 0 if you're keeping the money in cash.</li>
+      <li><strong>Set up a monthly transfer</strong> for the amount shown, ideally on the day you're paid.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <p>Interest is added monthly at one twelfth of the yearly rate, and you save at the end of each month.</p>
+    <div class="formula">Monthly rate     i = yearly rate ÷ 12
+Growth factor      = (1 + i) ^ months
+Savings grow to    = saved already × growth factor
+Still needed       = goal − what your savings grow to
+Monthly amount     = still needed × i ÷ (growth factor − 1)
+                     (or still needed ÷ months if there's no interest)</div>
+
+    <h2>Worked example</h2>
+    <p>Sara wants $20,000 for a house deposit in 3 years (36 months). She has $2,000 saved, in an account paying 4% a year.</p>
+    <div class="formula">Monthly rate     i = 4% ÷ 12                   = 0.3333%
+Growth factor      = 1.003333 ^ 36             = 1.12727
+Savings grow to    = 2,000 × 1.12727           = $2,254.54
+Still needed       = 20,000 − 2,254.54         = $17,745.46
+Monthly amount     = 17,745.46 × 0.003333 ÷ 0.12727 = $464.77</div>
+    <p>Sara needs to save <strong>$464.77 a month</strong>. She pays in about $16,732 in total and interest adds about $1,268. Without interest she'd need $500 a month.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does this include tax on interest?</summary>
+        <p>No. Interest is shown before any tax. In some countries savings interest is taxed above an allowance, and some accounts are tax-free, so the real growth can be a little lower or the same.</p>
+      </details>
+      <details>
+        <summary>What if my savings rate changes?</summary>
+        <p>Run the calculator again with the new rate and the amount you've saved so far. Rates on savings accounts often change, so checking every few months keeps you on track.</p>
+      </details>
+      <details>
+        <summary>Should I save or invest for my goal?</summary>
+        <p>That depends on your situation and how soon you need the money. Investments can fall as well as rise. A qualified financial adviser can help you decide.</p>
+      </details>
+    </div>
+  </div>

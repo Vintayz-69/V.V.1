@@ -1,0 +1,113 @@
+  <section class="calculator" aria-label="Retainer calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rate">Your normal hourly rate</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="75" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours in the retainer<span class="hint">Each month</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="20" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 0.5 and 744 hours.</span>
+      </div>
+
+      <div class="field">
+        <label for="discount">Discount for committing<span class="hint">0 for no discount</span></label>
+        <div class="input-wrap"><input id="discount" type="text" inputmode="decimal" value="10" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 90%.</span>
+      </div>
+
+      <div class="field">
+        <label for="months">Length of the agreement</label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="numeric" value="6" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter between 1 and 60 months.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="used">Hours the client really uses<span class="hint">Your best guess per month. Shows what you earn per hour actually worked.</span></label>
+        <div class="input-wrap"><input id="used" type="text" inputmode="decimal" value="16" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 0 and 744 hours.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Monthly retainer fee</h2>
+      <div class="result-main"><span id="out-fee">—</span> <small>/ month</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Total over the agreement</span><span id="out-contract">—</span></li>
+        <li><span>Same hours at your normal rate</span><span id="out-full">—</span></li>
+        <li><span>Discount you give each month</span><span id="out-saving">—</span></li>
+        <li><span>Your rate if all hours are used</span><span id="out-effective">—</span></li>
+        <li class="key"><span>Your rate for hours really used</span><span id="out-usage">—</span></li>
+      </ul>
+      <p class="result-note">If clients often use fewer hours than they pay for, the retainer earns you more per hour worked. If they use more, agree how extra hours are charged.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your normal hourly rate</strong> and the hours the client wants reserved each month.</li>
+      <li><strong>Add a discount</strong> if you're offering one in return for a longer commitment, and the number of months.</li>
+      <li><strong>Guess how many hours the client will really use.</strong> Look at past months with similar clients if you can.</li>
+      <li><strong>Read the monthly fee</strong>, and check the rate you earn for the hours you actually work.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Full price        = hourly rate × hours a month
+Monthly fee       = full price × (1 − discount %)
+Agreement total   = monthly fee × months
+Rate if all used  = monthly fee ÷ hours a month
+Rate really used  = monthly fee ÷ hours the client uses</div>
+
+    <h2>Worked example</h2>
+    <p>Maya is a freelance copywriter who charges $75 an hour. A client wants 20 hours a month for 6 months, and Maya offers 10% off for the commitment. From past clients, she expects them to use about 16 hours a month.</p>
+    <div class="formula">Full price        = 75 × 20             = $1,500
+Monthly fee       = 1,500 × (1 − 0.10)  = $1,350
+Agreement total   = 1,350 × 6           = $8,100
+Rate if all used  = 1,350 ÷ 20          = $67.50 an hour
+Rate really used  = 1,350 ÷ 16          = $84.38 an hour</div>
+    <p>Maya quotes <strong>$1,350 a month</strong>. If the client uses all 20 hours she earns $67.50 an hour, and if they use 16 hours she earns about $84.38 for each hour she works.</p>
+
+    <h2>What to agree in writing</h2>
+    <ul>
+      <li><strong>Unused hours:</strong> whether they expire at the end of each month or roll over (and for how long).</li>
+      <li><strong>Extra hours:</strong> the rate for work beyond the retainer, often your normal hourly rate.</li>
+      <li><strong>Payment:</strong> retainers are usually paid at the start of each month, before the work.</li>
+      <li><strong>Ending early:</strong> how much notice either side must give.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a retainer?</summary>
+        <p>A retainer is a fixed monthly fee a client pays to reserve some of your time. You get predictable income, and the client knows you'll be available.</p>
+      </details>
+      <details>
+        <summary>Do I have to offer a discount?</summary>
+        <p>No. Some freelancers offer a small discount because the steady income saves them time looking for work. Others charge their full rate, or even more, for guaranteed availability. Set the discount to 0 to see your full-price fee.</p>
+      </details>
+      <details>
+        <summary>What if the client uses more hours than the retainer?</summary>
+        <p>Then your rate per hour worked falls below your normal rate. Agree in advance that extra hours are billed separately, so the retainer doesn't turn into unpaid work.</p>
+      </details>
+    </div>
+  </div>
