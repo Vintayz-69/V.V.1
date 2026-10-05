@@ -1,0 +1,110 @@
+  <section class="calculator game sol-game" aria-label="Klondike Solitaire">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="sol-draw">Turn over</label>
+          <div class="select-wrap"><select id="sol-draw">
+            <option value="1" selected>1 card (easier)</option>
+            <option value="3">3 cards (classic)</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="sol-new">{{icon:refresh}} New game</button>
+        <button type="button" class="btn btn-sm" id="sol-undo" disabled>Undo</button>
+        <button type="button" class="btn btn-sm btn-primary" id="sol-finish" hidden>Finish</button>
+      </div>
+
+      <div class="sol-table" id="sol-table">
+        <div class="sol-row">
+          <button type="button" class="sol-pile sol-stock" id="sol-stock" aria-label="Stock"></button>
+          <div class="sol-pile sol-waste" id="sol-waste" role="group" aria-label="Waste pile"></div>
+          <div class="sol-pile sol-spacer" aria-hidden="true"></div>
+          <div class="sol-pile" data-sol-foundation="0" role="group"></div>
+          <div class="sol-pile" data-sol-foundation="1" role="group"></div>
+          <div class="sol-pile" data-sol-foundation="2" role="group"></div>
+          <div class="sol-pile" data-sol-foundation="3" role="group"></div>
+        </div>
+        <div class="sol-row sol-tableau">
+          <div class="sol-pile sol-col" data-sol-tableau="0" role="group"></div>
+          <div class="sol-pile sol-col" data-sol-tableau="1" role="group"></div>
+          <div class="sol-pile sol-col" data-sol-tableau="2" role="group"></div>
+          <div class="sol-pile sol-col" data-sol-tableau="3" role="group"></div>
+          <div class="sol-pile sol-col" data-sol-tableau="4" role="group"></div>
+          <div class="sol-pile sol-col" data-sol-tableau="5" role="group"></div>
+          <div class="sol-pile sol-col" data-sol-tableau="6" role="group"></div>
+        </div>
+      </div>
+      <p class="game-status" id="sol-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="calc-results">
+      <h2>This game</h2>
+      <div class="result-main"><span id="sol-home">0 / 52</span> <small>cards home</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Moves</span><span id="sol-moves">0</span></li>
+        <li><span>Time</span><span id="sol-time">0:00</span></li>
+        <li><span>Mode</span><span id="sol-mode">Draw 1</span></li>
+      </ul>
+      <p class="result-note">Tap a card to pick it up, then tap where it should go. Tap a picked-up card again to send it to the best place automatically.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play Klondike Solitaire</h2>
+    <ol class="steps">
+      <li><strong>The goal:</strong> move all 52 cards onto the four foundations at the top right, one pile per suit, in order from Ace up to King.</li>
+      <li><strong>Build down on the seven piles:</strong> put a card on one that is one higher and the other colour, for example a red 6 on a black 7.</li>
+      <li><strong>Move runs of cards:</strong> a run that is already in order, alternating colours, can move together. When you move the last face-up card off a pile, the card underneath turns over.</li>
+      <li><strong>Empty piles take a King</strong> (or a run that starts with a King).</li>
+      <li><strong>Stuck?</strong> Tap the stock at the top left to turn over new cards. When it runs out, tap it again to turn the waste pile back over. You can go through it as many times as you like.</li>
+    </ol>
+
+    <h2>Controls</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>To do this</th><th>Do this</th></tr></thead>
+        <tbody>
+          <tr><td>Move a card or run</td><td>Tap the card, then tap the pile it should go on.</td></tr>
+          <tr><td>Move it automatically</td><td>Tap the same card twice. It goes to a foundation if it can, otherwise to the first pile that takes it.</td></tr>
+          <tr><td>Put a card back down</td><td>Press Escape, or tap a card that can't take it.</td></tr>
+          <tr><td>Take back a move</td><td>Press Undo. You can undo many moves in a row.</td></tr>
+          <tr><td>Finish quickly</td><td>When every card is face up and the stock is empty, press Finish.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Worked example</h2>
+    <p>Say the piles show a black 8 of clubs, a red 7 of hearts and a black 6 of spades on top, and an Ace of diamonds turns up from the stock.</p>
+    <ol>
+      <li>Tap the Ace of diamonds twice: it goes straight to an empty foundation.</li>
+      <li>Tap the 7 of hearts, then the 8 of clubs: the red 7 goes on the black 8, and the card under the 7 turns over.</li>
+      <li>Tap the 6 of spades, then the 7 of hearts: now that pile reads 8, 7, 6 in alternating colours, and the whole run can move together later.</li>
+    </ol>
+
+    <h2>Tips to win more often</h2>
+    <ul>
+      <li><strong>Turn over hidden cards first.</strong> Moves that uncover a face-down card in the seven piles are usually worth more than moves from the stock.</li>
+      <li><strong>Work on the biggest piles.</strong> The piles on the right hide the most cards.</li>
+      <li><strong>Don't empty a pile without a King ready</strong> to go into the space.</li>
+      <li><strong>Don't rush cards to the foundations.</strong> A low card in the right colour can be more useful in the piles, holding a place for other cards.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can every game be won?</summary>
+        <p>No. The cards are shuffled at random, and some deals can't be finished whatever you do. If you are stuck, use Undo to try a different path or start a new game.</p>
+      </details>
+      <details>
+        <summary>What's the difference between turning over 1 card and 3 cards?</summary>
+        <p>With 1 card you see every card in the stock each time through, which makes the game easier. With 3 cards, only every third card is playable until you use the one on top, which is the classic and harder way to play.</p>
+      </details>
+      <details>
+        <summary>Is my game saved?</summary>
+        <p>No. We don't use cookies or browser storage, so the game is gone if you close or reload the page.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. Every card you can move is a button: use Tab to reach it, Enter to pick it up, then Tab to the pile you want and press Enter again. Screen readers hear each card's name.</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,75 @@
+  <section class="calculator game" aria-label="Number memory test">
+    <div class="game-area">
+      <div class="nm-stage" id="nm-stage">
+        <p class="nm-number" id="nm-number" aria-live="polite" hidden></p>
+        <div class="nm-bar" id="nm-bar" hidden><span></span></div>
+        <form class="nm-form" id="nm-form" hidden>
+          <div class="field">
+            <label for="nm-answer">What was the number?</label>
+            <input type="text" id="nm-answer" class="text-tool-input nm-answer" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done">
+          </div>
+          <button type="submit" class="btn btn-primary">Check</button>
+        </form>
+        <button type="button" class="btn btn-primary" id="nm-start">Start the test</button>
+      </div>
+      <p class="game-status" id="nm-status" role="status" aria-live="polite">You'll see a number for a few seconds. Remember it, then type it in.</p>
+    </div>
+
+    <div class="calc-results">
+      <h2>Your memory</h2>
+      <div class="result-main"><span id="nm-score">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Now showing</span><span id="nm-level">3 digits</span></li>
+        <li><span>Best this visit</span><span id="nm-best">—</span></li>
+      </ul>
+      <p class="result-note">Each right answer adds one digit. One wrong answer ends the test. Your best is forgotten when you leave the page.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the number memory test</h2>
+    <ol class="steps">
+      <li><strong>Press Start.</strong> A 3-digit number appears for a few seconds, with a bar showing how long you have left.</li>
+      <li><strong>Remember it.</strong> When it disappears, type it in and press Check (or Enter).</li>
+      <li><strong>If you're right,</strong> the next number has one more digit.</li>
+      <li><strong>If you're wrong,</strong> the test ends and shows the longest number you remembered.</li>
+    </ol>
+
+    <h2>How long each number is shown</h2>
+    <p>Longer numbers stay on screen longer: 1 second, plus 0.4 seconds for every digit.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Digits</th><th>Working</th><th>Time shown</th></tr></thead>
+        <tbody>
+          <tr><td>3</td><td>1 + 3 × 0.4</td><td>2.2 seconds</td></tr>
+          <tr><td>5</td><td>1 + 5 × 0.4</td><td>3 seconds</td></tr>
+          <tr><td>10</td><td>1 + 10 × 0.4</td><td>5 seconds</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Long numbers are shown in groups of three, like 1 234 567, to make them easier to read. You can type them with or without spaces.</p>
+
+    <h2>Tips to remember longer numbers</h2>
+    <ul>
+      <li><strong>Chunk it.</strong> Remember 4 820 193 as three pieces, not seven separate digits.</li>
+      <li><strong>Say it in your head</strong> as you read it: "four, eight-twenty, one-ninety-three".</li>
+      <li><strong>Look for patterns:</strong> repeated digits, runs like 3-4-5, or numbers that mean something to you, such as a year.</li>
+      <li><strong>Type it straight away.</strong> The longer you wait, the more you forget.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a good score?</summary>
+        <p>The fairest comparison is with yourself. Try the test a few times and see whether chunking and practice help you remember more digits.</p>
+      </details>
+      <details>
+        <summary>Is this a medical memory test?</summary>
+        <p>No. It's a game for fun and can't tell you anything about your health. If you're worried about your memory, speak to a doctor.</p>
+      </details>
+      <details>
+        <summary>Is my score saved?</summary>
+        <p>Only while the page is open. We don't use cookies or browser storage, so it's forgotten when you close or reload the page.</p>
+      </details>
+    </div>
+  </div>

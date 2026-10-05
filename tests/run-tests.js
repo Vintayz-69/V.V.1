@@ -857,12 +857,31 @@ function loadResume(country) {
 // ---------------- Mortgage payment
 {
   const calc = load("mortgage");
-  expectAll("mortgage $400k standard", calc({ homePrice: 400000, downPayment: 80000, rate: 6.5, termYears: 30, propertyTax: 4000, homeInsurance: 1200 }),
-    { loanAmount: 320000, monthlyPI: 2022.62, monthlyTax: 333.33, monthlyInsurance: 100, totalMonthly: 2455.95, totalInterest: 408142.36 });
-  expectAll("mortgage $250k 15-yr", calc({ homePrice: 250000, downPayment: 50000, rate: 5.0, termYears: 15, propertyTax: 0, homeInsurance: 0 }),
-    { loanAmount: 200000, monthlyPI: 1581.59, totalMonthly: 1581.59, totalInterest: 84685.71 });
-  expectAll("mortgage zero interest", calc({ homePrice: 100000, downPayment: 10000, rate: 0, termYears: 10, propertyTax: 0, homeInsurance: 0 }),
-    { loanAmount: 90000, monthlyPI: 750, totalMonthly: 750, totalInterest: 0 });
+  // Interest is charged in whole cents each month on a payment rounded to the cent, so total
+  // interest is a little different from payment × months − loan. Checked against a separate
+  // month-by-month simulation.
+  const std = calc({ homePrice: 400000, downPayment: 80000, rate: 6.5, termYears: 30, propertyTax: 4000, homeInsurance: 1200 });
+  expectAll("mortgage $400k standard", std,
+    { loanAmount: 320000, monthlyPI: 2022.62, monthlyTax: 333.33, monthlyInsurance: 100, totalMonthly: 2455.95, totalInterest: 408140.64 });
+  // Page worked example: principal paid.
+  expectAll("mortgage page example first payment", std, { firstInterest: 1733.33, firstPrincipal: 289.29 });
+  expectAll("mortgage page example year 1", std.years[0], { principal: 3576.76, interest: 20694.68, balance: 316423.24 });
+  expectAll("mortgage page example year 5", std.years[4], { balance: 299554.97 });
+  check("mortgage page example principal after 5 years", 320000 - std.years[4].balance, 20445.03);
+  check("mortgage page example paid in year 1", std.years[0].principal + std.years[0].interest, 24271.44);
+  check("mortgage page example balance after 1 payment", 320000 - std.firstPrincipal, 319710.71);
+  check("mortgage schedule length", std.years.length, 30);
+  check("mortgage schedule ends at 0", std.years[29].balance, 0);
+  check("mortgage schedule principal adds up to loan", std.years.reduce((a, y) => a + y.principal, 0), 320000);
+  const short = calc({ homePrice: 250000, downPayment: 50000, rate: 5.0, termYears: 15, propertyTax: 0, homeInsurance: 0 });
+  expectAll("mortgage $250k 15-yr", short,
+    { loanAmount: 200000, monthlyPI: 1581.59, totalMonthly: 1581.59, totalInterest: 84685.48, firstInterest: 833.33, firstPrincipal: 748.26 });
+  check("mortgage 15-yr year 1 principal", short.years[0].principal, 9187.77);
+  const zero = calc({ homePrice: 100000, downPayment: 10000, rate: 0, termYears: 10, propertyTax: 0, homeInsurance: 0 });
+  expectAll("mortgage zero interest", zero,
+    { loanAmount: 90000, monthlyPI: 750, totalMonthly: 750, totalInterest: 0, firstPrincipal: 750 });
+  check("mortgage zero interest year 1", zero.years[0].principal, 9000);
+  check("mortgage no loan", calc({ homePrice: 100000, downPayment: 100000, rate: 5, termYears: 30 }).years.length, 0);
 }
 
 // ---------------- TDEE & Calorie Deficit
@@ -1023,6 +1042,29 @@ function loadResume(country) {
   expectAll("savings goal no interest", calc({ goal: 10000, current: 0, months: 24, rate: 0 }), { monthly: 416.67, interest: 0 });
   expectAll("savings goal 5 years", calc({ goal: 50000, current: 5000, months: 60, rate: 5 }), { monthly: 640.87, deposits: 38452.33 });
   expectAll("savings goal already reached", calc({ goal: 1000, current: 1000, months: 12, rate: 3 }), { monthly: 0, reached: true, interest: 30.42 });
+}
+
+// ---------------- Monthly expenses (page worked example and bill converter)
+{
+  const calc = load("monthly-expenses");
+  const blank = { rent: null, counciltax: null, energy: null, water: null, broadband: null, food: null, transport: null,
+    insurance: null, debt: null, childcare: null, subscriptions: null, other: null, income: null };
+  const sam = calc({ ...blank, rent: 950, counciltax: 140, energy: 120, water: 40, broadband: 55, food: 300,
+    transport: 120, insurance: 30, subscriptions: 25, other: 150, income: 2400 });
+  expectAll("monthly expenses page example", sam, { total: 1930, yearly: 23160, weekly: 445.38, leftOver: 470, spentPct: 80.4 });
+  expectAll("monthly expenses page example biggest", sam.biggest, { key: "rent", share: 49.2 });
+  check("monthly expenses rows shown", sam.items.length, 10);
+  const two = calc({ ...blank, rent: 1200, food: 400 });
+  expectAll("monthly expenses no income", two, { total: 1600, yearly: 19200, weekly: 369.23, leftOver: null, spentPct: null });
+  check("monthly expenses two items biggest", two.biggest.share, 75);
+  expectAll("monthly expenses overspend", calc({ ...blank, rent: 1500, other: 1000, income: 2000 }), { total: 2500, leftOver: -500, spentPct: 125 });
+  check("monthly expenses equal costs keep form order", calc({ ...blank, energy: 100, transport: 100 }).biggest.key, "energy");
+  // Page text: "× 4 gets weekly bills wrong".
+  check("bill weekly", calc.toMonthly(20, "weekly"), 86.67);
+  check("bill every 4 weeks", calc.toMonthly(100, "fourweekly"), 108.33);
+  check("bill yearly", calc.toMonthly(1800, "yearly"), 150);
+  check("bill quarterly", calc.toMonthly(90, "quarterly"), 30);
+  check("bill fortnightly", calc.toMonthly(500, "fortnightly"), 1083.33);
 }
 
 // ---------------- Unix timestamp converter
@@ -1240,6 +1282,168 @@ function loadGameHelpers() {
   check("memory 12 pairs in 20 moves", Mem.rating(12, 20), 60);
   check("memory perfect game", Mem.rating(8, 8), 100);
   check("memory 8 pairs in 24 moves", Mem.rating(8, 24), 33);
+}
+{
+  // Klondike Solitaire. Suits: 0 spades, 1 hearts, 2 diamonds, 3 clubs.
+  const Sol = load("solitaire", GAME_LIBS);
+  const card = (rank, suit, up = true) => ({ rank, suit, up });
+  const dealt = Sol.deal(null, 1);
+  check("solitaire deal pile sizes", dealt.tableau.map((p) => p.length).join(","), "1,2,3,4,5,6,7");
+  check("solitaire deal only top cards face up", dealt.tableau.every((p) => p.every((c, i) => c.up === (i === p.length - 1))), true);
+  check("solitaire deal stock", dealt.stock.length, 24);
+  const all = [...dealt.stock, ...dealt.tableau.flat()].map((c) => c.suit * 13 + c.rank);
+  check("solitaire deal uses 52 different cards", new Set(all).size, 52);
+  check("solitaire red 6 on black 7", Sol.canStack(card(6, 1), [card(7, 0)]), true);
+  check("solitaire black 6 on red 7", Sol.canStack(card(6, 3), [card(7, 2)]), true);
+  check("solitaire red 6 on red 7", Sol.canStack(card(6, 1), [card(7, 2)]), false);
+  check("solitaire 5 on 7", Sol.canStack(card(5, 1), [card(7, 0)]), false);
+  check("solitaire King on empty pile", Sol.canStack(card(13, 0), []), true);
+  check("solitaire Queen on empty pile", Sol.canStack(card(12, 0), []), false);
+  check("solitaire Ace starts foundation", Sol.canFound(card(1, 1), []), true);
+  check("solitaire 2 hearts on Ace hearts", Sol.canFound(card(2, 1), [card(1, 1)]), true);
+  check("solitaire 2 spades on Ace hearts", Sol.canFound(card(2, 0), [card(1, 1)]), false);
+  check("solitaire 3 hearts on Ace hearts", Sol.canFound(card(3, 1), [card(1, 1)]), false);
+  // Draw 3 from a 5-card stock [A..5 of spades]: takes 5, 4, 3; then 2, 1; then turns the waste back over.
+  const empty7 = () => [[], [], [], [], [], [], []];
+  let s = { stock: [1, 2, 3, 4, 5].map((r) => card(r, 0, false)), waste: [], foundations: [[], [], [], []], tableau: empty7(), drawCount: 3 };
+  s = Sol.draw(s);
+  check("solitaire draw 3 waste", s.waste.map((c) => c.rank).join(","), "5,4,3");
+  check("solitaire draw 3 face up", s.waste.every((c) => c.up), true);
+  s = Sol.draw(s);
+  check("solitaire draw rest", s.stock.length + ":" + s.waste.map((c) => c.rank).join(","), "0:5,4,3,2,1");
+  s = Sol.draw(s);
+  check("solitaire recycle waste", s.stock.map((c) => c.rank).join(",") + ":" + s.waste.length + ":" + s.stock.some((c) => c.up), "1,2,3,4,5:0:false");
+  check("solitaire nothing to draw", Sol.draw({ ...s, stock: [], waste: [] }), null);
+  // Page worked example: red 7 of hearts onto black 8 of clubs turns over the card beneath.
+  const t = empty7();
+  t[0] = [card(8, 3)];
+  t[1] = [card(12, 2, false), card(7, 1)];
+  t[2] = [card(6, 0)];
+  t[3] = [card(9, 2)];
+  const ex = { stock: [], waste: [card(1, 2)], foundations: [[], [], [], []], tableau: t, drawCount: 1 };
+  const aceTo = Sol.bestMove(ex, { type: "waste" });
+  check("solitaire Ace goes to a foundation", aceTo && aceTo.type, "foundation");
+  const ex2 = Sol.move(ex, { type: "tableau", i: 1, index: 1 }, { type: "tableau", i: 0 });
+  check("solitaire 7 on 8", ex2.tableau[0].map((c) => c.rank).join(","), "8,7");
+  check("solitaire card beneath turns over", ex2.tableau[1][0].up, true);
+  const ex3 = Sol.move(ex2, { type: "tableau", i: 2, index: 0 }, { type: "tableau", i: 0 });
+  check("solitaire 8-7-6 run", ex3.tableau[0].map((c) => c.rank).join(","), "8,7,6");
+  check("solitaire original state unchanged", ex.tableau[0].length, 1);
+  const ex4 = Sol.move(ex3, { type: "tableau", i: 0, index: 0 }, { type: "tableau", i: 3 });
+  check("solitaire whole run moves onto red 9", ex4.tableau[3].map((c) => c.rank).join(","), "9,8,7,6");
+  check("solitaire broken run can't move", Sol.move({ ...ex, tableau: [[card(8, 3), card(5, 1)], [card(9, 1)], [], [], [], [], []] }, { type: "tableau", i: 0, index: 0 }, { type: "tableau", i: 1 }), null);
+  check("solitaire lone King doesn't hop between empty piles", Sol.bestMove({ ...ex, tableau: [[card(13, 0)], [], [], [], [], [], []] }, { type: "tableau", i: 0, index: 0 }), null);
+  // Finish: every suit up to Queen at home, four Kings face up in the piles.
+  const near = { stock: [], waste: [], foundations: [0, 1, 2, 3].map((su) => Array.from({ length: 12 }, (_, k) => card(k + 1, su))), tableau: [[card(13, 0)], [card(13, 1)], [card(13, 2)], [card(13, 3)], [], [], []], drawCount: 1 };
+  check("solitaire can finish", Sol.canAutoFinish(near), true);
+  let fin = near;
+  let steps = 0;
+  for (let n = Sol.autoFinishStep(fin); n; n = Sol.autoFinishStep(fin)) { fin = n; steps++; }
+  check("solitaire finish takes 4 moves", steps, 4);
+  check("solitaire won", Sol.isWon(fin), true);
+  check("solitaire can't finish with cards in stock", Sol.canAutoFinish({ ...near, stock: [card(2, 0, false)] }), false);
+}
+{
+  const Mf = load("mine-finder", GAME_LIBS);
+  const { makeRng } = loadGameHelpers();
+  check("mines corner has 3 neighbours", Mf.neighbours(0, 9, 9).length, 3);
+  check("mines edge has 5 neighbours", Mf.neighbours(4, 9, 9).length, 5);
+  check("mines middle has 8 neighbours", Mf.neighbours(40, 9, 9).length, 8);
+  // Page table
+  check("mines levels", Object.values(Mf.LEVELS).map((l) => `${l.rows}x${l.cols}/${l.mines}`).join(" "), "9x9/10 12x12/24 16x16/40");
+  for (const [key, lv] of Object.entries(Mf.LEVELS)) {
+    const mines = Mf.placeMines(lv.rows, lv.cols, lv.mines, 40, makeRng(9));
+    check(`mines ${key} count`, mines.filter(Boolean).length, lv.mines);
+    check(`mines ${key} first tap area safe`, [40, ...Mf.neighbours(40, lv.rows, lv.cols)].some((i) => mines[i]), false);
+  }
+  // 3×3 with mines in two corners: centre touches 2, top middle touches 1, the other corners 0.
+  const c3 = Mf.counts([true, false, false, false, false, false, false, false, true], 3, 3);
+  check("mines counts by hand", [c3[4], c3[1], c3[2], c3[6]].join(","), "2,1,0,0");
+  // 4×4 with one mine in the bottom-right corner: one tap on the top-left opens all 15 safe squares.
+  const b = Mf.makeBoard(4, 4, Array.from({ length: 16 }, (_, i) => i === 15));
+  check("mines numbers next to the mine", [b.counts[10], b.counts[11], b.counts[14], b.counts[0]].join(","), "1,1,1,0");
+  check("mines flood opens 15", Mf.reveal(b, 0).length, 15);
+  check("mines board cleared", Mf.isCleared(b), true);
+  const b2 = Mf.makeBoard(4, 4, Array.from({ length: 16 }, (_, i) => i === 15));
+  b2.flags[5] = true;
+  check("mines flag stops opening", Mf.reveal(b2, 5).length, 0);
+  check("mines not cleared", Mf.isCleared(b2), false);
+}
+{
+  const W = load("word-search", GAME_LIBS);
+  const { makeRng } = loadGameHelpers();
+  check("words across", W.cellsBetween(0, 3, 10).join(","), "0,1,2,3");
+  check("words diagonal", W.cellsBetween(0, 33, 10).join(","), "0,11,22,33");
+  check("words backwards", W.cellsBetween(33, 0, 10).join(","), "33,22,11,0");
+  check("words not a straight line", W.cellsBetween(0, 12, 10), null);
+  check("words match either way", W.match([{ word: "CAT", cells: [0, 1, 2] }], [2, 1, 0]), "CAT");
+  check("words no match", W.match([{ word: "CAT", cells: [0, 1, 2] }], [0, 1]), null);
+  // Page claims: 16 words per theme; Q, X and Z never used as filler; easy 10×10 with 8 words, hard 12×12 with 12.
+  for (const [key, theme] of Object.entries(W.THEMES)) {
+    check(`words ${key} has 16 different words`, new Set(theme.words).size, 16);
+    check(`words ${key} plain capitals`, theme.words.every((w) => /^[A-Z]+$/.test(w)), true);
+  }
+  check("words levels", Object.values(W.LEVELS).map((l) => `${l.size}/${l.count}/${l.dirs.length}`).join(" "), "10/8/4 12/12/8");
+  let seed = 1;
+  for (const theme of Object.keys(W.THEMES)) {
+    for (const level of ["easy", "hard"]) {
+      const p = W.generate(theme, level, makeRng(seed++));
+      const lv = W.LEVELS[level];
+      const label = `words ${theme} ${level}`;
+      check(`${label} made`, !!p, true);
+      check(`${label} word count`, p.placed.length, lv.count);
+      check(`${label} grid size`, p.grid.length, lv.size * lv.size);
+      check(`${label} words spelled in grid`, p.placed.every((w) => w.cells.map((i) => p.grid[i]).join("") === w.word), true);
+      check(`${label} words in straight lines`, p.placed.every((w) => (W.cellsBetween(w.cells[0], w.cells[w.cells.length - 1], lv.size) || []).join() === w.cells.join()), true);
+      const used = new Set(p.placed.flatMap((w) => w.cells));
+      check(`${label} no Q, X or Z filler`, p.grid.some((ch, i) => !used.has(i) && /[QXZ]/.test(ch)), false);
+      if (level === "easy") check(`${label} only forward words`, p.placed.every((w) => w.cells[1] - w.cells[0] > 0 || w.cells[1] - w.cells[0] === -(lv.size - 1)), true);
+    }
+  }
+}
+{
+  const MM = load("mental-math");
+  const { makeRng } = loadGameHelpers();
+  // Page worked example: 24 right in 60 seconds = 24 per minute.
+  check("math page example", MM.rate(24, 60), 24);
+  check("math 30 seconds", MM.rate(15, 30), 30);
+  check("math no time", MM.rate(5, 0), 0);
+  // Page tips
+  check("math tip 47 + 38", 40 + 30 + (7 + 8), 85);
+  check("math tip 92 − 57", (60 - 57) + (92 - 60), 35);
+  check("math tip 9 × 7", 10 * 7 - 7, 63);
+  check("math tip 84 ÷ 7", 7 * 12, 84);
+  const rng = makeRng(5);
+  for (const level of ["easy", "medium", "hard"]) {
+    const qs = Array.from({ length: 2000 }, () => MM.makeProblem(level, rng));
+    const ops = [...new Set(qs.map((q) => q.op))].sort().join("");
+    check(`math ${level} operations`, ops, { easy: "+−", medium: "+×−", hard: "+×÷−" }[level]);
+    const right = qs.every((q) => q.answer === { "+": q.a + q.b, "−": q.a - q.b, "×": q.a * q.b, "÷": q.a / q.b }[q.op]);
+    check(`math ${level} answers right`, right, true);
+    check(`math ${level} whole answers of 0 or more`, qs.every((q) => Number.isInteger(q.answer) && q.answer >= 0), true);
+    const max = { easy: 20, medium: 100, hard: 1000 }[level];
+    check(`math ${level} add/take away up to ${max}`, qs.filter((q) => q.op === "+" || q.op === "−").every((q) => q.a <= max && q.b <= max), true);
+    const table = level === "hard" ? 12 : 10;
+    check(`math ${level} times tables up to ${table}`, qs.filter((q) => q.op === "×").every((q) => q.a <= table && q.b <= table), true);
+    check(`math ${level} division answers up to 12`, qs.filter((q) => q.op === "÷").every((q) => q.answer >= 2 && q.answer <= 12 && q.b <= 12), true);
+  }
+}
+{
+  const NM = load("number-memory");
+  const { makeRng } = loadGameHelpers();
+  // Page table: 1 second + 0.4 seconds per digit
+  check("memory test 3 digits", NM.showTime(3), 2200);
+  check("memory test 5 digits", NM.showTime(5), 3000);
+  check("memory test 10 digits", NM.showTime(10), 5000);
+  check("memory test number with random 0", NM.makeNumber(7, () => 0), "1000000");
+  const nums = Array.from({ length: 500 }, (_, i) => NM.makeNumber(3 + (i % 10), makeRng(i)));
+  check("memory test lengths", nums.every((n, i) => n.length === 3 + (i % 10)), true);
+  check("memory test never starts with 0", nums.every((n) => n[0] !== "0"), true);
+  check("memory test spaces ignored", NM.isRight("1234567", "1 234 567"), true);
+  check("memory test wrong digit", NM.isRight("123", "124"), false);
+  check("memory test grouped", NM.grouped("1234567"), "1 234 567");
+  check("memory test grouped tip", NM.grouped("4820193"), "4 820 193");
+  check("memory test short not grouped", NM.grouped("123"), "123");
 }
 
 // ---------------- Resignation letter maker (shared resume engine)

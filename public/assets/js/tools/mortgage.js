@@ -27,23 +27,57 @@
       monthlyPI = loanAmount * (r * factor) / (factor - 1);
     }
 
+    // Lenders charge whole cents: the payment is rounded to the cent, and so is each month's interest.
+    monthlyPI = Math.round(monthlyPI * 100) / 100;
+    var plan = schedule(loanAmount, rate / 100 / 12, n, monthlyPI);
+
     var monthlyTax = propertyTax / 12;
     var monthlyInsurance = homeInsurance / 12;
     var totalMonthly = monthlyPI + monthlyTax + monthlyInsurance;
 
-    var totalCost = monthlyPI * n;
-    var totalInterest = Math.max(0, totalCost - loanAmount);
-
     return {
-      monthlyPI: Math.round(monthlyPI * 100) / 100,
+      monthlyPI: monthlyPI,
       monthlyTax: Math.round(monthlyTax * 100) / 100,
       monthlyInsurance: Math.round(monthlyInsurance * 100) / 100,
       totalMonthly: Math.round(totalMonthly * 100) / 100,
       loanAmount: Math.round(loanAmount * 100) / 100,
       downPaymentPct: Math.round(downPaymentPct * 10) / 10,
-      totalInterest: Math.round(totalInterest * 100) / 100,
-      totalCost: Math.round(totalCost * 100) / 100
+      totalInterest: plan.totalInterest,
+      totalCost: Math.round((loanAmount + plan.totalInterest) * 100) / 100,
+      firstInterest: plan.firstInterest,
+      firstPrincipal: plan.firstPrincipal,
+      years: plan.years
     };
+  }
+
+  /*
+   * Month-by-month repayment schedule, worked in cents.
+   *   interest this month  = balance × monthly rate (rounded to the cent)
+   *   principal this month = payment − interest
+   *   new balance          = balance − principal
+   * The last payment clears whatever is left after rounding.
+   * Returns totals per year: principal paid, interest paid and the balance at the end of the year.
+   */
+  function schedule(loan, r, n, payment) {
+    var bal = Math.round(loan * 100);
+    var pay = Math.round(payment * 100);
+    var years = [];
+    var yp = 0, yi = 0, totalInt = 0, firstInt = 0, firstPrin = 0;
+    for (var m = 1; m <= n && bal > 0; m++) {
+      var interest = Math.round(bal * r);
+      var principal = m === n ? bal : Math.min(pay - interest, bal);
+      bal -= principal;
+      yp += principal;
+      yi += interest;
+      totalInt += interest;
+      if (m === 1) { firstInt = interest; firstPrin = principal; }
+      if (m % 12 === 0 || m === n || bal === 0) {
+        years.push({ year: Math.ceil(m / 12), principal: yp / 100, interest: yi / 100, balance: bal / 100 });
+        yp = 0;
+        yi = 0;
+      }
+    }
+    return { years: years, totalInterest: totalInt / 100, firstInterest: firstInt / 100, firstPrincipal: firstPrin / 100 };
   }
 
   window.ToolNestCalc = calculate;
@@ -58,7 +92,10 @@
     "out-loan-amount",
     "out-down-pct",
     "out-total-interest",
-    "out-total-cost"
+    "out-total-cost",
+    "out-first-principal",
+    "out-first-interest",
+    "out-year1-principal"
   ];
 
   T.setupCalculator({
@@ -91,6 +128,19 @@
       T.setText("out-down-pct", r.downPaymentPct + "%");
       T.setText("out-total-interest", money(r.totalInterest));
       T.setText("out-total-cost", money(r.totalCost));
+      T.setText("out-first-principal", money(r.firstPrincipal));
+      T.setText("out-first-interest", money(r.firstInterest));
+      T.setText("out-year1-principal", r.years.length ? money(r.years[0].principal) : money(0));
+
+      var paid = 0;
+      document.getElementById("schedule-body").innerHTML = r.years.length ? T.tableRows(r.years.map(function (y) {
+        paid += y.principal;
+        return [T.formatNumber(y.year), money(y.principal), money(y.interest), money(paid), money(y.balance)];
+      })) : '<tr><td colspan="5">There is no loan to repay.</td></tr>';
+    },
+    onInvalid: function () {
+      document.getElementById("schedule-body").innerHTML =
+        '<tr><td colspan="5">Fix the highlighted fields above to see this table.</td></tr>';
     }
   });
 })();

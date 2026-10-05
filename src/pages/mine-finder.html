@@ -1,0 +1,96 @@
+  <section class="calculator game" aria-label="Mine Finder puzzle">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="mine-level">Difficulty</label>
+          <div class="select-wrap"><select id="mine-level">
+            <option value="easy" selected>Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="mine-new">{{icon:refresh}} New game</button>
+        <button type="button" class="btn btn-sm" id="mine-flag-mode" aria-pressed="false">{{icon:flag}} Flag mode</button>
+      </div>
+
+      <div class="mine-wrap">
+        <div class="mine-board" id="mine-board" role="group" aria-label="Minefield. Use the arrow keys to move, Enter to open a square and F to flag it."></div>
+      </div>
+      <p class="game-status" id="mine-status" role="status" aria-live="polite"></p>
+
+      <div id="mine-pictures" hidden>
+        <span data-pic="flag">{{icon:flag}}</span>
+        <span data-pic="mine"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6" fill="currentColor"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4M5.3 5.3l2.8 2.8M15.9 15.9l2.8 2.8M18.7 5.3l-2.8 2.8M8.1 15.9l-2.8 2.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      </div>
+    </div>
+
+    <div class="calc-results">
+      <h2>This game</h2>
+      <div class="result-main"><span id="mine-left">10</span> <small>mines left</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Time</span><span id="mine-time">0:00</span></li>
+        <li><span>Board</span><span id="mine-size">9 × 9, 10 mines</span></li>
+        <li><span>Fastest win this visit</span><span id="mine-best">—</span></li>
+      </ul>
+      <p class="result-note">On a computer, right-click to place a flag. On a phone, switch on Flag mode first.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play</h2>
+    <ol class="steps">
+      <li><strong>Tap any square to start.</strong> Your first tap is always safe and opens up part of the board.</li>
+      <li><strong>Read the numbers.</strong> A number tells you how many mines touch that square, including corners. A blank square has no mines around it.</li>
+      <li><strong>Flag the mines</strong> you're sure of: right-click on a computer, or switch on Flag mode on a phone.</li>
+      <li><strong>Open every square without a mine</strong> to win. Open a mine and the game ends.</li>
+    </ol>
+
+    <h2>Board sizes</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Difficulty</th><th>Board</th><th>Mines</th></tr></thead>
+        <tbody>
+          <tr><td>Easy</td><td>9 × 9 (81 squares)</td><td>10</td></tr>
+          <tr><td>Medium</td><td>12 × 12 (144 squares)</td><td>24</td></tr>
+          <tr><td>Hard</td><td>16 × 16 (256 squares)</td><td>40</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Mines are placed after your first tap, never on that square or the eight around it. That's why the first tap always opens a clear area.</p>
+
+    <h2>Worked example</h2>
+    <p>Imagine a row of open squares along the bottom of the board, reading <strong>1, 1, 1</strong>, with hidden squares above them.</p>
+    <ul>
+      <li>The <strong>1 on the far left</strong> touches only two hidden squares, and one of them is a mine.</li>
+      <li>The <strong>middle 1</strong> touches three hidden squares: the same two, plus one more on the right. It also needs exactly one mine.</li>
+      <li>The mine the left 1 needs is already one of those two squares, so it also counts for the middle 1. That means the extra square on the right is <strong>safe to open</strong>.</li>
+    </ul>
+    <p>Small steps like this solve most boards without guessing.</p>
+
+    <h2>Tips</h2>
+    <ul>
+      <li><strong>Start from the edges of open areas.</strong> Numbers next to blank squares give the most information.</li>
+      <li><strong>Use quick open:</strong> tap a number that already has the right number of flags around it, and all its other neighbours open at once. Make sure your flags are right first.</li>
+      <li><strong>Count the mines left.</strong> Near the end, the counter can tell you which squares must be safe.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is this Minesweeper?</summary>
+        <p>It follows the same well-known rules as minesweeper-style games. We wrote our own version from scratch, and it isn't connected with any other company's game.</p>
+      </details>
+      <details>
+        <summary>Do I ever have to guess?</summary>
+        <p>Sometimes, yes. Mines are placed at random, so now and then a board can't be solved by logic alone and you have to take a chance.</p>
+      </details>
+      <details>
+        <summary>How do I flag on a phone?</summary>
+        <p>Press Flag mode. While it's on, taps place or remove flags instead of opening squares. Press it again to go back to opening squares.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. Tab to the board, move with the arrow keys, press Enter or Space to open a square and F to place or remove a flag.</p>
+      </details>
+    </div>
+  </div>

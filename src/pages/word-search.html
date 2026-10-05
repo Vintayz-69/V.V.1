@@ -1,0 +1,91 @@
+  <section class="calculator game" aria-label="Word search puzzle">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="ws-theme">Theme</label>
+          <div class="select-wrap"><select id="ws-theme">
+            <option value="office" selected>At the office</option>
+            <option value="money">Money</option>
+            <option value="nature">Nature</option>
+            <option value="kitchen">In the kitchen</option>
+            <option value="travel">Travel</option>
+          </select></div>
+        </div>
+        <div class="field game-select">
+          <label for="ws-level">Difficulty</label>
+          <div class="select-wrap"><select id="ws-level">
+            <option value="easy" selected>Easy</option>
+            <option value="hard">Hard</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="ws-new">{{icon:refresh}} New puzzle</button>
+      </div>
+
+      <div class="ws-grid ws-10" id="ws-grid" role="group" aria-label="Letter grid. Tap the first and last letter of a word."></div>
+      <p class="game-status" id="ws-status" role="status" aria-live="polite"></p>
+      <div>
+        <h3 class="ws-list-title">Words to find</h3>
+        <ul class="ws-words" id="ws-words"></ul>
+      </div>
+    </div>
+
+    <div class="calc-results">
+      <h2>This puzzle</h2>
+      <div class="result-main"><span id="ws-found">0 / 8</span> <small>found</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Time</span><span id="ws-time">0:00</span></li>
+        <li><span>Theme</span><span id="ws-theme-out">At the office</span></li>
+      </ul>
+      <p class="result-note">The timer starts when you mark your first word. Found words stay highlighted in green.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play</h2>
+    <ol class="steps">
+      <li><strong>Pick a theme and difficulty,</strong> then look for the words in the list below the grid.</li>
+      <li><strong>Mark a word</strong> by tapping its first letter and then its last letter. On a computer you can also drag across it.</li>
+      <li><strong>Found words</strong> turn green in the grid and are crossed off the list.</li>
+      <li><strong>Find them all</strong> to finish the puzzle. Press New puzzle for a fresh grid.</li>
+    </ol>
+
+    <h2>Easy and hard puzzles</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Difficulty</th><th>Grid</th><th>Words</th><th>Directions</th></tr></thead>
+        <tbody>
+          <tr><td>Easy</td><td>10 × 10</td><td>8</td><td>Left to right, top to bottom, and diagonally forwards</td></tr>
+          <tr><td>Hard</td><td>12 × 12</td><td>12</td><td>All 8 directions, including backwards and upwards</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Every puzzle is made fresh in your browser. Words are chosen at random from the theme's list, placed in the grid (sometimes crossing where they share a letter), and the gaps are filled with random letters. The rare letters Q, X and Z are never used as filler, so if you see one, it's part of a word.</p>
+
+    <h2>Tips for finding words faster</h2>
+    <ul>
+      <li><strong>Look for unusual letters first,</strong> like K, W or Y. They stand out more than common letters such as E or A.</li>
+      <li><strong>Scan for double letters,</strong> such as the TT in KETTLE or the EE in BREEZE.</li>
+      <li><strong>Go row by row</strong> looking for just the first letter of one word, then check the letters around each match.</li>
+      <li><strong>On hard puzzles, read backwards too.</strong> A word can end where you'd expect it to start.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Will I get the same puzzle twice?</summary>
+        <p>Very unlikely. Each theme has 16 words, and every new puzzle picks a random set of them and places them in new spots, so the grid looks different every time.</p>
+      </details>
+      <details>
+        <summary>Can a word be inside another word?</summary>
+        <p>Each word in the list is placed once. Letters can be shared where two words cross, but you only need to mark each listed word once.</p>
+      </details>
+      <details>
+        <summary>Is my progress saved?</summary>
+        <p>No. We don't use cookies or browser storage, so the puzzle is gone if you close or reload the page.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. Tab to the grid, move with the arrow keys, press Enter on the first letter of a word and then Enter on its last letter.</p>
+      </details>
+    </div>
+  </div>

@@ -586,6 +586,46 @@ TOOLS = {
         icon="cards", group="games-puzzle", parent="games", go="Play now",
         keywords="concentration pairs card matching memory brain",
     ),
+    "solitaire": dict(
+        path="games/solitaire/",
+        name="Klondike Solitaire",
+        card="Solitaire",
+        short="The classic patience card game. Turn over 1 or 3 cards, with unlimited undo. Tap to move cards.",
+        icon="spade", group="games-classic", parent="games", go="Play now", featured=True,
+        keywords="klondike patience card game cards",
+    ),
+    "mine-finder": dict(
+        path="games/mine-finder/",
+        name="Mine Finder",
+        card="Mine finder",
+        short="A minesweeper-style logic puzzle. Use the numbers to find every hidden mine. Your first tap is always safe.",
+        icon="flag", group="games-classic", parent="games", go="Play now",
+        keywords="minesweeper mines logic puzzle flags",
+    ),
+    "word-search": dict(
+        path="games/word-search/",
+        name="Word Search",
+        card="Word search",
+        short="Find the hidden words in a fresh grid every time. Five themes, easy and hard puzzles.",
+        icon="search", group="games-classic", parent="games", go="Play now",
+        keywords="wordsearch word find puzzle letters",
+    ),
+    "mental-math": dict(
+        path="games/mental-math-test/",
+        name="Mental Math Test",
+        card="Mental math test",
+        short="Answer as many sums as you can in 60 seconds: adding, taking away, times tables and division.",
+        icon="plusminus", group="games-skill", parent="games", go="Start test",
+        keywords="maths arithmetic speed quiz times tables multiplication",
+    ),
+    "number-memory": dict(
+        path="games/number-memory-test/",
+        name="Number Memory Test",
+        card="Number memory test",
+        short="Remember a number, then type it. Each right answer adds a digit. How long a number can you hold?",
+        icon="hash", group="games-skill", parent="games", go="Start test",
+        keywords="digit span memory test brain",
+    ),
 
     # Personal Finance (Part 1)
     "compound-interest": dict(
@@ -704,6 +744,13 @@ TOOLS = {
         card="Savings goal calculator",
         short="Find how much to save each month to reach a goal by a set date, with interest added.",
         icon="target", group="finance-invest", parent="finance", keywords="save monthly deposit house car target how much to save",
+    ),
+    "monthly-expenses": dict(
+        path="finance/monthly-expenses-calculator/",
+        name="Monthly Expenses Calculator",
+        card="Monthly expenses calculator",
+        short="Add up your monthly bills and spending, see your yearly total and what's left from your pay.",
+        icon="receipt", group="finance-invest", parent="finance", keywords="budget monthly bills spending costs household outgoings council tax rent uk",
     ),
     "unix-timestamp": dict(
         path="dev/unix-timestamp-converter/",
@@ -917,7 +964,9 @@ RESUME_DAY = "2026-09-29"
 NEW_DAY = "2026-09-30"  # tools added on 30 September 2026
 ADD_TEXT_DAY = "2026-10-05"
 GAME_DAY = "2026-10-05"  # /games/ added on 5 October 2026
+GAME_DAY_2 = "2026-10-06"  # five more games added on 6 October 2026
 SECTIONS_DAY = "2026-10-05"  # one new tool in each section, 5 October 2026
+SEO_DAY = "2026-10-05"  # changes from Search Console queries, 5 October 2026
 GAME_CHIPS = ["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser, nothing saved"]
 GAME_LIBS = ["js/games-common.js"]
 
@@ -965,7 +1014,7 @@ PAGES = [
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["hourly-rate", "project-pricing", "hourly-to-annual"]),
     dict(tool="project-pricing", src="project-pricing.html", script="project-pricing.js",
-         title="Project Pricing Calculator for Freelancers | ToolNest by Vintayz",
+         title="Project Price Calculator for Freelance Work | ToolNest by Vintayz",
          description="Turn estimated hours, your rate, costs and a risk buffer into a fixed project price and deposit. See what overruns do to your real hourly rate.",
          intro="Turn your estimated hours, hourly rate and project costs into a fixed-price quote, with a safety buffer and deposit worked out for you.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
@@ -1262,7 +1311,7 @@ PAGES = [
          chips=["{{icon:globe}} Canadian format, Letter size"] + RESUME_CHIPS,
          related=["resume-us", "resume-uk", "resume-au"]),
     dict(tool="resume-au", src="resume-au.html", script="resume-au.js", libs=RESUME_LIBS, updated=RESUME_DAY,
-         title="Free Australian Resume Builder (PDF) | ToolNest by Vintayz",
+         title="Resume Maker Australia: Free Resume Builder (PDF) | ToolNest by Vintayz",
          description="Create an Australian resume on A4 with a personal summary, key skills and referees, following Workforce Australia's template. Free PDF download.",
          intro="Create an Australian resume and download it as a PDF. It follows Workforce Australia's resume template, and nothing you type leaves your device.",
          chips=["{{icon:globe}} Australian format, A4"] + RESUME_CHIPS,
@@ -1308,8 +1357,8 @@ PAGES = [
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["invoice-generator", "billable-hours", "overtime"]),
     dict(tool="business-days", src="business-days.html", script="business-days.js", libs=["data/holidays.js"], updated=NEW_DAY,
-         title="Business Days Calculator (US & UK Holidays) | ToolNest by Vintayz",
-         description="Count working days between two dates, or add working days to a date. Skips weekends and US federal or UK bank holidays for 2026 to 2028.",
+         title="Business Days Calculator UK & US (Bank Holidays) | ToolNest by Vintayz",
+         description="Count working days between two dates, or add working days to a date. Skips weekends and UK bank holidays (England, Scotland, NI) or US federal holidays.",
          intro="Count the working days between two dates, or find the date a number of working days from now, skipping weekends and public holidays.",
          chips=["{{icon:globe}} US federal and UK bank holidays"] + TOOL_CHIPS,
          related=["late-payment", "invoice-generator", "timesheet"]),
@@ -1344,7 +1393,7 @@ PAGES = [
 
     # Career Tools
     dict(tool="salary-to-hourly", src="salary-to-hourly.html", script="salary-to-hourly.js",
-         title="Salary to Hourly Calculator | ToolNest by Vintayz",
+         title="Salary to Hourly Calculator: Annual Pay to Hourly | ToolNest by Vintayz",
          description="Convert annual salary to hourly, daily, weekly, bi-weekly and overtime wage equivalents. Customize hours and paid weeks.",
          intro="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates based on your work schedule.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
@@ -1448,9 +1497,9 @@ PAGES = [
          related=["mortgage", "retirement-savings", "emergency-fund"]),
 
     dict(tool="mortgage", src="mortgage.html", script="mortgage.js", updated=NEW_DAY,
-         title="Mortgage Payment Calculator (Principal & Interest) | ToolNest by Vintayz",
-         description="Work out monthly mortgage repayments, total interest and loan amortization for 15, 20 and 30-year terms. Pure math, no lender ads.",
-         intro="Calculate your fixed monthly mortgage payment, interest breakdown, and total cost of borrowing over the full loan term.",
+         title="Mortgage Calculator: Principal & Interest by Year | ToolNest by Vintayz",
+         description="Work out your monthly mortgage payment, how much goes to principal and interest each year, and the balance left. With a worked example.",
+         intro="Calculate your fixed monthly mortgage payment, how much of it pays off the loan each year, and the total interest over the full term.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["compound-interest", "emergency-fund", "hourly-to-annual"]),
 
@@ -1511,9 +1560,9 @@ PAGES = [
          related=["profit-margin", "break-even", "payment-fee"]),
 
     # Brain games
-    dict(path="games/", src="games.html", kind="section", nav="games", updated=GAME_DAY,
-         title="Free Brain Games: Sudoku, Typing Test and More | ToolNest by Vintayz",
-         description="Free brain games for a short break: Sudoku, typing speed test, reaction time test, number merge puzzle and memory match. No sign-up, nothing saved.",
+    dict(path="games/", src="games.html", kind="section", nav="games", updated=GAME_DAY_2,
+         title="Free Games: Solitaire, Sudoku and More | ToolNest by Vintayz",
+         description="Free games for a short break: Solitaire, Sudoku, word search, mine finder, typing speed test, mental math and more. No sign-up, nothing saved.",
          h1="Brain Games for a Short Break",
          intro="Quick, free games to rest your mind between tasks, or to test your typing speed and reactions. They run in your browser and save nothing.",
          chips=GAME_CHIPS),
@@ -1530,13 +1579,13 @@ PAGES = [
          chips=GAME_CHIPS,
          related=["typing-test", "memory-match", "number-merge"]),
     dict(tool="sudoku", src="sudoku.html", script="sudoku.js", libs=GAME_LIBS, updated=GAME_DAY,
-         title="Free Sudoku Online: Easy, Medium and Hard | ToolNest by Vintayz",
+         title="Free Sudoku: Easy, Medium and Hard | ToolNest by Vintayz",
          description="Play free Sudoku online. New puzzles in easy, medium and hard, each with exactly one solution. Notes, hints and mistake checks. No sign-up.",
          intro="Fill the grid so every row, column and 3&times;3 box holds the numbers 1 to 9 once each. Every puzzle has exactly one solution.",
          chips=GAME_CHIPS,
          related=["number-merge", "memory-match", "typing-test"]),
     dict(tool="number-merge", src="number-merge.html", script="number-merge.js", updated=GAME_DAY,
-         title="Number Merge Puzzle: Slide Tiles to 2048 | ToolNest by Vintayz",
+         title="Number Merge Puzzle: Reach 2048 | ToolNest by Vintayz",
          description="A free 2048-style sliding tile puzzle. Join equal numbers to reach the 2048 tile. Play with arrow keys or swipe on your phone. No sign-up.",
          intro="Slide all the tiles at once. When two equal numbers touch, they join into one. Try to reach the 2048 tile.",
          chips=GAME_CHIPS,
@@ -1547,6 +1596,36 @@ PAGES = [
          intro="Turn over two cards at a time. Remember where each picture is and find all the pairs in as few moves as you can.",
          chips=GAME_CHIPS,
          related=["sudoku", "number-merge", "reaction-time"]),
+    dict(tool="solitaire", src="solitaire.html", script="solitaire.js", libs=GAME_LIBS, updated=GAME_DAY_2,
+         title="Free Solitaire (Klondike): Play Online | ToolNest by Vintayz",
+         description="Play free Klondike Solitaire online. Turn over 1 or 3 cards, undo any move, and tap to move cards on your phone. No sign-up, no download.",
+         intro="The classic card game of patience. Build four piles from Ace to King, one for each suit.",
+         chips=GAME_CHIPS,
+         related=["mine-finder", "sudoku", "word-search"]),
+    dict(tool="mine-finder", src="mine-finder.html", script="mine-finder.js", libs=GAME_LIBS, updated=GAME_DAY_2,
+         title="Mine Finder: Minesweeper-Style Puzzle | ToolNest by Vintayz",
+         description="Free minesweeper-style logic puzzle. Use the numbers to find the hidden mines. Easy, medium and hard boards; first tap always safe.",
+         intro="Open every square that doesn't hide a mine. The numbers tell you how many mines touch each square.",
+         chips=GAME_CHIPS,
+         related=["solitaire", "sudoku", "number-merge"]),
+    dict(tool="word-search", src="word-search.html", script="word-search.js", libs=GAME_LIBS, updated=GAME_DAY_2,
+         title="Word Search Puzzles: Free Online | ToolNest by Vintayz",
+         description="Free word search puzzles with a new grid every game. Choose from five themes, easy or hard. Tap or drag to mark words. No sign-up.",
+         intro="Find every word from the list hidden in the grid. Words can run across, down or diagonally.",
+         chips=GAME_CHIPS,
+         related=["memory-match", "solitaire", "typing-test"]),
+    dict(tool="mental-math", src="mental-math.html", script="mental-math.js", updated=GAME_DAY_2,
+         title="Mental Math Test: 60-Second Speed Quiz | ToolNest by Vintayz",
+         description="Free mental math test. Answer as many sums as you can in 60 seconds: addition, subtraction, times tables and division. Three levels.",
+         intro="How many sums can you answer in 60 seconds? Each answer is checked as you type.",
+         chips=GAME_CHIPS,
+         related=["number-memory", "typing-test", "sudoku"]),
+    dict(tool="number-memory", src="number-memory.html", script="number-memory.js", updated=GAME_DAY_2,
+         title="Number Memory Test: How Many Digits? | ToolNest by Vintayz",
+         description="Free number memory test. Remember a number shown for a few seconds, then type it. Each right answer adds a digit. Nothing is saved.",
+         intro="Remember the number, then type it in. Each right answer makes the next number one digit longer.",
+         chips=GAME_CHIPS,
+         related=["mental-math", "reaction-time", "memory-match"]),
 
     # One new tool in each section (5 October 2026)
     dict(tool="retainer", src="retainer.html", script="retainer.js", updated=SECTIONS_DAY,
@@ -1579,6 +1658,12 @@ PAGES = [
          intro="Find out how much to put aside each month to reach your savings goal in time, including the interest your savings earn.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["compound-interest", "emergency-fund", "mortgage"]),
+    dict(tool="monthly-expenses", src="monthly-expenses.html", script="monthly-expenses.js", updated=SEO_DAY,
+         title="Monthly Expenses Calculator (UK & US) | ToolNest by Vintayz",
+         description="Add up your monthly bills, from rent and council tax to food and subscriptions. See your yearly total, biggest costs and what's left from your pay.",
+         intro="Add up what you spend each month, see your yearly total and biggest costs, and find out what's left from your take-home pay.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["emergency-fund", "savings-goal", "uk-take-home"]),
     dict(tool="unix-timestamp", src="unix-timestamp.html", script="unix-timestamp.js", updated=SECTIONS_DAY,
          title="Unix Timestamp Converter (Epoch to Date) | ToolNest by Vintayz",
          description="Convert a Unix epoch timestamp in seconds or milliseconds to a date in UTC and your time zone, or a date back to a timestamp. Runs in your browser.",
@@ -1786,6 +1871,8 @@ ICONS = {
     "grid9": '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/>',
     "cards": '<rect x="3" y="6" width="11" height="15" rx="2"/><path d="M8 3.5h10.5A2 2 0 0 1 20.5 5.5V17"/><path d="M6.5 11.5l4 4M10.5 11.5l-4 4" opacity=".6"/>',
     "gamepad": '<path d="M7 7h10a5 5 0 0 1 4.9 6l-.6 3a2.6 2.6 0 0 1-4.5 1.2L15 15H9l-1.8 2.2a2.6 2.6 0 0 1-4.5-1.2l-.6-3A5 5 0 0 1 7 7z"/><path d="M7.5 10.5v3M6 12h3M15.5 11h.01M17.5 13h.01"/>',
+    "spade": '<path d="M12 3c-3 4-7 6.5-7 10a3.6 3.6 0 0 0 6.2 2.5L10 21h4l-1.2-5.5A3.6 3.6 0 0 0 19 13c0-3.5-4-6-7-10z"/>',
+    "plusminus": '<path d="M7 4v6M4 7h6M14 7h6M4 17h6M14 15h6M14 19h6"/>',
 }
 
 
@@ -2123,7 +2210,7 @@ def footer(up):
       <nav aria-label="Brain games">
         <h2>Games</h2>
         <ul>
-{links(('games-puzzle', 'games-skill'))}
+{links(('games-classic', 'games-puzzle', 'games-skill'))}
           <li><a href="{up}games/">All games</a></li>
         </ul>
       </nav>

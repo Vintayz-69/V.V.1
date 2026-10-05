@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mine Finder: Minesweeper-Style Puzzle | ToolNest by Vintayz</title>
+<meta name="description" content="Free minesweeper-style logic puzzle. Use the numbers to find the hidden mines. Easy, medium and hard boards; first tap always safe.">
+<link rel="canonical" href="https://vintayz.com/games/mine-finder/">
+<meta name="theme-color" content="#0b1b34">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ToolNest by Vintayz">
+<meta property="og:title" content="Mine Finder">
+<meta property="og:description" content="Free minesweeper-style logic puzzle. Use the numbers to find the hidden mines. Easy, medium and hard boards; first tap always safe.">
+<meta property="og:url" content="https://vintayz.com/games/mine-finder/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://vintayz.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ToolNest by Vintayz: free calculators and tools for freelancers">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-adsense-account" content="ca-pub-3325212569816736">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../../assets/js/theme.js?v=d0cb052c"></script>
+<link rel="stylesheet" href="../../assets/css/style.css?v=02ecd8ce">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://vintayz.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Brain Games",
+          "item": "https://vintayz.com/games/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mine Finder"
+        }
+      ]
+    },
+    {
+      "@type": "WebApplication",
+      "name": "Mine Finder",
+      "url": "https://vintayz.com/games/mine-finder/",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="../../"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#0b1b34"/><rect x="2.75" y="2.75" width="26.5" height="26.5" rx="5.5" fill="none" stroke="#d9b26a" stroke-opacity=".5" stroke-width=".8"/><path fill="#d9b26a" d="M7.5 7H24.5V11.8C24.1 10.2 23.1 9.2 21.4 9.2H17.5V17.46A4.4 4.4 0 0 1 15.51 25.97L16.93 22.92A1.4 1.4 0 0 0 14.39 21.73L12.97 24.79A4.4 4.4 0 0 1 14.5 17.46V9.2H10.6C8.9 9.2 7.9 10.2 7.5 11.8Z"/></svg>ToolNest<span class="logo-by">by Vintayz</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li class="hide-md"><a href="../../">Home</a></li>
+        <li>
+          <details class="nav-menu">
+            <summary class="nav-menu-button is-current"><span>Calc<span class="hide-sm-inline">ulators</span></span><svg class="icon nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <ul class="nav-menu-list nav-menu-list-start">
+              <li><a href="../../freelance/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18"/></svg>Freelance calculators</a></li>
+              <li><a href="../../finance/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Personal finance</a></li>
+              <li><a href="../../business/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Business tools</a></li>
+              <li><a href="../../career/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Career &amp; salary</a></li>
+              <li><a href="../../dev/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Developer tools</a></li>
+              <li><a href="../../tools/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 7.5h8M8.5 12.5l3 3M11.5 12.5l-3 3M14 14h3"/></svg>Everyday tools</a></li>
+              <li><a href="../../education/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>Writing &amp; study</a></li>
+              <li><a href="../../games/" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 7h10a5 5 0 0 1 4.9 6l-.6 3a2.6 2.6 0 0 1-4.5 1.2L15 15H9l-1.8 2.2a2.6 2.6 0 0 1-4.5-1.2l-.6-3A5 5 0 0 1 7 7z"/><path d="M7.5 10.5v3M6 12h3M15.5 11h.01M17.5 13h.01"/></svg>Brain games</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a href="../../pdf/">PDF<span class="hide-sm-inline"> tools</span></a></li>
+        <li><a href="../../resume-maker/">Resume</a></li>
+        <li>
+          <details class="nav-menu">
+            <summary class="nav-menu-button"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><span class="nav-label">Country</span><svg class="icon nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <ul class="nav-menu-list">
+              <li><a href="../../us/"><svg class="flag" viewBox="0 0 38 26" aria-hidden="true"><rect width="38" height="26" fill="#b22234"/><rect y="2" width="38" height="2" fill="#fff"/><rect y="6" width="38" height="2" fill="#fff"/><rect y="10" width="38" height="2" fill="#fff"/><rect y="14" width="38" height="2" fill="#fff"/><rect y="18" width="38" height="2" fill="#fff"/><rect y="22" width="38" height="2" fill="#fff"/><rect width="15.2" height="14" fill="#3c3b6e"/></svg>United States</a></li>
+              <li><a href="../../uk/"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-s219"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="uk-t219"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#uk-s219)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-t219)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>United Kingdom</a></li>
+              <li><a href="../../ca/"><span class="code" aria-hidden="true">CA</span>Canada</a></li>
+              <li><a href="../../au/"><span class="code" aria-hidden="true">AU</span>Australia</a></li>
+            </ul>
+          </details>
+        </li>
+        <li class="hide-md"><a href="../../about/">About</a></li>
+        <li class="hide-md"><a class="nav-cta" href="../../freelance/freelance-hourly-rate-calculator/">Rate calculator</a></li>
+        <li><button type="button" class="theme-switch" id="theme-toggle" role="switch" aria-checked="false" aria-label="Dark mode" hidden><span class="theme-switch-track" aria-hidden="true"><svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg><svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><span class="theme-switch-knob"></span></span></button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../games/">Brain Games</a></li><li aria-current="page">Mine Finder</li></ol></nav>
+    <h1>Mine Finder</h1>
+    <p class="intro">Open every square that doesn't hide a mine. The numbers tell you how many mines touch each square.</p>
+    <div class="meta-row"><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Free, no sign-up</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Runs in your browser, nothing saved</span></div>
+  </div>
+</section>
+<div class="container">
+  <section class="calculator game" aria-label="Mine Finder puzzle">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="mine-level">Difficulty</label>
+          <div class="select-wrap"><select id="mine-level">
+            <option value="easy" selected>Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="mine-new"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> New game</button>
+        <button type="button" class="btn btn-sm" id="mine-flag-mode" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg> Flag mode</button>
+      </div>
+
+      <div class="mine-wrap">
+        <div class="mine-board" id="mine-board" role="group" aria-label="Minefield. Use the arrow keys to move, Enter to open a square and F to flag it."></div>
+      </div>
+      <p class="game-status" id="mine-status" role="status" aria-live="polite"></p>
+
+      <div id="mine-pictures" hidden>
+        <span data-pic="flag"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></span>
+        <span data-pic="mine"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6" fill="currentColor"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4M5.3 5.3l2.8 2.8M15.9 15.9l2.8 2.8M18.7 5.3l-2.8 2.8M8.1 15.9l-2.8 2.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      </div>
+    </div>
+
+    <div class="calc-results">
+      <h2>This game</h2>
+      <div class="result-main"><span id="mine-left">10</span> <small>mines left</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Time</span><span id="mine-time">0:00</span></li>
+        <li><span>Board</span><span id="mine-size">9 × 9, 10 mines</span></li>
+        <li><span>Fastest win this visit</span><span id="mine-best">—</span></li>
+      </ul>
+      <p class="result-note">On a computer, right-click to place a flag. On a phone, switch on Flag mode first.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play</h2>
+    <ol class="steps">
+      <li><strong>Tap any square to start.</strong> Your first tap is always safe and opens up part of the board.</li>
+      <li><strong>Read the numbers.</strong> A number tells you how many mines touch that square, including corners. A blank square has no mines around it.</li>
+      <li><strong>Flag the mines</strong> you're sure of: right-click on a computer, or switch on Flag mode on a phone.</li>
+      <li><strong>Open every square without a mine</strong> to win. Open a mine and the game ends.</li>
+    </ol>
+
+    <h2>Board sizes</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Difficulty</th><th>Board</th><th>Mines</th></tr></thead>
+        <tbody>
+          <tr><td>Easy</td><td>9 × 9 (81 squares)</td><td>10</td></tr>
+          <tr><td>Medium</td><td>12 × 12 (144 squares)</td><td>24</td></tr>
+          <tr><td>Hard</td><td>16 × 16 (256 squares)</td><td>40</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Mines are placed after your first tap, never on that square or the eight around it. That's why the first tap always opens a clear area.</p>
+
+    <h2>Worked example</h2>
+    <p>Imagine a row of open squares along the bottom of the board, reading <strong>1, 1, 1</strong>, with hidden squares above them.</p>
+    <ul>
+      <li>The <strong>1 on the far left</strong> touches only two hidden squares, and one of them is a mine.</li>
+      <li>The <strong>middle 1</strong> touches three hidden squares: the same two, plus one more on the right. It also needs exactly one mine.</li>
+      <li>The mine the left 1 needs is already one of those two squares, so it also counts for the middle 1. That means the extra square on the right is <strong>safe to open</strong>.</li>
+    </ul>
+    <p>Small steps like this solve most boards without guessing.</p>
+
+    <h2>Tips</h2>
+    <ul>
+      <li><strong>Start from the edges of open areas.</strong> Numbers next to blank squares give the most information.</li>
+      <li><strong>Use quick open:</strong> tap a number that already has the right number of flags around it, and all its other neighbours open at once. Make sure your flags are right first.</li>
+      <li><strong>Count the mines left.</strong> Near the end, the counter can tell you which squares must be safe.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is this Minesweeper?</summary>
+        <p>It follows the same well-known rules as minesweeper-style games. We wrote our own version from scratch, and it isn't connected with any other company's game.</p>
+      </details>
+      <details>
+        <summary>Do I ever have to guess?</summary>
+        <p>Sometimes, yes. Mines are placed at random, so now and then a board can't be solved by logic alone and you have to take a chance.</p>
+      </details>
+      <details>
+        <summary>How do I flag on a phone?</summary>
+        <p>Press Flag mode. While it's on, taps place or remove flags instead of opening squares. Press it again to go back to opening squares.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. Tab to the board, move with the arrow keys, press Enter or Space to open a square and F to place or remove a flag.</p>
+      </details>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-head"><div><span class="kicker">Keep going</span><h2>Related tools</h2></div>
+      <a class="btn btn-sm" href="../../games/">All games</a></div>
+    <ul class="card-grid">
+<li><a class="card" href="../../games/solitaire/" data-search="klondike solitaire solitaire the classic patience card game. turn over 1 or 3 cards, with unlimited undo. tap to move cards. klondike patience card game cards">
+  <div class="card-top"><span class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3c-3 4-7 6.5-7 10a3.6 3.6 0 0 0 6.2 2.5L10 21h4l-1.2-5.5A3.6 3.6 0 0 0 19 13c0-3.5-4-6-7-10z"/></svg></span><span class="badge">Free</span></div>
+  <h3>Solitaire</h3>
+  <p>The classic patience card game. Turn over 1 or 3 cards, with unlimited undo. Tap to move cards.</p>
+  <span class="go">Play now <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</a></li>
+<li><a class="card" href="../../games/sudoku/" data-search="sudoku sudoku free sudoku puzzles in easy, medium and hard, each with one solution. notes, hints and mistake checks. number puzzle logic 9x9 daily">
+  <div class="card-top"><span class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></svg></span><span class="badge">Free</span></div>
+  <h3>Sudoku</h3>
+  <p>Free Sudoku puzzles in easy, medium and hard, each with one solution. Notes, hints and mistake checks.</p>
+  <span class="go">Play now <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</a></li>
+<li><a class="card" href="../../games/number-merge-puzzle/" data-search="number merge puzzle number merge puzzle slide the tiles and join equal numbers to reach 2048. a calm puzzle for a short break. 2048 sliding tiles merge numbers puzzle">
+  <div class="card-top"><span class="card-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span><span class="badge">Free</span></div>
+  <h3>Number merge puzzle</h3>
+  <p>Slide the tiles and join equal numbers to reach 2048. A calm puzzle for a short break.</p>
+  <span class="go">Play now <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</a></li>
+    </ul>
+  </section>
+  <div class="content">
+    <div class="disclaimer">
+      <p><strong>Just for fun:</strong> these games run in your browser and save nothing, so scores are forgotten when you close or reload the page. Speeds and times include your own device's delay, so treat them as a rough guide, not a medical or professional test. <a href="../../disclaimer/">Read the full disclaimer</a>.</p>
+    </div>
+    <p class="updated">Last updated: <time datetime="2026-10-06">6 October 2026</time></p>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="../../"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#0b1b34"/><rect x="2.75" y="2.75" width="26.5" height="26.5" rx="5.5" fill="none" stroke="#d9b26a" stroke-opacity=".5" stroke-width=".8"/><path fill="#d9b26a" d="M7.5 7H24.5V11.8C24.1 10.2 23.1 9.2 21.4 9.2H17.5V17.46A4.4 4.4 0 0 1 15.51 25.97L16.93 22.92A1.4 1.4 0 0 0 14.39 21.73L12.97 24.79A4.4 4.4 0 0 1 14.5 17.46V9.2H10.6C8.9 9.2 7.9 10.2 7.5 11.8Z"/></svg>ToolNest<span class="logo-by">by Vintayz</span></a>
+        <p class="about-text">Free, accurate money calculators for freelancers and self-employed people in the US, UK, Canada and Australia, plus PDF tools that never upload your files.</p>
+      </div>
+      <nav aria-label="Pricing tools">
+        <h2>Pricing</h2>
+        <ul>
+          <li><a href="../../freelance/freelance-hourly-rate-calculator/">Freelance hourly rate calculator</a></li>
+          <li><a href="../../freelance/contractor-day-rate-calculator/">Contractor day rate calculator</a></li>
+          <li><a href="../../freelance/project-pricing-calculator/">Project pricing calculator</a></li>
+          <li><a href="../../freelance/retainer-calculator/">Retainer calculator</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Income tools">
+        <h2>Income &amp; planning</h2>
+        <ul>
+          <li><a href="../../freelance/hourly-to-annual-income-calculator/">Hourly to annual income calculator</a></li>
+          <li><a href="../../freelance/billable-hours-calculator/">Billable hours calculator</a></li>
+          <li><a href="../../freelance/late-payment-interest-calculator/">Late payment interest calculator</a></li>
+          <li><a href="../../freelance/emergency-fund-calculator/">Emergency fund calculator</a></li>
+          <li><a href="../../freelance/retirement-savings-calculator/">Retirement savings calculator</a></li>
+          <li><a href="../../freelance/income-smoothing-calculator/">Income smoothing calculator</a></li>
+          <li><a href="../../freelance/invoice-generator/">Freelance invoice generator</a></li>
+          <li><a href="../../freelance/timesheet-calculator/">Timesheet calculator</a></li>
+          <li><a href="../../freelance/business-days-calculator/">Business days calculator</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Countries">
+        <h2>Countries</h2>
+        <ul>
+          <li><a href="../../us/">United States</a></li>
+          <li><a href="../../uk/">United Kingdom</a></li>
+          <li><a href="../../ca/">Canada</a></li>
+          <li><a href="../../au/">Australia</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="PDF tools">
+        <h2>PDF tools</h2>
+        <ul>
+          <li><a href="../../pdf/merge-pdf/">Merge PDF</a></li>
+          <li><a href="../../pdf/split-pdf/">Split PDF</a></li>
+          <li><a href="../../pdf/rotate-pdf/">Rotate PDF</a></li>
+          <li><a href="../../pdf/jpg-to-pdf/">JPG to PDF</a></li>
+          <li><a href="../../pdf/pdf-to-jpg/">PDF to JPG</a></li>
+          <li><a href="../../pdf/compress-pdf/">Compress PDF</a></li>
+          <li><a href="../../pdf/sign-pdf/">Sign PDF</a></li>
+          <li><a href="../../pdf/add-text-to-pdf/">Add text to PDF</a></li>
+          <li><a href="../../pdf/">All PDF tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Resume and CV makers">
+        <h2>Resume &amp; CV</h2>
+        <ul>
+          <li><a href="../../resume-maker/us-resume-builder/">US resume builder</a></li>
+          <li><a href="../../resume-maker/uk-cv-maker/">UK CV maker</a></li>
+          <li><a href="../../resume-maker/canada-resume-builder/">Canadian resume builder</a></li>
+          <li><a href="../../resume-maker/australia-resume-builder/">Australian resume builder</a></li>
+          <li><a href="../../resume-maker/cover-letter-maker/">Cover letter maker</a></li>
+          <li><a href="../../resume-maker/resignation-letter-maker/">Resignation letter maker</a></li>
+          <li><a href="../../resume-maker/">All resume makers</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Business tools">
+        <h2>Business</h2>
+        <ul>
+          <li><a href="../../business/profit-margin-calculator/">Profit margin calculator</a></li>
+          <li><a href="../../business/break-even-calculator/">Break-even calculator</a></li>
+          <li><a href="../../business/payment-fee-calculator/">Payment fee calculator</a></li>
+          <li><a href="../../business/quote-generator/">Quote generator</a></li>
+          <li><a href="../../business/roas-calculator/">ROAS calculator</a></li>
+          <li><a href="../../business/customer-lifetime-value-calculator/">Customer lifetime value calculator</a></li>
+          <li><a href="../../business/">All business tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Career tools">
+        <h2>Career &amp; Salary</h2>
+        <ul>
+          <li><a href="../../career/salary-to-hourly-calculator/">Salary to hourly calculator</a></li>
+          <li><a href="../../career/pay-rise-calculator/">Pay rise calculator</a></li>
+          <li><a href="../../career/overtime-calculator/">Overtime calculator</a></li>
+          <li><a href="../../career/uk-take-home-pay-calculator/">UK take-home pay calculator</a></li>
+          <li><a href="../../career/uk-holiday-entitlement-calculator/">UK holiday entitlement calculator</a></li>
+          <li><a href="../../career/uk-redundancy-pay-calculator/">UK redundancy pay calculator</a></li>
+          <li><a href="../../career/us-take-home-pay-calculator/">US take-home pay calculator</a></li>
+          <li><a href="../../career/job-offer-comparison-calculator/">Job offer comparison</a></li>
+          <li><a href="../../career/">All career tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Writing and study tools">
+        <h2>Writing &amp; Study</h2>
+        <ul>
+          <li><a href="../../education/word-counter/">Word counter</a></li>
+          <li><a href="../../education/citation-generator/">Citation generator</a></li>
+          <li><a href="../../education/gpa-calculator/">College GPA calculator</a></li>
+          <li><a href="../../education/uk-degree-classification-calculator/">UK degree calculator</a></li>
+          <li><a href="../../education/final-grade-calculator/">Final grade calculator</a></li>
+          <li><a href="../../education/weighted-grade-calculator/">Weighted grade calculator</a></li>
+          <li><a href="../../education/">All study tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Personal finance">
+        <h2>Finance</h2>
+        <ul>
+          <li><a href="../../finance/compound-interest-calculator/">Compound interest calculator</a></li>
+          <li><a href="../../finance/mortgage-calculator/">Mortgage payment calculator</a></li>
+          <li><a href="../../finance/savings-goal-calculator/">Savings goal calculator</a></li>
+          <li><a href="../../finance/monthly-expenses-calculator/">Monthly expenses calculator</a></li>
+          <li><a href="../../finance/">All finance tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Developer tools">
+        <h2>Developer</h2>
+        <ul>
+          <li><a href="../../dev/json-formatter/">JSON formatter & validator</a></li>
+          <li><a href="../../dev/color-contrast-checker/">Color contrast checker</a></li>
+          <li><a href="../../dev/unix-timestamp-converter/">Unix timestamp converter</a></li>
+          <li><a href="../../dev/">All developer tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Everyday tools">
+        <h2>Everyday Tools</h2>
+        <ul>
+          <li><a href="../../tools/tip-calculator/">Tip & bill split calculator</a></li>
+          <li><a href="../../tools/unit-converter/">Universal unit converter</a></li>
+          <li><a href="../../tools/percentage-calculator/">Percentage calculator</a></li>
+          <li><a href="../../tools/">All everyday tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Brain games">
+        <h2>Games</h2>
+        <ul>
+          <li><a href="../../games/typing-speed-test/">Typing speed test</a></li>
+          <li><a href="../../games/reaction-time-test/">Reaction time test</a></li>
+          <li><a href="../../games/sudoku/">Sudoku</a></li>
+          <li><a href="../../games/number-merge-puzzle/">Number merge puzzle</a></li>
+          <li><a href="../../games/memory-match/">Memory match</a></li>
+          <li><a href="../../games/solitaire/">Solitaire</a></li>
+          <li><a href="../../games/mine-finder/">Mine finder</a></li>
+          <li><a href="../../games/word-search/">Word search</a></li>
+          <li><a href="../../games/mental-math-test/">Mental math test</a></li>
+          <li><a href="../../games/number-memory-test/">Number memory test</a></li>
+          <li><a href="../../games/">All games</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Company">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../contact/">Contact</a></li>
+          <li><a href="../../privacy-policy/">Privacy Policy</a></li>
+          <li><a href="../../terms/">Terms of Use</a></li>
+          <li><a href="../../disclaimer/">Disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Vintayz. ToolNest is part of Vintayz. All rights reserved.</p>
+      <p>Estimates only. Not tax, legal or financial advice.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/js/common.js?v=35d515b6"></script>
+<script src="../../assets/js/games-common.js?v=4163f95f"></script>
+<script src="../../assets/js/tools/mine-finder.js?v=2a9c0d0e"></script>
+</body>
+</html>

@@ -70,6 +70,9 @@
         <li><span>Monthly home insurance</span><span id="out-monthly-insurance">—</span></li>
         <li class="key"><span>Loan principal borrowed</span><span id="out-loan-amount">—</span></li>
         <li><span>Down payment equity</span><span id="out-down-pct">—</span></li>
+        <li class="key"><span>First payment: principal</span><span id="out-first-principal">—</span></li>
+        <li><span>First payment: interest</span><span id="out-first-interest">—</span></li>
+        <li><span>Principal paid in year 1</span><span id="out-year1-principal">—</span></li>
         <li class="key"><span>Total interest paid over term</span><span id="out-total-interest">—</span></li>
         <li><span>Total payment (Principal + Interest)</span><span id="out-total-cost">—</span></li>
       </ul>
@@ -87,6 +90,38 @@ Where:
   r = Monthly Interest Rate (Annual Rate ÷ 100 ÷ 12)
   n = Total Number of Monthly Payments (Loan Term in Years × 12)</div>
 
+    <h2>Principal and interest, year by year</h2>
+    <p>How much of your payments goes to the loan itself (principal) and how much to interest each year, using your numbers above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Year</th><th class="num">Principal paid</th><th class="num">Interest paid</th><th class="num">Principal paid so far</th><th class="num">Balance left</th></tr></thead>
+        <tbody id="schedule-body"><tr><td colspan="5">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to calculate principal paid on a mortgage</h2>
+    <p>Each monthly payment is split in two. First the lender takes the interest due on what you still owe. Whatever is left of the payment goes to the principal and reduces the balance. Next month the interest is a little smaller, so a little more goes to principal.</p>
+    <div class="formula">Interest this month   = balance owed × yearly rate ÷ 12
+Principal this month  = monthly payment − interest this month
+New balance           = balance owed − principal this month
+Principal paid so far = amount borrowed − balance owed now</div>
+    <p>Repeat the three steps for each month. The table above does this for every month of the loan and adds up each year. Amounts are rounded to the cent each month, as lenders do.</p>
+
+    <h2>Worked example</h2>
+    <p>A home costs $400,000 with an $80,000 down payment, so the loan is $320,000. The rate is 6.5% fixed for 30 years (360 payments).</p>
+    <div class="formula">Monthly rate r         = 6.5 ÷ 100 ÷ 12           = 0.0054167
+Monthly payment        = 320,000 × [r(1 + r)^360] ÷ [(1 + r)^360 − 1] = $2,022.62
+
+First payment:
+  Interest             = 320,000 × 0.065 ÷ 12      = $1,733.33
+  Principal            = 2,022.62 − 1,733.33       = $289.29
+  New balance          = 320,000 − 289.29          = $319,710.71
+
+Year 1 (12 payments):  principal $3,576.76, interest $20,694.68
+After 5 years:         balance $299,554.97
+Principal paid so far  = 320,000 − 299,554.97      = $20,445.03</div>
+    <p>In the first year only about <strong>$3,577</strong> of the <strong>$24,271</strong> paid goes to the loan itself; the rest is interest. After 5 years, about <strong>$20,445</strong> of the principal has been paid off. Over the full 30 years the interest adds up to <strong>$408,140.64</strong>.</p>
+
     <h2>Understanding your monthly housing costs</h2>
     <p>In addition to repaying the borrowed principal and mortgage interest, homeownership entails recurring escrow costs:</p>
     <ul>
@@ -99,7 +134,15 @@ Where:
     <div class="faq">
       <details>
         <summary>Why is a 15-year mortgage significantly cheaper overall than a 30-year?</summary>
-        <p>A 15-year loan requires higher monthly repayments, but because the principal balance is paid down twice as quickly, you accumulate drastically less total compound interest over the life of the loan.</p>
+        <p>A 15-year loan requires higher monthly repayments, but because the principal balance is paid down twice as quickly, you pay much less interest in total over the life of the loan.</p>
+      </details>
+      <details>
+        <summary>Why does so little of my payment go to principal at first?</summary>
+        <p>Interest is worked out on the balance you still owe. At the start the balance is at its highest, so the interest takes most of the payment. As the balance falls, the interest falls too and more of the same payment goes to principal.</p>
+      </details>
+      <details>
+        <summary>Will my lender's figures match exactly?</summary>
+        <p>They should be close, but they may differ by a few cents or more. Lenders can work out interest daily instead of monthly, round differently, or add fees. Your mortgage statement shows the exact split for each payment.</p>
       </details>
       <details>
         <summary>What is a standard down payment?</summary>

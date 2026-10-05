@@ -5339,3 +5339,434 @@ main .section[hidden],
     grid-template-columns: 1fr;
   }
 }
+
+/* Monthly expenses calculator: the small "bill to monthly" converter below the results. */
+.conv-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+  padding: 20px;
+  margin: 0 0 1.4em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.conv-result {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 600px) {
+  .conv-form {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+}
+
+/* ---------- Brain games, part 2: Solitaire, Mine Finder, Word Search, Mental Math, Number Memory ---------- */
+.game-area [hidden] {
+  display: none !important;
+}
+
+.game-toolbar .btn-primary {
+  height: 50px;
+}
+
+/* Solitaire. Card faces stay white in dark mode, like paper. */
+.sol-table {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.sol-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(4px, 1.2vw, 10px);
+}
+
+.sol-pile {
+  position: relative;
+  aspect-ratio: 5 / 7;
+  min-width: 0;
+}
+
+.sol-tableau .sol-pile {
+  aspect-ratio: auto;
+}
+
+.sol-stock {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sol-stock:focus-visible,
+.sol-card:focus-visible,
+.sol-slot:focus-visible {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 2px;
+}
+
+.sol-card,
+.sol-slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  border-radius: clamp(4px, 0.9vw, 8px);
+}
+
+.sol-card {
+  display: block;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.18);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.sol-card.red { color: #b91c1c; }
+.sol-card.black { color: #0f172a; }
+
+.sol-card.down {
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.14), transparent 55%),
+    linear-gradient(160deg, var(--navy-700), var(--navy-900));
+  border: 1px solid rgba(217, 178, 106, 0.55);
+  cursor: default;
+}
+
+.sol-stock .sol-card.down {
+  cursor: pointer;
+}
+
+.sol-card.is-selected {
+  outline: 3px solid var(--blue-600);
+  outline-offset: -1px;
+  box-shadow: 0 6px 14px rgba(29, 78, 216, 0.35);
+}
+
+.sol-corner {
+  position: absolute;
+  top: 3%;
+  left: 7%;
+  font-size: clamp(0.72rem, 2.9vw, 1.05rem);
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.sol-mid {
+  position: absolute;
+  right: 8%;
+  bottom: 4%;
+  font-size: clamp(1rem, 5vw, 2.1rem);
+  line-height: 1;
+}
+
+.sol-waste .fan-1 { left: 28%; }
+.sol-waste .fan-2 { left: 56%; }
+
+.sol-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  font-size: clamp(0.8rem, 3vw, 1.2rem);
+  color: var(--subtle);
+  background: transparent;
+  border: 2px dashed var(--border-strong);
+}
+
+button.sol-slot {
+  cursor: pointer;
+}
+
+/* Mine Finder */
+.mine-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mine-board {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  background: var(--border-strong);
+}
+
+.mine-board.mine-easy { grid-template-columns: repeat(9, 1fr); max-width: 400px; }
+.mine-board.mine-medium { grid-template-columns: repeat(12, 1fr); max-width: 480px; }
+.mine-board.mine-hard { grid-template-columns: repeat(16, 1fr); max-width: 560px; min-width: 480px; }
+
+.mine-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  font: inherit;
+  font-weight: 800;
+  font-size: clamp(0.85rem, 3.4vw, 1.15rem);
+  background: linear-gradient(180deg, #dfe6f0, #c9d3e1); /* hidden squares look raised */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -2px 0 rgba(15, 23, 42, 0.18);
+  color: var(--text);
+  cursor: pointer;
+}
+
+[data-theme="dark"] .mine-cell {
+  background: linear-gradient(180deg, #33476b, #26375a);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.mine-cell:focus-visible {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 1px;
+  position: relative;
+}
+
+.mine-cell .icon {
+  width: 62%;
+  height: 62%;
+}
+
+.mine-cell.is-open,
+[data-theme="dark"] .mine-cell.is-open {
+  background: var(--surface);
+  box-shadow: none;
+  cursor: default;
+}
+
+[data-theme="dark"] .mine-cell.is-open {
+  background: var(--bg);
+}
+
+[data-theme="dark"] .mine-cell.is-hit,
+.mine-cell.is-hit {
+  background: #b91c1c;
+  color: #fff;
+}
+
+.mine-cell.is-flag { color: var(--red-600); }
+.mine-cell.is-wrong { background: rgba(185, 28, 28, 0.14); }
+.mine-cell.is-mine { color: var(--text); }
+.mine-cell.is-hit { background: #b91c1c; color: #fff; }
+
+.mine-cell.n1 { color: #1d4ed8; }
+.mine-cell.n2 { color: #047857; }
+.mine-cell.n3 { color: #b91c1c; }
+.mine-cell.n4 { color: #6d28d9; }
+.mine-cell.n5 { color: #92400e; }
+.mine-cell.n6 { color: #0e7490; }
+.mine-cell.n7 { color: #0f172a; }
+.mine-cell.n8 { color: #475569; }
+
+[data-theme="dark"] .mine-cell.n1 { color: #93c5fd; }
+[data-theme="dark"] .mine-cell.n2 { color: #6ee7b7; }
+[data-theme="dark"] .mine-cell.n3 { color: #fca5a5; }
+[data-theme="dark"] .mine-cell.n4 { color: #c4b5fd; }
+[data-theme="dark"] .mine-cell.n5 { color: #fcd34d; }
+[data-theme="dark"] .mine-cell.n6 { color: #67e8f9; }
+[data-theme="dark"] .mine-cell.n7 { color: #e5eaf3; }
+[data-theme="dark"] .mine-cell.n8 { color: #a6b2c6; }
+
+#mine-flag-mode.is-on {
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+  color: #fff;
+}
+
+[data-theme="dark"] #mine-flag-mode.is-on {
+  background: var(--btn-blue);
+  border-color: var(--btn-blue);
+}
+
+#mine-flag-mode .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Word Search */
+.ws-grid {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.ws-grid.ws-10 { grid-template-columns: repeat(10, 1fr); max-width: 440px; }
+.ws-grid.ws-12 { grid-template-columns: repeat(12, 1fr); max-width: 500px; }
+
+.ws-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 4vw, 1.25rem);
+  color: var(--text);
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.ws-cell:focus-visible {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 1px;
+}
+
+.ws-cell.is-found { background: var(--green-50); color: var(--green-600); box-shadow: inset 0 0 0 2px var(--green-600); }
+.ws-cell.is-preview { background: var(--blue-100); }
+.ws-cell.is-start { background: var(--blue-600); color: #fff; }
+
+[data-theme="dark"] .ws-cell.is-start { background: var(--btn-blue); }
+
+.ws-list-title {
+  margin: 0 0 8px;
+  font-size: 0.93rem;
+}
+
+.ws-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ws-words li {
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+}
+
+.ws-words li.is-found {
+  color: var(--subtle);
+  text-decoration: line-through;
+  border-color: var(--border);
+}
+
+/* Mental Math */
+.mm-stage,
+.nm-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding: 24px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.mm-question,
+.nm-number {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(2rem, 9vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.mm-answer.text-tool-input,
+.nm-answer.text-tool-input {
+  min-height: 0;
+  height: 56px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  resize: none;
+}
+
+.mm-stage > .btn,
+.nm-stage > .btn {
+  align-self: center;
+}
+
+/* Number Memory */
+.nm-stage {
+  min-height: 220px;
+  justify-content: center;
+}
+
+.nm-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.nm-bar span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--blue-600);
+  transform-origin: left;
+}
+
+.nm-bar.run span {
+  animation: nm-shrink var(--nm-time, 2000ms) linear forwards;
+}
+
+@keyframes nm-shrink {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+.nm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nm-form .btn {
+  align-self: center;
+}
+
+@media (max-width: 600px) {
+  .sol-table {
+    gap: 10px;
+  }
+
+  .mm-stage,
+  .nm-stage {
+    padding: 18px 14px;
+  }
+}

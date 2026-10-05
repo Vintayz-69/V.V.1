@@ -1,0 +1,216 @@
+  <section class="calculator" aria-label="Monthly expenses calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="field-title span-2 offer-title">Home</p>
+
+      <div class="field">
+        <label for="rent">Rent or mortgage</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rent" type="text" inputmode="decimal" value="950" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="counciltax">Council tax or property tax<span class="hint">Yearly bill ÷ 12</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="counciltax" type="text" inputmode="decimal" value="140" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="energy">Gas and electricity</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="energy" type="text" inputmode="decimal" value="120" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="water">Water</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="water" type="text" inputmode="decimal" value="40" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="broadband">Broadband, phone and TV<span class="hint">Include a TV licence or streaming if you pay for one</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="broadband" type="text" inputmode="decimal" value="55" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <p class="field-title span-2 offer-title">Everyday living</p>
+
+      <div class="field">
+        <label for="food">Food and groceries</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="food" type="text" inputmode="decimal" value="300" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="transport">Transport<span class="hint">Fuel, fares, car costs</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="transport" type="text" inputmode="decimal" value="120" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="insurance">Insurance<span class="hint">Home, car, pet, life</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="insurance" type="text" inputmode="decimal" value="30" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="debt">Loan and card repayments</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="debt" type="text" inputmode="decimal" value="" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="childcare">Childcare</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="childcare" type="text" inputmode="decimal" value="" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="subscriptions">Subscriptions<span class="hint">Apps, gym, memberships</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="subscriptions" type="text" inputmode="decimal" value="25" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="other">Everything else<span class="hint">Clothes, going out, gifts, haircuts</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="other" type="text" inputmode="decimal" value="150" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <p class="field-title span-2 offer-title">Your income (optional)</p>
+
+      <div class="field span-2">
+        <label for="income">Take-home pay a month<span class="hint">After tax. Leave empty to skip.</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="income" type="text" inputmode="decimal" value="2400" placeholder="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your monthly expenses</h2>
+      <div class="result-main"><span id="out-total">—</span> <small>/ month</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Left over each month</span><span id="out-left">—</span></li>
+        <li><span>Share of take-home pay spent</span><span id="out-spent">—</span></li>
+        <li><span>Over a year</span><span id="out-yearly">—</span></li>
+        <li><span>Average a week</span><span id="out-weekly">—</span></li>
+        <li><span>Biggest cost</span><span id="out-biggest">—</span></li>
+      </ul>
+      <p class="result-note">Leave any line empty if it doesn't apply to you. Weekly average = yearly total ÷ 52.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Where your money goes</h2>
+    <p>Your costs from biggest to smallest, using the numbers above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cost</th><th class="num">A month</th><th class="num">A year</th><th class="num">Share</th></tr></thead>
+        <tbody id="breakdown-body"><tr><td colspan="4">Enter your costs above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Turn any bill into a monthly amount</h2>
+    <p>Some bills come weekly, every four weeks, quarterly or once a year. Enter one here to get the monthly figure to use above.</p>
+    <form class="conv-form" id="conv-form" novalidate>
+      <div class="field">
+        <label for="conv-amount">Bill amount</label>
+        <div class="input-wrap"><input id="conv-amount" type="text" inputmode="decimal" value="20" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="conv-freq">How often you pay it</label>
+        <div class="select-wrap">
+          <select id="conv-freq">
+            <option value="weekly" selected>Every week</option>
+            <option value="fortnightly">Every 2 weeks</option>
+            <option value="fourweekly">Every 4 weeks</option>
+            <option value="quarterly">Every 3 months (quarterly)</option>
+            <option value="yearly">Once a year</option>
+          </select>
+        </div>
+      </div>
+      <p class="conv-result" aria-live="polite">Monthly amount: <strong id="conv-out">—</strong></p>
+    </form>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Go through a recent bank statement</strong> and note each regular payment. Your statement is more reliable than memory.</li>
+      <li><strong>Enter each cost as a monthly amount.</strong> Use the bill converter above for weekly, quarterly or yearly bills.</li>
+      <li><strong>Add your take-home pay</strong> (after tax) to see what's left over each month.</li>
+      <li><strong>Look at the table</strong> to see which costs take the biggest share.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Monthly expenses   = the sum of every cost you enter
+Over a year        = monthly expenses × 12
+Average a week     = monthly expenses × 12 ÷ 52
+Left over          = take-home pay − monthly expenses
+Share spent        = monthly expenses ÷ take-home pay × 100
+Share of each cost = that cost ÷ monthly expenses × 100
+
+Bill to monthly    = bill × times paid a year ÷ 12
+                     (weekly 52, every 2 weeks 26, every 4 weeks 13, quarterly 4, yearly 1)</div>
+
+    <h2>Worked example</h2>
+    <p>Sam rents a flat in the UK and takes home £2,400 a month. Their monthly costs are rent £950, council tax £140, gas and electricity £120, water £40, broadband and phone £55, food £300, transport £120, insurance £30, subscriptions £25 and everything else £150.</p>
+    <div class="formula">Monthly expenses   = 950 + 140 + 120 + 40 + 55 + 300 + 120 + 30 + 25 + 150 = £1,930
+Over a year        = 1,930 × 12           = £23,160
+Average a week     = 23,160 ÷ 52          = £445.38
+Left over          = 2,400 − 1,930        = £470
+Share spent        = 1,930 ÷ 2,400 × 100  = 80.4%
+Biggest cost       = rent: 950 ÷ 1,930    = 49.2% of all costs</div>
+    <p>Sam spends <strong>£1,930 a month</strong>, about 80% of their take-home pay, and has <strong>£470</strong> left over. Rent is almost half of all their costs.</p>
+
+    <h2>Why "× 4" gets weekly bills wrong</h2>
+    <p>A month is a little over 4 weeks, so multiplying a weekly cost by 4 makes it look smaller than it is. A year has 52 weeks, which is 4.33 weeks a month on average.</p>
+    <div class="formula">£20 a week × 4         = £80 a month      (too low)
+£20 a week × 52 ÷ 12   = £86.67 a month   (correct)
+£100 every 4 weeks     = 100 × 13 ÷ 12  = £108.33 a month
+£1,800 once a year     = 1,800 ÷ 12     = £150 a month</div>
+    <p>Bills paid every 4 weeks come 13 times a year, not 12, so one month in the year has two of them.</p>
+
+    <div class="tip">
+      <p><strong>Freelancer or self-employed?</strong> Keep business costs out of this list so you can see your personal spending clearly. Then use your total in the <a href="{{root}}freelance/emergency-fund-calculator/">emergency fund calculator</a> to see how many months of cover to save, and in the <a href="{{root}}freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a> to see what you need to charge to cover it.</p>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What counts as a monthly expense?</summary>
+        <p>Anything you pay regularly: housing, bills, food, travel, insurance, repayments and subscriptions. Include smaller spending too, like coffees and takeaways, in "Everything else". These small costs are easy to forget and often add up to more than people expect.</p>
+      </details>
+      <details>
+        <summary>How do I include council tax if I pay it over 10 months?</summary>
+        <p>Take the full yearly bill and divide it by 12, even if you pay it in 10 instalments. That spreads the cost over the whole year, so the two months with no payment don't make your budget look better than it is.</p>
+      </details>
+      <details>
+        <summary>My bills change from month to month. What should I enter?</summary>
+        <p>Use an average. Add up the last 12 months of a bill, such as energy, and divide by 12. If you only have a few months, use the higher ones, because heating bills are usually bigger in winter.</p>
+      </details>
+      <details>
+        <summary>Should I use my income before or after tax?</summary>
+        <p>After tax. Take-home pay is the money you can actually spend. If you're employed, it's the amount paid into your bank account. If you're self-employed, use what's left after setting money aside for tax. Our <a href="{{root}}career/uk-take-home-pay-calculator/">UK take-home pay calculator</a> can estimate it for employees.</p>
+      </details>
+      <details>
+        <summary>Is anything I type saved or sent anywhere?</summary>
+        <p>No. The calculator runs in your browser. Nothing is sent to us or anyone else, and nothing is stored on your device, so your numbers are gone when you close the page.</p>
+      </details>
+    </div>
+  </div>

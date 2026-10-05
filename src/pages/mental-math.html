@@ -1,0 +1,91 @@
+  <section class="calculator game" aria-label="Mental math test">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="mm-level">Difficulty</label>
+          <div class="select-wrap"><select id="mm-level">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm btn-primary" id="mm-start">Start</button>
+      </div>
+
+      <div class="mm-stage">
+        <p class="mm-question" id="mm-question" aria-live="polite">Press Start</p>
+        <div class="field">
+          <label for="mm-answer">Your answer</label>
+          <input type="text" id="mm-answer" class="text-tool-input mm-answer" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="next">
+        </div>
+        <button type="button" class="btn btn-sm" id="mm-skip">Skip question</button>
+      </div>
+      <p class="game-status" id="mm-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="calc-results">
+      <h2>Your score</h2>
+      <div class="result-main"><span id="mm-correct">0</span> <small>correct</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Time left</span><span id="mm-time">1:00</span></li>
+        <li><span>Skipped</span><span id="mm-skipped">0</span></li>
+        <li><span>Speed</span><span id="mm-rate">—</span></li>
+        <li><span>Best this visit</span><span id="mm-best">—</span></li>
+      </ul>
+      <p class="result-note">Each answer is checked as you type, so there's no need to press Enter. Your best score is forgotten when you leave the page.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the mental math test</h2>
+    <ol class="steps">
+      <li><strong>Pick a difficulty</strong> and press Start. You have 60 seconds.</li>
+      <li><strong>Type the answer</strong> to each question. As soon as it's right, the next question appears.</li>
+      <li><strong>Stuck?</strong> Press Skip question to see the answer and move on. Skipped questions don't count.</li>
+      <li><strong>When the time is up,</strong> you see how many you got right and your speed per minute.</li>
+    </ol>
+
+    <h2>What each level asks</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Difficulty</th><th>Questions</th></tr></thead>
+        <tbody>
+          <tr><td>Easy</td><td>Adding and taking away with numbers up to 20</td></tr>
+          <tr><td>Medium</td><td>Adding and taking away up to 100, and times tables up to 10 × 10</td></tr>
+          <tr><td>Hard</td><td>Adding and taking away up to 1,000, times tables up to 12 × 12, and division with whole-number answers up to 12</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Answers are always whole numbers of 0 or more: take-aways never go below zero, and divisions always come out exactly.</p>
+
+    <h2>Worked example</h2>
+    <p>Jo plays on medium and gets <strong>24 questions right</strong> in the 60 seconds, skipping 2.</p>
+    <div class="formula">
+      <p><strong>Speed</strong> = correct answers ÷ minutes = 24 ÷ 1 = <strong>24 per minute</strong></p>
+    </div>
+    <p>The skipped questions don't add to or take away from the score.</p>
+
+    <h2>Tips for quicker mental math</h2>
+    <ul>
+      <li><strong>Add in parts.</strong> For 47 + 38, add 40 + 30 = 70, then 7 + 8 = 15, then 70 + 15 = 85.</li>
+      <li><strong>Take away by counting up.</strong> For 92 − 57, count up from 57 to 60 (3), then from 60 to 92 (32): the answer is 35.</li>
+      <li><strong>Use the times table you know.</strong> 9 × 7 is 10 × 7 = 70 minus 7 = 63.</li>
+      <li><strong>Turn division into times tables.</strong> For 84 ÷ 7, ask "7 times what is 84?" The answer is 12.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why doesn't it ask for Enter?</summary>
+        <p>Each answer is checked as you type, so the next question comes up the moment you're right. That saves time and keeps the test about the maths, not the keyboard.</p>
+      </details>
+      <details>
+        <summary>Can I use it to practise for a job test?</summary>
+        <p>It's good practice for quick sums, but job and school tests vary a lot. Check the test's own guidance for the kinds of questions it asks.</p>
+      </details>
+      <details>
+        <summary>Is my score saved?</summary>
+        <p>Only while the page is open. We don't use cookies or browser storage, so it's forgotten when you close or reload the page.</p>
+      </details>
+    </div>
+  </div>
