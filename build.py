@@ -42,7 +42,7 @@ BING_SITE_VERIFICATION = ""
 
 # AdSense publisher ID. Used only for the verification meta tag and ads.txt, which load nothing
 # from Google. Do NOT add the AdSense <script> until LEGAL.md section 5 is fully done.
-ADSENSE_PUBLISHER_ID = "ca-pub-3325212569816736"
+ADSENSE_PUBLISHER_ID = "ca-pub-2792326360609634"
 
 
 def human_date(iso):
