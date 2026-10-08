@@ -198,6 +198,7 @@
       renderList();
       if (Object.keys(found).length === puzzle.placed.length) {
         clock.stop();
+        G.flash(gridEl, "fx-win");
         say("You found all " + puzzle.placed.length + " words in " + G.formatTime(clock.seconds()) + "!");
       } else {
         say("Found " + word + "!");
@@ -206,6 +207,7 @@
       say(word + " is already found.");
     } else {
       say("That's not one of the words. Try again.");
+      G.flash(gridEl, "fx-wrong", 500);
     }
     paint();
   }

@@ -1,0 +1,76 @@
+  <section class="calculator game" aria-label="Nonogram picture logic puzzle">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="ng-size">Size</label>
+          <div class="select-wrap"><select id="ng-size">
+            <option value="5">5 × 5 (quick)</option>
+            <option value="10" selected>10 × 10</option>
+            <option value="15">15 × 15 (long)</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="ng-new">{{icon:refresh}} New puzzle</button>
+        <button type="button" class="btn btn-sm" id="ng-mark" aria-pressed="false">✕ X mode</button>
+        <button type="button" class="btn btn-sm" id="ng-clear">Clear</button>
+      </div>
+
+      <div class="ng-wrap">
+        <div class="ng-board ng-10" id="ng-board" role="group" aria-label="Puzzle grid with clues. Arrow keys move, Space fills a square, X marks it empty."></div>
+      </div>
+      <p class="game-status" id="ng-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="calc-results">
+      <h2>This puzzle</h2>
+      <div class="result-main"><span id="ng-lines">0 / 20</span> <small>lines right</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Time</span><span id="ng-time">0:00</span></li>
+        <li><span>Squares filled</span><span id="ng-filled">0</span></li>
+        <li><span>Fastest this visit</span><span id="ng-best">—</span></li>
+      </ul>
+      <p class="result-note">A clue turns green when its row or column matches. Press and drag to fill several squares at once.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play</h2>
+    <ol class="steps">
+      <li><strong>Read the clues.</strong> The numbers beside each row and above each column are the lengths of the blocks of filled squares in that line, in order. "3 1" means a block of 3, then at least one gap, then a block of 1.</li>
+      <li><strong>Fill squares</strong> by tapping them, or press and drag to fill several.</li>
+      <li><strong>Mark squares you know are empty</strong> with an X: press X mode, then tap. X marks are just notes for you.</li>
+      <li><strong>Solve it</strong> when every row and column matches its clue. A hidden pattern appears as you go.</li>
+    </ol>
+
+    <h2>Worked example</h2>
+    <p>Take a row of 10 squares with the clue <strong>8</strong>. Wherever the block of 8 sits, it must cover squares 3 to 8:</p>
+    <ul>
+      <li>Pushed as far left as it goes, it fills squares 1 to 8.</li>
+      <li>Pushed as far right as it goes, it fills squares 3 to 10.</li>
+      <li>Squares 3 to 8 are filled in both cases, so you can fill those 6 squares straight away.</li>
+    </ul>
+    <p>This "overlap" trick works for any clue: the number of sure squares is the clue minus the free space (10 − 8 = 2, so 8 − 2 = 6).</p>
+
+    <h2>Tips</h2>
+    <ul>
+      <li><strong>Start with big numbers.</strong> Clues close to the full width give the most overlap.</li>
+      <li><strong>A line whose clues and gaps add up to the full width</strong> can be filled completely. For example, "4 5" in a row of 10 needs 4 + 1 + 5 = 10 squares.</li>
+      <li><strong>Use X marks</strong> once a line is done, so you can see which squares are left.</li>
+      <li><strong>Switch between rows and columns.</strong> Each square you fill gives you new information for the other direction.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can a puzzle have more than one answer?</summary>
+        <p>Sometimes. Each picture is made at random, so now and then two different patterns fit the same clues. Any pattern that matches every clue counts as solved.</p>
+      </details>
+      <details>
+        <summary>What is a nonogram?</summary>
+        <p>A nonogram is a picture logic puzzle that is also known as paint by numbers. Our version was written from scratch, and it isn't connected with any other company's game.</p>
+      </details>
+      <details>
+        <summary>Is my progress saved?</summary>
+        <p>No. We don't use cookies or browser storage, so the puzzle is gone if you close or reload the page.</p>
+      </details>
+    </div>
+  </div>

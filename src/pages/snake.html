@@ -1,0 +1,85 @@
+  <section class="calculator game sn-game" aria-label="Snake game">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="sn-speed">Speed</label>
+          <div class="select-wrap"><select id="sn-speed">
+            <option value="slow">Slow</option>
+            <option value="normal" selected>Normal</option>
+            <option value="fast">Fast</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm btn-primary" id="sn-start">Start</button>
+      </div>
+
+      <div class="sn-board" id="sn-board" tabindex="0" role="img" aria-label="Snake board. Arrow keys steer, Space pauses."></div>
+
+      <div class="sn-pad" role="group" aria-label="Steer">
+        <button type="button" class="btn sn-up" data-sn-dir="up" aria-label="Up"><span aria-hidden="true">↑</span></button>
+        <button type="button" class="btn sn-left" data-sn-dir="left" aria-label="Left"><span aria-hidden="true">←</span></button>
+        <button type="button" class="btn sn-right" data-sn-dir="right" aria-label="Right"><span aria-hidden="true">→</span></button>
+        <button type="button" class="btn sn-down" data-sn-dir="down" aria-label="Down"><span aria-hidden="true">↓</span></button>
+      </div>
+      <p class="game-status" id="sn-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="calc-results">
+      <h2>Score</h2>
+      <div class="result-main"><span id="sn-score">0</span> <small>food eaten</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Snake length</span><span id="sn-length">3</span></li>
+        <li><span>Best this visit</span><span id="sn-best">—</span></li>
+      </ul>
+      <p class="result-note">The game pauses on its own if you switch to another tab.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play</h2>
+    <ol class="steps">
+      <li><strong>Press Start.</strong> The snake starts moving to the right.</li>
+      <li><strong>Steer</strong> with the arrow keys (or W A S D), by swiping on the board, or with the arrow buttons under it.</li>
+      <li><strong>Eat the food.</strong> Each piece scores 1 point and makes the snake one square longer.</li>
+      <li><strong>Don't crash</strong> into the walls or the snake's own body. Press Space or the Pause button to take a break.</li>
+    </ol>
+
+    <h2>The board and speeds</h2>
+    <p>The board is 15 × 15 squares (225 in all), and the snake starts 3 squares long.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Speed</th><th>Time per step</th><th>Steps per second</th></tr></thead>
+        <tbody>
+          <tr><td>Slow</td><td>0.20 seconds</td><td>5</td></tr>
+          <tr><td>Normal</td><td>0.14 seconds</td><td>about 7</td></tr>
+          <tr><td>Fast</td><td>0.09 seconds</td><td>about 11</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Worked example</h2>
+    <p>The snake starts 3 squares long. After eating 10 pieces of food it is 3 + 10 = <strong>13 squares</strong> long, and the score shows <strong>10</strong>.</p>
+
+    <h2>Tips for a longer snake</h2>
+    <ul>
+      <li><strong>Stay near the edges</strong> early on and leave the middle open.</li>
+      <li><strong>Move in wide loops</strong> as the snake grows, so your tail clears the way ahead.</li>
+      <li><strong>Turning back on yourself is blocked</strong>, so a quick wrong key press won't end the game.</li>
+      <li><strong>Start on Slow</strong> on a phone until swiping feels natural.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why doesn't the page scroll when I swipe on the board?</summary>
+        <p>Swipes on the board steer the snake instead of moving the page. Swipe outside the board to scroll.</p>
+      </details>
+      <details>
+        <summary>Can I go through the walls?</summary>
+        <p>No. In this version, hitting a wall ends the game.</p>
+      </details>
+      <details>
+        <summary>Is my score saved?</summary>
+        <p>Only while the page is open. We don't use cookies or browser storage, so it's forgotten when you close or reload the page.</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,94 @@
+  <section class="calculator game" aria-label="Four in a Row">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="fr-mode">Opponent</label>
+          <div class="select-wrap"><select id="fr-mode">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+            <option value="friend">2 players</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="fr-new">{{icon:refresh}} New game</button>
+      </div>
+
+      <div class="fr-wrap">
+        <div class="fr-columns" id="fr-columns"></div>
+        <div class="fr-board" id="fr-board" role="img" aria-label="Board"></div>
+      </div>
+      <p class="game-status" id="fr-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="calc-results">
+      <h2>Scoreboard</h2>
+      <div class="result-main"><span id="fr-turn">You</span> <small>to play</small></div>
+      <ul class="result-list">
+        <li class="key"><span id="fr-label-1">Your wins</span><span id="fr-wins">0</span></li>
+        <li><span id="fr-label-2">Computer wins</span><span id="fr-losses">0</span></li>
+        <li><span>Draws</span><span id="fr-draws">0</span></li>
+      </ul>
+      <p class="result-note">Blue goes first. The scoreboard lasts until you change the opponent or leave the page.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play</h2>
+    <ol class="steps">
+      <li><strong>Take turns</strong> dropping a counter into one of the seven columns. It falls to the lowest empty space.</li>
+      <li><strong>Get four in a row</strong> of your colour: across, up and down, or diagonally.</li>
+      <li><strong>Block your opponent</strong> when they have three in a row with a space to finish it.</li>
+      <li><strong>If the board fills up</strong> with no four in a row, the game is a draw.</li>
+    </ol>
+
+    <h2>How strong is the computer?</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Level</th><th>How it plays</th></tr></thead>
+        <tbody>
+          <tr><td>Easy</td><td>Looks at its own next move only, and about a third of the time plays a random column.</td></tr>
+          <tr><td>Medium</td><td>Looks 3 moves ahead (its move, your reply, its next move).</td></tr>
+          <tr><td>Hard</td><td>Looks 6 moves ahead. It always takes a winning move and blocks yours when it sees one.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>When it isn't sure, the computer prefers the middle columns, because a counter there can be part of more lines of four.</p>
+
+    <h2>Worked example</h2>
+    <p>There are <strong>69</strong> possible lines of four on a 7 × 6 board:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Direction</th><th>Working</th><th>Lines</th></tr></thead>
+        <tbody>
+          <tr><td>Across</td><td>4 starting places in each of 6 rows</td><td>24</td></tr>
+          <tr><td>Up and down</td><td>3 starting places in each of 7 columns</td><td>21</td></tr>
+          <tr><td>Diagonal (each way)</td><td>12 + 12</td><td>24</td></tr>
+          <tr><td><strong>Total</strong></td><td>24 + 21 + 24</td><td><strong>69</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A counter in the bottom-middle space is part of 7 of those lines, while a corner counter is part of only 3. That's why the middle column is the strongest place to start.</p>
+
+    <h2>Tips to win</h2>
+    <ul>
+      <li><strong>Start in the middle column.</strong></li>
+      <li><strong>Make two threats at once.</strong> If you have two different places that would each finish four, your opponent can only block one.</li>
+      <li><strong>Watch the space underneath.</strong> Don't drop a counter that lets your opponent play on top of it into a winning space.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I play against a friend?</summary>
+        <p>Yes. Choose "2 players" and take turns on the same phone or computer.</p>
+      </details>
+      <details>
+        <summary>Is this Connect 4?</summary>
+        <p>It's the same kind of game, often called four in a row. We wrote our own version from scratch, and it isn't connected with any other company's game.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. Use Tab to reach the arrow buttons above each column and press Enter to drop a counter there.</p>
+      </details>
+    </div>
+  </div>

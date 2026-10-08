@@ -53,6 +53,11 @@
     statusEl.textContent = t;
   }
 
+  // Colour animation from games-common.js (does nothing if it isn't loaded).
+  function fx(el, cls, ms) {
+    if (window.ToolNestGames && window.ToolNestGames.flash) window.ToolNestGames.flash(el, cls, ms);
+  }
+
   function show() {
     target = makeNumber(digits);
     levelEl.textContent = digits + " digits";
@@ -91,6 +96,7 @@
       }
       digits++;
       say("Right! Next: " + digits + " digits.");
+      fx(stage, "fx-right", 700);
       setTimeout(show, 700);
       form.hidden = true;
     } else {
@@ -100,6 +106,7 @@
       var typed = input.value.replace(/\D/g, "");
       say("Not quite. The number was " + grouped(target) + " and you typed " + (typed ? grouped(typed) : "nothing") +
         ". You remembered " + (digits - 1 >= START_DIGITS ? (digits - 1) + " digits" : "fewer than " + START_DIGITS + " digits") + ".");
+      fx(stage, "fx-lose");
       digits = START_DIGITS;
       startBtn.hidden = false;
       startBtn.textContent = "Try again";

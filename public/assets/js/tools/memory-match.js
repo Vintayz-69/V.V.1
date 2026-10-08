@@ -121,6 +121,8 @@
       found++;
       renderCard(a);
       renderCard(b);
+      G.flash(cards[a], "fx-right", 700);
+      G.flash(cards[b], "fx-right", 700);
       renderStats();
       if (found === pairs) {
         clock.stop();
@@ -128,6 +130,7 @@
         scoreEl.textContent = s + " / 100";
         if (!best[pairs] || s > best[pairs]) best[pairs] = s;
         bestEl.textContent = best[pairs] + " / 100";
+        G.flash(boardEl, "fx-win");
         say("All " + pairs + " pairs found in " + moves + " moves and " + G.formatTime(clock.seconds()) + ". Score " + s + " / 100.");
       } else {
         say("A pair of " + name + "! " + (pairs - found) + " to go.");
@@ -136,6 +139,8 @@
     }
     renderStats();
     say(pictures[deck[b]].getAttribute("data-name") + ". Not a match.");
+    G.flash(cards[a], "fx-wrong", 700);
+    G.flash(cards[b], "fx-wrong", 700);
     busy = true;
     setTimeout(function () {
       open = [];

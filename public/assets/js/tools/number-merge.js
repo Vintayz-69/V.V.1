@@ -146,6 +146,11 @@
     statusEl.textContent = text;
   }
 
+  // Colour animation from games-common.js (does nothing if it isn't loaded).
+  function fx(el, cls, ms) {
+    if (window.ToolNestGames && window.ToolNestGames.flash) window.ToolNestGames.flash(el, cls, ms);
+  }
+
   function newGame() {
     grid = emptyGrid();
     score = 0;
@@ -171,7 +176,9 @@
     if (!won && grid.indexOf(GOAL) !== -1) {
       won = true;
       say("You made the " + GOAL + " tile! Keep going to beat your score.");
+      fx(board, "fx-win");
     } else if (!canMove(grid)) {
+      fx(board, "fx-lose");
       say("No moves left. Final score: " + score.toLocaleString("en-US") + ". Press New game to play again.");
     } else if (r.score) {
       say("+" + r.score);

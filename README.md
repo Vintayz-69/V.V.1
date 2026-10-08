@@ -35,7 +35,7 @@ We build **one section at a time**. The next stage starts only after the current
 | 3 | Resume maker and cover letter tools | `/resume-maker/` | 🟢 Resume makers (US, UK, Canada, Australia), Cover Letter Maker and Resignation Letter Maker built |
 | 4 | Business tools (invoices, margins, sales tax) | `/business/` | 🟢 Active (Profit Margin, Break-Even, Payment Fees, ROAS, Customer Lifetime Value, Quote Generator) |
 | 5 | Health, education, unit converters, and more | `/education/` | 🟢 Active (Word Counter, Citation Generator, College GPA, Weighted Grade, UK Degree Classification, Final Grade) |
-| Extra | Brain games (to bring in more visitors) | `/games/` | 🟢 Built (10 games: Solitaire, Mine Finder, Word Search, Sudoku, Number Merge Puzzle, Memory Match, Typing Speed Test, Reaction Time Test, Mental Math Test, Number Memory Test) |
+| Extra | Brain games (to bring in more visitors) | `/games/` | 🟢 Built (15 games: Solitaire, Mine Finder, Word Search, Four in a Row, Snake, Sudoku, Number Merge Puzzle, Memory Match, Sliding Puzzle, Nonogram, Typing Speed Test, Reaction Time Test, Mental Math Test, Number Memory Test, Sequence Memory Test) |
 
 ---
 
@@ -252,22 +252,22 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 
 ## 10. Launch Checklist
 
-- [ ] Choose final brand name and buy a `.com` (check the **renewal** price, not just the first-year price)
-- [ ] Create a GitHub repository and push this README
-- [ ] Connect the repo to free hosting (Cloudflare Pages: no build command, output directory `public`)
-- [ ] Point the domain to the hosting
+- [x] Choose final brand name and buy a `.com` (check the **renewal** price, not just the first-year price)
+- [x] Create a GitHub repository and push this README
+- [x] Connect the repo to free hosting (Cloudflare Pages: no build command, output directory `public`)
+- [x] Point the domain to the hosting
 - [x] Build the shared layout: header, footer, `style.css`
 - [x] Build and test the Freelance Hourly Rate Calculator
 - [x] Build and test all Phase A tools (101 automated checks pass)
 - [x] Premium design, mobile layout and minimal animation
 - [x] Create About, Contact, Privacy Policy, Terms, and Disclaimer pages (drafts: review before launch, replace the contact email)
 - [x] Add `sitemap.xml` and `robots.txt` (update the domain once bought)
-- [ ] **Cloudflare Web Analytics:** Cloudflare dashboard → your Pages project → Metrics → enable Web Analytics (cookie-free, already allowed by the security headers and named in the privacy policy)
-- [ ] **Google Search Console:** add a "Domain" property and verify with the DNS record in Cloudflare (no code needed). Or use a "URL prefix" property and paste the HTML-tag code into `GOOGLE_SITE_VERIFICATION` in `build.py`, then rebuild and deploy
+- [x] **Cloudflare Web Analytics:** Cloudflare dashboard → your Pages project → Metrics → enable Web Analytics (cookie-free, already allowed by the security headers and named in the privacy policy)
+- [x] **Google Search Console:** add a "Domain" property and verify with the DNS record in Cloudflare (no code needed). Or use a "URL prefix" property and paste the HTML-tag code into `GOOGLE_SITE_VERIFICATION` in `build.py`, then rebuild and deploy
 - [ ] In Search Console, submit `https://<your-domain>/sitemap.xml`
 - [ ] **Bing Webmaster Tools:** sign in and choose "Import from Google Search Console" (or paste the code into `BING_SITE_VERIFICATION`). Bing also feeds ChatGPT search.
 - [ ] After 2–4 weeks: Search Console → Performance → filter **Country = United States / United Kingdom** to see which searches bring each audience, then adjust page titles
-- [ ] No Google Analytics unless you first add a cookie consent banner (LEGAL.md section 4)
+- [x] No Google Analytics unless you first add a cookie consent banner (LEGAL.md section 4)
 - [ ] Share tools genuinely where freelancers ask pricing and tax questions (answer the question first, link only when it truly helps)
 
 ---
@@ -333,3 +333,6 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 | 2026-10-05 | Added `/games/` (Brain Games): Typing Speed Test (WPM and accuracy, our own practice passages), Reaction Time Test (average of 5 tries), Sudoku (new puzzle each time with exactly one solution, three levels, notes, hints, check), Number Merge Puzzle (2048-style, swipe or arrow keys, one undo) and Memory Match (16 or 24 cards). Shared helpers in `assets/js/games-common.js`. Added to the Calculators menu, the footer and the homepage. Nothing is stored. Tests cover every number on the game pages; all pages checked in Chrome at 390px and 1280px, light and dark, under the real security headers. |
 | 2026-10-05 | One new tool in every section: Retainer Calculator (`/freelance/`), Customer Lifetime Value (`/business/`), Job Offer Comparison (`/career/`), Weighted Grade (`/education/`), Savings Goal (`/finance/`), Unix Timestamp Converter (`/dev/`), Percentage Calculator (`/tools/`), Edit PDF Properties (`/pdf/`), Resignation Letter Maker (`/resume-maker/`), Federal Tax Bracket Calculator 2026 (`/us/`), Dividend Tax Calculator 2026/27 (`/uk/`), CPP and EI Calculator 2026 (`/ca/`) and Take-Home Pay Calculator 2026–27 (`/au/`). Country tools use only the existing official data files. The cover letter's page layout moved into `resume.js` (`letterLayout`) so both letter makers share it. Every worked example is checked in `tests/run-tests.js` or `tests/pdf-tests.js`. |
 | 2026-10-06 | Five more games in `/games/` (10 in all): Klondike Solitaire (draw 1 or 3, tap to move, unlimited undo, auto-finish), Mine Finder (minesweeper-style, three board sizes, first tap always safe, flag mode for phones), Word Search (five themes with our own word lists, easy and hard), Mental Math Test (60 seconds, three levels) and Number Memory Test. The games hub now has Classic games, Puzzles and Skill tests sections; the homepage shows Typing test, Sudoku and Solitaire. Tests cover every number and rule the pages quote; all pages checked in Chrome at 390px and 1280px, light and dark, under the real security headers. |
+| 2026-10-09 | Status check: the site is live at vintayz.com on Cloudflare Pages. Cloudflare Web Analytics and Google Search Console are set up, and AdSense has been applied for (the AdSense script stays off until LEGAL.md section 5 is done). Still to do: Bing Webmaster Tools. Earlier changes not logged here: on 2026-10-01 the BMI/TDEE tools and the 110 country copies plus `/global/` were switched off (see LEGAL.md change log); on 2026-10-05 the monthly expenses calculator was added and the mortgage calculator got a yearly breakdown; on 2026-10-06 the AdSense publisher ID was changed. 118 pages, 1,605 automated tests passing. |
+| 2026-10-09 | SEO and internal links: titles over 60 characters now end in "| Vintayz" so search results show them in full; "Last updated" dates fixed (mortgage 5 October, homepage 6 October, hub pages now take the newest date of their tools automatically); 62 "Related tools" links changed so every tool is linked from at least two other tools (the October tools had been linked only from their hub); every hub page now ends with "More free tools" links to all other sections. 1,605 automated tests passing. |
+| 2026-10-09 | Five more games in `/games/` (15 in all): Sliding Puzzle (3×3, 4×4, 5×5; every puzzle solvable), Four in a Row (computer at three levels, looking up to 6 moves ahead, or 2 players), Nonogram (5×5, 10×10, 15×15, drag to fill, X marks), Sequence Memory Test and Snake (three speeds, arrow keys, swipe or buttons). They use the shared win/lose colour animations. Tests cover every number and rule the pages quote; all pages checked in Chrome at 390px and 1280px, light and dark, under the real security headers. |

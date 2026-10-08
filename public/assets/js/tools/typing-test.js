@@ -115,6 +115,7 @@
     var r = update();
     if (r.wpm > best) best = r.wpm;
     bestEl.textContent = best + " WPM";
+    G.flash(passageEl, "fx-win");
     say(reason + " You typed " + r.wpm + " words per minute with " + r.accuracy + "% accuracy. Press Restart to try again.");
   }
 

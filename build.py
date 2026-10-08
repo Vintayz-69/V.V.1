@@ -626,6 +626,46 @@ TOOLS = {
         icon="hash", group="games-skill", parent="games", go="Start test",
         keywords="digit span memory test brain",
     ),
+    "sliding-puzzle": dict(
+        path="games/sliding-puzzle/",
+        name="Sliding Puzzle (15 Puzzle)",
+        card="Sliding puzzle",
+        short="Slide the numbered tiles back into order. Play the classic 15 puzzle, or a smaller or bigger board.",
+        icon="grid", group="games-puzzle", parent="games", go="Play now",
+        keywords="15 puzzle 8 puzzle slide tiles number puzzle",
+    ),
+    "four-in-a-row": dict(
+        path="games/four-in-a-row/",
+        name="Four in a Row",
+        card="Four in a row",
+        short="Drop counters and get four in a line before the computer does, or play a friend on the same device.",
+        icon="target", group="games-classic", parent="games", go="Play now",
+        keywords="connect four 4 in a row two player computer",
+    ),
+    "nonogram": dict(
+        path="games/nonogram/",
+        name="Nonogram (Picture Logic Puzzle)",
+        card="Nonogram",
+        short="Use the number clues to fill the right squares and reveal a hidden pattern. Three sizes.",
+        icon="grid9", group="games-puzzle", parent="games", go="Play now",
+        keywords="paint by numbers picture logic puzzle grid",
+    ),
+    "sequence-memory": dict(
+        path="games/sequence-memory-test/",
+        name="Sequence Memory Test",
+        card="Sequence memory test",
+        short="Watch the squares light up, then tap them in the same order. Each round adds one more.",
+        icon="activity", group="games-skill", parent="games", go="Start test",
+        keywords="pattern memory test brain squares order",
+    ),
+    "snake": dict(
+        path="games/snake/",
+        name="Snake",
+        card="Snake",
+        short="The classic Snake game: eat the food, grow longer and don't crash. Arrow keys or swipe.",
+        icon="trending", group="games-classic", parent="games", go="Play now",
+        keywords="snake game classic arcade",
+    ),
 
     # Personal Finance (Part 1)
     "compound-interest": dict(
@@ -965,13 +1005,15 @@ NEW_DAY = "2026-09-30"  # tools added on 30 September 2026
 ADD_TEXT_DAY = "2026-10-05"
 GAME_DAY = "2026-10-05"  # /games/ added on 5 October 2026
 GAME_DAY_2 = "2026-10-06"  # five more games added on 6 October 2026
+GAME_DAY_3 = "2026-10-09"  # five more games added on 9 October 2026
 SECTIONS_DAY = "2026-10-05"  # one new tool in each section, 5 October 2026
 SEO_DAY = "2026-10-05"  # changes from Search Console queries, 5 October 2026
+MORE_GAMES_DAY = "2026-10-06"  # five more games, linked from the homepage
 GAME_CHIPS = ["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser, nothing saved"]
 GAME_LIBS = ["js/games-common.js"]
 
 PAGES = [
-    dict(path="", src="home.html", kind="home", nav="home", updated=PDF_DAY,
+    dict(path="", src="home.html", kind="home", nav="home", updated=MORE_GAMES_DAY,
          title="ToolNest by Vintayz: Free Money Calculators for Freelancers",
          description="Free calculators for freelancers in the US, UK, Canada and Australia. Price your work, plan your income and chase late payments."),
     dict(path="freelance/", src="freelance.html", kind="section", nav="tools",
@@ -1012,13 +1054,13 @@ PAGES = [
          description="Work out the day rate you need as a contractor or freelancer, allowing for tax, expenses, holidays and gaps between contracts.",
          intro="Work out the day rate you need to charge, allowing for tax, expenses, holidays, public holidays and the gaps between contracts.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["hourly-rate", "project-pricing", "hourly-to-annual"]),
+         related=["hourly-rate", "retainer", "hourly-to-annual"]),
     dict(tool="project-pricing", src="project-pricing.html", script="project-pricing.js",
          title="Project Price Calculator for Freelance Work | ToolNest by Vintayz",
          description="Turn estimated hours, your rate, costs and a risk buffer into a fixed project price and deposit. See what overruns do to your real hourly rate.",
          intro="Turn your estimated hours, hourly rate and project costs into a fixed-price quote, with a safety buffer and deposit worked out for you.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["hourly-rate", "day-rate", "late-payment"]),
+         related=["hourly-rate", "day-rate", "quote-generator"]),
     dict(tool="hourly-to-annual", src="hourly-to-annual.html", script="hourly-to-annual.js",
          title="Hourly to Annual Income Calculator | ToolNest by Vintayz",
          description="Convert an hourly rate into daily, weekly, monthly and yearly income. Set your own hours and weeks worked. Free, in USD, GBP, CAD or AUD.",
@@ -1036,13 +1078,13 @@ PAGES = [
          description="Work out how big your emergency fund should be as a freelancer, how many months your savings cover and how long it will take to save the rest.",
          intro="Work out how much cash to keep for quiet months, how long your savings would last today, and how long it will take to reach your goal.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["income-smoothing", "retirement-savings", "hourly-rate"]),
+         related=["income-smoothing", "retirement-savings", "monthly-expenses"]),
     dict(tool="retirement-savings", src="retirement-savings.html", script="retirement-savings.js",
          title="Retirement Savings Calculator for the Self-Employed | ToolNest by Vintayz",
          description="See what your retirement savings could grow to with monthly contributions, and the income they might give you. For freelancers in the US, UK, CA and AU.",
          intro="See what your retirement savings could grow to by the time you stop working, and roughly what income they could give you.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["emergency-fund", "income-smoothing", "hourly-rate"]),
+         related=["emergency-fund", "income-smoothing", "savings-goal"]),
     dict(tool="income-smoothing", src="income-smoothing.html", script="income-smoothing.js",
          title="Income Smoothing Calculator for Freelancers | ToolNest by Vintayz",
          description="Turn irregular freelance income into a steady monthly salary. See the buffer you need and how your months would have played out.",
@@ -1054,25 +1096,25 @@ PAGES = [
          description="Calculate 2026 self-employment tax on your 1099 or Schedule C profit: Social Security, Medicare, Additional Medicare and the deductible half.",
          intro="Work out the Social Security and Medicare tax you owe on your 2026 freelance profit, and how much of it you can deduct.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
-         related=["us-take-home", "us-quarterly-tax", "us-1099-vs-w2"]),
+         related=["us-take-home", "us-quarterly-tax", "us-mileage"]),
     dict(tool="us-quarterly-tax", src="us-quarterly-tax.html", script="us-quarterly-tax.js", libs=["data/tax-us.js", "js/us-tax.js"],
          title="Quarterly Estimated Tax Calculator 2026 | ToolNest by Vintayz",
          description="Work out your 2026 quarterly estimated tax payments for self-employed income, with IRS due dates and the safe harbor that avoids penalties.",
          intro="See how much to pay the IRS each quarter for 2026, the safe harbor amount that avoids an underpayment penalty, and when each payment is due.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
-         related=["us-take-home", "us-self-employment-tax", "income-smoothing"]),
+         related=["us-take-home", "us-self-employment-tax", "us-tax-bracket"]),
     dict(tool="us-1099-vs-w2", src="us-1099-vs-w2.html", script="us-1099-vs-w2.js", libs=["data/tax-us.js", "js/us-tax.js"],
          title="1099 vs W-2 Calculator: Contractor vs Employee | ToolNest by Vintayz",
          description="Compare a 1099 contractor rate with a W-2 salary and benefits. Find the break-even hourly rate, including employer payroll taxes.",
          intro="Find the 1099 hourly rate that matches a W-2 job once benefits, employer payroll tax and unpaid time off are counted.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
-         related=["us-take-home", "hourly-rate", "us-self-employment-tax"]),
+         related=["us-take-home", "us-home-office", "us-self-employment-tax"]),
     dict(tool="us-take-home", src="us-take-home.html", script="us-take-home.js", libs=["data/tax-us.js", "js/us-tax.js"],
          title="Freelancer Take-Home Pay Calculator 2026 | ToolNest by Vintayz",
          description="See your 2026 take-home pay as a self-employed freelancer after federal income tax, self-employment tax, the QBI deduction and state tax.",
          intro="Estimate what you keep from your 2026 freelance profit after federal income tax, self-employment tax and state tax.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
-         related=["us-quarterly-tax", "us-self-employment-tax", "hourly-rate"]),
+         related=["us-quarterly-tax", "us-self-employment-tax", "us-tax-bracket"]),
     dict(tool="us-mileage", src="us-mileage.html", script="us-mileage.js", libs=["data/tax-us.js", "js/us-tax.js"],
          title="Business Mileage Deduction Calculator 2026 | ToolNest by Vintayz",
          description="Calculate your 2026 business mileage deduction with the IRS rates: 72.5 cents to June 30 and 76 cents from July 1. Includes parking and tolls.",
@@ -1097,13 +1139,13 @@ PAGES = [
          description="Work out your Self Assessment payments on account for January and July 2027, the balancing payment, and whether you need to pay them at all.",
          intro="See how much Self Assessment tax is due on 31 January and 31 July 2027, and whether you need to make payments on account at all.",
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
-         related=["uk-self-employed-tax", "income-smoothing", "emergency-fund"]),
+         related=["uk-self-employed-tax", "uk-work-from-home", "uk-dividend-tax"]),
     dict(tool="uk-sole-trader-vs-ltd", src="uk-sole-trader-vs-ltd.html", script="uk-sole-trader-vs-ltd.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
          title="Sole Trader vs Limited Company Calculator 2026/27 | ToolNest by Vintayz",
          description="Compare take-home pay as a sole trader and a limited company director for 2026 to 2027, with the new dividend tax rates and 15% employer NI.",
          intro="Compare your take-home pay as a sole trader and as a limited company director for 2026 to 2027, using the latest dividend and NI rates.",
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
-         related=["uk-self-employed-tax", "day-rate", "uk-payments-on-account"]),
+         related=["uk-self-employed-tax", "uk-dividend-tax", "uk-payments-on-account"]),
     dict(tool="uk-mileage", src="uk-mileage.html", script="uk-mileage.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
          title="Business Mileage Allowance Calculator UK (55p) | ToolNest by Vintayz",
          description="Calculate your business mileage claim with HMRC rates: 55p a mile for cars and vans from April 2026 (45p before), 25p after 10,000 miles.",
@@ -1142,19 +1184,19 @@ PAGES = [
          description="Estimate 2026 federal income tax and CPP (including CPP2) on self-employment income in Canada, with your own provincial tax estimate.",
          intro="Work out federal income tax and both halves of CPP on your 2026 self-employment income, and estimate what you'll take home.",
          chips=["{{icon:globe}} Canada, tax year 2026"] + TOOL_CHIPS,
-         related=["ca-instalments", "ca-gst-hst", "ca-employee-vs-contractor"]),
+         related=["ca-instalments", "ca-cpp-ei", "ca-employee-vs-contractor"]),
     dict(tool="ca-instalments", src="ca-instalments.html", script="ca-instalments.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
          title="Tax Instalments Calculator Canada 2026 | ToolNest by Vintayz",
          description="Find out if you need to pay CRA tax instalments in 2026, and compare current-year and prior-year options with the four due dates.",
          intro="Check whether you need to pay tax instalments to the CRA for 2026, and how much to pay each quarter.",
          chips=["{{icon:globe}} Canada, tax year 2026"] + TOOL_CHIPS,
-         related=["ca-self-employed-tax", "income-smoothing", "emergency-fund"]),
+         related=["ca-self-employed-tax", "income-smoothing", "ca-gst-hst"]),
     dict(tool="ca-employee-vs-contractor", src="ca-employee-vs-contractor.html", script="ca-employee-vs-contractor.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
          title="Employee vs Contractor Calculator Canada | ToolNest by Vintayz",
          description="Compare a contract rate with a salaried job in Canada. Find the break-even hourly rate including benefits and employer CPP.",
          intro="Find the contract hourly rate that matches a salaried job in Canada, once benefits and employer CPP are counted.",
          chips=["{{icon:globe}} Canada, tax year 2026"] + TOOL_CHIPS,
-         related=["ca-self-employed-tax", "hourly-rate", "ca-gst-hst"]),
+         related=["ca-self-employed-tax", "ca-cpp-ei", "ca-gst-hst"]),
     dict(tool="ca-gst-hst", src="ca-gst-hst.html", script="ca-gst-hst.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
          title="GST/HST Calculator for Every Province | ToolNest by Vintayz",
          description="Add or remove GST/HST for any Canadian province or territory, including Ontario 13% HST, Nova Scotia 14% and B.C. PST.",
@@ -1179,13 +1221,13 @@ PAGES = [
          description="Compare a contract rate with a salary plus 12% super in Australia. Find the break-even hourly rate once paid leave is counted.",
          intro="Find the contract hourly rate that matches an Australian salary once 12% super and paid leave are counted.",
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
-         related=["au-sole-trader-tax", "au-voluntary-super", "hourly-rate"]),
+         related=["au-sole-trader-tax", "au-gst", "au-take-home"]),
     dict(tool="au-voluntary-super", src="au-voluntary-super.html", script="au-voluntary-super.js", libs=["data/tax-au.js", "js/au-tax.js"],
          title="Voluntary Super Contribution Calculator 2026–27 | ToolNest by Vintayz",
          description="See how much tax you save by salary sacrificing or making deductible super contributions in 2026–27, with the $32,500 cap check.",
          intro="See how much tax you could save by adding extra concessional contributions to super in 2026–27.",
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
-         related=["au-sole-trader-tax", "retirement-savings", "au-employee-vs-contractor"]),
+         related=["au-sole-trader-tax", "retirement-savings", "au-take-home"]),
 
     dict(tool="late-payment", src="late-payment.html", script="late-payment.js", libs=["data/rates-uk.js"],
          title="Late Payment Interest Calculator (UK & US) | ToolNest by Vintayz",
@@ -1206,7 +1248,7 @@ PAGES = [
          description="Combine PDF files into one, in any order. Free, no sign-up, and your files never leave your device: merging happens in your browser.",
          intro="Join two or more PDF files into one, in the order you choose. Your files are merged by your own browser and never uploaded.",
          chips=PDF_CHIPS,
-         related=["pdf-split", "pdf-rearrange", "pdf-compress"]),
+         related=["pdf-split", "pdf-rearrange", "pdf-jpg-to-pdf"]),
     dict(tool="pdf-split", src="pdf-split.html", script="pdf-split.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="Split PDF: Separate Pages Into New Files | ToolNest by Vintayz",
          description="Split a PDF by page ranges, into equal parts or one file per page. Free and private: your PDF is split in your browser and never uploaded.",
@@ -1218,7 +1260,7 @@ PAGES = [
          description="Make a PDF smaller for email and uploads. Photos are re-saved at a smaller size while text stays sharp. Free, and your file never leaves your device.",
          intro="Make a PDF smaller so it's easier to email or upload. Photos inside it are re-saved at a smaller size, while text and drawings stay sharp.",
          chips=PDF_CHIPS,
-         related=["pdf-split", "pdf-to-jpg", "pdf-merge"]),
+         related=["pdf-jpg-to-pdf", "pdf-to-jpg", "pdf-metadata"]),
     dict(tool="pdf-rotate", src="pdf-rotate.html", script="pdf-rotate.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="Rotate PDF Pages Free, Without Uploading | ToolNest by Vintayz",
          description="Rotate one page or every page of a PDF by 90 or 180 degrees and save it. Free, with no quality loss, and it all happens in your browser.",
@@ -1230,13 +1272,13 @@ PAGES = [
          description="Remove unwanted pages from a PDF. Tap the pages or type their numbers, then save a new PDF. Free, and your file is never uploaded.",
          intro="Remove blank, extra or private pages from a PDF and save a new copy without them.",
          chips=PDF_CHIPS,
-         related=["pdf-extract-pages", "pdf-rearrange", "pdf-split"]),
+         related=["pdf-extract-pages", "pdf-rearrange", "pdf-rotate"]),
     dict(tool="pdf-extract-pages", src="pdf-extract-pages.html", script="pdf-extract-pages.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="Extract Pages from a PDF, Free Online | ToolNest by Vintayz",
          description="Save selected pages of a PDF as a new file. Tap the pages or type ranges like 2-5. Free, and your PDF never leaves your device.",
          intro="Pick the pages you need from a PDF and save just those pages as a new file.",
          chips=PDF_CHIPS,
-         related=["pdf-split", "pdf-delete-pages", "pdf-merge"]),
+         related=["pdf-split", "pdf-delete-pages", "pdf-rotate"]),
     dict(tool="pdf-rearrange", src="pdf-rearrange.html", script="pdf-rearrange.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="Rearrange PDF Pages: Reorder for Free | ToolNest by Vintayz",
          description="Drag PDF pages into a new order, or reverse them, and save. Bookmarks and links keep working. Free and private: nothing is uploaded.",
@@ -1260,25 +1302,25 @@ PAGES = [
          description="Save PDF pages as high-quality JPG or PNG pictures, at up to 300 DPI. Free, no sign-up, and your PDF is converted in your browser, not uploaded.",
          intro="Save the pages of a PDF as JPG or PNG pictures, for slides, social posts or anywhere a PDF won't open.",
          chips=PDF_CHIPS,
-         related=["pdf-jpg-to-pdf", "pdf-extract-pages", "pdf-compress"]),
+         related=["pdf-jpg-to-pdf", "pdf-extract-pages", "pdf-to-text"]),
     dict(tool="pdf-page-numbers", src="pdf-page-numbers.html", script="pdf-page-numbers.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="Add Page Numbers to a PDF, Free Online | ToolNest by Vintayz",
          description="Number the pages of a PDF: choose the corner, the style (like Page 1 of 10) and the first number. Free, and your file never leaves your device.",
          intro="Add page numbers to a PDF in the corner and style you choose, such as “Page 1 of 10”.",
          chips=PDF_CHIPS,
-         related=["pdf-watermark", "pdf-merge", "pdf-rearrange"]),
+         related=["pdf-watermark", "pdf-add-text", "pdf-rearrange"]),
     dict(tool="pdf-watermark", src="pdf-watermark.html", script="pdf-watermark.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="Add a Watermark to a PDF, Free and Private | ToolNest by Vintayz",
          description="Stamp DRAFT, CONFIDENTIAL or your own text across PDF pages. Choose the size, colour and strength. Free, and your file is never uploaded.",
          intro="Stamp a word or phrase such as DRAFT or CONFIDENTIAL across the pages of a PDF.",
          chips=PDF_CHIPS,
-         related=["pdf-page-numbers", "pdf-compress", "pdf-merge"]),
+         related=["pdf-page-numbers", "pdf-compress", "pdf-sign"]),
     dict(tool="pdf-sign", src="pdf-sign.html", script="pdf-sign.js", libs=PDF_LIBS, updated=NEW_DAY,
          title="Sign a PDF Free, Without Uploading | ToolNest by Vintayz",
          description="Draw or type your signature and place it on any page of a PDF, with the date if you like. Free, and your PDF and signature never leave your device.",
          intro="Draw or type your signature, put it where it belongs on the page, and save the signed PDF.",
          chips=PDF_CHIPS,
-         related=["pdf-add-text", "pdf-merge", "pdf-watermark"]),
+         related=["pdf-add-text", "pdf-metadata", "pdf-watermark"]),
     dict(tool="pdf-add-text", src="pdf-add-text.html", script="pdf-add-text.js", libs=PDF_LIBS, updated=ADD_TEXT_DAY,
          title="Add Text to a PDF Free, Without Uploading | ToolNest by Vintayz",
          description="Type on any page of a PDF and choose the font, size, colour, bold, italic and underline. Free, no sign-up, and your PDF never leaves your device.",
@@ -1297,13 +1339,13 @@ PAGES = [
          description="Build a US resume that follows CareerOneStop advice: Letter size, 1 to 2 pages, no birthdate. Free PDF download, no sign-up, nothing uploaded.",
          intro="Build a clean, one-column US resume and download it as a PDF. It follows the US Department of Labor's CareerOneStop advice, and nothing you type leaves your device.",
          chips=["{{flag:us}} US format, Letter size"] + RESUME_CHIPS,
-         related=["resume-uk", "resume-ca", "resume-au"]),
+         related=["resume-uk", "resume-ca", "cover-letter"]),
     dict(tool="resume-uk", src="resume-uk.html", script="resume-uk.js", libs=RESUME_LIBS, updated=RESUME_DAY,
          title="Free CV Maker (UK Format, PDF) | ToolNest by Vintayz",
          description="Make a UK CV on A4 that follows National Careers Service advice: personal profile, no date of birth, references line. Free PDF, nothing uploaded.",
          intro="Write a UK-style CV and download it as a PDF. It follows the National Careers Service's advice, fits on A4, and nothing you type leaves your device.",
          chips=["{{flag:uk}} UK format, A4"] + RESUME_CHIPS,
-         related=["resume-us", "resume-au", "resume-ca"]),
+         related=["resume-us", "resume-au", "cover-letter"]),
     dict(tool="resume-ca", src="resume-ca.html", script="resume-ca.js", libs=RESUME_LIBS, updated=RESUME_DAY,
          title="Free Canadian Resume Builder (PDF) | ToolNest by Vintayz",
          description="Build a Canadian resume that follows Job Bank advice: two pages at most, no photo or SIN, volunteer work included. Free PDF, nothing uploaded.",
@@ -1321,7 +1363,7 @@ PAGES = [
          description="Write a cover letter for the US, UK, Canada or Australia and download it as a PDF. The right greeting and sign-off for each country. Nothing is uploaded.",
          intro="Write a cover letter with the right layout, greeting and sign-off for the country you're applying in, and download it as a PDF.",
          chips=["{{icon:globe}} US · UK · Canada · Australia"] + RESUME_CHIPS,
-         related=["resume-us", "resume-uk", "resume-ca"]),
+         related=["resume-us", "resume-uk", "resignation-letter"]),
 
     # Hub pages
     dict(path="business/", src="business.html", kind="section", nav="business",
@@ -1349,7 +1391,7 @@ PAGES = [
          description="Make a professional freelance invoice and download it as a PDF, free. No sign-up and no watermark. Your details never leave your device.",
          intro="Generate clean, professional invoices and download them as PDFs. Runs completely in your browser with zero server uploads.",
          chips=[CURRENCY_CHIP, "{{icon:lock}} Files never leave your device", "{{icon:check}} Free, no watermark"],
-         related=["hourly-rate", "late-payment", "project-pricing"]),
+         related=["uk-vat", "late-payment", "retainer"]),
     dict(tool="timesheet", src="timesheet.html", script="timesheet.js", updated=NEW_DAY,
          title="Timesheet Calculator: Add Up Hours and Pay | ToolNest by Vintayz",
          description="Add up a week of start and finish times, less breaks, including night shifts. See total hours, overtime and pay. Free, in USD, GBP, CAD or AUD.",
@@ -1369,14 +1411,14 @@ PAGES = [
          description="Calculate gross margin, markup percentage, and net profit from your costs and selling price. Free, in USD, GBP, CAD or AUD.",
          intro="Find your gross margin, markup percentage and net profit from your direct costs and selling price.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["break-even", "payment-fee", "project-pricing"]),
+         related=["break-even", "payment-fee", "customer-lifetime-value"]),
 
     dict(tool="break-even", src="break-even.html", script="break-even.js",
          title="Break-Even Analysis Calculator | ToolNest by Vintayz",
          description="Free break-even calculator: find how many units and how much revenue you need to cover your fixed costs, with a profit and loss table.",
          intro="Work out how many units you need to sell to cover your fixed overheads and start making a profit.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["profit-margin", "payment-fee", "hourly-rate"]),
+         related=["profit-margin", "payment-fee", "roas-calculator"]),
 
     dict(tool="payment-fee", src="payment-fee.html", script="payment-fee.js",
          title="Stripe & PayPal Fee Calculator | ToolNest by Vintayz",
@@ -1389,7 +1431,7 @@ PAGES = [
          description="Make a professional quote or estimate for a client and download it as a PDF, free. No sign-up, no watermark, and your details never leave your device.",
          intro="Make a clear quote or estimate for a client, with line items, tax and terms, and download it as a PDF.",
          chips=[CURRENCY_CHIP, "{{icon:lock}} Files never leave your device", "{{icon:check}} Free, no watermark"],
-         related=["invoice-generator", "project-pricing", "profit-margin"]),
+         related=["invoice-generator", "uk-vat", "profit-margin"]),
 
     # Career Tools
     dict(tool="salary-to-hourly", src="salary-to-hourly.html", script="salary-to-hourly.js",
@@ -1397,13 +1439,13 @@ PAGES = [
          description="Convert annual salary to hourly, daily, weekly, bi-weekly and overtime wage equivalents. Customize hours and paid weeks.",
          intro="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates based on your work schedule.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["hourly-to-annual", "us-1099-vs-w2", "billable-hours"]),
+         related=["hourly-to-annual", "us-1099-vs-w2", "job-offer"]),
     dict(tool="pay-rise", src="pay-rise.html", script="pay-rise.js", updated=NEW_DAY,
          title="Pay Rise Calculator: Percent, Amount and Inflation | ToolNest by Vintayz",
          description="Work out a pay rise as a percentage or in money, see the extra you get each month, and check whether it beats inflation. Free, in USD, GBP, CAD or AUD.",
          intro="See how big a raise really is: as a percentage, in money each month and week, and after inflation.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["salary-to-hourly", "uk-take-home", "overtime"]),
+         related=["salary-to-hourly", "uk-take-home", "job-offer"]),
     dict(tool="overtime", src="overtime.html", script="overtime.js", updated=NEW_DAY,
          title="Overtime Pay Calculator: Time and a Half | ToolNest by Vintayz",
          description="Work out overtime pay at time and a half and double time, your total weekly pay and your average hourly rate. Free, in USD, GBP, CAD or AUD.",
@@ -1415,7 +1457,7 @@ PAGES = [
          description="Work out your salary after tax for 2026 to 2027: Income Tax, National Insurance, student loan and pension. Monthly and weekly take-home pay, including Scotland.",
          intro="See what you take home from your salary in 2026 to 2027 after Income Tax, National Insurance, student loan repayments and your pension.",
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
-         related=["pay-rise", "uk-holiday", "uk-self-employed-tax"]),
+         related=["uk-dividend-tax", "uk-holiday", "uk-self-employed-tax"]),
     dict(tool="uk-holiday", src="uk-holiday.html", script="uk-holiday.js", libs=["data/employment-uk.js"], updated=NEW_DAY,
          title="UK Holiday Entitlement Calculator | ToolNest by Vintayz",
          description="Work out your statutory holiday: 5.6 weeks a year, up to 28 days. For full-time, part-time, hours-based and irregular hours workers (12.07%).",
@@ -1427,7 +1469,7 @@ PAGES = [
          description="Work out statutory redundancy pay in England, Scotland and Wales from your age, years of service and weekly pay, with the £751 weekly cap from April 2026.",
          intro="Work out the minimum redundancy pay the law gives you in England, Scotland and Wales.",
          chips=["{{flag:uk}} England, Scotland and Wales"] + TOOL_CHIPS,
-         related=["uk-take-home", "uk-holiday", "emergency-fund"]),
+         related=["uk-take-home", "uk-holiday", "resignation-letter"]),
 
     # Student & Writing Tools
     dict(tool="word-counter", src="word-counter.html", script="word-counter.js",
@@ -1435,7 +1477,7 @@ PAGES = [
          description="Count words, characters, sentences, paragraphs, reading time, speaking time and Flesch reading ease level. 100% private in browser.",
          intro="Analyze text metrics, character counts, reading time, and reading grade level directly inside your browser.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
-         related=["gpa-calculator", "resume-us", "invoice-generator"]),
+         related=["gpa-calculator", "citation", "pdf-to-text"]),
     dict(tool="citation", src="citation.html", script="citation.js", updated=NEW_DAY,
          title="Citation Generator: APA, MLA and Harvard | ToolNest by Vintayz",
          description="Make APA 7th, MLA 9th and Harvard references for websites, books and journal articles, and build a reference list. Free, and nothing is uploaded.",
@@ -1448,7 +1490,7 @@ PAGES = [
          description="Calculate your semester or cumulative college GPA on a 4.0 scale, weighted by course credits. Free, private and easy to use on your phone.",
          intro="Calculate your college semester and cumulative grade point average on a standard 4.0 scale with credit weighting.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
-         related=["word-counter", "final-grade", "citation"]),
+         related=["word-counter", "final-grade", "weighted-grade"]),
     dict(tool="uk-degree", src="uk-degree.html", script="uk-degree.js", updated=NEW_DAY,
          title="UK Degree Classification Calculator | ToolNest by Vintayz",
          description="Work out your UK degree mark and class (First, 2:1, 2:2, Third) from your second and final year averages, and the final-year marks you need.",
@@ -1460,7 +1502,7 @@ PAGES = [
          description="Find the score you need on your final exam to reach the course grade you want, and see the grade you'd get for different exam scores.",
          intro="Find out what you need to score on your final exam to get the overall grade you want.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
-         related=["gpa-calculator", "uk-degree", "citation"]),
+         related=["gpa-calculator", "uk-degree", "weighted-grade"]),
 
     # New Hub pages (Part 1)
     dict(path="finance/", src="finance.html", kind="section", nav="finance",
@@ -1494,14 +1536,14 @@ PAGES = [
          description="Calculate compound interest with regular monthly deposits, annual returns and a year-by-year growth table. Free in USD, GBP, CAD, AUD.",
          intro="See how compound interest and regular monthly contributions grow your savings over time, with a year-by-year schedule.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["mortgage", "retirement-savings", "emergency-fund"]),
+         related=["mortgage", "retirement-savings", "savings-goal"]),
 
-    dict(tool="mortgage", src="mortgage.html", script="mortgage.js", updated=NEW_DAY,
+    dict(tool="mortgage", src="mortgage.html", script="mortgage.js", updated=SECTIONS_DAY,  # yearly breakdown added
          title="Mortgage Calculator: Principal & Interest by Year | ToolNest by Vintayz",
          description="Work out your monthly mortgage payment, how much goes to principal and interest each year, and the balance left. With a worked example.",
          intro="Calculate your fixed monthly mortgage payment, how much of it pays off the loan each year, and the total interest over the full term.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["compound-interest", "emergency-fund", "hourly-to-annual"]),
+         related=["compound-interest", "emergency-fund", "monthly-expenses"]),
 
     dict(tool="tdee-calculator", src="tdee.html", script="tdee.js", updated=NEW_DAY,
          title="TDEE Calculator: Daily Calorie Expenditure | ToolNest by Vintayz",
@@ -1522,47 +1564,47 @@ PAGES = [
          description="Format, prettify, minify and validate JSON data instantly. 100% private in your browser with zero server uploads.",
          intro="Format and validate your JSON data with 2-space indentation or minify it for production. Runs entirely in your browser memory.",
          chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
-         related=["color-contrast", "word-counter", "unit-converter"]),
+         related=["color-contrast", "unix-timestamp", "unit-converter"]),
 
     dict(tool="color-contrast", src="color-contrast.html", script="color-contrast.js", updated=NEW_DAY,
          title="WCAG Color Contrast Checker (AA & AAA) | ToolNest by Vintayz",
          description="Check foreground and background color contrast ratios against WCAG 2.1 Level AA and AAA accessibility standards. Live preview.",
          intro="Test foreground and background color pairs against WCAG 2.1 accessibility benchmarks to ensure digital compliance.",
          chips=["{{icon:lock}} Evaluated locally", "{{icon:check}} WCAG 2.1 standards"],
-         related=["json-formatter", "word-counter", "profit-margin"]),
+         related=["json-formatter", "word-counter", "unix-timestamp"]),
 
     dict(tool="tip-calculator", src="tip.html", script="tip.js", updated=NEW_DAY,
          title="Tip & Bill Split Calculator: Even Diners Split | ToolNest by Vintayz",
          description="Calculate tips (10% to 25%) and evenly split the bill between friends. Optional round-up to nearest dollar. Free, in USD, GBP, CAD, AUD.",
          intro="Evenly split food and drinks bills with tips, with quick preset buttons and an optional round-up toggle.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["unit-converter", "profit-margin", "payment-fee"]),
+         related=["unit-converter", "profit-margin", "percentage"]),
 
     dict(tool="unit-converter", src="unit-converter.html", script="unit-converter.js", updated=NEW_DAY,
          title="Universal Unit Converter: Length, Weight, Temp | ToolNest by Vintayz",
          description="Convert between metric and imperial units for length (mi to km), weight (lbs to kg), temperature (°C to °F), volume and area.",
          intro="Convert instantly between metric and imperial measurement systems with standard scientific precision.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Converted locally"],
-         related=["tip-calculator", "bmi-calculator", "timesheet"]),
+         related=["tip-calculator", "bmi-calculator", "timesheet", "percentage"]),
 
     dict(tool="us-salaried-pay", src="us-take-home-pay.html", script="us-take-home-pay.js", libs=["data/tax-us.js"], updated=NEW_DAY,
          title="US Take-Home Pay Calculator 2026 (W-2 Salary) | ToolNest by Vintayz",
          description="Calculate your net paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax. Monthly and bi-weekly.",
          intro="See what you take home from your annual W-2 salary in 2026 after federal income tax, FICA payroll taxes, and state taxes.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
-         related=["salary-to-hourly", "pay-rise", "us-take-home"]),
+         related=["overtime", "us-tax-bracket", "us-take-home"]),
 
     dict(tool="roas-calculator", src="roas.html", script="roas.js", updated=NEW_DAY,
          title="E-Commerce ROAS Calculator: Break-Even Ad Spend | ToolNest by Vintayz",
          description="Calculate Return On Ad Spend (ROAS) and break-even ROAS from product margins to see real net profit from ad campaigns.",
          intro="Find your campaign ROAS, break-even ROAS based on cost of goods sold, and true net profit after advertising spend.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["profit-margin", "break-even", "payment-fee"]),
+         related=["profit-margin", "break-even", "customer-lifetime-value"]),
 
     # Brain games
-    dict(path="games/", src="games.html", kind="section", nav="games", updated=GAME_DAY_2,
+    dict(path="games/", src="games.html", kind="section", nav="games", updated=GAME_DAY_3,
          title="Free Games: Solitaire, Sudoku and More | ToolNest by Vintayz",
-         description="Free games for a short break: Solitaire, Sudoku, word search, mine finder, typing speed test, mental math and more. No sign-up, nothing saved.",
+         description="15 free games for a short break: Solitaire, Sudoku, Snake, word search, four in a row, typing and memory tests. No sign-up, nothing saved.",
          h1="Brain Games for a Short Break",
          intro="Quick, free games to rest your mind between tasks, or to test your typing speed and reactions. They run in your browser and save nothing.",
          chips=GAME_CHIPS),
@@ -1571,31 +1613,31 @@ PAGES = [
          description="Free typing speed test. Type a short passage for 30, 60 or 120 seconds and see your words per minute (WPM) and accuracy. Nothing you type is saved.",
          intro="Type the passage as fast and as accurately as you can. You'll see your words per minute (WPM) and accuracy as you go.",
          chips=GAME_CHIPS,
-         related=["reaction-time", "word-counter", "sudoku"]),
+         related=["reaction-time", "word-counter", "mental-math"]),
     dict(tool="reaction-time", src="reaction-time.html", script="reaction-time.js", updated=GAME_DAY,
          title="Reaction Time Test: How Fast Are You? | ToolNest by Vintayz",
          description="Free reaction time test. Tap when the box turns green and get your average, best and slowest time in milliseconds over five tries.",
          intro="Wait for the box to turn green, then tap or click as fast as you can. After five tries you get your average time.",
          chips=GAME_CHIPS,
-         related=["typing-test", "memory-match", "number-merge"]),
+         related=["typing-test", "memory-match", "number-memory"]),
     dict(tool="sudoku", src="sudoku.html", script="sudoku.js", libs=GAME_LIBS, updated=GAME_DAY,
          title="Free Sudoku: Easy, Medium and Hard | ToolNest by Vintayz",
          description="Play free Sudoku online. New puzzles in easy, medium and hard, each with exactly one solution. Notes, hints and mistake checks. No sign-up.",
          intro="Fill the grid so every row, column and 3&times;3 box holds the numbers 1 to 9 once each. Every puzzle has exactly one solution.",
          chips=GAME_CHIPS,
-         related=["number-merge", "memory-match", "typing-test"]),
-    dict(tool="number-merge", src="number-merge.html", script="number-merge.js", updated=GAME_DAY,
+         related=["number-merge", "memory-match", "mine-finder"]),
+    dict(tool="number-merge", src="number-merge.html", script="number-merge.js", libs=GAME_LIBS, updated=GAME_DAY,
          title="Number Merge Puzzle: Reach 2048 | ToolNest by Vintayz",
          description="A free 2048-style sliding tile puzzle. Join equal numbers to reach the 2048 tile. Play with arrow keys or swipe on your phone. No sign-up.",
          intro="Slide all the tiles at once. When two equal numbers touch, they join into one. Try to reach the 2048 tile.",
          chips=GAME_CHIPS,
-         related=["sudoku", "memory-match", "reaction-time"]),
+         related=["sudoku", "memory-match", "solitaire"]),
     dict(tool="memory-match", src="memory-match.html", script="memory-match.js", libs=GAME_LIBS, updated=GAME_DAY,
          title="Memory Match Game: Find the Pairs | ToolNest by Vintayz",
          description="Free memory match card game. Turn over two cards at a time and find every pair in as few moves as you can. 16 or 24 cards. No sign-up.",
          intro="Turn over two cards at a time. Remember where each picture is and find all the pairs in as few moves as you can.",
          chips=GAME_CHIPS,
-         related=["sudoku", "number-merge", "reaction-time"]),
+         related=["sudoku", "number-merge", "word-search"]),
     dict(tool="solitaire", src="solitaire.html", script="solitaire.js", libs=GAME_LIBS, updated=GAME_DAY_2,
          title="Free Solitaire (Klondike): Play Online | ToolNest by Vintayz",
          description="Play free Klondike Solitaire online. Turn over 1 or 3 cards, undo any move, and tap to move cards on your phone. No sign-up, no download.",
@@ -1614,18 +1656,48 @@ PAGES = [
          intro="Find every word from the list hidden in the grid. Words can run across, down or diagonally.",
          chips=GAME_CHIPS,
          related=["memory-match", "solitaire", "typing-test"]),
-    dict(tool="mental-math", src="mental-math.html", script="mental-math.js", updated=GAME_DAY_2,
+    dict(tool="mental-math", src="mental-math.html", script="mental-math.js", libs=GAME_LIBS, updated=GAME_DAY_2,
          title="Mental Math Test: 60-Second Speed Quiz | ToolNest by Vintayz",
          description="Free mental math test. Answer as many sums as you can in 60 seconds: addition, subtraction, times tables and division. Three levels.",
          intro="How many sums can you answer in 60 seconds? Each answer is checked as you type.",
          chips=GAME_CHIPS,
          related=["number-memory", "typing-test", "sudoku"]),
-    dict(tool="number-memory", src="number-memory.html", script="number-memory.js", updated=GAME_DAY_2,
+    dict(tool="number-memory", src="number-memory.html", script="number-memory.js", libs=GAME_LIBS, updated=GAME_DAY_2,
          title="Number Memory Test: How Many Digits? | ToolNest by Vintayz",
          description="Free number memory test. Remember a number shown for a few seconds, then type it. Each right answer adds a digit. Nothing is saved.",
          intro="Remember the number, then type it in. Each right answer makes the next number one digit longer.",
          chips=GAME_CHIPS,
          related=["mental-math", "reaction-time", "memory-match"]),
+    dict(tool="sliding-puzzle", src="sliding-puzzle.html", script="sliding-puzzle.js", libs=GAME_LIBS, updated=GAME_DAY_3,
+         title="Sliding Puzzle: Free 15 Puzzle Online | ToolNest by Vintayz",
+         description="Play the classic 15 puzzle free: slide the tiles back into order. 3×3, 4×4 or 5×5, and every puzzle can be solved. No sign-up.",
+         intro="Slide the tiles back into order, 1 to 15, with the gap in the bottom-right corner.",
+         chips=GAME_CHIPS,
+         related=["number-merge", "sudoku", "nonogram"]),
+    dict(tool="four-in-a-row", src="four-in-a-row.html", script="four-in-a-row.js", libs=GAME_LIBS, updated=GAME_DAY_3,
+         title="Four in a Row: Play the Computer Free | ToolNest by Vintayz",
+         description="Free four in a row game. Drop counters and line up four before the computer does, on easy, medium or hard. Or play a friend on one device.",
+         intro="Take turns dropping counters. The first to line up four of their colour wins.",
+         chips=GAME_CHIPS,
+         related=["solitaire", "mine-finder", "snake"]),
+    dict(tool="nonogram", src="nonogram.html", script="nonogram.js", libs=GAME_LIBS, updated=GAME_DAY_3,
+         title="Nonogram: Free Picture Logic Puzzles | ToolNest by Vintayz",
+         description="Free nonogram puzzles, also called paint by numbers. Use the clues to fill the grid. 5×5, 10×10 or 15×15, new puzzle every time.",
+         intro="Fill in squares so every row and column matches its number clues.",
+         chips=GAME_CHIPS,
+         related=["sudoku", "mine-finder", "sliding-puzzle"]),
+    dict(tool="sequence-memory", src="sequence-memory.html", script="sequence-memory.js", libs=GAME_LIBS, updated=GAME_DAY_3,
+         title="Sequence Memory Test: Repeat the Pattern | ToolNest by Vintayz",
+         description="Free sequence memory test. Watch the squares light up and tap them back in order. Each round adds one. How long can you go?",
+         intro="Watch the squares light up, then tap them in the same order. Each round adds one more.",
+         chips=GAME_CHIPS,
+         related=["number-memory", "memory-match", "reaction-time"]),
+    dict(tool="snake", src="snake.html", script="snake.js", libs=GAME_LIBS, updated=GAME_DAY_3,
+         title="Snake Game: Play Free Online | ToolNest by Vintayz",
+         description="Play the classic Snake game free. Eat the food, grow longer and don't crash. Arrow keys on a computer, swipe on your phone. No sign-up.",
+         intro="Steer the snake to the food. Each piece makes it longer. Don't hit the walls or yourself.",
+         chips=GAME_CHIPS,
+         related=["four-in-a-row", "number-merge", "reaction-time"]),
 
     # One new tool in each section (5 October 2026)
     dict(tool="retainer", src="retainer.html", script="retainer.js", updated=SECTIONS_DAY,
@@ -1633,7 +1705,7 @@ PAGES = [
          description="Work out a monthly retainer fee from your hourly rate, reserved hours and discount, and what you really earn per hour worked. In USD, GBP, CAD or AUD.",
          intro="Turn your hourly rate into a monthly retainer fee, and see what you really earn per hour once you know how many hours the client uses.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["project-pricing", "hourly-rate", "invoice-generator"]),
+         related=["project-pricing", "quote-generator", "invoice-generator"]),
     dict(tool="customer-lifetime-value", src="customer-lifetime-value.html", script="customer-lifetime-value.js", updated=SECTIONS_DAY,
          title="Customer Lifetime Value (CLV) Calculator | ToolNest by Vintayz",
          description="Calculate customer lifetime value from order value, orders a year, margin and how long customers stay, and compare it with your cost to win them (LTV:CAC).",
@@ -1645,7 +1717,7 @@ PAGES = [
          description="Compare two job offers side by side: salary, bonus, benefits, working hours, commuting cost and commuting time. See which pays more per hour of your time.",
          intro="Put two job offers side by side and see which leaves you more money, and which pays more for each hour of your time once commuting is counted.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["salary-to-hourly", "pay-rise", "us-salaried-pay"]),
+         related=["salary-to-hourly", "us-1099-vs-w2", "us-salaried-pay"]),
     dict(tool="weighted-grade", src="weighted-grade.html", script="weighted-grade.js", updated=SECTIONS_DAY,
          title="Weighted Grade Calculator: Your Grade So Far | ToolNest by Vintayz",
          description="Work out your course grade from weighted categories like homework, quizzes and exams. Leave ungraded work empty to see your grade so far.",
@@ -1657,13 +1729,13 @@ PAGES = [
          description="Find how much to save each month to reach a savings goal by a set date, with interest added monthly. Free, in USD, GBP, CAD or AUD.",
          intro="Find out how much to put aside each month to reach your savings goal in time, including the interest your savings earn.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["compound-interest", "emergency-fund", "mortgage"]),
+         related=["compound-interest", "emergency-fund", "monthly-expenses"]),
     dict(tool="monthly-expenses", src="monthly-expenses.html", script="monthly-expenses.js", updated=SEO_DAY,
          title="Monthly Expenses Calculator (UK & US) | ToolNest by Vintayz",
          description="Add up your monthly bills, from rent and council tax to food and subscriptions. See your yearly total, biggest costs and what's left from your pay.",
          intro="Add up what you spend each month, see your yearly total and biggest costs, and find out what's left from your take-home pay.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["emergency-fund", "savings-goal", "uk-take-home"]),
+         related=["emergency-fund", "savings-goal", "mortgage"]),
     dict(tool="unix-timestamp", src="unix-timestamp.html", script="unix-timestamp.js", updated=SECTIONS_DAY,
          title="Unix Timestamp Converter (Epoch to Date) | ToolNest by Vintayz",
          description="Convert a Unix epoch timestamp in seconds or milliseconds to a date in UTC and your time zone, or a date back to a timestamp. Runs in your browser.",
@@ -1675,19 +1747,19 @@ PAGES = [
          description="Free percentage calculator: X% of Y, X as a percent of Y, percentage change between two numbers, and adding or taking off a percentage.",
          intro="Four quick percentage calculators in one place, each with a plain-English answer.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
-         related=["tip-calculator", "unit-converter", "profit-margin"]),
+         related=["tip-calculator", "unit-converter", "pay-rise"]),
     dict(tool="pdf-metadata", src="pdf-metadata.html", script="pdf-metadata.js", libs=PDF_LIBS, updated=SECTIONS_DAY,
          title="Edit or Remove PDF Metadata Free | ToolNest by Vintayz",
          description="Change a PDF's title, author, subject and keywords, or remove all hidden properties before you share it. Free, and your PDF never leaves your device.",
          intro="See and change the hidden properties inside a PDF, such as its title and author, or remove them all before you share it.",
          chips=PDF_CHIPS,
-         related=["pdf-compress", "pdf-watermark", "pdf-merge"]),
+         related=["pdf-compress", "pdf-watermark", "pdf-sign"]),
     dict(tool="resignation-letter", src="resignation-letter.html", script="resignation-letter.js", libs=RESUME_LIBS, updated=SECTIONS_DAY,
          title="Free Resignation Letter Maker (PDF) | ToolNest by Vintayz",
          description="Write a polite, professional resignation letter with your last working day and download it as a PDF. For the US, UK, Canada and Australia. Nothing is uploaded.",
          intro="Write a clear, polite resignation letter with your last working day, and download it as a PDF or copy it into an email.",
          chips=["{{icon:globe}} US · UK · Canada · Australia"] + RESUME_CHIPS,
-         related=["cover-letter", "resume-us", "resume-uk"]),
+         related=["cover-letter", "resume-us", "uk-redundancy"]),
     dict(tool="us-tax-bracket", src="us-tax-bracket.html", script="us-tax-bracket.js", libs=["data/tax-us.js", "js/us-tax.js"], updated=SECTIONS_DAY,
          title="Federal Tax Bracket Calculator 2026 | ToolNest by Vintayz",
          description="Find your 2026 federal tax bracket, the tax on each slice of your income, and your marginal and effective tax rates, for every filing status.",
@@ -1755,6 +1827,20 @@ for p in PAGES:
         p.setdefault("parent", t.get("parent", "freelance"))
         p.setdefault("nav", PARENTS[p["parent"]][2])
     p.setdefault("updated", TODAY)
+
+# A section page changes whenever a tool is added to it, so its date (and sitemap lastmod)
+# is the newest date of its own content or any of its tools.
+for p in PAGES:
+    if p.get("kind") == "section":
+        kids = [k["updated"] for k in PAGES if "parent" in k and PARENTS[k["parent"]][1] == p["path"]]
+        p["updated"] = max([p["updated"]] + kids)
+
+# Keep titles to about 60 characters so search results show them in full: long ones use the
+# short brand name.
+for p in PAGES:
+    long_suffix = f" | {BRAND}"
+    if len(p.get("title", "")) > 60 and p["title"].endswith(long_suffix):
+        p["title"] = p["title"][: -len(long_suffix)] + " | Vintayz"
 
 # Build a lookup of base page definitions for regional tools
 base_tool_pages = {}
@@ -2069,7 +2155,7 @@ def header(page, up):
     in_calcs = " is-current" if nav in [c[0] for c in CALC_SECTIONS] else ""
 
     # The Country menu is a <details> element, so it opens and closes without JavaScript.
-    # common.js only adds closing on Escape and on a click outside.
+    # common.js adds opening on mouse hover, the open/close animation, and closing on Escape and a click outside.
     return f"""<a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header">
@@ -2322,6 +2408,17 @@ def related(page, up):
   </section>"""
 
 
+def other_sections(page, up):
+    """Links to every other section, so visitors can move on from a section page."""
+    live = {p["path"] for p in PAGES if p.get("kind") == "section"}
+    links = "".join(f'<a class="chip chip-link" href="{up}{path}">{html.escape(name)}</a>'
+                    for name, path, _ in PARENTS.values() if path in live and path != page["path"])
+    return f"""<section class="section">
+    <div class="section-head"><div><span class="kicker">Explore</span><h2>More free tools</h2></div></div>
+    <nav class="meta-row" aria-label="Other sections">{links}</nav>
+  </section>"""
+
+
 def updated_line(page):
     return f'<p class="updated">Last updated: <time datetime="{page["updated"]}">{human_date(page["updated"])}</time></p>'
 
@@ -2332,7 +2429,7 @@ def main_content(page, up, body):
         return body
     hero = page_hero(page, up)
     if kind == "section":
-        return f"{hero}\n<div class=\"container\">\n{body}\n</div>"
+        return f"{hero}\n<div class=\"container\">\n{body}\n  {other_sections(page, up)}\n</div>"
     if kind == "legal":
         return f"{hero}\n<div class=\"container\">\n  <div class=\"content legal\">\n{body}\n{updated_line(page)}\n  </div>\n</div>"
     # tool

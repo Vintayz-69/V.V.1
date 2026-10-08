@@ -294,6 +294,45 @@ ol {
   box-shadow: var(--shadow-lg);
 }
 
+/* An invisible strip over the 8px gap, so the mouse can move from the button into the menu
+   without leaving it (common.js opens the menus on hover and closes them when the mouse leaves). */
+.site-nav .nav-menu-list::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10px;
+  height: 10px;
+}
+
+/* Menus slide down and fade in when they open, and back out when common.js closes them. */
+.nav-menu[open] .nav-menu-list {
+  transform-origin: top right;
+  animation: menu-in 0.18s ease-out;
+}
+
+.nav-menu[open] .nav-menu-list-start {
+  transform-origin: top left;
+}
+
+.nav-menu.is-closing .nav-menu-list {
+  animation: menu-out 0.14s ease-in forwards;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+}
+
+@keyframes menu-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+}
+
 .site-nav .nav-menu-list a {
   display: flex;
   align-items: center;
@@ -618,6 +657,18 @@ ol {
   font-size: 0.85rem;
   font-weight: 550;
   color: var(--muted);
+}
+
+.chip-link {
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 14px;
+}
+
+.chip-link:hover,
+.chip-link:focus-visible {
+  border-color: var(--green-600);
+  color: var(--green-600);
 }
 
 .chip .icon {
@@ -5030,11 +5081,15 @@ main .section[hidden],
   gap: 10px;
   width: 100%;
   max-width: 420px;
+  /* Also fit the screen's height, so the whole board and the arrow buttons show without scrolling. */
+  max-width: max(240px, min(420px, 100vh - 330px));
+  max-width: max(240px, min(420px, 100dvh - 330px));
   margin: 0 auto;
   padding: 10px;
   aspect-ratio: 1;
   border-radius: var(--radius);
   background: var(--border-strong);
+  container-type: inline-size;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
@@ -5054,12 +5109,13 @@ main .section[hidden],
   border-radius: 8px;
   background: var(--bg);
   font-size: clamp(1.4rem, 7vw, 2.2rem);
+  font-size: clamp(1.1rem, 12cqi, 2.2rem); /* grows and shrinks with the board */
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
 
-.merge-cell.tile-long { font-size: clamp(1.1rem, 5.4vw, 1.7rem); }
+.merge-cell.tile-long { font-size: clamp(1.1rem, 5.4vw, 1.7rem); font-size: clamp(0.9rem, 9cqi, 1.7rem); }
 
 .tile-2 { background: #eef3ff; color: #1e3a8a; }
 .tile-4 { background: #dbe5ff; color: #1e3a8a; }
@@ -5760,6 +5816,141 @@ button.sol-slot {
   align-self: center;
 }
 
+/* ---------- Game colour animations ----------
+   flash() in games-common.js adds fx-win, fx-lose, fx-right or fx-wrong for a moment.
+   Green and gold for good news, red for a miss. Each glow pulses well under 3 times a second. */
+@keyframes fx-win-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  20%, 60% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.6), 0 0 28px 6px rgba(245, 196, 81, 0.55); }
+  40%, 80% { box-shadow: 0 0 0 3px rgba(245, 196, 81, 0.65), 0 0 16px 2px rgba(16, 185, 129, 0.35); }
+}
+
+@keyframes fx-lose-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+  25% { box-shadow: 0 0 0 5px rgba(220, 38, 38, 0.6), 0 0 24px 4px rgba(220, 38, 38, 0.35); }
+}
+
+@keyframes fx-right-flash {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  35% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.6); }
+}
+
+@keyframes fx-wrong-flash {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+  35% { box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.6); }
+}
+
+@keyframes fx-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+@keyframes fx-pop {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.08); }
+}
+
+.fx-win { animation: fx-win-glow 1.8s ease-in-out; }
+.fx-lose { animation: fx-lose-glow 1.2s ease-out, fx-shake 0.4s ease-in-out; }
+.fx-right { animation: fx-right-flash 0.5s ease-out; }
+.fx-wrong { animation: fx-wrong-flash 0.5s ease-out, fx-shake 0.35s ease-in-out; }
+
+.sol-table.fx-win,
+.typing-passage.fx-win { border-radius: var(--radius); }
+
+/* The Mine Finder board sits in a scrolling box that would cut off a glow, so its gaps change colour instead. */
+@keyframes mine-win-bg {
+  0%, 100% { background-color: var(--border-strong); }
+  25%, 65% { background-color: #10b981; }
+  45%, 85% { background-color: #f5c451; }
+}
+
+@keyframes mine-lose-bg {
+  0%, 100% { background-color: var(--border-strong); }
+  25% { background-color: #dc2626; }
+}
+
+.mine-board.fx-win { animation: mine-win-bg 1.8s ease-in-out; }
+.mine-board.fx-lose { animation: mine-lose-bg 1.2s ease-out, fx-shake 0.4s ease-in-out; }
+
+@keyframes mine-open {
+  from { background-color: var(--blue-100); }
+}
+
+@keyframes mine-hit {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+  100% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+}
+
+.mine-cell.is-open { animation: mine-open 0.35s ease-out; }
+.mine-cell.is-hit { animation: mine-hit 0.7s ease-out 2; position: relative; z-index: 1; }
+
+/* Memory Match: the card shakes, its face lights up. */
+.memory-card.fx-right { animation: fx-pop 0.45s ease-out; }
+.memory-card.fx-wrong { animation: fx-shake 0.35s ease-in-out; }
+.memory-card.fx-right .memory-front { animation: fx-right-flash 0.7s ease-out; }
+.memory-card.fx-wrong .memory-front {
+  border-color: var(--red-600);
+  color: var(--red-600);
+  animation: fx-wrong-flash 0.7s ease-out;
+}
+
+/* Word Search: found letters flash gold, then settle to green. */
+@keyframes ws-found {
+  0% { background-color: #f5c451; color: #0b1b34; transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.ws-cell.is-found { animation: ws-found 0.5s ease-out; }
+
+/* Number Merge: merged tiles give off a gold glow as they pop. */
+@keyframes tile-glow {
+  0% { box-shadow: 0 0 0 0 rgba(245, 196, 81, 0); }
+  40% { box-shadow: 0 0 0 4px rgba(245, 196, 81, 0.75), 0 0 16px 2px rgba(245, 196, 81, 0.5); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 196, 81, 0); }
+}
+
+.tile-merged { animation: tile-pop 0.16s ease-out, tile-glow 0.45s ease-out; }
+
+/* Sudoku: a square that breaks the rules gives a small shake. */
+.sudoku-cell.conflict { animation: fx-shake 0.3s ease-in-out; }
+
+/* Solitaire: the picked card lifts with a blue glow. */
+@keyframes sol-pick {
+  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+  100% { box-shadow: 0 6px 14px rgba(29, 78, 216, 0.35); }
+}
+
+.sol-card.is-selected { animation: sol-pick 0.25s ease-out; }
+
+/* Reaction Time. The pad turns green at once (no fade), so the timing stays fair;
+   the ring only starts after the colour has changed. */
+@keyframes rt-go-ring {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  100% { box-shadow: 0 0 0 18px rgba(16, 185, 129, 0); }
+}
+
+.reaction-pad.is-go { animation: rt-go-ring 0.9s ease-out infinite; }
+.reaction-pad.is-early { animation: fx-shake 0.4s ease-in-out; }
+.reaction-pad.is-done { animation: fx-win-glow 1.8s ease-in-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the colours, drop the movement. */
+  .fx-lose { animation: fx-lose-glow 1.2s ease-out; }
+  .fx-wrong { animation: fx-wrong-flash 0.5s ease-out; }
+  .mine-board.fx-lose { animation: mine-lose-bg 1.2s ease-out; }
+  .memory-card.fx-right,
+  .memory-card.fx-wrong,
+  .sudoku-cell.conflict,
+  .reaction-pad.is-go,
+  .reaction-pad.is-early { animation: none; }
+  .tile-merged { animation: tile-glow 0.45s ease-out; }
+  .ws-cell.is-found { animation: none; }
+}
+
 @media (max-width: 600px) {
   .sol-table {
     gap: 10px;
@@ -5769,4 +5960,297 @@ button.sol-slot {
   .nm-stage {
     padding: 18px 14px;
   }
+}
+
+/* ---------- Brain games, part 3: Sliding Puzzle, Four in a Row, Nonogram, Sequence Memory, Snake ---------- */
+
+/* Sliding Puzzle */
+.sp-board {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  background: var(--border-strong);
+}
+
+.sp-board.sp-3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+.sp-board.sp-4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
+.sp-board.sp-5 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); gap: 5px; }
+
+.sp-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: clamp(1.2rem, 6vw, 2rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: linear-gradient(180deg, var(--navy-700), var(--navy-900));
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.sp-5 .sp-tile { font-size: clamp(1rem, 4.8vw, 1.6rem); }
+
+.sp-tile.is-home {
+  background: linear-gradient(180deg, #059669, #047857);
+}
+
+.sp-tile:focus-visible {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 2px;
+}
+
+.sp-gap {
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+/* Four in a Row */
+.fr-wrap {
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.fr-columns,
+.fr-board {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(4px, 1.4vw, 8px);
+}
+
+.fr-columns {
+  padding: 0 clamp(6px, 1.6vw, 10px) 6px;
+}
+
+.fr-drop {
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.fr-drop:hover:not(:disabled) { border-color: var(--blue-600); color: var(--blue-600); }
+.fr-drop:disabled { opacity: 0.35; cursor: default; }
+.fr-drop:focus-visible { outline: 3px solid var(--blue-600); outline-offset: 2px; }
+
+.fr-board {
+  padding: clamp(6px, 1.6vw, 10px);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--navy-700), var(--navy-900));
+  cursor: pointer;
+}
+
+.fr-cell {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.fr-cell.p1 { background: radial-gradient(circle at 35% 30%, #60a5fa, #1d4ed8 70%); }
+.fr-cell.p2 { background: radial-gradient(circle at 35% 30%, #fde68a, #d4901a 70%); }
+.fr-cell.is-win { box-shadow: 0 0 0 3px #10b981, 0 0 12px 2px rgba(16, 185, 129, 0.7); }
+
+@keyframes fr-drop-in {
+  from { transform: translateY(-120%); opacity: 0.4; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.fr-cell.is-new { animation: fr-drop-in 0.22s ease-in; }
+
+/* Nonogram */
+.ng-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ng-board {
+  display: grid;
+  gap: 1px;
+  width: 100%;
+  margin: 0 auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ng-board.ng-5 { grid-template-columns: auto repeat(5, minmax(0, 1fr)); max-width: 360px; }
+.ng-board.ng-10 { grid-template-columns: auto repeat(10, minmax(0, 1fr)); max-width: 500px; }
+.ng-board.ng-15 { grid-template-columns: auto repeat(15, minmax(0, 1fr)); max-width: 620px; min-width: 520px; }
+
+.ng-clue {
+  display: flex;
+  font-size: clamp(0.62rem, 2.4vw, 0.82rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+.ng-col-clue {
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4px;
+  white-space: pre;
+  text-align: center;
+}
+
+.ng-row-clue {
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+  white-space: nowrap;
+}
+
+.ng-clue.is-done { color: var(--green-600); opacity: 0.75; }
+
+.ng-cell {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+}
+
+.ng-cell.edge-r { box-shadow: 2px 0 0 var(--subtle); }
+.ng-cell.edge-b { box-shadow: 0 2px 0 var(--subtle); }
+.ng-cell.edge-r.edge-b { box-shadow: 2px 0 0 var(--subtle), 0 2px 0 var(--subtle), 2px 2px 0 var(--subtle); }
+
+.ng-cell.is-on { background: var(--navy-900); border-color: var(--navy-900); }
+[data-theme="dark"] .ng-cell.is-on { background: #dbe5ff; border-color: #dbe5ff; }
+
+.ng-cell.is-x::before,
+.ng-cell.is-x::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 50%;
+  height: 2px;
+  background: var(--subtle);
+}
+
+.ng-cell.is-x::before { transform: rotate(45deg); }
+.ng-cell.is-x::after { transform: rotate(-45deg); }
+
+.ng-cell:focus-visible { outline: 3px solid var(--blue-600); outline-offset: 1px; z-index: 1; }
+
+.ng-board.is-solved .ng-cell.is-on { background: #047857; border-color: #047857; }
+
+#ng-mark.is-on {
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+  color: #fff;
+}
+
+[data-theme="dark"] #ng-mark.is-on {
+  background: var(--btn-blue);
+  border-color: var(--btn-blue);
+}
+
+/* Sequence Memory */
+.sq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: var(--radius);
+}
+
+.sq-pad {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--navy-700), var(--navy-900));
+  cursor: pointer;
+  transition: background-color 0.1s, transform 0.1s;
+}
+
+.sq-pad:disabled { cursor: default; }
+.sq-pad:focus-visible { outline: 3px solid var(--blue-600); outline-offset: 3px; }
+
+.sq-pad.is-lit {
+  background: #f5c451;
+  transform: scale(1.04);
+  box-shadow: 0 0 18px 4px rgba(245, 196, 81, 0.6);
+}
+
+.sq-pad.is-answer {
+  background: #10b981;
+}
+
+.sq-toolbar {
+  justify-content: center;
+}
+
+/* Snake */
+.sn-board {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  padding: 4px;
+  gap: 1px;
+  border-radius: var(--radius-sm);
+  background: var(--navy-900);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sn-board:focus-visible { outline: 3px solid var(--blue-600); outline-offset: 3px; }
+
+.sn-cell {
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sn-cell.is-body { background: #34d399; border-radius: 3px; }
+.sn-cell.is-head { background: #10b981; border-radius: 4px; box-shadow: 0 0 0 1px #d1fae5 inset; }
+.sn-cell.is-food { background: #f5c451; border-radius: 50%; }
+
+.sn-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-areas: ". up ." "left down right";
+  justify-content: center;
+  gap: 8px;
+}
+
+.sn-pad .btn { height: 48px; padding: 0; font-size: 1.3rem; }
+.sn-pad .sn-up { grid-area: up; }
+.sn-pad .sn-left { grid-area: left; }
+.sn-pad .sn-down { grid-area: down; }
+.sn-pad .sn-right { grid-area: right; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fr-cell.is-new { animation: none; }
+  .sq-pad { transition: none; }
 }

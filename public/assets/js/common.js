@@ -316,16 +316,66 @@
   };
 
   // The header's Calculators and Country menus are <details> elements and work on their own; this also
-  // closes it on Escape, on a click outside, and when keyboard focus moves away.
+  // opens them when the mouse moves over them, plays a short closing animation (style.css), and closes
+  // them on Escape, on a click outside, and when keyboard focus moves away.
   function initNavMenus() {
     var menus = document.querySelectorAll(".nav-menu");
     if (!menus.length) return;
+    var CLOSE_DELAY = 200; // ms the mouse can be outside before the menu closes
+    var CLOSE_ANIMATION = 140; // matches menu-out in style.css
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function open(menu) {
+      clearTimeout(menu.navTimer);
+      menu.classList.remove("is-closing");
+      menu.open = true;
+      Array.prototype.forEach.call(menus, function (other) {
+        if (other !== menu) close(other);
+      });
+    }
+
+    function close(menu) {
+      clearTimeout(menu.navTimer);
+      menu.hoverOpened = false;
+      if (!menu.open || menu.classList.contains("is-closing")) return;
+      if (reduceMotion) {
+        menu.open = false;
+        return;
+      }
+      menu.classList.add("is-closing");
+      menu.navTimer = setTimeout(function () {
+        menu.classList.remove("is-closing");
+        menu.open = false;
+      }, CLOSE_ANIMATION);
+    }
 
     function closeOutside(target) {
       Array.prototype.forEach.call(menus, function (menu) {
-        if (menu.open && !menu.contains(target)) menu.open = false;
+        if (menu.open && !menu.contains(target)) close(menu);
       });
     }
+
+    Array.prototype.forEach.call(menus, function (menu) {
+      // Only a real mouse opens on hover; a tap on a phone still works like a click.
+      menu.addEventListener("pointerenter", function (e) {
+        if (e.pointerType !== "mouse") return;
+        if (!menu.open) menu.hoverOpened = true;
+        open(menu);
+      });
+      menu.addEventListener("pointerleave", function (e) {
+        if (e.pointerType !== "mouse" || !menu.open) return;
+        clearTimeout(menu.navTimer);
+        menu.navTimer = setTimeout(function () { close(menu); }, CLOSE_DELAY);
+      });
+      // Clicking the button toggles the menu (Enter and Space also send a click). A click right after
+      // hovering keeps the menu open instead of shutting the menu the mouse just opened.
+      menu.querySelector("summary").addEventListener("click", function (e) {
+        e.preventDefault();
+        if (menu.open && !menu.hoverOpened && !menu.classList.contains("is-closing")) close(menu);
+        else open(menu);
+        menu.hoverOpened = false;
+      });
+    });
 
     document.addEventListener("click", function (e) { closeOutside(e.target); });
     document.addEventListener("focusin", function (e) { closeOutside(e.target); });
@@ -333,7 +383,7 @@
       if (e.key !== "Escape") return;
       Array.prototype.forEach.call(menus, function (menu) {
         if (!menu.open) return;
-        menu.open = false;
+        close(menu);
         menu.querySelector("summary").focus();
       });
     });

@@ -1,0 +1,65 @@
+  <section class="calculator game" aria-label="Sequence memory test">
+    <div class="game-area">
+      <div class="sq-grid" id="sq-grid" role="group" aria-label="Squares"></div>
+      <div class="game-toolbar sq-toolbar">
+        <button type="button" class="btn btn-primary" id="sq-start">Start the test</button>
+      </div>
+      <p class="game-status" id="sq-status" role="status" aria-live="polite">Watch the squares light up, then tap them in the same order.</p>
+    </div>
+
+    <div class="calc-results">
+      <h2>Your memory</h2>
+      <div class="result-main"><span id="sq-score">—</span> <small>in a row</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Now showing</span><span id="sq-level">—</span></li>
+        <li><span>Best this visit</span><span id="sq-best">—</span></li>
+      </ul>
+      <p class="result-note">Each round adds one more square. One wrong tap ends the test. Your best is forgotten when you leave the page.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the sequence memory test</h2>
+    <ol class="steps">
+      <li><strong>Press Start</strong> and watch: one of the nine squares lights up.</li>
+      <li><strong>Tap the same square.</strong> If you're right, the sequence plays again with one more square added.</li>
+      <li><strong>Keep going.</strong> The same square can come up more than once.</li>
+      <li><strong>One wrong tap ends the test.</strong> Your score is the longest sequence you repeated correctly, and the square you should have tapped is shown.</li>
+    </ol>
+
+    <h2>How long each sequence takes to watch</h2>
+    <p>Each square lights for half a second with a quarter-second pause after it, so every square adds 0.75 seconds.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Squares</th><th>Working</th><th>Time to watch</th></tr></thead>
+        <tbody>
+          <tr><td>4</td><td>4 × 0.75</td><td>3 seconds</td></tr>
+          <tr><td>8</td><td>8 × 0.75</td><td>6 seconds</td></tr>
+          <tr><td>12</td><td>12 × 0.75</td><td>9 seconds</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Tips to remember longer sequences</h2>
+    <ul>
+      <li><strong>Give the squares names</strong>, like numbers 1 to 9 or positions ("top left, middle, bottom right"), and say them in your head.</li>
+      <li><strong>Look for shapes.</strong> A sequence often traces a line or a corner you can picture.</li>
+      <li><strong>Break it into chunks</strong> of three or four, the same way you'd remember a phone number.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is this a medical memory test?</summary>
+        <p>No. It's a game for fun and can't tell you anything about your health. If you're worried about your memory, speak to a doctor.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. When it's your turn, use Tab to move between the squares and Enter or Space to choose one.</p>
+      </details>
+      <details>
+        <summary>Is my score saved?</summary>
+        <p>Only while the page is open. We don't use cookies or browser storage, so it's forgotten when you close or reload the page.</p>
+      </details>
+    </div>
+  </div>

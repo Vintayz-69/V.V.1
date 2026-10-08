@@ -1,0 +1,83 @@
+  <section class="calculator game sp-game" aria-label="Sliding puzzle">
+    <div class="game-area">
+      <div class="game-toolbar">
+        <div class="field game-select">
+          <label for="sp-size">Size</label>
+          <div class="select-wrap"><select id="sp-size">
+            <option value="3">3 × 3 (8 tiles)</option>
+            <option value="4" selected>4 × 4 (15 tiles)</option>
+            <option value="5">5 × 5 (24 tiles)</option>
+          </select></div>
+        </div>
+        <button type="button" class="btn btn-sm" id="sp-new">{{icon:refresh}} New puzzle</button>
+      </div>
+
+      <div class="sp-board sp-4" id="sp-board" role="group" aria-label="Puzzle tiles"></div>
+      <p class="game-status" id="sp-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="calc-results">
+      <h2>This puzzle</h2>
+      <div class="result-main"><span id="sp-moves">0</span> <small>moves</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Tiles in place</span><span id="sp-placed">0 / 15</span></li>
+        <li><span>Time</span><span id="sp-time">0:00</span></li>
+        <li><span>Fewest moves this visit</span><span id="sp-best">—</span></li>
+      </ul>
+      <p class="result-note">Tap a tile in the same row or column as the gap to slide it. Tiles already in the right place turn green.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to play</h2>
+    <ol class="steps">
+      <li><strong>The goal:</strong> put the numbered tiles in order, left to right and top to bottom, with the gap in the bottom-right corner.</li>
+      <li><strong>Tap a tile</strong> next to the gap to slide it in. Tap a tile further along the same row or column to slide several tiles at once.</li>
+      <li><strong>On a keyboard,</strong> click a tile first, then use the arrow keys: each press slides the tile beside the gap into it.</li>
+      <li><strong>Try for fewer moves.</strong> Sliding several tiles at once counts as one move.</li>
+    </ol>
+
+    <h2>Every puzzle can be solved</h2>
+    <p>Only half of all possible tile orders can be solved. If you swapped two tiles by hand, for example, the puzzle would become impossible. To avoid that, we start from the solved puzzle and mix it with hundreds of random slides, so the order you get can always be put back.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Size</th><th>Tiles</th><th>Random slides used to mix it</th></tr></thead>
+        <tbody>
+          <tr><td>3 × 3</td><td>8</td><td>540</td></tr>
+          <tr><td>4 × 4</td><td>15</td><td>960</td></tr>
+          <tr><td>5 × 5</td><td>24</td><td>1,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Worked example: the solving method</h2>
+    <p>Most people solve the 4 × 4 puzzle a row at a time:</p>
+    <ol>
+      <li><strong>Top row:</strong> place tiles 1 and 2. Then bring 4 under the spot where 3 goes, put 3 in the corner, and slide both into place together.</li>
+      <li><strong>Second row:</strong> do the same with 5, 6, 7 and 8. Once two rows are done, never move them again.</li>
+      <li><strong>Last two rows:</strong> solve them a column at a time from the left: 9 and 13, then 10 and 14, then 11, 12 and 15.</li>
+    </ol>
+
+    <h2>Tips</h2>
+    <ul>
+      <li><strong>Start with 3 × 3</strong> to learn how tiles move around each other, then try 4 × 4.</li>
+      <li><strong>Move the gap, not the tile.</strong> Think about where the gap needs to go to push a tile one step closer to home.</li>
+      <li><strong>The last two tiles of a row</strong> are always the tricky part. Line them up one below the other, then rotate them in together.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is this the 15 puzzle?</summary>
+        <p>Yes. The 4 × 4 size is the classic 15 puzzle, one of the best-known sliding tile puzzles. You can also play a smaller 8 puzzle or a larger 24 puzzle.</p>
+      </details>
+      <details>
+        <summary>Is my game saved?</summary>
+        <p>No. We don't use cookies or browser storage, so the puzzle is gone if you close or reload the page.</p>
+      </details>
+      <details>
+        <summary>Can I play with a keyboard?</summary>
+        <p>Yes. Tab to any tile and press Enter to slide it, or use the arrow keys to slide the tile next to the gap.</p>
+      </details>
+    </div>
+  </div>

@@ -217,6 +217,7 @@
     finished = true;
     clock.stop();
     var t = G.formatTime(clock.seconds());
+    G.flash(boardEl, "fx-win");
     say("Solved in " + t + (hints ? " with " + hints + " hint" + (hints > 1 ? "s" : "") : " with no hints") + ". Well done!");
   }
 

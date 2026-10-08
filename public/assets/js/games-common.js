@@ -69,10 +69,22 @@
     };
   }
 
+  // Plays a short colour animation (fx-win, fx-lose, fx-right, fx-wrong in style.css) by adding
+  // a class, then takes it off again so the same animation can play next time.
+  function flash(el, cls, ms) {
+    if (!el || !el.classList) return;
+    clearTimeout(el._fxTimer);
+    el.classList.remove("fx-win", "fx-lose", "fx-right", "fx-wrong");
+    void el.offsetWidth; // restart the animation if it is already playing
+    el.classList.add(cls);
+    el._fxTimer = setTimeout(function () { el.classList.remove(cls); }, ms || 1900);
+  }
+
   window.ToolNestGames = {
     makeRng: makeRng,
     shuffle: shuffle,
     formatTime: formatTime,
-    stopwatch: stopwatch
+    stopwatch: stopwatch,
+    flash: flash
   };
 })();

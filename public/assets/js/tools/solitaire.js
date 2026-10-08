@@ -332,6 +332,7 @@
     if (isWon(state)) {
       won = true;
       clock.stop();
+      G.flash(table, "fx-win");
       say("You won in " + moves + " moves and " + G.formatTime(clock.seconds()) + "! Press New game to play again.");
     } else if (message !== undefined) {
       say(message);

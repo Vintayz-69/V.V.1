@@ -182,6 +182,7 @@
     clock.stop();
     renderAll();
     cells[i].focus();
+    G.flash(boardEl, "fx-lose");
     say("Boom! That square had a mine. Press New game to try again.");
   }
 
@@ -196,6 +197,7 @@
     var key = levelSelect.value;
     if (!best[key] || t < best[key]) best[key] = t;
     bestEl.textContent = G.formatTime(best[key]);
+    G.flash(boardEl, "fx-win");
     say("You cleared the board in " + G.formatTime(t) + "!");
   }
 

@@ -75,6 +75,11 @@
     statusEl.textContent = t;
   }
 
+  // Colour animation from games-common.js (does nothing if it isn't loaded).
+  function fx(el, cls, ms) {
+    if (window.ToolNestGames && window.ToolNestGames.flash) window.ToolNestGames.flash(el, cls, ms);
+  }
+
   function left() {
     return Math.max(0, Math.ceil((endsAt - Date.now()) / 1000));
   }
@@ -104,6 +109,7 @@
     bestEl.textContent = String(best[key]);
     rateEl.textContent = rate(correct, ROUND_SECONDS) + " per minute";
     timeEl.textContent = "0:00";
+    fx(qEl.parentNode, "fx-win");
     say("Time's up! You answered " + correct + " correctly" + (skipped ? " and skipped " + skipped : "") + ". The last question was " + problem.text + " = " + problem.answer + ".");
     startBtn.focus();
   }
@@ -133,6 +139,7 @@
     if (typed !== input.value) input.value = typed;
     if (typed !== "" && Number(typed) === problem.answer) {
       correct++;
+      fx(qEl.parentNode, "fx-right", 500);
       showStats();
       next();
     }
@@ -141,6 +148,7 @@
     if (e.key === "Enter" && running && input.value !== "") {
       e.preventDefault();
       say("Not quite. Fix your answer or press Skip.");
+      fx(qEl.parentNode, "fx-wrong", 500);
     }
   });
 

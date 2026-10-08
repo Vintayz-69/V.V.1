@@ -1445,6 +1445,131 @@ function loadGameHelpers() {
   check("memory test grouped tip", NM.grouped("4820193"), "4 820 193");
   check("memory test short not grouped", NM.grouped("123"), "123");
 }
+{
+  // Sliding Puzzle
+  const SP = load("sliding-puzzle", GAME_LIBS);
+  const { makeRng } = loadGameHelpers();
+  const s3 = SP.solvedBoard(3);
+  check("slide solved 3x3", s3.join(","), "1,2,3,4,5,6,7,8,0");
+  check("slide solved is solved", SP.isSolved(s3), true);
+  check("slide one tile", SP.slide(s3, 3, 7).join(","), "1,2,3,4,5,6,7,0,8");
+  check("slide two tiles in a row", SP.slide(s3, 3, 6).join(","), "1,2,3,4,5,6,0,7,8");
+  check("slide two tiles in a column", SP.slide(s3, 3, 2).join(","), "1,2,0,4,5,3,7,8,6");
+  check("slide not in line", SP.slide(s3, 3, 0), null);
+  check("slide tiles next to gap", SP.movable(SP.solvedBoard(4), 4).join(","), "11,14");
+  // Swapping two tiles makes a puzzle impossible (page: "only half of all orders can be solved").
+  const swap = (b, x, y) => { const c = b.slice(); const i = c.indexOf(x), j = c.indexOf(y); [c[i], c[j]] = [c[j], c[i]]; return c; };
+  check("slide 15 puzzle solvable", SP.isSolvable(SP.solvedBoard(4), 4), true);
+  check("slide 14-15 swapped unsolvable", SP.isSolvable(swap(SP.solvedBoard(4), 14, 15), 4), false);
+  check("slide 8 puzzle solvable", SP.isSolvable(s3, 3), true);
+  check("slide 7-8 swapped unsolvable", SP.isSolvable(swap(s3, 7, 8), 3), false);
+  check("slide gap moved up still solvable", SP.isSolvable(SP.slide(SP.solvedBoard(4), 4, 11), 4), true);
+  for (const n of [3, 4, 5]) {
+    let ok = true;
+    for (let seed = 1; seed <= 20; seed++) {
+      const b = SP.scramble(n, makeRng(seed));
+      ok = ok && SP.isSolvable(b, n) && !SP.isSolved(b) && [...b].sort((x, y) => x - y).every((v, i) => v === i);
+    }
+    check(`slide ${n}x${n} scrambles are solvable and mixed`, ok, true);
+  }
+  // Page table: random slides used = 60 × tiles squared
+  check("slide mixing moves", [3, 4, 5].map((n) => 60 * n * n).join(","), "540,960,1500");
+}
+{
+  // Four in a Row. Index = row × 7 + column, row 0 at the top.
+  const FR = load("four-in-a-row", GAME_LIBS);
+  check("four lines on the board", FR.LINES.length, 69);
+  check("four lines through bottom middle", FR.LINES.filter((l) => l.includes(38)).length, 7);
+  check("four lines through a corner", FR.LINES.filter((l) => l.includes(0)).length, 3);
+  const e = FR.emptyBoard();
+  check("four counter lands at the bottom", FR.landingRow(e, 3), 5);
+  let col = e;
+  for (let k = 0; k < 6; k++) col = FR.drop(col, 0, k % 2 ? 2 : 1);
+  check("four full column", FR.landingRow(col, 0) + ":" + FR.drop(col, 0, 1), "-1:null");
+  check("four full column not a move", FR.validMoves(col).includes(0), false);
+  const put = (cells, p) => { const b = FR.emptyBoard(); cells.forEach((i) => { b[i] = p; }); return b; };
+  const across = FR.winner(put([35, 36, 37, 38], 1));
+  check("four across wins", across && across.player + ":" + across.cells.join(","), "1:35,36,37,38");
+  check("four down wins", FR.winner(put([14, 21, 28, 35], 2)).player, 2);
+  check("four diagonal wins", FR.winner(put([35, 29, 23, 17], 1)).player, 1);
+  check("four other diagonal wins", FR.winner(put([38, 30, 22, 14], 2)).player, 2);
+  check("four three is not a win", FR.winner(put([35, 36, 37], 1)), null);
+  // Computer takes its own win, and blocks yours.
+  const toWin = put([35, 36, 37], 2);
+  toWin[28] = 1; toWin[29] = 1;
+  for (const level of ["medium", "hard"]) check(`four ${level} takes the win`, FR.bestMove(toWin, 2, level), 3);
+  const toBlock = put([35, 36, 37], 1);
+  toBlock[28] = 2;
+  for (const level of ["medium", "hard"]) check(`four ${level} blocks you`, FR.bestMove(toBlock, 2, level), 3);
+  check("four full board", FR.isFull(Array(42).fill(1)), true);
+}
+{
+  const NG = load("nonogram", GAME_LIBS);
+  const { makeRng } = loadGameHelpers();
+  check("nonogram clue 2 1", NG.lineClue([1, 1, 0, 1]).join(" "), "2 1");
+  check("nonogram clue 1 2", NG.lineClue([0, 1, 0, 1, 1, 0]).join(" "), "1 2");
+  check("nonogram clue full", NG.lineClue([1, 1, 1]).join(" "), "3");
+  check("nonogram clue empty", NG.lineClue([0, 0]).length, 0);
+  const c2 = NG.clues([1, 0, 1, 1], 2);
+  check("nonogram 2x2 clues", JSON.stringify(c2), '{"rows":[[1],[2]],"cols":[[2],[1]]}');
+  // Page worked example: clue 8 in a row of 10 → 8 − (10 − 8) = 6 sure squares; "4 5" fills 4 + 1 + 5 = 10.
+  const sure = (clue, n) => { const left = Array(n).fill(0), right = Array(n).fill(0); for (let i = 0; i < clue; i++) { left[i] = 1; right[n - 1 - i] = 1; } return left.filter((v, i) => v && right[i]).length; };
+  check("nonogram overlap example", sure(8, 10), 6);
+  check("nonogram full-width example", 4 + 1 + 5, 10);
+  for (const n of [5, 10, 15]) {
+    let ok = true;
+    for (let seed = 1; seed <= 10; seed++) {
+      const p = NG.generate(n, makeRng(seed * 7 + n));
+      ok = ok && p.grid.length === n * n && p.clues.rows.every((r) => r.length) && p.clues.cols.every((c) => c.length) &&
+        NG.fits(p.grid, n, p.clues) && !NG.fits(Array(n * n).fill(0), n, p.clues);
+    }
+    check(`nonogram ${n}x${n} puzzles have clues for every line and their picture fits`, ok, true);
+  }
+}
+{
+  const SQ = load("sequence-memory", GAME_LIBS);
+  check("sequence right so far", SQ.check([1, 2, 3], [1]), "more");
+  check("sequence all right", SQ.check([1, 2, 3], [1, 2, 3]), "done");
+  check("sequence wrong", SQ.check([1, 2, 3], [1, 3]), "wrong");
+  check("sequence nothing tapped yet", SQ.check([4], []), "more");
+  let seq = [];
+  for (let k = 0; k < 50; k++) seq = SQ.extend(seq);
+  check("sequence grows by one", seq.length, 50);
+  check("sequence uses the 9 squares", seq.every((p) => p >= 0 && p < 9), true);
+  // Page table: 0.75 seconds per square
+  check("sequence 4 squares", SQ.playTime(4), 3000);
+  check("sequence 8 squares", SQ.playTime(8), 6000);
+  check("sequence 12 squares", SQ.playTime(12), 9000);
+}
+{
+  const SN = load("snake", GAME_LIBS);
+  const { makeRng } = loadGameHelpers();
+  const g = SN.newGame(makeRng(1));
+  check("snake starts 3 long", g.snake.length, 3);
+  check("snake board 15x15", SN.SIZE * SN.SIZE, 225);
+  check("snake food not on snake", g.snake.some((p) => p[0] === g.food[0] && p[1] === g.food[1]), false);
+  const away = { ...g, food: [0, 0] };
+  const moved = SN.step(away);
+  check("snake moves right", moved.snake[0].join(",") + ":" + moved.snake.length, "7,4:3");
+  check("snake can't turn back", SN.turn(away, "left").queued.length, 0);
+  check("snake turn queued", SN.turn(away, "up").queued.join(), "up");
+  check("snake up then left kept", SN.turn(SN.turn(away, "up"), "left").queued.join(), "up,left");
+  // Page worked example: 10 pieces of food → 3 + 10 = 13 long, score 10.
+  let s = { ...g, food: [7, 4] };
+  for (let k = 0; k < 10; k++) {
+    s = SN.step(s);
+    const h = s.snake[0];
+    s = { ...s, food: [h[0], h[1] + 1] };
+  }
+  check("snake after 10 food", s.snake.length + ":" + s.score + ":" + s.dead, "13:10:false");
+  check("snake hits wall", SN.step({ ...g, snake: [[0, 5], [1, 5], [2, 5]], dir: "up", queued: [], food: [9, 9] }).dead, true);
+  const ring = { ...g, snake: [[1, 1], [1, 2], [2, 2], [2, 1]], queued: [], food: [9, 9] };
+  check("snake can follow its tail", SN.step({ ...ring, dir: "down" }).dead, false);
+  check("snake hits itself", SN.step({ ...ring, dir: "right" }).dead, true);
+  check("snake full board has no food", SN.placeFood(Array.from({ length: 225 }, (_, i) => [Math.floor(i / 15), i % 15])), null);
+  // Page table: steps per second
+  check("snake speeds", ["slow", "normal", "fast"].map((k) => Math.round(1000 / SN.SPEEDS[k] * 10) / 10).join(","), "5,7.1,11.1");
+}
 
 // ---------------- Resignation letter maker (shared resume engine)
 {
