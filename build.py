@@ -44,6 +44,10 @@ BING_SITE_VERIFICATION = ""
 # from Google. Do NOT add the AdSense <script> until LEGAL.md section 5 is fully done.
 ADSENSE_PUBLISHER_ID = "ca-pub-2792326360609634"
 
+# IndexNow key (not a secret). public/<key>.txt proves we own the site when indexnow.py tells Bing
+# and other search engines about new or changed pages. See README "Telling search engines".
+INDEXNOW_KEY = "2839202decd040fd82addb8e527b2899"
+
 
 def human_date(iso):
     months = ["January", "February", "March", "April", "May", "June", "July",
@@ -428,10 +432,10 @@ TOOLS = {
     ),
     "business-days": dict(
         path="freelance/business-days-calculator/",
-        name="Business Days Calculator",
-        card="Business days calculator",
+        name="Working Days Calculator",
+        card="Working days calculator",
         short="Count working days between two dates, or add working days to a date, skipping US or UK public holidays.",
-        icon="calendar", group="planning", parent="freelance",
+        icon="calendar", group="planning", parent="freelance", keywords="business days bank holidays",
     ),
 
     # Business tools (Stage 4)
@@ -849,6 +853,153 @@ TOOLS = {
         short="Work out your 2026–27 salary after tax and the Medicare levy, per fortnight, month and week, plus super.",
         icon="trending", group="au-tax", parent="australia", keywords="salary after tax pay calculator fortnightly net income super package",
     ),
+
+    # New sectors (11 October 2026): image tools, date and time, text tools
+    "image-resize": dict(
+        path="image/resize-image/",
+        name="Resize Image",
+        card="Resize image",
+        short="Make photos and pictures a new size in pixels or by a percentage, one at a time or many at once.",
+        icon="image", group="image-edit", parent="image", go="Open tool", featured=True,
+        keywords="resize photo picture jpg png webp pixels width height smaller bigger scale dimensions batch",
+    ),
+    "image-compress": dict(
+        path="image/compress-image/",
+        name="Compress Image",
+        card="Compress image",
+        short="Make JPG, PNG and WebP pictures smaller for email and uploads, to a quality you choose or under a file size.",
+        icon="compress", group="image-edit", parent="image", go="Open tool", featured=True,
+        keywords="reduce shrink image size kb mb photo jpg png webp optimize optimise under 100kb 200kb",
+    ),
+    "image-convert": dict(
+        path="image/convert-image/",
+        name="Image Converter (JPG, PNG, WebP)",
+        card="Convert image",
+        short="Change pictures to JPG, PNG or WebP: WebP to JPG, PNG to JPG, JPG to PNG and more.",
+        icon="refresh", group="image-edit", parent="image", go="Open tool", featured=True,
+        keywords="convert webp to jpg png to jpg jpg to png jpeg webp gif bmp avif heic format change",
+    ),
+    "image-crop": dict(
+        path="image/crop-image/",
+        name="Crop Image",
+        card="Crop image",
+        short="Cut a picture to the part you want, free or to a shape such as square or 16:9, and turn or flip it.",
+        icon="crop", group="image-edit", parent="image", go="Open tool",
+        keywords="crop cut trim photo picture square 1:1 16:9 4:5 profile picture rotate flip aspect ratio",
+    ),
+    "date-difference": dict(
+        path="time/days-between-dates-calculator/",
+        name="Days Between Dates Calculator",
+        card="Days between dates",
+        short="Count the days between two dates, in days, weeks, and years, months and days.",
+        icon="calendar", group="time-dates", parent="time",
+        keywords="days between dates how many days until since date difference duration count weeks months",
+    ),
+    "date-add": dict(
+        path="time/add-days-to-date-calculator/",
+        name="Add or Subtract Days from a Date",
+        card="Add or subtract days",
+        short="Find the date a number of days, weeks, months or years before or after any date, such as 30 days from today.",
+        icon="plusminus", group="time-dates", parent="time",
+        keywords="date calculator add days subtract days from today 30 60 90 days due date net 30 weeks months",
+    ),
+    "week-number": dict(
+        path="time/week-number-calculator/",
+        name="Week Number Calculator",
+        card="Week number",
+        short="Find the week number of any date (ISO and US style), and the dates of any week of the year.",
+        icon="grid", group="time-dates", parent="time",
+        keywords="week number what week is it iso 8601 calendar week of the year 52 53 weeks",
+    ),
+    "time-zone": dict(
+        path="time/time-zone-converter/",
+        name="Time Zone Converter",
+        card="Time zone converter",
+        short="See a time in several cities at once, with summer time, and find hours that work for everyone.",
+        icon="globe", group="time-zones", parent="time", go="Open tool",
+        keywords="time zone converter world clock meeting planner est pst gmt bst utc ist aest london new york sydney",
+    ),
+    "case-converter": dict(
+        path="text/case-converter/",
+        name="Case Converter",
+        card="Case converter",
+        short="Change text to Sentence case, lower case, UPPER CASE, Title Case, camelCase, snake_case and more.",
+        icon="type-icon", group="text-tools", parent="text", go="Open tool",
+        keywords="uppercase lowercase title case sentence case capitalize caps lock camelcase snake case kebab",
+    ),
+    "text-compare": dict(
+        path="text/text-compare/",
+        name="Text Compare (Find the Differences)",
+        card="Text compare",
+        short="Paste two versions of a text and see exactly what was added and removed, by line or by word.",
+        icon="scales", group="text-tools", parent="text", go="Open tool",
+        keywords="diff compare two texts documents differences changes checker side by side contract draft",
+    ),
+    "line-tools": dict(
+        path="text/remove-duplicate-lines/",
+        name="Remove Duplicate Lines and Sort",
+        card="Remove duplicate lines",
+        short="Tidy a list: remove repeated and empty lines, trim spaces, and sort A to Z, by number or by length.",
+        icon="text", group="text-tools", parent="text", go="Open tool",
+        keywords="remove duplicates dedupe unique lines sort alphabetically list cleaner empty lines trim",
+    ),
+    # Popular everyday and developer tools (11 October 2026)
+    "discount": dict(
+        path="tools/discount-calculator/",
+        name="Discount Calculator",
+        card="Discount calculator",
+        short="Work out the sale price and what you save, with a second discount or sales tax, and the percent off between two prices.",
+        icon="tag", group="everyday-tools", parent="everyday",
+        keywords="sale price percent off discount savings coupon extra 20% off 25% off how much do i save",
+    ),
+    "qr-code": dict(
+        path="tools/qr-code-generator/",
+        name="QR Code Generator",
+        card="QR code generator",
+        short="Make a free QR code for a link, text, Wi-Fi network, email or phone number. Download PNG or SVG. Never expires.",
+        icon="qr", group="everyday-tools", parent="everyday", go="Open tool", featured=True,
+        keywords="qr code maker free no expiry wifi qr link url png svg print business card menu",
+    ),
+    "random-number": dict(
+        path="tools/random-number-generator/",
+        name="Random Number Generator and Picker",
+        card="Random number generator",
+        short="Fair random numbers in any range, with or without repeats, or random picks from a list of names.",
+        icon="dice", group="everyday-tools", parent="everyday", go="Open tool",
+        keywords="random number generator rng pick a number name picker random winner giveaway draw dice",
+    ),
+    "password-generator": dict(
+        path="dev/password-generator/",
+        name="Password Generator",
+        card="Password generator",
+        short="Make strong random passwords with your choice of length, letters, numbers and symbols. Made on your device.",
+        icon="key", group="dev-tools", parent="dev", go="Open tool", featured=True,
+        keywords="strong password generator random secure create password symbols length",
+    ),
+    "color-converter": dict(
+        path="dev/color-converter/",
+        name="Color Converter (HEX, RGB, HSL)",
+        card="Color converter",
+        short="Convert colours between HEX, RGB, HSL, HSV and CMYK, with shades and contrast against white and black.",
+        icon="palette", group="dev-tools", parent="dev", go="Open tool",
+        keywords="hex to rgb rgb to hex hsl colour code converter picker cmyk hsv shades css",
+    ),
+    "base64": dict(
+        path="dev/base64-encode-decode/",
+        name="Base64 Encode and Decode",
+        card="Base64 encode & decode",
+        short="Encode text to Base64 or decode it back, standard or URL-safe, and turn files into data URLs.",
+        icon="code", group="dev-tools", parent="dev", go="Open tool",
+        keywords="base64 encoder decoder online utf-8 url safe data url image to base64",
+    ),
+    "timer": dict(
+        path="time/online-timer/",
+        name="Online Timer and Stopwatch",
+        card="Timer & stopwatch",
+        short="A countdown timer with an alarm sound, and a stopwatch with laps. Free, in your browser.",
+        icon="timer", group="time-zones", parent="time", go="Open tool",
+        keywords="online timer countdown stopwatch alarm 5 minute timer 10 minute timer 25 minutes lap",
+    ),
 }
 
 # Sections a tool can live in: key -> (breadcrumb name, path, header nav key).
@@ -868,6 +1019,9 @@ PARENTS = {
     "finance": ("Personal Finance", "finance/", "finance"),
     "health": ("Health & Fitness", "health/", "health"),
     "everyday": ("Everyday Utilities", "tools/", "everyday"),
+    "image": ("Image Tools", "image/", "image"),
+    "time": ("Date & Time", "time/", "time"),
+    "text": ("Text Tools", "text/", "text"),
     "games": ("Brain Games", "games/", "games"),
 }
 
@@ -1011,9 +1165,15 @@ SEO_DAY = "2026-10-05"  # changes from Search Console queries, 5 October 2026
 MORE_GAMES_DAY = "2026-10-06"  # five more games, linked from the homepage
 GAME_CHIPS = ["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser, nothing saved"]
 GAME_LIBS = ["js/games-common.js"]
+SECTORS_DAY = "2026-10-11"  # /image/, /time/ and /text/ added on 11 October 2026
+POPULAR_DAY = "2026-10-11"  # QR code, password, timer, random number, discount, colour and Base64 tools
+IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
+IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
+TIME_LIBS = ["js/date-common.js"]
+TEXT_CHIPS = ["{{icon:check}} Free, no sign-up", "{{icon:lock}} Your text never leaves your browser"]
 
 PAGES = [
-    dict(path="", src="home.html", kind="home", nav="home", updated=MORE_GAMES_DAY,
+    dict(path="", src="home.html", kind="home", nav="home", updated=SECTORS_DAY,
          title="ToolNest by Vintayz: Free Money Calculators for Freelancers",
          description="Free calculators for freelancers in the US, UK, Canada and Australia. Price your work, plan your income and chase late payments."),
     dict(path="freelance/", src="freelance.html", kind="section", nav="tools",
@@ -1080,7 +1240,7 @@ PAGES = [
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["income-smoothing", "retirement-savings", "monthly-expenses"]),
     dict(tool="retirement-savings", src="retirement-savings.html", script="retirement-savings.js",
-         title="Retirement Savings Calculator for the Self-Employed | ToolNest by Vintayz",
+         title="Retirement Savings Calculator for Self-Employed | ToolNest by Vintayz",
          description="See what your retirement savings could grow to with monthly contributions, and the income they might give you. For freelancers in the US, UK, CA and AU.",
          intro="See what your retirement savings could grow to by the time you stop working, and roughly what income they could give you.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
@@ -1234,7 +1394,7 @@ PAGES = [
          description="Calculate interest on an overdue invoice. Includes UK statutory interest (8% + base rate) and fixed compensation, or use your contract rate.",
          intro="Work out how much interest and compensation you can claim on an overdue invoice, using UK statutory interest or the rate in your contract.",
          chips=["{{icon:globe}} UK statutory or contract rate"] + TOOL_CHIPS,
-         related=["project-pricing", "hourly-rate", "billable-hours"]),
+         related=["project-pricing", "hourly-rate", "billable-hours", "date-add"]),
 
     dict(path="pdf/", src="pdf.html", kind="section", nav="pdf", updated=PDF_DAY,
          search=("Search PDF tools", "merge or JPG", "pdf"), libs=["js/tool-search.js"],
@@ -1290,19 +1450,19 @@ PAGES = [
          description="Turn JPG, PNG and other pictures into one PDF, one picture per page. Choose A4 or Letter and margins. Free, and your photos never leave your device.",
          intro="Turn photos, scans and screenshots into a single PDF, one picture per page. JPG, PNG, WebP and GIF all work.",
          chips=PDF_CHIPS,
-         related=["pdf-to-jpg", "pdf-merge", "pdf-compress"]),
+         related=["pdf-to-jpg", "pdf-merge", "pdf-compress", "image-convert"]),
     dict(tool="pdf-to-text", src="pdf-to-text.html", script="pdf-to-text.js", libs=PDF_LIBS, updated=NEW_DAY,
          title="PDF to Text Converter, Free and Private | ToolNest by Vintayz",
          description="Copy the text out of a PDF or save it as a .txt file. Free, no sign-up, and your PDF is read in your browser, never uploaded.",
          intro="Copy the words out of a PDF, or save them as a plain text file you can open anywhere.",
          chips=PDF_CHIPS,
-         related=["pdf-to-jpg", "pdf-extract-pages", "word-counter"]),
+         related=["pdf-to-jpg", "pdf-extract-pages", "word-counter", "text-compare"]),
     dict(tool="pdf-to-jpg", src="pdf-to-jpg.html", script="pdf-to-jpg.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="PDF to JPG Converter, Free and Private | ToolNest by Vintayz",
          description="Save PDF pages as high-quality JPG or PNG pictures, at up to 300 DPI. Free, no sign-up, and your PDF is converted in your browser, not uploaded.",
          intro="Save the pages of a PDF as JPG or PNG pictures, for slides, social posts or anywhere a PDF won't open.",
          chips=PDF_CHIPS,
-         related=["pdf-jpg-to-pdf", "pdf-extract-pages", "pdf-to-text"]),
+         related=["pdf-jpg-to-pdf", "pdf-extract-pages", "pdf-to-text", "image-compress"]),
     dict(tool="pdf-page-numbers", src="pdf-page-numbers.html", script="pdf-page-numbers.js", libs=PDF_LIBS, updated=PDF_DAY,
          title="Add Page Numbers to a PDF, Free Online | ToolNest by Vintayz",
          description="Number the pages of a PDF: choose the corner, the style (like Page 1 of 10) and the first number. Free, and your file never leaves your device.",
@@ -1397,13 +1557,14 @@ PAGES = [
          description="Add up a week of start and finish times, less breaks, including night shifts. See total hours, overtime and pay. Free, in USD, GBP, CAD or AUD.",
          intro="Enter your start and finish times for each day. The calculator takes off your breaks, adds up the hours and works out your pay.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
-         related=["invoice-generator", "billable-hours", "overtime"]),
+         related=["invoice-generator", "billable-hours", "overtime", "week-number"]),
     dict(tool="business-days", src="business-days.html", script="business-days.js", libs=["data/holidays.js"], updated=NEW_DAY,
-         title="Business Days Calculator UK & US (Bank Holidays) | ToolNest by Vintayz",
-         description="Count working days between two dates, or add working days to a date. Skips weekends and UK bank holidays (England, Scotland, NI) or US federal holidays.",
-         intro="Count the working days between two dates, or find the date a number of working days from now, skipping weekends and public holidays.",
+         title="Working Days Calculator UK & US: Business Days | Vintayz",
+         h1="Working Days Calculator (Business Days)",
+         description="Count working days (business days) between two dates, or add them to a date, skipping weekends and UK bank holidays or US federal holidays.",
+         intro="Count the working days (business days) between two dates, or find the date a number of working days from now, skipping weekends and public holidays.",
          chips=["{{icon:globe}} US federal and UK bank holidays"] + TOOL_CHIPS,
-         related=["late-payment", "invoice-generator", "timesheet"]),
+         related=["late-payment", "invoice-generator", "timesheet", "date-difference"]),
 
     # Business Tools
     dict(tool="profit-margin", src="profit-margin.html", script="profit-margin.js",
@@ -1477,7 +1638,7 @@ PAGES = [
          description="Count words, characters, sentences, paragraphs, reading time, speaking time and Flesch reading ease level. 100% private in browser.",
          intro="Analyze text metrics, character counts, reading time, and reading grade level directly inside your browser.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
-         related=["gpa-calculator", "citation", "pdf-to-text"]),
+         related=["gpa-calculator", "citation", "pdf-to-text", "case-converter"]),
     dict(tool="citation", src="citation.html", script="citation.js", updated=NEW_DAY,
          title="Citation Generator: APA, MLA and Harvard | ToolNest by Vintayz",
          description="Make APA 7th, MLA 9th and Harvard references for websites, books and journal articles, and build a reference list. Free, and nothing is uploaded.",
@@ -1498,7 +1659,7 @@ PAGES = [
          chips=["{{flag:uk}} UK universities"] + TOOL_CHIPS,
          related=["final-grade", "citation", "word-counter"]),
     dict(tool="final-grade", src="final-grade.html", script="final-grade.js", updated=NEW_DAY,
-         title="Final Grade Calculator: What Do I Need on My Final? | ToolNest by Vintayz",
+         title="Final Grade Calculator: What Do I Need on My Final | ToolNest by Vintayz",
          description="Find the score you need on your final exam to reach the course grade you want, and see the grade you'd get for different exam scores.",
          intro="Find out what you need to score on your final exam to get the overall grade you want.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
@@ -1518,16 +1679,16 @@ PAGES = [
          intro="Calculate your daily calorie needs for fat loss or muscle gain and evaluate Body Mass Index safely and privately.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Health data never leaves your device"]),
     dict(path="dev/", src="dev.html", kind="section", nav="dev",
-         title="Developer & Web Accessibility Tools | ToolNest by Vintayz",
-         description="Free client-side developer tools: format and minify JSON safely, convert Unix timestamps, and check WCAG 2.1 AA/AAA color contrast ratios.",
+         title="Free Developer Tools: Password, JSON, Base64 | Vintayz",
+         description="Free developer and design tools that run in your browser: password generator, JSON formatter, Base64, color converter, contrast checker and Unix time.",
          h1="Developer & Design Tools",
-         intro="Private browser utilities for developers and designers. Validate JSON payloads and verify web accessibility compliance.",
+         intro="Private browser tools for developers and designers: make passwords, format JSON, encode Base64, convert colours and check contrast.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Code never uploaded to servers"]),
     dict(path="tools/", src="tools-hub.html", kind="section", nav="everyday",
-         title="Everyday Utilities & Quick Calculators | ToolNest by Vintayz",
-         description="Free everyday utilities: percentage calculator, tip and bill split calculator, and universal metric to imperial unit converter.",
+         title="Free Everyday Tools: QR Code, Discount, Percent | Vintayz",
+         description="Free everyday tools: QR code generator, discount and percentage calculators, random number picker, tip and bill split, and a unit converter.",
          h1="Everyday Utilities & Quick Tools",
-         intro="Fast, private everyday calculators to split dinner bills and convert length, weight, temperature, and volume.",
+         intro="Quick, private everyday tools: make a QR code, work out discounts and percentages, pick a random winner, split a bill and convert units.",
          chips=TOOL_CHIPS + [CURRENCY_CHIP]),
 
     # Tool pages (Part 1 & Part 2)
@@ -1564,7 +1725,7 @@ PAGES = [
          description="Format, prettify, minify and validate JSON data instantly. 100% private in your browser with zero server uploads.",
          intro="Format and validate your JSON data with 2-space indentation or minify it for production. Runs entirely in your browser memory.",
          chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
-         related=["color-contrast", "unix-timestamp", "unit-converter"]),
+         related=["color-contrast", "unix-timestamp", "unit-converter", "text-compare"]),
 
     dict(tool="color-contrast", src="color-contrast.html", script="color-contrast.js", updated=NEW_DAY,
          title="WCAG Color Contrast Checker (AA & AAA) | ToolNest by Vintayz",
@@ -1741,9 +1902,9 @@ PAGES = [
          description="Convert a Unix epoch timestamp in seconds or milliseconds to a date in UTC and your time zone, or a date back to a timestamp. Runs in your browser.",
          intro="Convert Unix timestamps to readable dates in UTC and your own time zone, or turn a date into a timestamp.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
-         related=["json-formatter", "color-contrast", "business-days"]),
+         related=["json-formatter", "color-contrast", "business-days", "time-zone"]),
     dict(tool="percentage", src="percentage.html", script="percentage.js", updated=SECTIONS_DAY,
-         title="Percentage Calculator: Percent Of, Change, Increase | ToolNest by Vintayz",
+         title="Percentage Calculator: Of, Change, Increase | ToolNest by Vintayz",
          description="Free percentage calculator: X% of Y, X as a percent of Y, percentage change between two numbers, and adding or taking off a percentage.",
          intro="Four quick percentage calculators in one place, each with a plain-English answer.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
@@ -1785,19 +1946,159 @@ PAGES = [
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
          related=["au-sole-trader-tax", "au-voluntary-super", "au-employee-vs-contractor"]),
 
+    # New sectors (11 October 2026): image tools, date and time, text tools
+    dict(path="image/", src="image.html", kind="section", nav="image", updated=SECTORS_DAY,
+         title="Free Image Tools: Resize, Compress, Convert, Crop | Vintayz",
+         description="Resize, compress, convert and crop JPG, PNG and WebP pictures for free. Every tool runs in your browser, so your pictures are never uploaded.",
+         h1="Free Image Tools",
+         intro="Resize, compress, convert and crop photos and pictures in seconds. Everything happens in your browser, so your pictures never leave your device.",
+         chips=["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up, no watermark"]),
+    dict(tool="image-resize", src="image-resize.html", script="image-resize.js", libs=IMAGE_LIBS, updated=SECTORS_DAY,
+         title="Resize Image Online Free (JPG, PNG, WebP) | ToolNest by Vintayz",
+         description="Resize photos and pictures to an exact size in pixels or by a percentage, keeping their shape. Many at once. Free, and nothing is uploaded.",
+         intro="Make photos and pictures a new size in pixels or by a percentage, keeping their shape, one at a time or many at once.",
+         chips=IMAGE_CHIPS,
+         related=["image-compress", "image-crop", "image-convert"]),
+    dict(tool="image-compress", src="image-compress.html", script="image-compress.js", libs=IMAGE_LIBS, updated=SECTORS_DAY,
+         title="Compress Image to KB Online Free | ToolNest by Vintayz",
+         description="Make JPG, PNG and WebP pictures smaller: pick a quality or a size limit such as 200 KB. Free, many at once, and your pictures never leave your device.",
+         intro="Make pictures smaller for email, websites and upload forms, at a quality you choose or under a file size limit.",
+         chips=IMAGE_CHIPS,
+         related=["image-resize", "image-convert", "pdf-compress"]),
+    dict(tool="image-convert", src="image-convert.html", script="image-convert.js", libs=IMAGE_LIBS, updated=SECTORS_DAY,
+         title="Image Converter: WebP to JPG, PNG to JPG | ToolNest by Vintayz",
+         description="Convert pictures to JPG, PNG or WebP for free: WebP to JPG, PNG to JPG, JPG to PNG and more. Many at once, in your browser, never uploaded.",
+         intro="Change pictures to JPG, PNG or WebP, one at a time or many at once, without uploading them anywhere.",
+         chips=IMAGE_CHIPS,
+         related=["image-compress", "image-resize", "pdf-jpg-to-pdf"]),
+    dict(tool="image-crop", src="image-crop.html", script="image-crop.js", libs=IMAGE_LIBS, updated=SECTORS_DAY,
+         title="Crop Image Online Free (Square, 16:9, 4:5) | ToolNest by Vintayz",
+         description="Crop a photo to the part you want, free or to a shape such as square, 4:5 or 16:9. Turn or flip it too. Free, and your picture is never uploaded.",
+         intro="Cut a picture down to the part you want, free or to a set shape, and turn or flip it if it's the wrong way round.",
+         chips=IMAGE_CHIPS,
+         related=["image-resize", "image-compress", "image-convert"]),
+
+    dict(path="time/", src="time.html", kind="section", nav="time", updated=SECTORS_DAY,
+         title="Date & Time Calculators and Time Zone Converter | Vintayz",
+         description="Free date and time tools: days between dates, add days to a date, week numbers and a time zone converter with a meeting planner.",
+         h1="Date & Time Tools",
+         intro="Count the days to a deadline, find the date 30 days from now, check the week number, and plan calls across time zones.",
+         chips=TOOL_CHIPS),
+    dict(tool="date-difference", src="date-difference.html", script="date-difference.js", libs=TIME_LIBS, updated=SECTORS_DAY,
+         title="Days Between Dates Calculator | ToolNest by Vintayz",
+         description="Count the days between two dates, in days, weeks, and years, months and days, plus weekdays. Choose whether to count the end date. Free.",
+         intro="Count the days between two dates, and see the gap in weeks, in years, months and days, and in weekdays.",
+         chips=TOOL_CHIPS,
+         related=["date-add", "business-days", "week-number"]),
+    dict(tool="date-add", src="date-add.html", script="date-add.js", libs=TIME_LIBS, updated=SECTORS_DAY,
+         title="Add or Subtract Days from a Date | ToolNest by Vintayz",
+         description="Find the date a number of days, weeks, months or years before or after any date, such as 30, 60 or 90 days from today. With the day of the week.",
+         intro="Find the date a number of days, weeks, months or years before or after any date, with its day of the week.",
+         chips=TOOL_CHIPS,
+         related=["date-difference", "business-days", "late-payment"]),
+    dict(tool="week-number", src="week-number.html", script="week-number.js", libs=TIME_LIBS, updated=SECTORS_DAY,
+         title="Week Number Calculator: What Week Is It? | ToolNest by Vintayz",
+         description="Find the ISO week number of any date, and the US-style week too. See which dates any week covers, and every week of the year.",
+         intro="Find the week number of any date, as ISO 8601 (Monday start) and US style (Sunday start), and the dates of any week.",
+         chips=TOOL_CHIPS,
+         related=["date-difference", "date-add", "timesheet"]),
+    dict(tool="time-zone", src="time-zone.html", script="time-zone.js", libs=TIME_LIBS, updated=SECTORS_DAY,
+         title="Time Zone Converter and Meeting Planner | ToolNest by Vintayz",
+         description="Convert a time between cities in the US, UK, Canada, Australia and worldwide, with summer time, and find hours that suit everyone. Free.",
+         intro="See one moment in several cities at once, with each place's summer time, and find the hours that fall inside everyone's working day.",
+         chips=TOOL_CHIPS,
+         related=["unix-timestamp", "date-add", "business-days"]),
+
+    dict(path="text/", src="text.html", kind="section", nav="text", updated=SECTORS_DAY,
+         title="Free Text Tools: Case Converter, Compare, Dedupe | Vintayz",
+         description="Free text tools that run in your browser: change text case, compare two texts to find the differences, and remove duplicate lines from a list.",
+         h1="Text Tools",
+         intro="Change the case of text, find the differences between two versions, and tidy up lists. Your text never leaves your browser.",
+         chips=TEXT_CHIPS),
+    dict(tool="case-converter", src="case-converter.html", script="case-converter.js", updated=SECTORS_DAY,
+         title="Case Converter: Upper, Lower, Title, Sentence | ToolNest by Vintayz",
+         description="Change text to Sentence case, lower case, UPPER CASE, Title Case, camelCase, snake_case or kebab-case in one click. Free, in your browser.",
+         intro="Change text to Sentence case, lower case, UPPER CASE, Title Case or code styles like camelCase, in one click.",
+         chips=TEXT_CHIPS,
+         related=["word-counter", "line-tools", "text-compare"]),
+    dict(tool="text-compare", src="text-compare.html", script="text-compare.js", updated=SECTORS_DAY,
+         title="Text Compare: Find the Difference Between Texts | Vintayz",
+         description="Compare two texts and see what was added and removed, line by line or word by word. Free, private, and nothing you paste is uploaded.",
+         intro="Paste two versions of a text and see exactly what was added and removed, line by line or word by word.",
+         chips=TEXT_CHIPS,
+         related=["line-tools", "case-converter", "pdf-to-text"]),
+    dict(tool="line-tools", src="line-tools.html", script="line-tools.js", updated=SECTORS_DAY,
+         title="Remove Duplicate Lines and Sort a List | ToolNest by Vintayz",
+         description="Remove duplicate and empty lines from a list, trim spaces, and sort A to Z, by number or by length. Free, and your list never leaves your browser.",
+         intro="Tidy a list with one item per line: remove repeats and empty lines, trim spaces, and sort it.",
+         chips=TEXT_CHIPS,
+         related=["text-compare", "case-converter", "word-counter"]),
+
+
+    # Popular everyday and developer tools (11 October 2026)
+    dict(tool="discount", src="discount.html", script="discount.js", updated=POPULAR_DAY,
+         title="Discount Calculator: Sale Price and Savings | ToolNest by Vintayz",
+         description="Work out the sale price and how much you save from a percentage off, with a second discount or sales tax. Find the percent off between two prices.",
+         intro="Find the sale price and what you save, add a second discount or sales tax, or work out the percent off between two prices.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["percentage", "tip-calculator", "profit-margin"]),
+    dict(tool="qr-code", src="qr-code.html", script="qr-code.js", libs=["vendor/qrcode-generator/qrcode.js"], updated=POPULAR_DAY,
+         title="Free QR Code Generator (No Expiry, PNG & SVG) | Vintayz",
+         description="Make a free QR code for a link, text, Wi-Fi, email or phone number. Download PNG or SVG. No sign-up, no expiry, no tracking, made on your device.",
+         intro="Make a QR code for a link, text, Wi-Fi network, email or phone number, and download it as PNG or SVG. It never expires.",
+         chips=["{{icon:check}} Free, no sign-up, no expiry", "{{icon:lock}} Made on your device"],
+         related=["password-generator", "invoice-generator", "image-resize"]),
+    dict(tool="random-number", src="random-number.html", script="random-number.js", updated=POPULAR_DAY,
+         title="Random Number Generator and Name Picker | ToolNest by Vintayz",
+         description="Generate fair random numbers in any range, with or without repeats, or pick random names from a list for a giveaway or draw. Free and private.",
+         intro="Get fair random numbers in any range, or pick random names or items from a list, using your browser's secure random numbers.",
+         chips=TOOL_CHIPS,
+         related=["password-generator", "line-tools", "percentage"]),
+    dict(tool="password-generator", src="password-generator.html", script="password-generator.js", updated=POPULAR_DAY,
+         title="Strong Password Generator | ToolNest by Vintayz",
+         description="Make strong, random passwords with your choice of length, letters, numbers and symbols. Made on your device with secure random numbers, never sent or saved.",
+         intro="Make strong random passwords with the length and characters you choose. They're made on your device and never sent or saved.",
+         chips=["{{icon:lock}} Made on your device, never sent", "{{icon:check}} Free, no sign-up"],
+         related=["qr-code", "base64", "random-number"]),
+    dict(tool="color-converter", src="color-converter.html", script="color-converter.js", updated=POPULAR_DAY,
+         title="Color Converter: HEX to RGB, HSL, CMYK | ToolNest by Vintayz",
+         description="Convert colours between HEX, RGB, HSL, HSV and CMYK with a colour picker. See lighter and darker shades and contrast with white and black text.",
+         intro="Convert a colour between HEX, RGB, HSL, HSV and CMYK, see its shades, and check its contrast with white and black text.",
+         chips=TOOL_CHIPS,
+         related=["color-contrast", "image-convert", "json-formatter"]),
+    dict(tool="base64", src="base64.html", script="base64.js", updated=POPULAR_DAY,
+         title="Base64 Encode and Decode Online | ToolNest by Vintayz",
+         description="Encode text to Base64 or decode Base64 to text, with UTF-8 and URL-safe Base64. Turn small files into data URLs. Free, and nothing is uploaded.",
+         intro="Encode text to Base64 or decode it back, with URL-safe Base64 and file to data URL, all in your browser.",
+         chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
+         related=["json-formatter", "unix-timestamp", "text-compare"]),
+    dict(tool="timer", src="timer.html", script="timer.js", updated=POPULAR_DAY,
+         title="Online Timer and Stopwatch with Alarm | ToolNest by Vintayz",
+         description="A free online countdown timer with an alarm sound, and a stopwatch with laps. Quick starts for 1, 5, 10, 25 and 60 minutes. No sign-up.",
+         intro="A countdown timer with an alarm, and a stopwatch with laps. Start in one click, right in your browser.",
+         chips=TOOL_CHIPS,
+         related=["timesheet", "time-zone", "billable-hours"]),
+
+    dict(path="all-tools/", src="all-tools.html", kind="section", nav="all", updated=POPULAR_DAY, libs=["js/tool-search.js", "js/all-tools.js"],
+         title="All Free Tools A to Z | ToolNest by Vintayz",
+         description="Every free ToolNest tool in one place: calculators, PDF, image, text, date and time tools, resume makers and games. Search or browse by section.",
+         h1="All Free Tools",
+         intro="Every calculator, converter and maker on ToolNest, grouped by section. Type to find the one you need.",
+         chips=TOOL_CHIPS),
+
     dict(path="about/", src="about.html", kind="legal", nav="about", updated=PDF_DAY,
          title="About ToolNest by Vintayz", h1="About ToolNest",
          description="ToolNest builds free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia."),
     dict(path="contact/", src="contact.html", kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
-    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=GAME_DAY,
+    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=SECTORS_DAY,
          title="Privacy Policy | ToolNest by Vintayz", h1="Privacy Policy",
          description="How ToolNest handles personal information, cookies and analytics, and your privacy rights in the UK, the US and India."),
     dict(path="terms/", src="terms.html", kind="legal", updated=PDF_DAY,
          title="Terms of Use | ToolNest by Vintayz", h1="Terms of Use",
          description="The terms that apply when you use the ToolNest website and calculators."),
-    dict(path="disclaimer/", src="disclaimer.html", kind="legal", updated=GAME_DAY,
+    dict(path="disclaimer/", src="disclaimer.html", kind="legal", updated=SECTORS_DAY,
          title="Disclaimer | ToolNest by Vintayz", h1="Disclaimer",
          description="ToolNest calculators provide estimates for planning only and are not tax, legal or financial advice."),
 ]
@@ -1832,7 +2133,7 @@ for p in PAGES:
 # is the newest date of its own content or any of its tools.
 for p in PAGES:
     if p.get("kind") == "section":
-        kids = [k["updated"] for k in PAGES if "parent" in k and PARENTS[k["parent"]][1] == p["path"]]
+        kids = [k["updated"] for k in PAGES if "parent" in k and (PARENTS[k["parent"]][1] == p["path"] or p["path"] == "all-tools/")]
         p["updated"] = max([p["updated"]] + kids)
 
 # Keep titles to about 60 characters so search results show them in full: long ones use the
@@ -1959,6 +2260,15 @@ ICONS = {
     "gamepad": '<path d="M7 7h10a5 5 0 0 1 4.9 6l-.6 3a2.6 2.6 0 0 1-4.5 1.2L15 15H9l-1.8 2.2a2.6 2.6 0 0 1-4.5-1.2l-.6-3A5 5 0 0 1 7 7z"/><path d="M7.5 10.5v3M6 12h3M15.5 11h.01M17.5 13h.01"/>',
     "spade": '<path d="M12 3c-3 4-7 6.5-7 10a3.6 3.6 0 0 0 6.2 2.5L10 21h4l-1.2-5.5A3.6 3.6 0 0 0 19 13c0-3.5-4-6-7-10z"/>',
     "plusminus": '<path d="M7 4v6M4 7h6M14 7h6M4 17h6M14 15h6M14 19h6"/>',
+    "crop": '<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M2 6h14a2 2 0 0 1 2 2v14"/>',
+    "rotate-left": '<path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v5h5"/>',
+    "flip": '<path d="M12 3v18"/><path d="M9 7L4 17h5zM15 7l5 10h-5z"/>',
+    "download": '<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
+    "key": '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/>',
+    "qr": '<rect x="3.5" y="3.5" width="6" height="6" rx="1"/><rect x="14.5" y="3.5" width="6" height="6" rx="1"/><rect x="3.5" y="14.5" width="6" height="6" rx="1"/><path d="M14.5 14.5h2.5v2.5M20.5 14.5v6h-3M14.5 18.5v2"/>',
+    "timer": '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5M12 2.5V5"/>',
+    "dice": '<rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>',
+    "tag": '<path d="M3 12V4.5A1.5 1.5 0 0 1 4.5 3H12l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
 }
 
 
@@ -2027,6 +2337,30 @@ def tool_card(slug, up, region=None):
 </a></li>"""
 
 
+def all_tools_list(up):
+    """Every live tool, grouped by section (in menu order), A to Z within each. Plain links, so
+    search engines and visitors without JavaScript can reach every tool from one page."""
+    live = {p["tool"] for p in PAGES if p.get("kind") == "tool"}
+    out = []
+    for key, (pname, ppath, _) in PARENTS.items():
+        slugs = sorted((s for s in live if TOOLS[s].get("parent", "freelance") == key), key=lambda s: TOOLS[s]["name"].lower())
+        if not slugs:
+            continue
+        items = []
+        for s in slugs:
+            t = TOOLS[s]
+            words = html.escape(" ".join([t["name"], t["card"], t["short"], t.get("keywords", ""), pname]).lower(), quote=True)
+            items.append(f'        <li data-search="{words}"><a href="{up}{t["path"]}">{html.escape(t["name"])}</a>'
+                         f'<span>{t["short"]}</span></li>')
+        out.append(f"""  <section class="az-group" aria-labelledby="az-{key}">
+    <h2 id="az-{key}"><a href="{up}{ppath}">{html.escape(pname)}</a> <small>{len(slugs)}</small></h2>
+    <ul class="az-list">
+{chr(10).join(items)}
+    </ul>
+  </section>""")
+    return "\n".join(out)
+
+
 def soon_card(name, short, icon_name):
     return f"""<li><div class="card soon">
   <div class="card-top"><span class="card-icon">{icon(icon_name)}</span><span class="badge muted">Coming soon</span></div>
@@ -2053,6 +2387,8 @@ def expand(text, up, page=None):
             return "\n".join(soon_card(*c) for c in SOON[arg])
         if key == "tool":
             return tool_card(arg, up, region)
+        if key == "alltools":
+            return all_tools_list(up)
         raise KeyError(m.group(0))
     return re.sub(r"\{\{(\w+)(?::([\w-]+))?\}\}", sub, text)
 
@@ -2079,14 +2415,21 @@ APP_CATEGORY = {
     "tip-calculator": "UtilitiesApplication",
     "unit-converter": "UtilitiesApplication",
     "games": "GameApplication",
+    "image": "MultimediaApplication",
+    "time": "UtilitiesApplication",
+    "text": "UtilitiesApplication",
 }
 
 
 def json_ld(page):
     url = f"{DOMAIN}/{page['path']}"
     graph = []
+    org = {"@type": "Organization", "@id": f"{DOMAIN}/#org", "name": OWNER, "url": f"{DOMAIN}/",
+           "logo": f"{DOMAIN}/favicon.svg"}
     if page["kind"] == "home":
-        graph.append({"@type": "WebSite", "name": BRAND, "url": f"{DOMAIN}/"})
+        graph.append(org)
+        graph.append({"@type": "WebSite", "@id": f"{DOMAIN}/#website", "name": BRAND, "alternateName": ["ToolNest", OWNER],
+                      "url": f"{DOMAIN}/", "inLanguage": "en", "publisher": {"@id": f"{DOMAIN}/#org"}})
     else:
         items = [{"@type": "ListItem", "position": 1, "name": "Home", "item": f"{DOMAIN}/"}]
         if page["kind"] == "tool":
@@ -2100,7 +2443,25 @@ def json_ld(page):
             "@type": "WebApplication", "name": page["h1"], "url": url,
             "applicationCategory": APP_CATEGORY.get(page["tool"], APP_CATEGORY.get(page["parent"], "FinanceApplication")),
             "operatingSystem": "Any",
+            "description": page["description"],
+            "inLanguage": "en",
+            "isAccessibleForFree": True,
+            "dateModified": page["updated"],
+            "publisher": {"@type": "Organization", "name": OWNER, "url": f"{DOMAIN}/"},
             "offers": {"@type": "Offer", "price": "0", "priceCurrency": curr},
+        })
+    if page["kind"] == "section":
+        # The tools a hub lists, so search engines see the hub as a collection of them.
+        if page["path"] == "all-tools/":
+            slugs = [p["tool"] for p in PAGES if p.get("kind") == "tool"]
+        else:
+            slugs = [p["tool"] for p in PAGES if p.get("kind") == "tool" and PARENTS[p["parent"]][1] == page["path"]]
+        graph.append({
+            "@type": "CollectionPage", "name": page["h1"], "url": url, "description": page["description"],
+            "inLanguage": "en", "dateModified": page["updated"],
+            "mainEntity": {"@type": "ItemList", "numberOfItems": len(slugs), "itemListElement": [
+                {"@type": "ListItem", "position": i + 1, "name": TOOLS[s]["name"], "url": f"{DOMAIN}/{TOOLS[s]['path']}"}
+                for i, s in enumerate(slugs)]},
         })
     data = json.dumps({"@context": "https://schema.org", "@graph": graph}, indent=2, ensure_ascii=False)
     return f'<script type="application/ld+json">\n{data}\n</script>'
@@ -2114,6 +2475,9 @@ CALC_SECTIONS = [("tools", "Freelance calculators", "freelance/", "briefcase"),
                  ("health", "Health &amp; fitness", "health/", "heart"),
                  ("dev", "Developer tools", "dev/", "code"),
                  ("everyday", "Everyday tools", "tools/", "formula"),
+                 ("image", "Image tools", "image/", "image"),
+                 ("time", "Date &amp; time", "time/", "calendar"),
+                 ("text", "Text tools", "text/", "type-icon"),
                  ("education", "Writing &amp; study", "education/", "award"),
                  ("games", "Brain games", "games/", "gamepad")]
 if not HEALTH_TOOLS:
@@ -2151,7 +2515,7 @@ def header(page, up):
     # The Calculators menu lists every calculator section (PDF and Resume have their own links).
     sections = "\n".join(
         f'              <li><a href="{up}{path}"{cur(key)}>{icon(ic)}{name}</a></li>'
-        for key, name, path, ic in CALC_SECTIONS)
+        for key, name, path, ic in CALC_SECTIONS + [("all", "All tools A–Z", "all-tools/", "grid")])
     in_calcs = " is-current" if nav in [c[0] for c in CALC_SECTIONS] else ""
 
     # The Country menu is a <details> element, so it opens and closes without JavaScript.
@@ -2214,7 +2578,7 @@ def footer(up):
     <div class="footer-grid">
       <div>
         <a class="logo" href="{home}">{LOGO}ToolNest<span class="logo-by">by {OWNER}</span></a>
-        <p class="about-text">Free, accurate money calculators for freelancers and self-employed people in the US, UK, Canada and Australia, plus PDF tools that never upload your files.</p>
+        <p class="about-text">Free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia, plus PDF, image, text and everyday tools that run in your browser and never upload your files.</p>
       </div>
       <nav aria-label="Pricing tools">
         <h2>Pricing</h2>
@@ -2293,6 +2657,27 @@ def footer(up):
           <li><a href="{up}tools/">All everyday tools</a></li>
         </ul>
       </nav>
+      <nav aria-label="Image tools">
+        <h2>Image Tools</h2>
+        <ul>
+{links(('image-edit',))}
+          <li><a href="{up}image/">All image tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Date and time tools">
+        <h2>Date &amp; Time</h2>
+        <ul>
+{links(('time-dates', 'time-zones'))}
+          <li><a href="{up}time/">All date and time tools</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Text tools">
+        <h2>Text Tools</h2>
+        <ul>
+{links(('text-tools',))}
+          <li><a href="{up}text/">All text tools</a></li>
+        </ul>
+      </nav>
       <nav aria-label="Brain games">
         <h2>Games</h2>
         <ul>
@@ -2303,6 +2688,7 @@ def footer(up):
       <nav aria-label="Company">
         <h2>Company</h2>
         <ul>
+          <li><a href="{up}all-tools/">All tools A–Z</a></li>
           <li><a href="{up}about/">About</a></li>
           <li><a href="{up}contact/">Contact</a></li>
           <li><a href="{up}privacy-policy/">Privacy Policy</a></li>
@@ -2396,7 +2782,8 @@ def related(page, up):
     region = page.get("region")
     cards = "\n".join(tool_card(s, up, region) for s in page.get("related", []))
     pname, ppath, _ = PARENTS[page['parent']]
-    all_label = f"All {pname.replace('Freelancer Tools', 'freelancer').replace('PDF Tools', 'PDF').replace('Resume & CV Maker', 'resume and CV')} tools"
+    short = re.sub(r"\s+Tools$", "", pname.replace('Freelancer Tools', 'freelancer').replace('Resume & CV Maker', 'resume and CV'))
+    all_label = html.escape(f"All {short} tools")
     if page["parent"] == "games":
         all_label = "All games"
     return f"""<section class="section">
@@ -2413,6 +2800,8 @@ def other_sections(page, up):
     live = {p["path"] for p in PAGES if p.get("kind") == "section"}
     links = "".join(f'<a class="chip chip-link" href="{up}{path}">{html.escape(name)}</a>'
                     for name, path, _ in PARENTS.values() if path in live and path != page["path"])
+    if page["path"] != "all-tools/":
+        links += f'<a class="chip chip-link" href="{up}all-tools/">All tools A–Z</a>'
     return f"""<section class="section">
     <div class="section-head"><div><span class="kicker">Explore</span><h2>More free tools</h2></div></div>
     <nav class="meta-row" aria-label="Other sections">{links}</nav>
@@ -2433,7 +2822,18 @@ def main_content(page, up, body):
     if kind == "legal":
         return f"{hero}\n<div class=\"container\">\n  <div class=\"content legal\">\n{body}\n{updated_line(page)}\n  </div>\n</div>"
     # tool
-    if page["parent"] == "pdf":
+    if page["parent"] == "image":
+        note = ("<strong>Keep your original:</strong> this tool makes a new copy of your picture on your own device. "
+                "We never see your pictures, so we can't recover them for you. Check the new picture before you delete "
+                "the original.")
+    elif page["parent"] == "text":
+        note = ("<strong>Please note:</strong> these tools change text by fixed rules, so check the result before you use "
+                "it, especially names, codes and anything legal or official.")
+    elif page["parent"] == "time":
+        note = ("<strong>Please note:</strong> results are worked out from your device's calendar and time zone rules. "
+                "Contracts, laws and official deadlines can count days differently, so check the wording of any rule "
+                "that applies to you.")
+    elif page["parent"] == "pdf":
         note = ("<strong>Keep your original:</strong> this tool makes a new copy of your file on your own device. "
                 "We never see your files, so we can't recover them for you. Check the new PDF before you delete the "
                 "original or send it to anyone.")
@@ -2603,6 +3003,31 @@ REDIRECTS = """/canada /ca/ 301
 """
 
 
+def llms_txt():
+    """A plain-text map of the site for AI assistants and AI search (the llms.txt format)."""
+    live = {p["tool"] for p in PAGES if p.get("kind") == "tool"}
+    lines = [f"# {BRAND}", "",
+             "> Free calculators and tools that run in the browser: money and tax calculators for freelancers in the "
+             "US, UK, Canada and Australia, plus PDF, image, text, date and time, developer and everyday tools, "
+             "resume makers and brain games. No sign-up. Calculations and files stay on the visitor's device.", "",
+             "Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and each tax tool names its "
+             "tax year. Results are estimates, not tax, legal or financial advice.", ""]
+    for key, (pname, ppath, _) in PARENTS.items():
+        slugs = sorted((s for s in live if TOOLS[s].get("parent", "freelance") == key), key=lambda s: TOOLS[s]["name"].lower())
+        if not slugs:
+            continue
+        lines.append(f"## {pname}")
+        lines.append("")
+        lines.append(f"- [{pname}]({DOMAIN}/{ppath}): all {pname.lower()}")
+        for s in slugs:
+            t = TOOLS[s]
+            lines.append(f"- [{t['name']}]({DOMAIN}/{t['path']}): {t['short']}")
+        lines.append("")
+    lines += ["## About", "", f"- [About]({DOMAIN}/about/)", f"- [Privacy Policy]({DOMAIN}/privacy-policy/)",
+              f"- [Disclaimer]({DOMAIN}/disclaimer/)", f"- [All tools A to Z]({DOMAIN}/all-tools/)", ""]
+    return "\n".join(lines)
+
+
 def write(rel, text):
     path = os.path.join(OUT, *rel.split("/"))
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -2623,6 +3048,8 @@ def main():
     if ADSENSE_PUBLISHER_ID:
         pub = ADSENSE_PUBLISHER_ID.replace("ca-", "", 1)
         write("ads.txt", f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n")
+    write(f"{INDEXNOW_KEY}.txt", INDEXNOW_KEY + "\n")
+    write("llms.txt", llms_txt())
     write("favicon.svg", FAVICON + "\n")
     write("_headers", HEADERS)
     write("_redirects", REDIRECTS)

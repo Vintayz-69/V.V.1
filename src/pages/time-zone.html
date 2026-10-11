@@ -1,0 +1,95 @@
+  <section class="calculator" aria-label="Time zone converter">
+    <form class="calc-form" id="tz-form" novalidate>
+      <div class="field">
+        <label for="tz-date">Date</label>
+        <div class="input-wrap"><input id="tz-date" type="date"></div>
+        <span class="error-msg">Choose a date.</span>
+      </div>
+      <div class="field">
+        <label for="tz-time">Time</label>
+        <div class="input-wrap"><input id="tz-time" type="time"></div>
+        <span class="error-msg">Choose a time.</span>
+      </div>
+      <div class="field span-2">
+        <label for="tz-from">Where is this time?</label>
+        <div class="inline-row">
+          <div class="select-wrap grow"><select id="tz-from"></select></div>
+          <button type="button" class="btn btn-sm" id="tz-now">Now</button>
+        </div>
+      </div>
+      <div class="field span-2">
+        <label for="tz-add">Add a place<span class="hint">Cities are grouped by time zone; every zone is listed at the end</span></label>
+        <div class="select-wrap"><select id="tz-add"></select></div>
+      </div>
+      <div class="form-actions span-2">
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>The same moment around the world</h2>
+      <div class="result-main tz-main"><span id="tz-main">—</span></div>
+      <p class="tz-utc" id="tz-utc"></p>
+      <ul class="tz-list" id="tz-list" aria-label="Places"></ul>
+      <p class="result-note" id="tz-note" hidden></p>
+    </div>
+  </section>
+
+  <section class="section tz-hours-section" aria-labelledby="tz-hours-title">
+    <div class="section-head"><div><span class="kicker">Meeting planner</span><h2 id="tz-hours-title">Working hours in each place</h2>
+      <p id="tz-hours-summary"></p></div></div>
+    <div id="tz-hours"></div>
+    <p class="work-note">Each row is one hour of the chosen day, in the first place. Green cells are between 9:00 and 17:00 (9 AM and 5 PM) there; +1 means the next day.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use this converter</h2>
+    <ol class="steps">
+      <li><strong>Pick the date and time</strong>, and say where that time is. Press "Now" for the current time.</li>
+      <li><strong>Add the places</strong> you want to compare, such as a client's city. Remove any you don't need with the ✕.</li>
+      <li><strong>Read the time in each place</strong>, with its offset from UTC and whether it's on summer time.</li>
+      <li><strong>Find a meeting time</strong> in the table below: bold rows are inside working hours everywhere.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>Every place's clock is a number of hours ahead of or behind UTC (Coordinated Universal Time, the world's reference time). Many places move their clocks forward an hour in summer, on dates that differ between countries. We use the time zone rules built into your browser, which are kept up to date with your browser and device updates.</p>
+    <div class="formula">UTC time    = local time − that place's offset
+Their time  = UTC time + their offset</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">Sunday 11 October 2026, 12:00 in London (UTC+1, summer time)
+  UTC                  11:00
+  New York  (UTC−4)    07:00
+  Los Angeles (UTC−7)  04:00
+  India     (UTC+5:30) 16:30
+  Sydney    (UTC+11)   22:00
+
+Tuesday 27 October 2026, 12:00 in London (UTC, summer time has ended)
+  New York  (UTC−4)    08:00   ← only 4 hours behind this week
+
+Monday 2 November 2026, 9:00 in New York (UTC−5)
+  London    (UTC)      14:00
+  Sydney    (UTC+11)   01:00 the next day</div>
+    <p>The UK's clocks go back on the last Sunday of October, but the US's go back a week later, on the first Sunday of November. For that one week, New York is 4 hours behind London instead of the usual 5, a common reason for missed meetings. The same happens in March, when the US changes first.</p>
+    <p>On Monday 12 October 2026, the hours that fall inside 9:00 to 17:00 in both London and New York are 14:00, 15:00 and 16:00 London time (9:00, 10:00 and 11:00 in New York).</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What does "summer time" mean here?</summary>
+        <p>It means the place has moved its clocks forward for summer (called daylight saving time in the US, Canada and Australia, and British Summer Time in the UK). Southern places such as Sydney have summer from about October to April, so their clocks change the other way round to Europe and North America.</p>
+      </details>
+      <details>
+        <summary>What if my time doesn't exist, or happens twice?</summary>
+        <p>When the clocks go forward, an hour is skipped (in New York, 2:30 AM never happens on 8 March 2026), so we move the time on by the change and tell you. When the clocks go back, an hour happens twice, and we use the first one.</p>
+      </details>
+      <details>
+        <summary>Why isn't my city listed?</summary>
+        <p>The popular list shows big cities by time zone; any city in the same zone has the same time. If yours isn't there, look under "All time zones", which lists every zone your browser knows by region and main city, such as America/Edmonton or Australia/Perth.</p>
+      </details>
+      <details>
+        <summary>How accurate is it?</summary>
+        <p>It's as accurate as your browser's time zone rules. Countries sometimes change their rules at short notice; browsers and devices add the change in their updates. For important dates, check the time with the person you're meeting.</p>
+      </details>
+    </div>
+  </div>

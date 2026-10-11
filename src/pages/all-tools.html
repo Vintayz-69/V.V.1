@@ -1,0 +1,10 @@
+  <div class="hub-search az-search" role="search">
+    <label class="visually-hidden" for="az-search">Search all tools</label>
+    <span class="hub-search-icon">{{icon:search}}</span>
+    <input id="az-search" type="search" placeholder="Search, e.g. compress, QR or tax" autocomplete="off" spellcheck="false" enterkeyhint="go">
+  </div>
+  <p class="search-status" id="az-status" role="status" aria-live="polite"></p>
+
+{{alltools}}
+
+  <p class="az-none" id="az-none" hidden>No tools match that. Try a shorter word, or <a href="{{root}}contact/">tell us what you need</a>.</p>

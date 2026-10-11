@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vintayz.com/</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-11</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/freelance/</loc>
@@ -314,11 +314,11 @@
   </url>
   <url>
     <loc>https://vintayz.com/dev/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-11</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/tools/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-11</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/finance/compound-interest-calculator/</loc>
@@ -473,6 +473,94 @@
     <lastmod>2026-10-05</lastmod>
   </url>
   <url>
+    <loc>https://vintayz.com/image/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/image/resize-image/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/image/compress-image/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/image/convert-image/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/image/crop-image/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/time/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/time/days-between-dates-calculator/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/time/add-days-to-date-calculator/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/time/week-number-calculator/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/time/time-zone-converter/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/text/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/text/case-converter/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/text/text-compare/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/text/remove-duplicate-lines/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/tools/discount-calculator/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/tools/qr-code-generator/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/tools/random-number-generator/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/dev/password-generator/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/dev/color-converter/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/dev/base64-encode-decode/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/time/online-timer/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/all-tools/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
     <loc>https://vintayz.com/about/</loc>
     <lastmod>2026-09-29</lastmod>
   </url>
@@ -482,7 +570,7 @@
   </url>
   <url>
     <loc>https://vintayz.com/privacy-policy/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-11</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/terms/</loc>
@@ -490,6 +578,6 @@
   </url>
   <url>
     <loc>https://vintayz.com/disclaimer/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-11</lastmod>
   </url>
 </urlset>

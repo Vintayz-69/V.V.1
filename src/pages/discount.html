@@ -1,0 +1,115 @@
+  <section class="calculator" aria-label="Discount calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="price">Original price</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="price" type="text" inputmode="decimal" value="80" autocomplete="off"></div>
+        <span class="error-msg">Enter a price of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="off">Discount</label>
+        <div class="input-wrap"><input id="off" type="text" inputmode="decimal" value="25" autocomplete="off"><span class="affix">% off</span></div>
+        <span class="error-msg">Enter a percentage from 0 to 100.</span>
+      </div>
+      <div class="field">
+        <label for="extra">Extra discount<span class="hint">Optional: taken off the sale price</span></label>
+        <div class="input-wrap"><input id="extra" type="text" inputmode="decimal" autocomplete="off" placeholder="0"><span class="affix">% off</span></div>
+        <span class="error-msg">Enter a percentage from 0 to 100, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="tax">Sales tax to add<span class="hint">Optional: your local rate</span></label>
+        <div class="input-wrap"><input id="tax" type="text" inputmode="decimal" autocomplete="off" placeholder="0"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from 0 to 100, or leave it empty.</span>
+      </div>
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="reset">{{icon:refresh}} Reset</button>
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Sale price</h2>
+      <div class="result-main"><span id="out-sale">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>You save</span><span id="out-saved">—</span></li>
+        <li><span>Total discount</span><span id="out-total-off">—</span></li>
+        <li id="row-first" hidden><span>After the first discount</span><span id="out-first">—</span></li>
+        <li><span>Sales tax</span><span id="out-tax">—</span></li>
+        <li class="key"><span>To pay</span><span id="out-pay">—</span></li>
+      </ul>
+      <p class="result-note">Two discounts one after the other don't add up: 20% then 10% off is 28% off, not 30%.</p>
+    </div>
+  </section>
+
+  <form class="mini-calc" id="po-form" novalidate>
+    <h2>What percent off is it?</h2>
+    <div class="mini-calc-row">
+      <div class="field">
+        <label for="po-original">Original price</label>
+        <div class="input-wrap"><input id="po-original" type="text" inputmode="decimal" value="50" autocomplete="off"></div>
+      </div>
+      <div class="field">
+        <label for="po-sale">Sale price</label>
+        <div class="input-wrap"><input id="po-sale" type="text" inputmode="decimal" value="35" autocomplete="off"></div>
+      </div>
+      <p class="mini-calc-out" aria-live="polite"><span id="po-out">—</span></p>
+    </div>
+  </form>
+
+  <div class="content">
+    <h2>How to use the discount calculator</h2>
+    <ol class="steps">
+      <li><strong>Type the original price</strong> and the <strong>discount</strong>, such as 25% off.</li>
+      <li><strong>Got a second discount</strong>, like an extra 10% off at the till or with a code? Type it in "Extra discount".</li>
+      <li><strong>Add sales tax</strong> only if it's added at the till where you are (see below). Leave it empty if prices already include tax.</li>
+      <li><strong>Read the sale price</strong>, what you save and the total you pay.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Sale price      = original price × (1 − discount ÷ 100)
+Extra discount  = sale price × (1 − extra ÷ 100)
+You save        = original price − final sale price
+Total discount  = you save ÷ original price × 100
+To pay          = final sale price × (1 + sales tax ÷ 100)
+Percent off     = (1 − sale price ÷ original price) × 100</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$80, 25% off             80 × 0.75        = $60.00   (you save $20.00)
+
+$120, 20% off then 10% off
+  120 × 0.80 = 96.00,  96.00 × 0.90             = $86.40
+  you save $33.60, a total of 28% off (not 30%)
+
+$86.40 plus 8% sales tax 86.40 × 0.08    = $6.91 tax, $93.31 to pay
+
+Was $50, now $35         (1 − 35 ÷ 50) × 100 = 30% off</div>
+
+    <h2>Does the price include tax?</h2>
+    <p>In the UK and Australia, shop prices for shoppers already include VAT or GST, so leave sales tax empty. In the US and Canada, sales tax is usually added at the till and the rate depends on where you are, so type your own local rate if you want the total. We don't fill in any rates for you.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why isn't 20% plus 10% off the same as 30% off?</summary>
+        <p>The second discount is taken off the price that's already been reduced, which is smaller. On $100, 20% off leaves $80, and 10% off $80 is $8, so you pay $72: 28% off in total. A single 30% off would leave $70.</p>
+      </details>
+      <details>
+        <summary>How do I work out a discount in my head?</summary>
+        <p>10% is the price with the decimal point moved one place left ($80 → $8). Double it for 20%, halve it for 5%, and add them up for others: 25% off $80 is $8 + $8 + $4 = $20.</p>
+      </details>
+      <details>
+        <summary>How do I find the original price from a sale price?</summary>
+        <p>Divide the sale price by (1 − discount ÷ 100). For example, $60 after 25% off: 60 ÷ 0.75 = $80. Our <a href="{{root}}tools/percentage-calculator/">percentage calculator</a> can help with other percentage questions.</p>
+      </details>
+    </div>
+  </div>

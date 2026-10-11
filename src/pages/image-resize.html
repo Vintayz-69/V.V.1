@@ -1,0 +1,131 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Resize image tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.avif" multiple>
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose pictures</label>
+      <p class="dropzone-hint">or drop them here. JPG, PNG, WebP, GIF and BMP all work.</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="work-head">
+        <h2 class="work-title">Pictures</h2>
+        <p class="work-note" id="images-summary"></p>
+      </div>
+      <ol class="file-list" id="file-list"></ol>
+
+      <div class="pdf-options">
+        <fieldset class="choice-group span-2">
+          <legend>Resize by</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="rs-mode" id="rs-mode-px" value="pixels" checked><label for="rs-mode-px">Size in pixels<small>Width and height</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="rs-mode" id="rs-mode-pct" value="percent"><label for="rs-mode-pct">Percentage<small>e.g. 50% of the size</small></label></div>
+          </div>
+        </fieldset>
+
+        <div class="img-size-grid span-2" id="rs-pixels">
+          <div class="field">
+            <label for="rs-width">Width</label>
+            <div class="input-wrap"><input id="rs-width" type="text" inputmode="numeric" autocomplete="off" placeholder="Auto"><span class="affix">px</span></div>
+            <span class="error-msg">Enter 1 to 20,000, or leave it empty.</span>
+          </div>
+          <div class="field">
+            <label for="rs-height">Height</label>
+            <div class="input-wrap"><input id="rs-height" type="text" inputmode="numeric" autocomplete="off" placeholder="Auto"><span class="affix">px</span></div>
+            <span class="error-msg">Enter 1 to 20,000, or leave it empty.</span>
+          </div>
+          <div class="field span-2">
+            <label class="check" for="rs-keep"><input type="checkbox" id="rs-keep" checked> Keep the shape (don't stretch the picture)</label>
+          </div>
+        </div>
+
+        <div class="field" id="rs-percent-field" hidden>
+          <label for="rs-percent">Percentage of the current size<span class="hint">Under 100 makes it smaller, over 100 bigger</span></label>
+          <div class="input-wrap"><input id="rs-percent" type="text" inputmode="numeric" autocomplete="off" value="50"><span class="affix">%</span></div>
+          <span class="error-msg">Enter a percentage from 1 to 1,000.</span>
+        </div>
+
+        <div class="field">
+          <label for="rs-format">Save as</label>
+          <div class="select-wrap">
+            <select id="rs-format">
+              <option value="same">Same type as the original</option>
+              <option value="jpg">JPG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WebP</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" id="rs-quality-field">
+          <label for="rs-quality">Quality: <output id="rs-quality-out" for="rs-quality">90%</output><span class="hint">For JPG and WebP. Lower means a smaller file.</span></label>
+          <input class="range" type="range" id="rs-quality" min="10" max="100" step="1" value="90">
+        </div>
+        <p class="img-preview-line span-2" id="rs-preview" aria-live="polite"></p>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Resize</button>
+        <input class="visually-hidden" type="file" id="pdf-more" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.avif" multiple>
+        <label class="btn" for="pdf-more">{{icon:plus}} Add more pictures</label>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Start over</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your pictures stay on your device. They're resized by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to resize a picture</h2>
+    <ol class="steps">
+      <li><strong>Choose one or more pictures</strong>, or drag them onto the box.</li>
+      <li><strong>Type the new width or height</strong> in pixels. With "Keep the shape" ticked, the other side changes to match, so nothing looks squashed. Or choose "Percentage" to scale by, say, 50%.</li>
+      <li><strong>Pick the file type</strong> if you want a different one, and the quality for JPG or WebP.</li>
+      <li><strong>Press "Resize"</strong> and download your picture, or all of them in one ZIP file.</li>
+    </ol>
+
+    <h2>How the new size is worked out</h2>
+    <p>A picture's shape is its width divided by its height. To keep that shape, both sides are multiplied by the same number:</p>
+    <div class="formula">Scale       = new width ÷ old width        (or new height ÷ old height)
+New height  = old height × scale
+
+Both sides typed, shape kept:
+Scale       = the smaller of (new width ÷ old width) and (new height ÷ old height)
+            → the picture fits inside the box you typed, without stretching</div>
+    <p>Sides are rounded to whole pixels. If you untick "Keep the shape", the picture is stretched or squeezed to exactly the size you type.</p>
+
+    <h2>Worked example</h2>
+    <p>A phone photo is 4,032 × 3,024 pixels, too big for many website and email uploads.</p>
+    <div class="formula">Width 1,200 px    scale = 1,200 ÷ 4,032 = 0.2976    height = 3,024 × 0.2976 = 900
+                  → 1,200 × 900 px
+
+50%               → 2,016 × 1,512 px
+
+Fit inside 1,080 × 1,080:
+                  scale = smaller of 1,080 ÷ 4,032 and 1,080 ÷ 3,024 = 0.2679
+                  → 1,080 × 810 px</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Will resizing make my picture blurry?</summary>
+        <p>Making a picture smaller keeps it sharp: we shrink it in halving steps, which gives smoother edges than one big jump. Making a picture bigger can't add detail that isn't there, so enlarged pictures look softer. Start from the largest original you have.</p>
+      </details>
+      <details>
+        <summary>Can I resize several pictures at once?</summary>
+        <p>Yes. Choose them all together. With a width and height typed and "Keep the shape" ticked, each picture is made as large as fits inside that box, so tall and wide pictures both keep their shape. You can download them all in one ZIP file.</p>
+      </details>
+      <details>
+        <summary>What happens to the photo's hidden details, like location?</summary>
+        <p>The new picture is drawn fresh by your browser, so it doesn't copy over hidden details (called EXIF data) such as the camera model, the date or GPS location. The picture is turned the right way up first, so it won't come out sideways.</p>
+      </details>
+      <details>
+        <summary>Which file type should I choose?</summary>
+        <p>JPG is best for photos and makes small files. PNG keeps sharp edges and see-through areas, so it suits logos, screenshots and graphics. WebP can do both and makes smaller files, and most modern browsers and websites accept it, but some older apps don't. JPG can't be see-through, so transparent areas become white.</p>
+      </details>
+      <details>
+        <summary>Are my pictures uploaded?</summary>
+        <p>No. Your browser does all the work on your own device, so this tool works even with your internet switched off once the page has loaded. We never see your pictures.</p>
+      </details>
+    </div>
+  </div>

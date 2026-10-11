@@ -1,0 +1,72 @@
+  <section class="calculator" aria-label="Color converter">
+    <form class="calc-form" id="cl-form" novalidate>
+      <div class="field span-2">
+        <label for="cl-input">Colour<span class="hint">Type HEX (#1d4ed8), RGB (rgb(29, 78, 216)) or HSL (hsl(224, 76%, 48%))</span></label>
+        <div class="inline-row">
+          <div class="input-wrap grow"><input id="cl-input" type="text" value="#1d4ed8" autocomplete="off" spellcheck="false"></div>
+          <input class="colour-input cl-picker" type="color" id="cl-picker" value="#1d4ed8" aria-label="Pick a colour">
+        </div>
+        <span class="error-msg">We couldn't read that colour. Try #1d4ed8, rgb(29, 78, 216) or hsl(224, 76%, 48%).</span>
+      </div>
+      <div class="span-2">
+        <span class="field-title" id="cl-shades-label">Shades (darker to lighter). Click one to use it.</span>
+        <div class="cl-shades" id="cl-shades" role="group" aria-labelledby="cl-shades-label"></div>
+      </div>
+      <div class="form-actions span-2">
+        <span class="privacy-note">{{icon:lock}} Converted in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your colour</h2>
+      <div class="cl-swatch" id="cl-swatch"><span class="cl-on-white">Aa</span><span class="cl-on-black">Aa</span></div>
+      <ul class="result-list">
+        <li class="key"><span>HEX</span><span><span id="cl-hex">—</span> <button type="button" class="btn btn-sm ts-copy" data-copy="cl-hex">Copy</button></span></li>
+        <li class="key"><span>RGB</span><span><span id="cl-rgb">—</span> <button type="button" class="btn btn-sm ts-copy" data-copy="cl-rgb">Copy</button></span></li>
+        <li class="key"><span>HSL</span><span><span id="cl-hsl">—</span> <button type="button" class="btn btn-sm ts-copy" data-copy="cl-hsl">Copy</button></span></li>
+        <li><span>HSV / HSB</span><span id="cl-hsv">—</span></li>
+        <li><span>CMYK (approximate)</span><span id="cl-cmyk">—</span></li>
+        <li><span>Contrast with white text</span><span id="cl-white">—</span></li>
+        <li><span>Contrast with black text</span><span id="cl-black">—</span></li>
+      </ul>
+      <p class="result-note">AA means a contrast of at least 4.5 : 1 for normal text (WCAG 2.1). Test any pair of colours in our <a href="{{root}}dev/color-contrast-checker/">contrast checker</a>.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the color converter</h2>
+    <ol class="steps">
+      <li><strong>Type or paste a colour</strong> in HEX, RGB or HSL, or pick one with the colour picker.</li>
+      <li><strong>Copy the format you need</strong>: HEX and RGB for websites and apps, HSL for making lighter and darker versions in CSS.</li>
+      <li><strong>Check the contrast</strong> before using the colour behind text, and click a shade to explore lighter or darker versions.</li>
+    </ol>
+
+    <h2>How the formats relate</h2>
+    <p>Screens mix red, green and blue light. <strong>RGB</strong> gives each from 0 to 255. <strong>HEX</strong> writes the same three numbers in base 16 (00 to ff). <strong>HSL</strong> describes the same colour as a hue (an angle round the colour wheel: 0° red, 120° green, 240° blue), saturation (how strong) and lightness. <strong>HSV</strong> (also called HSB) is similar, with "value" instead of lightness, and is used by many design apps' pickers.</p>
+    <div class="formula">HEX → RGB      1d → 1×16 + 13 = 29,  4e → 4×16 + 14 = 78,  d8 → 13×16 + 8 = 216
+RGB → HSL      lightness = (largest + smallest) ÷ 2 of the three values (as 0 to 1)
+CMYK           K = 1 − largest,  C = (1 − R − K) ÷ (1 − K), and the same for M and Y</div>
+
+    <h2>Worked example</h2>
+    <div class="formula">#1d4ed8  =  rgb(29, 78, 216)  =  hsl(224, 76%, 48%)   (HSL rounded to whole numbers)
+          HSV 224°, 87%, 85%       CMYK 87%, 64%, 0%, 15%
+          Contrast with white text: 6.7 : 1 (passes AA)
+#ffffff  =  rgb(255, 255, 255)  =  hsl(0, 0%, 100%)
+#f00     =  #ff0000  =  rgb(255, 0, 0)  =  hsl(0, 100%, 50%)</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why is CMYK marked "approximate"?</summary>
+        <p>The CMYK numbers here use the simple textbook formula. Real printing depends on the printer, ink and paper, which printers handle with colour profiles. Ask your printer for the CMYK values to use, and use these as a starting point.</p>
+      </details>
+      <details>
+        <summary>What's the short HEX code like #f00?</summary>
+        <p>When each pair of digits is a repeated digit, CSS lets you write each pair once: #ff0000 can be written #f00. We accept both and always show the full six-digit version.</p>
+      </details>
+      <details>
+        <summary>Are shades the same as tints?</summary>
+        <p>Strictly, tints add white and shades add black. Our row keeps the hue and saturation and steps the HSL lightness from 10% to 90%, which gives both darker and lighter versions of your colour.</p>
+      </details>
+    </div>
+  </div>

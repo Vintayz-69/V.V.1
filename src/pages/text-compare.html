@@ -1,0 +1,83 @@
+  <section class="text-tool" aria-label="Text compare">
+    <form id="tc-form" novalidate>
+      <div class="tc-inputs">
+        <div class="field">
+          <label for="tc-a">Original text</label>
+          <textarea id="tc-a" class="text-tool-input" rows="9" spellcheck="false" placeholder="Paste the first version…"></textarea>
+        </div>
+        <div class="field">
+          <label for="tc-b">Changed text</label>
+          <textarea id="tc-b" class="text-tool-input" rows="9" spellcheck="false" placeholder="Paste the second version…"></textarea>
+        </div>
+      </div>
+
+      <div class="tc-options">
+        <fieldset class="choice-group">
+          <legend>Compare by</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="tc-mode" id="tc-lines" value="lines" checked><label for="tc-lines">Lines<small>Lists, code, documents</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="tc-mode" id="tc-words" value="words"><label for="tc-words">Words<small>Small edits in sentences</small></label></div>
+          </div>
+        </fieldset>
+        <div class="tc-checks">
+          <label class="check-line"><input type="checkbox" id="tc-case"> Ignore capital letters</label>
+          <label class="check-line"><input type="checkbox" id="tc-space"> Ignore extra spaces</label>
+        </div>
+        <div class="tc-buttons">
+          <button type="button" class="btn btn-sm" id="tc-swap">{{icon:refresh}} Swap</button>
+          <button type="button" class="btn btn-sm btn-quiet" id="tc-clear">{{icon:trash}} Clear</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="tc-result">
+      <h2 class="tc-title">Differences</h2>
+      <p class="tc-summary" id="tc-summary" role="status" aria-live="polite"></p>
+      <p class="tc-legend" id="tc-legend" hidden><span class="tc-del">Removed</span> <span class="tc-ins">Added</span></p>
+      <div class="tc-out" id="tc-out"></div>
+    </div>
+    <p class="pdf-privacy">{{icon:lock}} Compared in your browser. Your text is never sent or saved.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to compare two texts</h2>
+    <ol class="steps">
+      <li><strong>Paste the original</strong> in the first box and the <strong>changed version</strong> in the second.</li>
+      <li><strong>Choose "Lines" or "Words".</strong> Lines suits lists, code and long documents; Words shows small edits inside sentences.</li>
+      <li><strong>Read the differences</strong>: removed text is red with a line through it, added text is green. The summary counts them.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>We look for the smallest set of additions and removals that turns the original into the changed version, using the Myers difference method, the same idea behind most "diff" tools programmers use. Everything that isn't added or removed is shown as the same. A changed line shows as the old line removed and the new line added.</p>
+    <p>"Ignore capital letters" treats Hello and hello as the same. "Ignore extra spaces" treats several spaces, tabs and spaces at the ends of lines as one space, which helps when text has been copied between apps.</p>
+
+    <h2>Worked example</h2>
+    <div class="formula">Original:   The price is $1,200 for the full project.
+Changed:    The price is $1,350 for the whole project.
+
+By words:   The price is <del>$1,200</del> <ins>$1,350</ins> for the <del>full</del> <ins>whole</ins> project.
+            2 words added, 2 words removed, 6 words the same
+
+By lines (a 5-line email where the price line changed and one line was added):
+            2 lines added, 1 line removed, 4 lines the same</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What can I use it for?</summary>
+        <p>Checking what a client changed in a contract or brief, comparing two drafts of an essay or proposal, spotting edits in a list, or comparing two versions of a settings file or code.</p>
+      </details>
+      <details>
+        <summary>Can it compare Word or PDF files?</summary>
+        <p>Not directly. Copy the text out of each file and paste it in. For PDFs, our <a href="{{root}}pdf/pdf-to-text/">PDF to text</a> tool can copy the words out for you. Formatting such as bold or fonts isn't compared, only the words.</p>
+      </details>
+      <details>
+        <summary>Is there a size limit?</summary>
+        <p>Texts of thousands of lines work well. If two texts are almost completely different, we stop and say so, because the result wouldn't be useful.</p>
+      </details>
+      <details>
+        <summary>Is my text sent anywhere?</summary>
+        <p>No. Both texts stay in your browser, and they're gone when you close or reload the page. We never see them.</p>
+      </details>
+    </div>
+  </div>

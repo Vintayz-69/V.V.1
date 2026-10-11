@@ -3,10 +3,43 @@
       <div>
         <span class="kicker">Code &amp; Design</span>
         <h2>Developer &amp; web accessibility tools</h2>
-        <p>Format and minify JSON safely without server uploads, convert Unix timestamps, check WCAG 2.1 color contrast compliance, and build better software.</p>
+        <p>Make strong passwords, format JSON, encode and decode Base64, convert colour codes, check WCAG 2.1 contrast and convert Unix timestamps, all without uploading anything.</p>
       </div>
     </div>
     <ul class="card-grid">
 {{cards:dev-tools}}
     </ul>
+  </section>
+
+  <section class="section hub-guide">
+    <div class="section-head"><div><span class="kicker">Guide</span><h2>Which developer tool do I need?</h2></div></div>
+    <div class="content">
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>I want to…</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td data-label="I want to">Make a strong, random password</td><td data-label="Use"><a href="{{root}}dev/password-generator/">Password generator</a></td></tr>
+          <tr><td data-label="I want to">Tidy up or check JSON from an API</td><td data-label="Use"><a href="{{root}}dev/json-formatter/">JSON formatter &amp; validator</a></td></tr>
+          <tr><td data-label="I want to">Turn text into Base64, or decode it</td><td data-label="Use"><a href="{{root}}dev/base64-encode-decode/">Base64 encode &amp; decode</a></td></tr>
+          <tr><td data-label="I want to">Turn a picture into a data URL for HTML or CSS</td><td data-label="Use"><a href="{{root}}dev/base64-encode-decode/">Base64 encode &amp; decode</a></td></tr>
+          <tr><td data-label="I want to">Change a HEX colour code to RGB or HSL</td><td data-label="Use"><a href="{{root}}dev/color-converter/">Color converter</a></td></tr>
+          <tr><td data-label="I want to">Check text is readable on a background colour</td><td data-label="Use"><a href="{{root}}dev/color-contrast-checker/">Color contrast checker</a></td></tr>
+          <tr><td data-label="I want to">Read a Unix timestamp as a date</td><td data-label="Use"><a href="{{root}}dev/unix-timestamp-converter/">Unix timestamp converter</a></td></tr>
+          <tr><td data-label="I want to">See what changed between two versions of a file</td><td data-label="Use"><a href="{{root}}text/text-compare/">Text compare</a></td></tr>
+          <tr><td data-label="I want to">Rename text to camelCase or snake_case</td><td data-label="Use"><a href="{{root}}text/case-converter/">Case converter</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is it safe to paste code, keys or passwords here?</summary>
+        <p>These tools run in your browser and send nothing to us, so what you paste stays on your device. Even so, it's good practice not to paste live secret keys into any website: use test values where you can.</p>
+      </details>
+      <details>
+        <summary>Do the tools work offline?</summary>
+        <p>Once a page has loaded, the tool itself works without the internet, because all the work happens in your browser.</p>
+      </details>
+    </div>
+    </div>
   </section>

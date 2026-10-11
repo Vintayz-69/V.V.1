@@ -1,0 +1,100 @@
+  <section class="calculator" aria-label="Week number calculator">
+    <form class="calc-form" id="wk-form" novalidate>
+      <div class="field span-2">
+        <label for="wk-date">Date</label>
+        <div class="inline-row">
+          <div class="input-wrap grow"><input id="wk-date" type="date"></div>
+          <button type="button" class="btn btn-sm" id="wk-today">Today</button>
+        </div>
+        <span class="error-msg">Choose a date.</span>
+      </div>
+
+      <h2 class="field-title span-2 wk-find-title">Or find the dates of a week</h2>
+      <div class="field">
+        <label for="wk-year">Year</label>
+        <div class="input-wrap"><input id="wk-year" type="text" inputmode="numeric" autocomplete="off" maxlength="4"></div>
+        <span class="error-msg">Enter a year such as 2026.</span>
+      </div>
+      <div class="field">
+        <label for="wk-week">Week number</label>
+        <div class="input-wrap"><input id="wk-week" type="text" inputmode="numeric" autocomplete="off" maxlength="2"></div>
+        <span class="error-msg">Enter a week from 1 to 53.</span>
+      </div>
+      <ul class="result-list wk-find span-2">
+        <li class="key"><span>That week runs</span><span id="wk-find-out">—</span></li>
+      </ul>
+      <div class="form-actions span-2">
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>ISO week number</h2>
+      <div class="result-main"><span id="wk-out">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Runs (Monday to Sunday)</span><span id="wk-out-range">—</span></li>
+        <li><span>Week-numbering year</span><span id="wk-out-year">—</span></li>
+        <li><span>Weeks in that year</span><span id="wk-out-weeks">—</span></li>
+        <li><span>US-style week (Sunday start)</span><span id="wk-out-us">—</span></li>
+        <li><span>Day of the year</span><span id="wk-out-day">—</span></li>
+      </ul>
+      <p class="result-note">The ISO week is the one used in the UK, Europe and most business software. US calendars often number weeks differently, so the US-style week is shown too.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Pick a date</strong>, or press "Today", to see its week number and the Monday and Sunday of that week.</li>
+      <li><strong>To go the other way</strong>, type a year and a week number to see which dates that week covers.</li>
+      <li><strong>Open the list below</strong> to see every week of the year with its dates.</li>
+    </ol>
+
+    <h2>How week numbers work</h2>
+    <p>The international standard, ISO 8601, says:</p>
+    <ul>
+      <li>Weeks start on <strong>Monday</strong> and end on Sunday.</li>
+      <li><strong>Week 1</strong> is the week with the year's first Thursday in it (which is also the week with 4 January in it).</li>
+      <li>So a year has <strong>52 or 53 weeks</strong>, and the first few days of January can belong to the last week of the year before, or the last days of December to week 1 of the next year.</li>
+    </ul>
+    <div class="formula">Find the Thursday of the date's week (Monday to Sunday)
+Week number = (that Thursday's day of the year − 1) ÷ 7, rounded down, + 1
+The week belongs to the year that Thursday is in</div>
+    <p>US-style calendars usually start weeks on Sunday and count the week with 1 January in it as week 1, so their numbers can be one higher than ISO's for most of the year.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">Sunday 11 October 2026
+  Thursday of its week = 8 October = day 281 of the year
+  (281 − 1) ÷ 7 = 40, rounded down, + 1  →  ISO week 41 (Mon 5 Oct – Sun 11 Oct)
+  US style: 1 January 2026 is a Thursday, so 11 October is in week 42
+
+Thursday 1 January 2026   →  ISO week 1 of 2026  (Mon 29 Dec 2025 – Sun 4 Jan 2026)
+Friday 1 January 2027     →  ISO week 53 of 2026 (2026 has 53 weeks)
+2027                      →  52 weeks</div>
+
+    <details class="wk-year-list">
+      <summary>Every week of <span id="wk-table-year">the year</span> (ISO)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Week</th><th scope="col">Monday</th><th scope="col">Sunday</th></tr></thead>
+          <tbody id="wk-table-body"></tbody>
+        </table>
+      </div>
+    </details>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why does 1 January show week 52 or 53?</summary>
+        <p>If 1 January falls on a Friday, Saturday or Sunday, that week's Thursday is still in December, so the week belongs to the year before. For example, Friday 1 January 2027 is in week 53 of 2026.</p>
+      </details>
+      <details>
+        <summary>Which years have 53 weeks?</summary>
+        <p>A year has 53 ISO weeks when it starts on a Thursday, or when it's a leap year starting on a Wednesday. 2026 starts on a Thursday, so it has 53 weeks; the next one is 2032.</p>
+      </details>
+      <details>
+        <summary>Which week number should I use?</summary>
+        <p>For work in the UK and Europe, and in most business software and spreadsheets set to ISO weeks, use the ISO week. If a US calendar or colleague counts from Sunday, use the US-style number. When it matters, write the dates as well as the week number.</p>
+      </details>
+    </div>
+  </div>

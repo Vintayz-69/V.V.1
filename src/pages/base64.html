@@ -1,0 +1,81 @@
+  <section class="text-tool" aria-label="Base64 encoder and decoder">
+    <form id="b64-form" novalidate>
+      <fieldset class="choice-group">
+        <legend class="visually-hidden">Encode or decode</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="b64-mode" id="b64-mode-enc" value="enc" checked><label for="b64-mode-enc">Encode<small>Text → Base64</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="b64-mode" id="b64-mode-dec" value="dec"><label for="b64-mode-dec">Decode<small>Base64 → text</small></label></div>
+        </div>
+      </fieldset>
+      <div class="tc-inputs b64-boxes">
+        <div class="field">
+          <label for="b64-in" id="b64-in-label">Text to encode<span class="hint">Any language and emoji work (UTF-8)</span></label>
+          <textarea id="b64-in" class="text-tool-input mono-box" rows="8" spellcheck="false">Hello, world! 👋</textarea>
+        </div>
+        <div class="field">
+          <label for="b64-out">Result</label>
+          <textarea id="b64-out" class="text-tool-input mono-box" rows="8" spellcheck="false" readonly></textarea>
+        </div>
+      </div>
+      <p class="tc-summary" id="b64-msg" role="status" aria-live="polite"></p>
+      <div class="tc-options">
+        <div class="tc-checks" id="b64-urlsafe-row">
+          <label class="check-line"><input type="checkbox" id="b64-urlsafe"> URL-safe (- and _ instead of + and /, no = at the end)</label>
+        </div>
+        <div class="tc-buttons">
+          <button type="button" class="btn btn-primary" id="b64-copy">{{icon:check}} Copy result</button>
+          <button type="button" class="btn" id="b64-swap">{{icon:refresh}} Swap</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="tc-result">
+      <h2 class="tc-title">Encode a file (data URL)</h2>
+      <p class="tc-summary">Turn a small picture or file into a <code>data:</code> URL you can paste into HTML or CSS. The file is read on your device, not uploaded.</p>
+      <div class="tool-actions">
+        <input class="visually-hidden" type="file" id="b64-file">
+        <label class="btn" for="b64-file">{{icon:upload}} Choose a file</label>
+        <button type="button" class="btn btn-quiet" id="b64-file-copy">Copy data URL</button>
+      </div>
+      <p class="tc-summary" id="b64-file-msg" role="status" aria-live="polite"></p>
+      <label class="visually-hidden" for="b64-file-out">Data URL</label>
+      <textarea id="b64-file-out" class="text-tool-input mono-box" rows="3" spellcheck="false" readonly></textarea>
+    </div>
+    <p class="pdf-privacy">{{icon:lock}} Encoded in your browser. Your text and files are never sent or saved.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use it</h2>
+    <ol class="steps">
+      <li><strong>Choose Encode or Decode.</strong></li>
+      <li><strong>Paste your text or Base64</strong> in the first box. The result appears as you type.</li>
+      <li><strong>Press "Copy result"</strong>, or "Swap" to feed the result back in the other way.</li>
+    </ol>
+
+    <h2>How Base64 works</h2>
+    <p>Base64 turns any data into 64 safe characters (A–Z, a–z, 0–9, + and /) so it can travel through email, web addresses, JSON and other places made for text. Text is first turned into bytes using UTF-8, then every 3 bytes (24 bits) become 4 characters of 6 bits each. If the last group is short, = signs pad it. So Base64 is always about a third bigger than the original.</p>
+    <div class="formula">"Man"   bytes 77 97 110  →  bits 010011 010110 000101 101110  →  TWFu
+"Ma"    →  TWE=        "M"  →  TQ==
+Size    ≈ 4 × (bytes ÷ 3, rounded up) characters</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">Hello, world!      →  SGVsbG8sIHdvcmxkIQ==
+Hello, world! 👋   →  SGVsbG8sIHdvcmxkISDwn5GL   (the emoji is 4 bytes in UTF-8)
+URL-safe "??>"     →  Pz8-   (standard: Pz8+)</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is Base64 encryption?</summary>
+        <p>No. Anyone can decode Base64, so it hides nothing. Never use it to protect passwords or private data.</p>
+      </details>
+      <details>
+        <summary>What's URL-safe Base64?</summary>
+        <p>Standard Base64 uses + and /, which have special meanings in web addresses. URL-safe Base64 (described in RFC 4648) uses - and _ instead and usually drops the = padding, so the result can go straight into a link or file name. Our decoder reads both.</p>
+      </details>
+      <details>
+        <summary>Why does decoding say "it isn't text"?</summary>
+        <p>The Base64 is fine, but the data inside is something else, such as a picture. Pictures are often stored as data URLs starting with <code>data:image/png;base64,</code>.</p>
+      </details>
+    </div>
+  </div>

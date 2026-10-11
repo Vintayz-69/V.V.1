@@ -1,0 +1,90 @@
+  <section class="text-tool tm-tool" id="tm-tool" aria-label="Timer and stopwatch">
+    <fieldset class="choice-group">
+      <legend class="visually-hidden">Timer or stopwatch</legend>
+      <div class="choices tm-tabs">
+        <div class="choice"><input class="visually-hidden" type="radio" name="tm-mode" id="tm-mode-timer" value="timer" checked><label for="tm-mode-timer">{{icon:timer}} Timer</label></div>
+        <div class="choice"><input class="visually-hidden" type="radio" name="tm-mode" id="tm-mode-watch" value="watch"><label for="tm-mode-watch">{{icon:clock}} Stopwatch</label></div>
+      </div>
+    </fieldset>
+
+    <div id="tm-timer">
+      <div class="tm-display" id="tm-display" role="timer" aria-live="off">05:00</div>
+      <p class="tm-msg" id="tm-msg" role="status" aria-live="polite"></p>
+      <div class="tm-set" role="group" aria-label="Set the time">
+        <div class="field"><label for="tm-h">Hours</label><div class="input-wrap"><input id="tm-h" type="number" min="0" max="99" value="0" inputmode="numeric"></div></div>
+        <div class="field"><label for="tm-m">Minutes</label><div class="input-wrap"><input id="tm-m" type="number" min="0" max="59" value="5" inputmode="numeric"></div></div>
+        <div class="field"><label for="tm-s">Seconds</label><div class="input-wrap"><input id="tm-s" type="number" min="0" max="59" value="0" inputmode="numeric"></div></div>
+      </div>
+      <div class="quick-picks tm-presets" role="group" aria-label="Quick start">
+        <button type="button" class="btn btn-sm" data-minutes="1">1 min</button>
+        <button type="button" class="btn btn-sm" data-minutes="5">5 min</button>
+        <button type="button" class="btn btn-sm" data-minutes="10">10 min</button>
+        <button type="button" class="btn btn-sm" data-minutes="15">15 min</button>
+        <button type="button" class="btn btn-sm" data-minutes="25">25 min</button>
+        <button type="button" class="btn btn-sm" data-minutes="30">30 min</button>
+        <button type="button" class="btn btn-sm" data-minutes="60">1 hour</button>
+      </div>
+      <div class="tool-actions tm-actions">
+        <button type="button" class="btn btn-primary" id="tm-start">Start</button>
+        <button type="button" class="btn" id="tm-plus">+1 min</button>
+        <button type="button" class="btn btn-quiet" id="tm-reset">Reset</button>
+      </div>
+    </div>
+
+    <div id="tm-watch" hidden>
+      <div class="tm-display" id="sw-display" role="timer" aria-live="off">00:00.00</div>
+      <div class="tool-actions tm-actions">
+        <button type="button" class="btn btn-primary" id="sw-start">Start</button>
+        <button type="button" class="btn" id="sw-lap" disabled>Lap</button>
+        <button type="button" class="btn btn-quiet" id="sw-reset">Reset</button>
+      </div>
+      <ol class="sw-laps" id="sw-laps" aria-label="Laps, newest first"></ol>
+    </div>
+    <p class="pdf-privacy">{{icon:lock}} Runs in your browser. Nothing is saved. Press the space bar to start or pause.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use the timer</h2>
+    <ol class="steps">
+      <li><strong>Set the time</strong> in hours, minutes and seconds, or press a quick start button such as "5 min".</li>
+      <li><strong>Press Start.</strong> The time left also shows in the browser tab, so you can see it from another tab.</li>
+      <li><strong>When it reaches zero</strong>, the timer beeps and the display flashes. Turn your sound on to hear it.</li>
+      <li><strong>Need longer?</strong> Press "+1 min" at any time, or Pause and Resume.</li>
+    </ol>
+
+    <h2>How to use the stopwatch</h2>
+    <ol class="steps">
+      <li><strong>Choose "Stopwatch"</strong> and press Start.</li>
+      <li><strong>Press Lap</strong> to record a split. Each lap shows its own time and the total so far, newest at the top.</li>
+      <li><strong>Press Stop</strong> to pause, Resume to carry on, or Reset to clear it.</li>
+    </ol>
+
+    <h2>How it keeps time</h2>
+    <p>Instead of counting ticks, which browsers slow down in background tabs, the timer notes the exact moment it should end and checks the clock against it. So the time shown is right even if your computer was busy. The countdown rounds up to the whole second, so it shows 00:01 until the very end.</p>
+    <div class="formula">Time left   = end time − time now        (shown rounded up to the second)
+Stopwatch   = time now − start time      (minus any time stopped)
+Lap time    = total now − total at the last lap</div>
+
+    <h2>Ideas for using it</h2>
+    <ul>
+      <li><strong>Focus sessions:</strong> work for 25 minutes, then take a 5-minute break, a pattern many people use to stay focused.</li>
+      <li><strong>Billing your time:</strong> use the stopwatch while you work for a client, then add the time to our <a href="{{root}}freelance/timesheet-calculator/">timesheet calculator</a>.</li>
+      <li><strong>Meetings and presentations:</strong> keep talks to time, or give each speaker the same slot.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Will the alarm sound if I switch tabs?</summary>
+        <p>The time stays accurate, but to save battery some browsers delay sounds and updates in tabs you're not looking at, especially on phones or after a few minutes. If the alarm matters, keep this tab open and visible, and your sound on.</p>
+      </details>
+      <details>
+        <summary>Does it keep running if I close the page?</summary>
+        <p>No. Nothing is saved, so closing or reloading the page stops the timer and clears the stopwatch.</p>
+      </details>
+      <details>
+        <summary>How accurate is the stopwatch?</summary>
+        <p>It reads your device's clock, which is precise to well under a hundredth of a second. Your own reaction when pressing the button adds more delay than that, so treat hundredths as a guide.</p>
+      </details>
+    </div>
+  </div>

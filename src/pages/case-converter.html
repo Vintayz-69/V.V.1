@@ -1,0 +1,89 @@
+  <section class="text-tool" aria-label="Case converter">
+    <div class="field">
+      <label for="cc-text">Your text<span class="hint">Type or paste, then pick a case. The text changes in the box.</span></label>
+      <textarea id="cc-text" class="text-tool-input" rows="10" spellcheck="false" placeholder="Paste your text here…"></textarea>
+      <p class="text-stats" id="cc-stats" aria-live="polite"></p>
+    </div>
+
+    <div class="case-buttons" role="group" aria-label="Change the case">
+      <button type="button" class="btn btn-sm" data-case="sentence">Sentence case</button>
+      <button type="button" class="btn btn-sm" data-case="lower">lower case</button>
+      <button type="button" class="btn btn-sm" data-case="upper">UPPER CASE</button>
+      <button type="button" class="btn btn-sm" data-case="title">Title Case</button>
+      <button type="button" class="btn btn-sm" data-case="capitalized">Capitalized Case</button>
+      <button type="button" class="btn btn-sm mono" data-case="camel">camelCase</button>
+      <button type="button" class="btn btn-sm mono" data-case="pascal">PascalCase</button>
+      <button type="button" class="btn btn-sm mono" data-case="snake">snake_case</button>
+      <button type="button" class="btn btn-sm mono" data-case="kebab">kebab-case</button>
+      <button type="button" class="btn btn-sm mono" data-case="constant">CONSTANT_CASE</button>
+    </div>
+
+    <div class="tool-actions text-actions">
+      <button type="button" class="btn btn-primary" id="cc-copy">{{icon:check}} Copy</button>
+      <button type="button" class="btn" id="cc-undo" disabled>{{icon:rotate-left}} Undo</button>
+      <button type="button" class="btn btn-quiet" id="cc-clear">{{icon:trash}} Clear</button>
+      <span class="text-status" id="cc-status" role="status" aria-live="polite"></span>
+    </div>
+    <p class="pdf-privacy">{{icon:lock}} Changed in your browser. Your text is never sent or saved.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use the case converter</h2>
+    <ol class="steps">
+      <li><strong>Type or paste your text</strong> into the box.</li>
+      <li><strong>Press the case you want.</strong> The text changes straight away; press another button to try a different one, or "Undo" to go back one step.</li>
+      <li><strong>Press "Copy"</strong> and paste it wherever you need it.</li>
+    </ol>
+
+    <h2>What each case does</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Case</th><th>Example</th><th>Good for</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Case"><strong>Sentence case</strong></td><td data-label="Example">How to price your work. It's easier than you think.</td><td data-label="Good for">Fixing text typed with Caps Lock on, emails, descriptions</td></tr>
+          <tr><td data-label="Case"><strong>lower case</strong></td><td data-label="Example">how to price your work</td><td data-label="Good for">Email addresses, tags, tidying up</td></tr>
+          <tr><td data-label="Case"><strong>UPPER CASE</strong></td><td data-label="Example">HOW TO PRICE YOUR WORK</td><td data-label="Good for">Short labels and headings</td></tr>
+          <tr><td data-label="Case"><strong>Title Case</strong></td><td data-label="Example">How to Price Your Work: A Guide for Freelancers</td><td data-label="Good for">Headlines, titles of articles and books</td></tr>
+          <tr><td data-label="Case"><strong>Capitalized Case</strong></td><td data-label="Example">How To Price Your Work</td><td data-label="Good for">Names, product lists, simple headings</td></tr>
+          <tr><td data-label="Case"><strong>camelCase</strong></td><td data-label="Example"><code>invoiceTotalAmount</code></td><td data-label="Good for">JavaScript and Java variable names</td></tr>
+          <tr><td data-label="Case"><strong>PascalCase</strong></td><td data-label="Example"><code>InvoiceTotalAmount</code></td><td data-label="Good for">Class and component names</td></tr>
+          <tr><td data-label="Case"><strong>snake_case</strong></td><td data-label="Example"><code>invoice_total_amount</code></td><td data-label="Good for">Python names, database columns</td></tr>
+          <tr><td data-label="Case"><strong>kebab-case</strong></td><td data-label="Example"><code>invoice-total-amount</code></td><td data-label="Good for">Web addresses (URLs), CSS class names, file names</td></tr>
+          <tr><td data-label="Case"><strong>CONSTANT_CASE</strong></td><td data-label="Example"><code>INVOICE_TOTAL_AMOUNT</code></td><td data-label="Good for">Constants and settings names</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How the rules work</h2>
+    <ul>
+      <li><strong>Sentence case</strong> makes everything lowercase, then gives a capital to the first letter of each sentence (after . ! or ?) and to "I" on its own. Names such as London lose their capitals, so check them afterwards.</li>
+      <li><strong>Title Case</strong> gives every word a capital, except short words (a, an, and, the, of, to, in, for, on, at, by, or and similar) in the middle of a title. The first and last words, and the word after a colon, always get a capital. Style guides differ a little on which short words to keep lowercase, so check yours if it matters.</li>
+      <li><strong>Words in capitals</strong> such as NASA, and words like iPhone, are kept as they are in Title Case and Capitalized Case, unless all of your text is in capitals.</li>
+      <li><strong>Code cases</strong> (camelCase and the rest) drop spaces and punctuation and join the words. Each line is changed on its own.</li>
+    </ul>
+
+    <h2>Worked example</h2>
+    <div class="formula">Typed:            HOW TO PRICE YOUR WORK: A GUIDE FOR FREELANCERS
+Title Case:       How to Price Your Work: A Guide for Freelancers
+Sentence case:    How to price your work: a guide for freelancers
+
+Typed:            invoice total amount
+camelCase:        invoiceTotalAmount
+snake_case:       invoice_total_amount</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How do I fix text I typed with Caps Lock on?</summary>
+        <p>Paste it in and press "Sentence case". Then put capitals back on names and places by hand.</p>
+      </details>
+      <details>
+        <summary>Does it work with accents and other languages?</summary>
+        <p>Yes, for languages with capital letters, such as French, Spanish or German: letters like é and ß are changed using your browser's built-in rules. The Title Case short-word list is for English.</p>
+      </details>
+      <details>
+        <summary>Is my text saved or sent anywhere?</summary>
+        <p>No. Everything happens in your browser, and the text is gone when you close or reload the page.</p>
+      </details>
+    </div>
+  </div>

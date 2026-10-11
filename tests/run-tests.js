@@ -11,7 +11,7 @@ const vm = require("vm");
 const JS = path.join(__dirname, "..", "public", "assets");
 
 function load(tool, extra = []) {
-  const sandbox = { window: {}, document: { getElementById: () => null } };
+  const sandbox = { window: { crypto: globalThis.crypto }, document: { getElementById: () => null }, crypto: globalThis.crypto, TextEncoder, TextDecoder };
   sandbox.window.ToolNest = {};
   vm.createContext(sandbox);
   for (const file of [...extra, `js/tools/${tool}.js`]) {
@@ -1104,6 +1104,443 @@ function loadResume(country) {
   check("percent undo a rise", Math.round(230 / 1.15 * 100) / 100, 200);
 }
 
+// ---------------- Image tools (resize, compress, convert, crop)
+const IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"];
+{
+  const R = load("image-resize", IMAGE_LIBS);
+  // Page example: a 4,032 × 3,024 phone photo.
+  const px = (o) => { const s = R.fitSize(4032, 3024, o); return `${s.width}x${s.height}`; };
+  check("resize width 1200 keeps shape", px({ mode: "pixels", width: 1200, keepRatio: true }), "1200x900");
+  check("resize scale for width 1200", (1200 / 4032).toFixed(4), "0.2976");
+  check("resize 50%", px({ mode: "percent", percent: 50 }), "2016x1512");
+  check("resize fit inside 1080 box", px({ mode: "pixels", width: 1080, height: 1080, keepRatio: true }), "1080x810");
+  check("resize fit scale", Math.min(1080 / 4032, 1080 / 3024).toFixed(4), "0.2679");
+  check("resize height only", px({ mode: "pixels", height: 600, keepRatio: true }), "800x600");
+  check("resize stretch", px({ mode: "pixels", width: 500, height: 500, keepRatio: false }), "500x500");
+  check("resize stretch width only", px({ mode: "pixels", width: 500, keepRatio: false }), "500x3024");
+  check("resize enlarge 200%", px({ mode: "percent", percent: 200 }), "8064x6048");
+  check("resize never below 1 px", (() => { const s = R.fitSize(10, 1000, { mode: "pixels", width: 1, keepRatio: true }); return `${s.width}x${s.height}`; })(), "1x100");
+  check("resize nothing asked", R.fitSize(100, 100, { mode: "pixels", keepRatio: true }), null);
+  // Shrinking goes through halving steps, ending at the exact size.
+  check("resize steps", R.downscaleSteps(4032, 3024, 1200, 900).map((s) => `${s.width}x${s.height}`).join(","), "2016x1512,1200x900");
+  check("resize steps enlarge", R.downscaleSteps(100, 100, 300, 300).map((s) => `${s.width}x${s.height}`).join(","), "300x300");
+  check("resize steps big shrink", R.downscaleSteps(4000, 4000, 400, 400).map((s) => s.width).join(","), "2000,1000,500,400");
+  check("output same jpg", R.outputType("image/jpeg", "same"), "image/jpeg");
+  check("output same gif → png", R.outputType("image/gif", "same"), "image/png");
+  check("output same heic → jpg", R.outputType("image/heic", "same"), "image/jpeg");
+  check("output chosen webp", R.outputType("image/png", "webp"), "image/webp");
+  check("resize file name", R.outName("Holiday photo.JPEG", "image/jpeg", "-1200x900"), "Holiday photo-1200x900.jpg");
+
+  const CP = load("image-compress", IMAGE_LIBS);
+  // Page example: 3,200 KB → 480 KB is 85% smaller.
+  check("compress saving", CP.percentSaved(3200, 480), 85);
+  check("compress bigger shows negative", CP.percentSaved(100, 120), -20);
+  const lim = CP.limitSize(4032, 3024, 1920);
+  check("compress longest side 1920", `${lim.width}x${lim.height}`, "1920x1440");
+  check("compress pixels before", 4032 * 3024, 12192768);
+  check("compress pixels after", lim.width * lim.height, 2764800);
+  check("compress fewer pixels %", Math.round((1 - 2764800 / 12192768) * 100), 77);
+  check("compress never enlarges", JSON.stringify(CP.limitSize(800, 600, 1920)), '{"width":800,"height":600}');
+  check("compress tall photo", (() => { const s = CP.limitSize(3024, 4032, 1280); return `${s.width}x${s.height}`; })(), "960x1280");
+  check("compress KB", CP.KB, 1024);
+}
+
+// Target-size search, with a pretend encoder whose file size grows with quality and area.
+async function imageSearchTests() {
+  const CP = load("image-compress", IMAGE_LIBS);
+  const fake = (base) => (q, scale) => Promise.resolve(Math.round(base * scale * scale * (0.15 + q)));
+  const a = await CP.searchQuality(fake(400000), 200 * 1024);
+  check("compress target met", a.met, true);
+  check("compress target under limit", a.size <= 200 * 1024, true);
+  check("compress target full size", a.scale, 1);
+  check("compress target quality close", a.quality > 0.3 && a.quality < 0.4, true);
+  const b = await CP.searchQuality(fake(400000), 1000000);
+  check("compress target easy → top quality", b.quality, 0.95);
+  const c = await CP.searchQuality(fake(4000000), 50 * 1024);
+  check("compress target shrinks picture", c.scale < 1, true);
+  check("compress target met after shrinking", c.met && c.size <= 50 * 1024, true);
+  const d = await CP.searchQuality(() => Promise.resolve(1e9), 1024);
+  check("compress target impossible", d.met, false);
+}
+
+{
+  const CV = load("image-convert", IMAGE_LIBS);
+  // Page examples.
+  check("convert webp to jpg name", CV.outName("photo.webp", CV.outputType("image/webp", "jpg"), ""), "photo.jpg");
+  check("convert png name", CV.outName("Logo final.PNG", "image/jpeg", ""), "Logo final.jpg");
+  check("convert to png", CV.outputType("image/jpeg", "png"), "image/png");
+  check("convert colour ok", CV.safeColour("#ff0000", "#ffffff"), "#ff0000");
+  check("convert colour bad", CV.safeColour("red; x", "#ffffff"), "#ffffff");
+}
+
+{
+  const CR = load("image-crop", IMAGE_LIBS);
+  const box = (b) => `${b.x},${b.y} ${b.width}x${b.height}`;
+  // Page examples: 4,032 × 3,024 photo.
+  check("crop square", box(CR.centerBox(4032, 3024, CR.ratioOf("1:1"))), "504,0 3024x3024");
+  check("crop 16:9", box(CR.centerBox(4032, 3024, CR.ratioOf("16:9"))), "0,378 4032x2268");
+  check("crop 4:5", box(CR.centerBox(4032, 3024, CR.ratioOf("4:5"))), "807,0 2419x3024");
+  check("crop free = whole", box(CR.centerBox(4032, 3024, CR.ratioOf("free"))), "0,0 4032x3024");
+  check("crop original ratio", CR.ratioOf("original", 4032, 3024).toFixed(3), "1.333");
+  const b = { x: 100, y: 100, width: 200, height: 100 };
+  check("crop move clamps right", box(CR.moveBox(b, 1000, 0, 400, 300)), "200,100 200x100");
+  check("crop move clamps top", box(CR.moveBox(b, 0, -500, 400, 300)), "100,0 200x100");
+  check("crop drag se", box(CR.resizeBox(b, "se", 50, 20, 0, 400, 300)), "100,100 250x120");
+  check("crop drag nw", box(CR.resizeBox(b, "nw", -50, -50, 0, 400, 300)), "50,50 250x150");
+  check("crop drag past edge", box(CR.resizeBox(b, "e", 500, 0, 0, 400, 300)), "100,100 300x100");
+  check("crop drag can't flip", box(CR.resizeBox(b, "w", 500, 0, 0, 400, 300)), "299,100 1x100");
+  check("crop ratio kept on corner", box(CR.resizeBox({ x: 0, y: 0, width: 100, height: 100 }, "se", 50, 10, 1, 400, 300)), "0,0 150x150");
+  check("crop ratio kept at edge", box(CR.resizeBox({ x: 0, y: 0, width: 100, height: 100 }, "se", 500, 500, 1, 400, 300)), "0,0 300x300");
+  check("crop ratio side handle", box(CR.resizeBox({ x: 100, y: 100, width: 100, height: 100 }, "e", 40, 0, 1, 400, 300)), "100,80 140x140");
+  check("crop typed box fits", box(CR.fitBox({ x: 350, y: -5, width: 100, height: 999 }, 400, 300)), "300,0 100x300");
+  check("crop turned size", JSON.stringify(CR.turnedSize(4032, 3024, 1)), '{"width":3024,"height":4032}');
+  check("crop name", CR.outName("me.png", "image/png", "-cropped"), "me-cropped.png");
+}
+
+// ---------------- Date and time tools
+const TIME_LIBS = ["js/date-common.js"];
+{
+  const calc = load("date-difference", TIME_LIBS);
+  const d = (s) => { const [y, m, dd] = s.split("-").map(Number); return { y, m, d: dd }; };
+  // Page examples.
+  expectAll("days 11 Oct → 25 Dec 2026", calc(d("2026-10-11"), d("2026-12-25"), false),
+    { days: 75, weeks: 10, weekDays: 5, years: 0, months: 2, monthDays: 14, weekdays: 54, hours: 1800 });
+  expectAll("days whole 2026", calc(d("2026-01-01"), d("2026-12-31"), false), { days: 364, months: 11, monthDays: 30 });
+  expectAll("days whole 2026 counting end", calc(d("2026-01-01"), d("2026-12-31"), true), { days: 365, years: 1, months: 0, monthDays: 0 });
+  expectAll("days 31 Jan → 1 Mar", calc(d("2026-01-31"), d("2026-03-01"), false), { days: 29, months: 1, monthDays: 1 });
+  expectAll("days leap year", calc(d("2028-02-28"), d("2028-03-01"), false), { days: 2 });
+  expectAll("days backwards", calc(d("2026-12-25"), d("2026-10-11"), false), { days: 75, reversed: true });
+  expectAll("days Monday to Friday counting end", calc(d("2026-10-12"), d("2026-10-16"), true), { days: 5, weekdays: 5 });
+  expectAll("days same day", calc(d("2026-10-11"), d("2026-10-11"), false), { days: 0, weekdays: 0 });
+}
+
+{
+  const sandbox = { window: {}, document: { getElementById: () => null } };
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(path.join(JS, "js/date-common.js"), "utf8"), sandbox);
+  const D = sandbox.window.ToolNestDate;
+  check("date weekday 1 Jan 1970", D.weekday({ y: 1970, m: 1, d: 1 }), 4);
+  check("date weekday 11 Oct 2026", D.WEEKDAYS[D.weekday({ y: 2026, m: 10, d: 11 })], "Sunday");
+  check("date add month clamps", D.iso(D.addMonths({ y: 2026, m: 1, d: 31 }, 1)), "2026-02-28");
+  check("date add month leap", D.iso(D.addMonths({ y: 2028, m: 1, d: 31 }, 1)), "2028-02-29");
+  check("date add months back over year", D.iso(D.addMonths({ y: 2026, m: 2, d: 15 }, -3)), "2025-11-15");
+  check("date parse rejects 31 Feb", D.parse("2026-02-31"), null);
+  check("date long UK", D.longDate({ y: 2026, m: 10, d: 11 }, false), "Sunday 11 October 2026");
+  check("date long US", D.longDate({ y: 2026, m: 10, d: 11 }, true), "Sunday, October 11, 2026");
+  check("date weekdays in a week", D.weekdaysBetween({ y: 2026, m: 10, d: 11 }, { y: 2026, m: 10, d: 18 }), 5);
+  check("date year 1", D.iso(D.fromDays(D.toDays({ y: 1, m: 3, d: 1 }))), "0001-03-01");
+}
+
+{
+  const calc = load("date-add", TIME_LIBS);
+  const sandbox = { window: {}, document: { getElementById: () => null } };
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(path.join(JS, "js/date-common.js"), "utf8"), sandbox);
+  const D = sandbox.window.ToolNestDate;
+  const say = (r) => D.longDate(r.date, false);
+  // Page examples.
+  check("add 30 days", say(calc({ y: 2026, m: 10, d: 11 }, { days: 30 }, 1)), "Tuesday 10 November 2026");
+  check("add 30 days gap", calc({ y: 2026, m: 10, d: 11 }, { days: 30 }, 1).days, 30);
+  check("add 1 month from 31 Jan", say(calc({ y: 2026, m: 1, d: 31 }, { months: 1 }, 1)), "Saturday 28 February 2026");
+  check("subtract 90 days", say(calc({ y: 2026, m: 3, d: 15 }, { days: 90 }, -1)), "Monday 15 December 2025");
+  check("subtract 90 days gap", calc({ y: 2026, m: 3, d: 15 }, { days: 90 }, -1).days, -90);
+  check("add mixed: 14 months", D.iso(calc({ y: 2026, m: 10, d: 11 }, { years: 1, months: 2 }, 1).date), "2027-12-11");
+  check("add mixed", say(calc({ y: 2026, m: 10, d: 11 }, { years: 1, months: 2, weeks: 3, days: 4 }, 1)), "Wednesday 5 January 2028");
+  check("add nothing", calc({ y: 2026, m: 10, d: 11 }, {}, 1).days, 0);
+  check("add 1 month 5 March", D.iso(calc({ y: 2026, m: 3, d: 5 }, { months: 1 }, 1).date), "2026-04-05");
+}
+
+{
+  const W = load("week-number", TIME_LIBS);
+  const wk = (y, m, d) => { const r = W.isoWeek({ y, m, d }); return `${r.year}-W${r.week}`; };
+  const sandbox = { window: {}, document: { getElementById: () => null } };
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(path.join(JS, "js/date-common.js"), "utf8"), sandbox);
+  const D = sandbox.window.ToolNestDate;
+  // Page examples.
+  check("week 11 Oct 2026", wk(2026, 10, 11), "2026-W41");
+  check("week Thursday 8 Oct is day 281", W.dayOfYear({ y: 2026, m: 10, d: 8 }), 281);
+  check("week 41 starts Monday 5 Oct", D.iso(W.isoWeekStart(2026, 41)), "2026-10-05");
+  check("week US style 11 Oct 2026", W.usWeek({ y: 2026, m: 10, d: 11 }), 42);
+  check("week 1 Jan 2026", wk(2026, 1, 1), "2026-W1");
+  check("week 1 of 2026 starts 29 Dec 2025", D.iso(W.isoWeekStart(2026, 1)), "2025-12-29");
+  check("week 1 Jan 2027", wk(2027, 1, 1), "2026-W53");
+  check("week 2026 has 53 weeks", W.weeksInYear(2026), 53);
+  check("week 2027 has 52 weeks", W.weeksInYear(2027), 52);
+  const next53 = [2027, 2028, 2029, 2030, 2031, 2032].find((y) => W.weeksInYear(y) === 53);
+  check("week next 53-week year", next53, 2032);
+  check("week 31 Dec 2026", wk(2026, 12, 31), "2026-W53");
+  check("week 29 Dec 2025 is 2026 week 1", wk(2025, 12, 29), "2026-W1");
+  check("week US 1 Jan", W.usWeek({ y: 2026, m: 1, d: 1 }), 1);
+  check("week US Sunday 4 Jan 2026", W.usWeek({ y: 2026, m: 1, d: 4 }), 2);
+  check("week 2026 day 1 Thursday", D.WEEKDAYS[D.weekday({ y: 2026, m: 1, d: 1 })], "Thursday");
+}
+
+{
+  const C = load("time-zone", TIME_LIBS);
+  const at = (p, from, zones) => C.convert(p, from, zones).rows.map((r) => `${C.clock(r.h, r.mi)} ${C.formatOffset(r.offset)}${r.summer ? " S" : ""}${r.dayShift ? " " + r.dayShift : ""}`).join(" | ");
+  const Z = ["Europe/London", "America/New_York", "America/Los_Angeles", "Asia/Kolkata", "Australia/Sydney"];
+  // Page examples.
+  check("tz 11 Oct 2026 12:00 London", at({ y: 2026, m: 10, d: 11, h: 12, mi: 0 }, "Europe/London", Z),
+    "12:00 UTC+1 S | 07:00 UTC−4 S | 04:00 UTC−7 S | 16:30 UTC+5:30 | 22:00 UTC+11 S");
+  check("tz 11 Oct UTC", new Date(C.convert({ y: 2026, m: 10, d: 11, h: 12, mi: 0 }, "Europe/London", []).ms).toISOString(), "2026-10-11T11:00:00.000Z");
+  check("tz 27 Oct gap week", at({ y: 2026, m: 10, d: 27, h: 12, mi: 0 }, "Europe/London", ["Europe/London", "America/New_York"]), "12:00 UTC | 08:00 UTC−4 S");
+  check("tz 2 Nov New York", at({ y: 2026, m: 11, d: 2, h: 9, mi: 0 }, "America/New_York", ["Europe/London", "Australia/Sydney"]), "14:00 UTC | 01:00 UTC+11 S 1");
+  // Page FAQ: 2:30 AM on 8 March 2026 doesn't happen in New York.
+  check("tz spring gap", C.zonedToUtc({ y: 2026, m: 3, d: 8, h: 2, mi: 30 }, "America/New_York").gap, true);
+  check("tz fall back twice", C.zonedToUtc({ y: 2026, m: 11, d: 1, h: 1, mi: 30 }, "America/New_York").ambiguous, true);
+  check("tz fall back uses first", new Date(C.zonedToUtc({ y: 2026, m: 11, d: 1, h: 1, mi: 30 }, "America/New_York").ms).toISOString(), "2026-11-01T05:30:00.000Z");
+  check("tz UK changes 25 Oct", C.offsetMinutes("Europe/London", Date.UTC(2026, 9, 25, 2)), 0);
+  check("tz UK summer 24 Oct", C.offsetMinutes("Europe/London", Date.UTC(2026, 9, 24, 12)), 60);
+  check("tz US changes 1 Nov", C.offsetMinutes("America/New_York", Date.UTC(2026, 10, 1, 7)), -300);
+  check("tz US spring 8 Mar", C.offsetMinutes("America/New_York", Date.UTC(2026, 2, 8, 8)), -240);
+  check("tz UK spring 29 Mar", C.offsetMinutes("Europe/London", Date.UTC(2026, 2, 29, 2)), 60);
+  check("tz US before UK in March", C.offsetMinutes("Europe/London", Date.UTC(2026, 2, 9, 12)) - C.offsetMinutes("America/New_York", Date.UTC(2026, 2, 9, 12)), 240);
+  check("tz Sydney summer starts 4 Oct", C.isSummerTime("Australia/Sydney", Date.UTC(2026, 9, 5)), true);
+  check("tz Sydney winter in July", C.isSummerTime("Australia/Sydney", Date.UTC(2026, 6, 1)), false);
+  check("tz India no summer time", C.isSummerTime("Asia/Kolkata", Date.UTC(2026, 6, 1)), false);
+  check("tz offset words", [60, -240, 330, 0, -150].map(C.formatOffset).join(" "), "UTC+1 UTC−4 UTC+5:30 UTC UTC−2:30");
+  check("tz 12-hour clock", [C.clock(0, 5, true), C.clock(12, 0, true), C.clock(13, 30, true)].join(" "), "12:05 AM 12:00 PM 1:30 PM");
+  // Page text: on Monday 12 October 2026, 14:00, 15:00 and 16:00 London time suit London and New York.
+  const rows = C.workingHours({ y: 2026, m: 10, d: 12 }, "Europe/London", ["Europe/London", "America/New_York"], 9, 17);
+  check("tz meeting hours", rows.filter((r) => r.everyone).map((r) => r.hour).join(","), "14,15,16");
+  check("tz meeting hours NY times", rows.filter((r) => r.everyone).map((r) => r.cells[1].h).join(","), "9,10,11");
+  check("tz day has 24 rows", rows.length, 24);
+  check("tz spring day has 23 rows", C.workingHours({ y: 2026, m: 3, d: 8 }, "America/New_York", ["America/New_York"]).length, 23);
+  check("tz every listed place is real", C.PLACES.every((p) => { try { C.offsetMinutes(p[1], 0); return true; } catch (e) { return false; } }), true);
+}
+
+// ---------------- Text tools
+{
+  const C = load("case-converter");
+  // Page examples.
+  check("case title", C.convert("HOW TO PRICE YOUR WORK: A GUIDE FOR FREELANCERS", "title"), "How to Price Your Work: A Guide for Freelancers");
+  check("case sentence", C.convert("HOW TO PRICE YOUR WORK: A GUIDE FOR FREELANCERS", "sentence"), "How to price your work: a guide for freelancers");
+  check("case camel", C.convert("invoice total amount", "camel"), "invoiceTotalAmount");
+  check("case snake", C.convert("invoice total amount", "snake"), "invoice_total_amount");
+  check("case pascal", C.convert("invoice total amount", "pascal"), "InvoiceTotalAmount");
+  check("case kebab", C.convert("invoice total amount", "kebab"), "invoice-total-amount");
+  check("case constant", C.convert("invoice total amount", "constant"), "INVOICE_TOTAL_AMOUNT");
+  check("case table sentence", C.convert("how to price your work. it's easier than you think.", "sentence"), "How to price your work. It's easier than you think.");
+  check("case table capitalized", C.convert("how to price your work", "capitalized"), "How To Price Your Work");
+  check("case upper", C.convert("How to price", "upper"), "HOW TO PRICE");
+  check("case lower", C.convert("How To PRICE", "lower"), "how to price");
+  check("case sentence lone i", C.convert("yes, i think i'm right.", "sentence"), "Yes, I think I'm right.");
+  check("case sentence after quote", C.convert('he said "no." "then why?" she asked.', "sentence"), 'He said "no." "Then why?" She asked.');
+  check("case title keeps NASA and iPhone", C.convert("a NASA test of my iPhone", "title"), "A NASA Test of My iPhone");
+  check("case title last word", C.convert("what are you looking at", "title"), "What Are You Looking At");
+  check("case title hyphen", C.convert("state-of-the-art tools", "title"), "State-of-the-Art Tools");
+  check("case title each line", C.convert("the first line\nthe second line", "title"), "The First Line\nThe Second Line");
+  check("case accents", C.convert("élan straße", "upper"), "ÉLAN STRASSE");
+  check("case camel split", C.convert("XMLHttpRequest userID", "snake"), "xml_http_request_user_id");
+  check("case code per line", C.convert("client name\nunit price", "camel"), "clientName\nunitPrice");
+  expectAll("case stats", C.stats("Hello world\nline two"), { characters: 20, words: 4, lines: 2 });
+  check("case stats empty", C.stats("").lines, 0);
+}
+
+{
+  const C = load("text-compare");
+  // Page examples.
+  const w = C.compare("The price is $1,200 for the full project.", "The price is $1,350 for the whole project.", { mode: "words" });
+  expectAll("compare words", w, { added: 2, removed: 2, same: 6, identical: false });
+  check("compare words removed text", w.ops.filter((o) => o.type === "del").map((o) => o.items.join("")).join("|"), "$1,200|full");
+  const email = "Dear Sam,\nThanks for the brief.\nThe price is $1,200.\nBest,\nAlex";
+  const email2 = "Dear Sam,\nThanks for the brief.\nThe price is $1,350.\nIt includes two rounds of changes.\nBest,\nAlex";
+  expectAll("compare lines", C.compare(email, email2, { mode: "lines" }), { added: 2, removed: 1, same: 4 });
+  check("compare identical", C.compare("a\nb", "a\nb", { mode: "lines" }).identical, true);
+  check("compare ignore case", C.compare("Hello World", "hello world", { mode: "lines", ignoreCase: true }).identical, true);
+  check("compare case matters by default", C.compare("Hello", "hello", { mode: "lines" }).identical, false);
+  check("compare ignore spaces", C.compare("a  b \nc", "a b\nc", { mode: "lines", ignoreSpace: true }).identical, true);
+  check("compare windows line breaks", C.compare("a\r\nb", "a\nb", { mode: "lines" }).identical, true);
+  check("compare empty vs text", C.compare("", "one\ntwo", { mode: "lines" }).added, 2);
+  // The changes always rebuild both texts, and are as few as possible.
+  let ok = true;
+  const lcs = (a, b) => { const dp = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0)); for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]); return dp[a.length][b.length]; };
+  let seed = 7;
+  const rand = (n) => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed % n; };
+  for (let t = 0; t < 500; t++) {
+    const a = Array.from({ length: rand(10) }, () => "abc"[rand(3)]);
+    const b = Array.from({ length: rand(10) }, () => "abc"[rand(3)]);
+    const ops = C.diff(a, b);
+    const ra = [], rb = [];
+    let edits = 0;
+    ops.forEach((o) => { if (o.type !== "ins") ra.push(...o.items); if (o.type !== "del") rb.push(...o.items); if (o.type !== "same") edits += o.items.length; });
+    if (ra.join() !== a.join() || rb.join() !== b.join() || edits !== a.length + b.length - 2 * lcs(a, b)) ok = false;
+  }
+  check("compare 500 random texts rebuild and are minimal", ok, true);
+}
+
+{
+  const tidy = load("line-tools");
+  const list = "banana\nApple\nitem 10\napple\nbanana\n\nitem 2\nitem 10";
+  // Page example.
+  const r = tidy(list, { trim: true, removeEmpty: true, dedupe: true, ignoreCase: true, sort: "az" });
+  check("lines example result", r.lines.join(","), "Apple,banana,item 2,item 10");
+  expectAll("lines example counts", r, { before: 8, after: 4, duplicates: 3, empty: 1 });
+  check("lines case kept apart", tidy(list, { trim: true, removeEmpty: true, dedupe: true, ignoreCase: false, sort: "az" }).lines.join(","), "Apple,apple,banana,item 2,item 10");
+  check("lines keep order", tidy("c\na\nc\nb", { dedupe: true, sort: "none" }).lines.join(","), "c,a,b");
+  check("lines Z to A", tidy("item 2\nitem 10\nitem 1", { sort: "za" }).lines.join(","), "item 10,item 2,item 1");
+  check("lines shortest", tidy("ccc\na\nbb", { sort: "short" }).lines.join(","), "a,bb,ccc");
+  check("lines longest", tidy("ccc\na\nbb", { sort: "long" }).lines.join(","), "ccc,bb,a");
+  check("lines reverse", tidy("1\n2\n3", { sort: "reverse" }).lines.join(","), "3,2,1");
+  check("lines trim makes duplicates", tidy("apple \n  apple", { trim: true, dedupe: true }).duplicates, 1);
+  check("lines no trim keeps them", tidy("apple \n  apple", { trim: false, dedupe: true }).duplicates, 0);
+  check("lines empty input", tidy("", { dedupe: true }).after, 0);
+  check("lines accents sort", tidy("Éclair\nzebra\napple", { sort: "az" }).lines.join(","), "apple,Éclair,zebra");
+  check("lines odd names", tidy("__proto__\nconstructor\n__proto__", { dedupe: true }).lines.join(","), "__proto__,constructor");
+}
+
+// ---------------- Popular tools: discount, password, QR code, random numbers, colour, Base64, timer
+{
+  const calc = load("discount");
+  // Page examples.
+  expectAll("discount 25% off $80", calc({ price: 80, off: 25 }), { sale: 60, saved: 20, totalOff: 25, toPay: 60 });
+  expectAll("discount 20% then 10%", calc({ price: 120, off: 20, extra: 10 }), { afterFirst: 96, sale: 86.4, saved: 33.6, totalOff: 28 });
+  expectAll("discount plus 8% tax", calc({ price: 86.4, off: 0, tax: 8 }), { taxAmount: 6.91, toPay: 93.31 });
+  check("discount percent off 50 → 35", calc.percentOff(50, 35), 30);
+  check("discount percent off price rise", calc.percentOff(50, 60), -20);
+  check("discount percent off from 0", calc.percentOff(0, 10), null);
+  expectAll("discount $100 20% + 10%", calc({ price: 100, off: 20, extra: 10 }), { sale: 72, totalOff: 28 });
+  check("discount 100% off", calc({ price: 50, off: 100 }).sale, 0);
+  // FAQ: $60 after 25% off came from $80.
+  check("discount original from sale", 60 / 0.75, 80);
+}
+
+{
+  const P = load("password-generator");
+  const all = { length: 20, lower: true, upper: true, digits: true, symbols: true };
+  // Page example: 90 characters, 20 long = 129.8 bits; 6 digits = 19.9 bits; 83 without look-alikes.
+  check("password pool size", P.groups(all).join("").length, 90);
+  check("password bits 20 of 90", P.entropyBits(all), 129.8);
+  check("password bits 6 digits", P.entropyBits({ length: 6, digits: true }), 19.9);
+  check("password look-alikes removed", P.groups({ ...all, noLookalike: true }).join("").length, 83);
+  check("password labels", [30, 50, 70, 90].map(P.strengthLabel).join(","), "Weak,Fair,Strong,Very strong");
+  let lengthsOk = true, setsOk = true, lookOk = true;
+  for (let i = 0; i < 300; i++) {
+    const pw = P.generate(all);
+    if (pw.length !== 20) lengthsOk = false;
+    if (!/[a-z]/.test(pw) || !/[A-Z]/.test(pw) || !/\d/.test(pw) || !/[^a-zA-Z0-9]/.test(pw)) setsOk = false;
+    if (/[Il1O0o|]/.test(P.generate({ ...all, noLookalike: true }))) lookOk = false;
+  }
+  check("password length", lengthsOk, true);
+  check("password has every type ticked", setsOk, true);
+  check("password no look-alikes", lookOk, true);
+  check("password digits only", /^\d{8}$/.test(P.generate({ length: 8, digits: true })), true);
+  check("password nothing ticked", P.generate({ length: 8 }), "");
+  // Every allowed character turns up about equally often (no bias).
+  const counts = {};
+  for (let i = 0; i < 20000; i++) { const c = P.generate({ length: 1, digits: true }); counts[c] = (counts[c] || 0) + 1; }
+  const vals = Object.values(counts);
+  check("password digits all used", vals.length, 10);
+  check("password digits even spread", Math.max(...vals) / Math.min(...vals) < 1.25, true);
+}
+
+{
+  const Q = load("qr-code", ["vendor/qrcode-generator/qrcode.js"]);
+  // Page examples.
+  check("qr wifi", Q.payload({ kind: "wifi", ssid: "Cafe Guest", password: "sunny-day-42", security: "WPA" }), "WIFI:T:WPA;S:Cafe Guest;P:sunny-day-42;;");
+  check("qr wifi escaping", Q.payload({ kind: "wifi", ssid: "My;Net", password: 'a"b:c', security: "WPA", hidden: true }), 'WIFI:T:WPA;S:My\\;Net;P:a\\"b\\:c;H:true;;');
+  check("qr wifi open", Q.payload({ kind: "wifi", ssid: "Guest", password: "", security: "WPA" }), "WIFI:T:nopass;S:Guest;;");
+  check("qr email", Q.payload({ kind: "email", to: "hello@example.com", subject: "Quote request" }), "mailto:hello@example.com?subject=Quote%20request");
+  check("qr phone", Q.payload({ kind: "phone", number: "+44 1632 960123" }), "tel:+441632960123");
+  const m = Q.matrix("https://vintayz.com/", "M");
+  check("qr example size", m.size, 25);
+  check("qr example version", m.version, 2);
+  check("qr example pixels", Math.floor(600 / (25 + 8)) * (25 + 8), 594);
+  check("qr finder corner dark", m.dark(0, 0) && m.dark(0, 6) && m.dark(6, 0) && !m.dark(1, 1), true);
+  check("qr too long", !!Q.matrix("x".repeat(3000), "H").error, true);
+  check("qr unicode works", !!Q.matrix("Café 👋", "M").size, true);
+  check("qr higher level is bigger", Q.matrix("https://vintayz.com/", "H").size > m.size, true);
+  check("qr svg", Q.svg(m, 10, 4, "#000000", "#ffffff").startsWith('<svg xmlns="http://www.w3.org/2000/svg" width="330"'), true);
+  check("qr contrast black on white", Math.round(Q.contrast("#000000", "#ffffff")), 21);
+}
+
+{
+  const R = load("random-number");
+  let inRange = true, unique = true;
+  for (let i = 0; i < 200; i++) {
+    const r = R.numbers({ min: 1, max: 6, count: 3, unique: false });
+    if (r.numbers.some((n) => n < 1 || n > 6 || n % 1)) inRange = false;
+    const u = R.numbers({ min: 1, max: 10, count: 10, unique: true, sort: true });
+    if (u.numbers.join(",") !== "1,2,3,4,5,6,7,8,9,10") unique = false;
+  }
+  check("random numbers in range", inRange, true);
+  check("random no repeats uses every number", unique, true);
+  check("random too many without repeats", !!R.numbers({ min: 1, max: 5, count: 6, unique: true }).error, true);
+  check("random min above max", !!R.numbers({ min: 10, max: 1, count: 1 }).error, true);
+  check("random negatives", R.numbers({ min: -10, max: -10, count: 1 }).numbers[0], -10);
+  check("random big unique sample", new Set(R.numbers({ min: 1, max: 1000000, count: 500, unique: true }).numbers).size, 500);
+  const counts = [0, 0, 0, 0, 0, 0];
+  for (let i = 0; i < 30000; i++) counts[R.numbers({ min: 1, max: 6, count: 1 }).numbers[0] - 1]++;
+  check("random fair dice", Math.max(...counts) / Math.min(...counts) < 1.1, true);
+  const list = "Alex\nSam\n\nPriya\nJordan\nChen\nMaria";
+  const p = R.pick(list, 2);
+  check("random pick count", p.picks.length + "/" + p.total, "2/6");
+  check("random pick distinct", new Set(p.picks).size, 2);
+  check("random pick too many", !!R.pick(list, 7).error, true);
+  check("random pick empty", !!R.pick("\n \n", 1).error, true);
+}
+
+{
+  const C = load("color-converter");
+  const c = C.parse("#1d4ed8");
+  // Page example.
+  check("colour hex to rgb", JSON.stringify(c), '{"r":29,"g":78,"b":216}');
+  check("colour hsl", JSON.stringify(C.toHsl(c)), '{"h":224,"s":76,"l":48}');
+  check("colour hsv", JSON.stringify(C.toHsv(c)), '{"h":224,"s":87,"v":85}');
+  check("colour cmyk", JSON.stringify(C.toCmyk(c)), '{"c":87,"m":64,"y":0,"k":15}');
+  check("colour contrast with white", C.contrast(c, { r: 255, g: 255, b: 255 }), 6.7);
+  check("colour short hex", C.hex(C.parse("#f00")), "#ff0000");
+  check("colour red hsl", JSON.stringify(C.toHsl(C.parse("#f00"))), '{"h":0,"s":100,"l":50}');
+  check("colour white hsl", JSON.stringify(C.toHsl(C.parse("#ffffff"))), '{"h":0,"s":0,"l":100}');
+  check("colour rgb text", C.hex(C.parse("rgb(29, 78, 216)")), "#1d4ed8");
+  check("colour rgb spaces", C.hex(C.parse("29 78 216")), "#1d4ed8");
+  check("colour hsl text", C.hex(C.parse("hsl(0, 100%, 50%)")), "#ff0000");
+  check("colour bad", C.parse("#12345"), null);
+  check("colour rgb over 255", C.parse("rgb(300, 0, 0)"), null);
+  check("colour black cmyk", JSON.stringify(C.toCmyk({ r: 0, g: 0, b: 0 })), '{"c":0,"m":0,"y":0,"k":100}');
+  check("colour shades count", C.shades(c).length, 9);
+  // Round trip for every hue step.
+  let ok = true;
+  for (let h = 0; h < 360; h += 15) {
+    const rgb = C.fromHsl(h, 60, 40);
+    const back = C.toHsl(rgb);
+    if (Math.abs(back.l - 40) > 1 || Math.abs(back.s - 60) > 1) ok = false;
+  }
+  check("colour hsl round trip", ok, true);
+}
+
+{
+  const B = load("base64");
+  // Page examples.
+  check("base64 hello", B.encode("Hello, world!"), "SGVsbG8sIHdvcmxkIQ==");
+  check("base64 emoji", B.encode("Hello, world! 👋"), "SGVsbG8sIHdvcmxkISDwn5GL");
+  check("base64 Man", B.encode("Man"), "TWFu");
+  check("base64 Ma", B.encode("Ma"), "TWE=");
+  check("base64 M", B.encode("M"), "TQ==");
+  check("base64 url-safe", B.encode("??>", true), "Pz8-");
+  check("base64 standard", B.encode("??>"), "Pz8+");
+  check("base64 decode", B.decode("SGVsbG8sIHdvcmxkISDwn5GL").text, "Hello, world! 👋");
+  check("base64 decode url-safe", B.decode("Pz8-").text, "??>");
+  check("base64 decode no padding", B.decode("TQ").text, "M");
+  check("base64 decode spaces", B.decode("SGVs bG8=\n").text, "Hello");
+  check("base64 invalid", !!B.decode("abc$").error, true);
+  check("base64 not text", !!B.decode(B.bytesToBase64(new Uint8Array([255, 254, 0]))).error, true);
+  check("base64 matches Node", B.encode("Ünïcödé ✓ 日本"), Buffer.from("Ünïcödé ✓ 日本").toString("base64"));
+}
+
+{
+  const T = load("timer");
+  check("timer 5 min", T.formatTimer(300000), "05:00");
+  check("timer rounds up", T.formatTimer(4200), "00:05");
+  check("timer last moment", T.formatTimer(1), "00:01");
+  check("timer zero", T.formatTimer(0), "00:00");
+  check("timer hour", T.formatTimer(T.toMs(1, 2, 3)), "1:02:03");
+  check("stopwatch", T.formatStopwatch(83456), "01:23.45");
+  check("stopwatch hour", T.formatStopwatch(3723990), "1:02:03.99");
+  check("timer toMs", T.toMs(0, 25, 0), 1500000);
+}
+
 // ---------------- US federal tax brackets (2026)
 {
   const calc = load("us-tax-bracket", US_LIBS);
@@ -1644,7 +2081,10 @@ async function resumePdfTests() {
   }
 }
 
-resumePdfTests().catch((err) => {
+imageSearchTests().catch((err) => {
+  failed++;
+  console.log(`FAIL  image search tests: ${err.message}`);
+}).then(resumePdfTests).catch((err) => {
   failed++;
   console.log(`FAIL  resume PDF tests: ${err.message}`);
 }).then(() => require("./pdf-tests.js")(check, expectAll)).catch((err) => {

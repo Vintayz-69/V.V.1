@@ -1,0 +1,87 @@
+  <section class="calculator" aria-label="Days between dates calculator">
+    <form class="calc-form" id="dd-form" novalidate>
+      <div class="field">
+        <label for="dd-start">Start date</label>
+        <div class="input-wrap"><input id="dd-start" type="date"></div>
+        <span class="error-msg">Choose a date.</span>
+        <button type="button" class="btn btn-sm btn-quiet date-today" id="dd-start-today">Today</button>
+      </div>
+      <div class="field">
+        <label for="dd-end">End date</label>
+        <div class="input-wrap"><input id="dd-end" type="date"></div>
+        <span class="error-msg">Choose a date.</span>
+        <button type="button" class="btn btn-sm btn-quiet date-today" id="dd-end-today">Today</button>
+      </div>
+      <div class="field span-2">
+        <label class="check" for="dd-include"><input type="checkbox" id="dd-include"> Count the end date too (add 1 day)</label>
+      </div>
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="dd-swap">{{icon:refresh}} Swap dates</button>
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Days between the dates</h2>
+      <div class="result-main"><span id="out-days">—</span> <small id="out-days-word">days</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Years, months and days</span><span id="out-ymd">—</span></li>
+        <li><span>Weeks and days</span><span id="out-weeks">—</span></li>
+        <li><span>Weekdays (Monday to Friday)</span><span id="out-weekdays">—</span></li>
+        <li><span>Hours</span><span id="out-hours">—</span></li>
+        <li><span>From</span><span id="out-start">—</span></li>
+        <li><span>To</span><span id="out-end">—</span></li>
+      </ul>
+      <p class="result-note" id="out-note" hidden></p>
+      <p class="result-note">Weekdays don't skip public holidays. For working days, use the <a class="link-light" href="{{root}}freelance/business-days-calculator/">business days calculator</a>.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Pick the start date and the end date.</strong> Press "Today" to fill in today's date.</li>
+      <li><strong>Tick "Count the end date too"</strong> if both days should count, for example for a holiday from Monday to Friday (5 days, not 4).</li>
+      <li><strong>Read the answer</strong> in days, in years, months and days, in weeks, and in weekdays.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <p>We count the days from the start date up to the end date. The start date counts and the end date doesn't, the way you'd count nights in a hotel. Ticking "Count the end date too" adds one day.</p>
+    <div class="formula">Days                = end date − start date   (+ 1 if the end date counts)
+Weeks and days      = days ÷ 7, with what's left over in days
+Years, months, days = whole months from the start date, then the days left over</div>
+    <p>For whole months, we move the start date forward a month at a time. If that day doesn't exist in a month (there's no 31 February), we use the last day of that month. Every day is counted as a whole calendar day, so clock changes for daylight saving time make no difference. Leap years are included.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">11 October 2026 → 25 December 2026
+  October 20 + November 30 + December 25   = 75 days
+  = 10 weeks, 5 days  = 2 months, 14 days  = 54 weekdays
+
+1 January 2026 → 31 December 2026          = 364 days (11 months, 30 days)
+  with the end date counted                = 365 days (1 year)
+
+31 January 2026 → 1 March 2026             = 29 days
+  31 January + 1 month = 28 February (no 31st), + 1 day = 1 month, 1 day
+
+28 February 2028 → 1 March 2028            = 2 days (2028 is a leap year)</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should I count the end date?</summary>
+        <p>It depends on what you're counting. For "how long until" questions and hotel nights, don't. For things that happen on both days, like a holiday from Monday to Friday or a contract that runs from the 1st to the 30th, do. Contracts and official rules sometimes say exactly how to count, so check the wording if it matters.</p>
+      </details>
+      <details>
+        <summary>Does it skip weekends and public holidays?</summary>
+        <p>The main answer counts every calendar day. "Weekdays" leaves out Saturdays and Sundays but not public holidays. To skip US or UK public holidays as well, use our <a href="{{root}}freelance/business-days-calculator/">business days calculator</a>.</p>
+      </details>
+      <details>
+        <summary>Why can months and days look odd at the end of a month?</summary>
+        <p>Months have different lengths, so "one month" from 31 January lands on 28 February (or 29 in a leap year). We always use the last day of the month when the start day doesn't exist, and count the days left over from there.</p>
+      </details>
+      <details>
+        <summary>Can I count backwards?</summary>
+        <p>Yes. If the end date is before the start date, we count the days between them and tell you the dates are the other way round. Or press "Swap dates".</p>
+      </details>
+    </div>
+  </div>

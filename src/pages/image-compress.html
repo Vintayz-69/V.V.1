@@ -1,0 +1,122 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Compress image tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.avif" multiple>
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose pictures</label>
+      <p class="dropzone-hint">or drop them here. JPG, PNG, WebP, GIF and BMP all work.</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="work-head">
+        <h2 class="work-title">Pictures</h2>
+        <p class="work-note" id="images-summary"></p>
+      </div>
+      <ol class="file-list" id="file-list"></ol>
+
+      <div class="pdf-options">
+        <fieldset class="choice-group span-2">
+          <legend>How small?</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="cp-mode" id="cp-mode-q" value="quality" checked><label for="cp-mode-q">Choose the quality<small>You pick the balance</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="cp-mode" id="cp-mode-t" value="target"><label for="cp-mode-t">Under a file size<small>e.g. under 200 KB</small></label></div>
+          </div>
+        </fieldset>
+
+        <div class="field" id="cp-quality-field">
+          <label for="cp-quality">Quality: <output id="cp-quality-out" for="cp-quality">75%</output><span class="hint">70–80% looks almost the same as the original for most photos</span></label>
+          <input class="range" type="range" id="cp-quality" min="10" max="95" step="1" value="75">
+        </div>
+        <div class="field" id="cp-target-field" hidden>
+          <label for="cp-target">Largest file size<span class="hint">Each picture is made no bigger than this</span></label>
+          <div class="input-wrap"><input id="cp-target" type="text" inputmode="numeric" autocomplete="off" value="200"><span class="affix">KB</span></div>
+          <span class="error-msg">Enter a size from 5 to 100,000 KB.</span>
+        </div>
+
+        <div class="field">
+          <label for="cp-max">Longest side<span class="hint">Shrinking big photos saves the most</span></label>
+          <div class="select-wrap">
+            <select id="cp-max">
+              <option value="0">Keep the full size</option>
+              <option value="3840">No more than 3,840 px</option>
+              <option value="2560">No more than 2,560 px</option>
+              <option value="1920">No more than 1,920 px</option>
+              <option value="1600">No more than 1,600 px</option>
+              <option value="1280">No more than 1,280 px</option>
+              <option value="1024">No more than 1,024 px</option>
+              <option value="800">No more than 800 px</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="cp-format">Save as</label>
+          <div class="select-wrap">
+            <select id="cp-format">
+              <option value="jpg">JPG (works everywhere)</option>
+              <option value="webp">WebP (smaller, keeps transparency)</option>
+            </select>
+          </div>
+        </div>
+        <p class="img-preview-line span-2" id="cp-transparent" hidden>Some of your pictures have see-through areas. JPG can't be see-through, so those areas will be white. Choose WebP to keep them.</p>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Compress</button>
+        <input class="visually-hidden" type="file" id="pdf-more" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.avif" multiple>
+        <label class="btn" for="pdf-more">{{icon:plus}} Add more pictures</label>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Start over</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your pictures stay on your device. They're compressed by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to compress a picture</h2>
+    <ol class="steps">
+      <li><strong>Choose one or more pictures</strong>, or drag them onto the box.</li>
+      <li><strong>Pick a quality</strong>, or choose "Under a file size" and type the limit, such as 200 KB for a form that won't take anything bigger.</li>
+      <li><strong>Shrink the longest side</strong> if the photo is bigger than it needs to be. A photo for a website or email rarely needs more than 1,920 pixels.</li>
+      <li><strong>Press "Compress"</strong>, check the preview, and download.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <p>JPG and WebP save space by leaving out fine detail your eye barely notices. The quality setting decides how much is left out: lower quality means a smaller file but, eventually, blocky or smudged areas. Making the picture smaller in pixels saves even more, because a picture half as wide and half as high has only a quarter of the pixels.</p>
+    <p>With "Under a file size", we try different qualities, keeping the best one that fits under your limit. If even the lowest quality is too big, we make the picture smaller in pixels and try again. We count 1 KB as 1,024 bytes, as Windows does, so aim a little under your limit to be safe.</p>
+    <div class="formula">Saving (%)  = (1 − new size ÷ original size) × 100
+Pixels      = width × height</div>
+
+    <h2>Worked example</h2>
+    <div class="formula">A photo of 3,200 KB is compressed to 480 KB:
+Saving      = (1 − 480 ÷ 3,200) × 100 = 85% smaller
+
+Longest side limited to 1,920 px, for a 4,032 × 3,024 photo:
+New size    = 1,920 × 1,440 px
+Pixels      = 12,192,768  →  2,764,800   (about 77% fewer pixels)</div>
+    <p>How small a file gets depends on the picture: a photo of a busy scene keeps more detail, and so stays bigger, than a photo of a clear sky. Always check the preview.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What quality should I choose?</summary>
+        <p>For photos, 70–80% usually looks almost the same as the original at a much smaller size. Go lower only if you must meet a size limit, and check the preview for blocky patches around edges and text.</p>
+      </details>
+      <details>
+        <summary>Why is my compressed file bigger than the original?</summary>
+        <p>Some pictures are already well compressed, or are simple graphics that PNG stores very efficiently. Saving them again as JPG can make them bigger. When that happens we tell you, so you can keep the original instead.</p>
+      </details>
+      <details>
+        <summary>Can I compress a PNG and keep it see-through?</summary>
+        <p>Choose WebP: it keeps see-through areas and usually makes much smaller files than PNG. JPG can't be see-through, so transparent areas turn white.</p>
+      </details>
+      <details>
+        <summary>Does compressing remove the photo's location and camera details?</summary>
+        <p>Yes. The new picture is drawn fresh by your browser, so hidden details (EXIF data) such as the camera model, date and GPS location aren't copied over. The picture is turned the right way up first.</p>
+      </details>
+      <details>
+        <summary>Are my pictures uploaded?</summary>
+        <p>No. Everything happens in your own browser, and we never see your pictures.</p>
+      </details>
+    </div>
+  </div>

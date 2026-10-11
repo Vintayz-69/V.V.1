@@ -1,0 +1,201 @@
+# ToolNest by Vintayz
+
+> Free calculators and tools that run in the browser: money and tax calculators for freelancers in the US, UK, Canada and Australia, plus PDF, image, text, date and time, developer and everyday tools, resume makers and brain games. No sign-up. Calculations and files stay on the visitor's device.
+
+Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and each tax tool names its tax year. Results are estimates, not tax, legal or financial advice.
+
+## Freelancer Tools
+
+- [Freelancer Tools](https://vintayz.com/freelance/): all freelancer tools
+- [Billable Hours Calculator](https://vintayz.com/freelance/billable-hours-calculator/): Work out how many hours you can realistically bill once admin and sales are counted.
+- [Contractor Day Rate Calculator](https://vintayz.com/freelance/contractor-day-rate-calculator/): Work out the day rate you need, allowing for holidays and gaps between contracts.
+- [Emergency Fund Calculator for Freelancers](https://vintayz.com/freelance/emergency-fund-calculator/): Work out how much cash to keep for quiet months, and how long it will take to save.
+- [Freelance Hourly Rate Calculator](https://vintayz.com/freelance/freelance-hourly-rate-calculator/): Find the hourly rate you need to hit your take-home income goal after tax, expenses and time off.
+- [Freelance Invoice Generator](https://vintayz.com/freelance/invoice-generator/): Create, customize and download professional freelance invoices as PDFs. No sign-up, no watermarks, files stay on your device.
+- [Freelance Retainer Calculator](https://vintayz.com/freelance/retainer-calculator/): Turn your hourly rate into a monthly retainer fee, and see what the client's real usage does to your rate.
+- [Hourly to Annual Income Calculator](https://vintayz.com/freelance/hourly-to-annual-income-calculator/): See what an hourly rate adds up to per day, week, month and year.
+- [Income Smoothing Calculator](https://vintayz.com/freelance/income-smoothing-calculator/): Turn irregular freelance income into a steady monthly salary with a safety buffer.
+- [Late Payment Interest Calculator](https://vintayz.com/freelance/late-payment-interest-calculator/): Calculate interest and fixed compensation on an overdue invoice, including UK statutory interest.
+- [Project Pricing Calculator](https://vintayz.com/freelance/project-pricing-calculator/): Turn your hours, costs and a safety buffer into a fixed project quote and deposit.
+- [Retirement Savings Calculator](https://vintayz.com/freelance/retirement-savings-calculator/): See what your pension or retirement savings could grow to, and the income they might give you.
+- [Timesheet Calculator](https://vintayz.com/freelance/timesheet-calculator/): Add up a week of start and finish times, less breaks, and see what to bill at your hourly rate.
+- [Working Days Calculator](https://vintayz.com/freelance/business-days-calculator/): Count working days between two dates, or add working days to a date, skipping US or UK public holidays.
+
+## United States
+
+- [United States](https://vintayz.com/us/): all united states
+- [1099 vs W-2 Calculator](https://vintayz.com/us/1099-vs-w2-calculator/): Find the 1099 hourly rate that matches a W-2 salary and benefits package.
+- [Business Mileage Deduction Calculator (2026)](https://vintayz.com/us/business-mileage-deduction-calculator/): Work out your deduction with the 2026 IRS rates, including the July 1 rate change.
+- [Federal Tax Bracket Calculator (2026)](https://vintayz.com/us/tax-bracket-calculator/): See which 2026 federal tax bracket you're in, the tax in each bracket, and your marginal and effective rates.
+- [Freelancer Take-Home Pay Calculator (2026)](https://vintayz.com/us/freelancer-take-home-pay-calculator/): See what you keep after 2026 federal income tax, self-employment tax and state tax.
+- [Home Office Deduction Calculator](https://vintayz.com/us/home-office-deduction-calculator/): Compare the simplified and regular home office methods and see which gives more.
+- [Quarterly Estimated Tax Calculator (2026)](https://vintayz.com/us/quarterly-estimated-tax-calculator/): See what to pay the IRS each quarter in 2026, including the safe harbor that avoids penalties.
+- [Self-Employment Tax Calculator (2026)](https://vintayz.com/us/self-employment-tax-calculator/): Work out 2026 Social Security and Medicare tax on your freelance profit, and the half you can deduct.
+
+## United Kingdom
+
+- [United Kingdom](https://vintayz.com/uk/): all united kingdom
+- [Business Mileage Allowance Calculator (55p rate)](https://vintayz.com/uk/business-mileage-allowance-calculator/): Claim mileage at HMRC's rates, including the new 55p car rate from April 2026.
+- [Dividend Tax Calculator (2026 to 2027)](https://vintayz.com/uk/dividend-tax-calculator/): Work out tax on your dividends for 2026 to 2027, with the dividend allowance and your other income.
+- [Payments on Account Calculator](https://vintayz.com/uk/payments-on-account-calculator/): See what Self Assessment payments are due in January and July, and plan for the first-year shock.
+- [Self-Employed Tax and NI Calculator (2026/27)](https://vintayz.com/uk/self-employed-tax-calculator/): Work out Income Tax and Class 4 National Insurance on your 2026 to 2027 profits, including Scotland.
+- [Sole Trader vs Limited Company Calculator (2026/27)](https://vintayz.com/uk/sole-trader-vs-limited-company-calculator/): Compare take-home pay as a sole trader and as a company director, with 2026 to 2027 dividend rates.
+- [VAT Calculator UK (20%)](https://vintayz.com/uk/vat-calculator/): Add 20% or 5% VAT to a price, or take the VAT out of a total, with the £90,000 registration rule.
+- [Working From Home Expenses Calculator](https://vintayz.com/uk/working-from-home-expenses-calculator/): Compare HMRC's flat rate with a share of your actual bills and claim the higher.
+
+## Canada
+
+- [Canada](https://vintayz.com/ca/): all canada
+- [CPP and EI Calculator (2026)](https://vintayz.com/ca/cpp-ei-calculator/): Work out your 2026 CPP, CPP2 and EI deductions as an employee, per year and per pay, and what your employer adds.
+- [Employee vs Contractor Calculator (Canada)](https://vintayz.com/ca/employee-vs-contractor-calculator/): Find the contract rate that matches a salaried job once benefits and employer CPP are counted.
+- [GST/HST Calculator](https://vintayz.com/ca/gst-hst-calculator/): Add or remove GST, HST and provincial sales tax for any province or territory.
+- [Self-Employed Tax Calculator Canada (2026)](https://vintayz.com/ca/self-employed-tax-calculator/): Work out 2026 federal tax and both halves of CPP on your self-employment income.
+- [Tax Instalments Calculator (Canada 2026)](https://vintayz.com/ca/tax-instalments-calculator/): Check if you need quarterly instalments in 2026 and compare the current-year and prior-year options.
+
+## Australia
+
+- [Australia](https://vintayz.com/au/): all australia
+- [Employee vs Contractor Calculator (Australia)](https://vintayz.com/au/employee-vs-contractor-calculator/): Find the contract rate that matches a salary plus 12% super and paid leave.
+- [GST Calculator Australia](https://vintayz.com/au/gst-calculator/): Add 10% GST to a price or work out the GST inside a total.
+- [Sole Trader Tax Calculator (2026–27)](https://vintayz.com/au/sole-trader-tax-calculator/): Work out 2026–27 tax, Medicare levy and offsets on your sole trader income.
+- [Take-Home Pay Calculator Australia (2026–27)](https://vintayz.com/au/take-home-pay-calculator/): Work out your 2026–27 salary after tax and the Medicare levy, per fortnight, month and week, plus super.
+- [Voluntary Super Contribution Calculator (2026–27)](https://vintayz.com/au/voluntary-super-contribution-calculator/): See the tax you save by adding to super, and check the new $32,500 cap.
+
+## PDF Tools
+
+- [PDF Tools](https://vintayz.com/pdf/): all pdf tools
+- [Add a Watermark to a PDF](https://vintayz.com/pdf/add-watermark-to-pdf/): Stamp DRAFT, CONFIDENTIAL or your own words across the pages.
+- [Add Page Numbers to a PDF](https://vintayz.com/pdf/add-page-numbers-to-pdf/): Number the pages of a PDF, in the corner and style you choose.
+- [Add Text to a PDF](https://vintayz.com/pdf/add-text-to-pdf/): Type on any page of a PDF, in the font, size, colour and style you choose.
+- [Compress PDF](https://vintayz.com/pdf/compress-pdf/): Make a PDF smaller for email and uploads, while text stays sharp.
+- [Delete Pages from a PDF](https://vintayz.com/pdf/delete-pdf-pages/): Remove the pages you don't need and save a new PDF.
+- [Edit or Remove PDF Properties](https://vintayz.com/pdf/edit-pdf-metadata/): Change a PDF's title, author and keywords, or remove all its hidden properties before you share it.
+- [Extract Pages from a PDF](https://vintayz.com/pdf/extract-pdf-pages/): Pick the pages you need and save just those as a new PDF.
+- [JPG to PDF Converter](https://vintayz.com/pdf/jpg-to-pdf/): Turn photos and pictures (JPG, PNG and more) into one PDF.
+- [Merge PDF Files](https://vintayz.com/pdf/merge-pdf/): Join several PDFs into one file, in the order you choose.
+- [PDF to JPG Converter](https://vintayz.com/pdf/pdf-to-jpg/): Save PDF pages as sharp JPG or PNG pictures.
+- [PDF to Text Converter](https://vintayz.com/pdf/pdf-to-text/): Copy the words out of a PDF, or save them as a plain text file.
+- [Rearrange PDF Pages](https://vintayz.com/pdf/rearrange-pdf-pages/): Drag pages into a new order, or reverse them, and save the PDF.
+- [Rotate PDF Pages](https://vintayz.com/pdf/rotate-pdf/): Turn sideways or upside-down pages the right way up: one page or all of them.
+- [Sign a PDF](https://vintayz.com/pdf/sign-pdf/): Draw or type your signature, place it on the page and save the signed PDF.
+- [Split PDF](https://vintayz.com/pdf/split-pdf/): Split a PDF into smaller files by page ranges, or one file per page.
+
+## Resume & CV Maker
+
+- [Resume & CV Maker](https://vintayz.com/resume-maker/): all resume & cv maker
+- [Australian Resume Builder](https://vintayz.com/resume-maker/australia-resume-builder/): An Australian resume on A4 with key skills and referees, following Workforce Australia's template.
+- [Canadian Resume Builder](https://vintayz.com/resume-maker/canada-resume-builder/): A Canadian resume of up to two pages, with volunteer work and languages, following Job Bank advice.
+- [Cover Letter Maker](https://vintayz.com/resume-maker/cover-letter-maker/): Write a cover letter laid out for the US, UK, Canada or Australia, and download it as a PDF.
+- [Resignation Letter Maker](https://vintayz.com/resume-maker/resignation-letter-maker/): Write a polite resignation letter with your last working day, for the US, UK, Canada or Australia, and download it as a PDF.
+- [UK CV Maker](https://vintayz.com/resume-maker/uk-cv-maker/): A UK CV on A4 with a personal profile and references line, following National Careers Service advice.
+- [US Resume Builder](https://vintayz.com/resume-maker/us-resume-builder/): A one-column US resume on Letter paper, following the US Department of Labor's CareerOneStop advice.
+
+## Business Tools
+
+- [Business Tools](https://vintayz.com/business/): all business tools
+- [Break-Even Analysis Calculator](https://vintayz.com/business/break-even-calculator/): Find the exact unit volume and sales revenue needed to cover fixed overheads and start making a profit.
+- [Customer Lifetime Value Calculator](https://vintayz.com/business/customer-lifetime-value-calculator/): Work out what a customer is worth in gross profit, compared with what it costs to win them (LTV:CAC).
+- [E-Commerce ROAS & Break-Even Calculator](https://vintayz.com/business/roas-calculator/): Calculate Return On Ad Spend, break-even ROAS based on product profit margins, and true campaign net profits.
+- [Payment Processing Fee Calculator](https://vintayz.com/business/payment-fee-calculator/): Work out card processing fees, your net payout, and how much to invoice to cover the fee.
+- [Profit Margin & Markup Calculator](https://vintayz.com/business/profit-margin-calculator/): Find your gross margin, markup percentage and net profit from your costs and selling price.
+- [Quote and Estimate Generator](https://vintayz.com/business/quote-generator/): Make a clear price quote or estimate for a client and download it as a PDF. No sign-up.
+
+## Career & Salary
+
+- [Career & Salary](https://vintayz.com/career/): all career & salary
+- [Job Offer Comparison Calculator](https://vintayz.com/career/job-offer-comparison-calculator/): Compare two job offers on salary, bonus, benefits, hours and commuting, and see which pays more per hour.
+- [Overtime Pay Calculator](https://vintayz.com/career/overtime-calculator/): Work out weekly pay with time-and-a-half and double-time hours.
+- [Pay Rise Calculator](https://vintayz.com/career/pay-rise-calculator/): See your raise as a percentage and in money, and whether it beats inflation.
+- [Salary to Hourly Calculator](https://vintayz.com/career/salary-to-hourly-calculator/): Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates.
+- [UK Holiday Entitlement Calculator](https://vintayz.com/career/uk-holiday-entitlement-calculator/): Your minimum paid holiday in days or hours, including part-time and irregular hours.
+- [UK Statutory Redundancy Pay Calculator](https://vintayz.com/career/uk-redundancy-pay-calculator/): Work out the legal minimum redundancy pay from your age, service and weekly pay.
+- [UK Take-Home Pay Calculator (2026/27)](https://vintayz.com/career/uk-take-home-pay-calculator/): Your salary after Income Tax, National Insurance, student loan and pension for 2026 to 2027.
+- [US Take-Home Pay Calculator (2026)](https://vintayz.com/career/us-take-home-pay-calculator/): Calculate your net W-2 paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax.
+
+## Education & Writing
+
+- [Education & Writing](https://vintayz.com/education/): all education & writing
+- [Citation Generator (APA, MLA, Harvard)](https://vintayz.com/education/citation-generator/): Make APA 7, MLA 9 and Harvard references for websites, books and journal articles.
+- [College GPA Calculator (4.0 Scale)](https://vintayz.com/education/gpa-calculator/): Calculate semester and cumulative college GPA on a 4.0 scale, weighted by course credits.
+- [Final Grade Calculator](https://vintayz.com/education/final-grade-calculator/): Find the score you need on your final exam to get the course grade you want.
+- [UK Degree Classification Calculator](https://vintayz.com/education/uk-degree-classification-calculator/): Work out your degree mark and class (First, 2:1, 2:2) and the final-year marks you need.
+- [Weighted Grade Calculator](https://vintayz.com/education/weighted-grade-calculator/): Work out your course grade so far from weighted categories such as homework, quizzes and exams.
+- [Word Counter & Readability Analyzer](https://vintayz.com/education/word-counter/): Count words, characters, sentences, estimated reading time, speaking time, and Flesch readability grade level.
+
+## Developer Tools
+
+- [Developer Tools](https://vintayz.com/dev/): all developer tools
+- [Base64 Encode and Decode](https://vintayz.com/dev/base64-encode-decode/): Encode text to Base64 or decode it back, standard or URL-safe, and turn files into data URLs.
+- [Color Converter (HEX, RGB, HSL)](https://vintayz.com/dev/color-converter/): Convert colours between HEX, RGB, HSL, HSV and CMYK, with shades and contrast against white and black.
+- [JSON Formatter & Validator](https://vintayz.com/dev/json-formatter/): Beautify, minify, and validate JSON code 100% locally in your browser with instant syntax error highlighting.
+- [Password Generator](https://vintayz.com/dev/password-generator/): Make strong random passwords with your choice of length, letters, numbers and symbols. Made on your device.
+- [Unix Timestamp Converter](https://vintayz.com/dev/unix-timestamp-converter/): Convert epoch timestamps in seconds or milliseconds to dates in UTC and your time zone, and back.
+- [WCAG Color Contrast Checker](https://vintayz.com/dev/color-contrast-checker/): Check text and background color combinations against WCAG 2.1 AA and AAA legal web accessibility standards.
+
+## Personal Finance
+
+- [Personal Finance](https://vintayz.com/finance/): all personal finance
+- [Compound Interest Calculator](https://vintayz.com/finance/compound-interest-calculator/): See how regular deposits and compound interest grow your investments over time, with a year-by-year schedule.
+- [Monthly Expenses Calculator](https://vintayz.com/finance/monthly-expenses-calculator/): Add up your monthly bills and spending, see your yearly total and what's left from your pay.
+- [Mortgage Payment Calculator](https://vintayz.com/finance/mortgage-calculator/): Calculate monthly principal, interest, taxes and insurance payments for fixed-rate home loans.
+- [Savings Goal Calculator](https://vintayz.com/finance/savings-goal-calculator/): Find how much to save each month to reach a goal by a set date, with interest added.
+
+## Everyday Utilities
+
+- [Everyday Utilities](https://vintayz.com/tools/): all everyday utilities
+- [Discount Calculator](https://vintayz.com/tools/discount-calculator/): Work out the sale price and what you save, with a second discount or sales tax, and the percent off between two prices.
+- [Percentage Calculator](https://vintayz.com/tools/percentage-calculator/): Work out X% of a number, what percent one number is of another, percentage change, and adding or taking off a percent.
+- [QR Code Generator](https://vintayz.com/tools/qr-code-generator/): Make a free QR code for a link, text, Wi-Fi network, email or phone number. Download PNG or SVG. Never expires.
+- [Random Number Generator and Picker](https://vintayz.com/tools/random-number-generator/): Fair random numbers in any range, with or without repeats, or random picks from a list of names.
+- [Tip & Bill Split Calculator](https://vintayz.com/tools/tip-calculator/): Evenly split restaurant bills, work out custom gratuity percentages, and round up totals cleanly.
+- [Universal Unit Converter](https://vintayz.com/tools/unit-converter/): Convert between metric and imperial measurements for length, weight, temperature, volume and area.
+
+## Image Tools
+
+- [Image Tools](https://vintayz.com/image/): all image tools
+- [Compress Image](https://vintayz.com/image/compress-image/): Make JPG, PNG and WebP pictures smaller for email and uploads, to a quality you choose or under a file size.
+- [Crop Image](https://vintayz.com/image/crop-image/): Cut a picture to the part you want, free or to a shape such as square or 16:9, and turn or flip it.
+- [Image Converter (JPG, PNG, WebP)](https://vintayz.com/image/convert-image/): Change pictures to JPG, PNG or WebP: WebP to JPG, PNG to JPG, JPG to PNG and more.
+- [Resize Image](https://vintayz.com/image/resize-image/): Make photos and pictures a new size in pixels or by a percentage, one at a time or many at once.
+
+## Date & Time
+
+- [Date & Time](https://vintayz.com/time/): all date & time
+- [Add or Subtract Days from a Date](https://vintayz.com/time/add-days-to-date-calculator/): Find the date a number of days, weeks, months or years before or after any date, such as 30 days from today.
+- [Days Between Dates Calculator](https://vintayz.com/time/days-between-dates-calculator/): Count the days between two dates, in days, weeks, and years, months and days.
+- [Online Timer and Stopwatch](https://vintayz.com/time/online-timer/): A countdown timer with an alarm sound, and a stopwatch with laps. Free, in your browser.
+- [Time Zone Converter](https://vintayz.com/time/time-zone-converter/): See a time in several cities at once, with summer time, and find hours that work for everyone.
+- [Week Number Calculator](https://vintayz.com/time/week-number-calculator/): Find the week number of any date (ISO and US style), and the dates of any week of the year.
+
+## Text Tools
+
+- [Text Tools](https://vintayz.com/text/): all text tools
+- [Case Converter](https://vintayz.com/text/case-converter/): Change text to Sentence case, lower case, UPPER CASE, Title Case, camelCase, snake_case and more.
+- [Remove Duplicate Lines and Sort](https://vintayz.com/text/remove-duplicate-lines/): Tidy a list: remove repeated and empty lines, trim spaces, and sort A to Z, by number or by length.
+- [Text Compare (Find the Differences)](https://vintayz.com/text/text-compare/): Paste two versions of a text and see exactly what was added and removed, by line or by word.
+
+## Brain Games
+
+- [Brain Games](https://vintayz.com/games/): all brain games
+- [Four in a Row](https://vintayz.com/games/four-in-a-row/): Drop counters and get four in a line before the computer does, or play a friend on the same device.
+- [Klondike Solitaire](https://vintayz.com/games/solitaire/): The classic patience card game. Turn over 1 or 3 cards, with unlimited undo. Tap to move cards.
+- [Memory Match](https://vintayz.com/games/memory-match/): Turn over cards two at a time and find every pair in as few moves as you can.
+- [Mental Math Test](https://vintayz.com/games/mental-math-test/): Answer as many sums as you can in 60 seconds: adding, taking away, times tables and division.
+- [Mine Finder](https://vintayz.com/games/mine-finder/): A minesweeper-style logic puzzle. Use the numbers to find every hidden mine. Your first tap is always safe.
+- [Nonogram (Picture Logic Puzzle)](https://vintayz.com/games/nonogram/): Use the number clues to fill the right squares and reveal a hidden pattern. Three sizes.
+- [Number Memory Test](https://vintayz.com/games/number-memory-test/): Remember a number, then type it. Each right answer adds a digit. How long a number can you hold?
+- [Number Merge Puzzle](https://vintayz.com/games/number-merge-puzzle/): Slide the tiles and join equal numbers to reach 2048. A calm puzzle for a short break.
+- [Reaction Time Test](https://vintayz.com/games/reaction-time-test/): Tap the moment the box turns green. Five tries give you an average reaction time in milliseconds.
+- [Sequence Memory Test](https://vintayz.com/games/sequence-memory-test/): Watch the squares light up, then tap them in the same order. Each round adds one more.
+- [Sliding Puzzle (15 Puzzle)](https://vintayz.com/games/sliding-puzzle/): Slide the numbered tiles back into order. Play the classic 15 puzzle, or a smaller or bigger board.
+- [Snake](https://vintayz.com/games/snake/): The classic Snake game: eat the food, grow longer and don't crash. Arrow keys or swipe.
+- [Sudoku](https://vintayz.com/games/sudoku/): Free Sudoku puzzles in easy, medium and hard, each with one solution. Notes, hints and mistake checks.
+- [Typing Speed Test (WPM)](https://vintayz.com/games/typing-speed-test/): Check your typing speed in words per minute and your accuracy with a 30, 60 or 120 second test.
+- [Word Search](https://vintayz.com/games/word-search/): Find the hidden words in a fresh grid every time. Five themes, easy and hard puzzles.
+
+## About
+
+- [About](https://vintayz.com/about/)
+- [Privacy Policy](https://vintayz.com/privacy-policy/)
+- [Disclaimer](https://vintayz.com/disclaimer/)
+- [All tools A to Z](https://vintayz.com/all-tools/)

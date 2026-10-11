@@ -1,0 +1,144 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Crop image tool">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.avif">
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose a picture</label>
+      <p class="dropzone-hint">or drop it here. JPG, PNG, WebP, GIF and BMP all work.</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="file-card">
+        <span class="file-card-icon img-card-icon">{{icon:image}}</span>
+        <div><strong id="file-name"></strong><span class="file-card-meta" id="file-meta"></span></div>
+      </div>
+
+      <fieldset class="choice-group crop-ratios">
+        <legend>Shape</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="cr-ratio" id="cr-free" value="free" checked><label for="cr-free">Free</label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="cr-ratio" id="cr-1-1" value="1:1"><label for="cr-1-1">Square<small>1:1</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="cr-ratio" id="cr-4-5" value="4:5"><label for="cr-4-5">Portrait<small>4:5</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="cr-ratio" id="cr-4-3" value="4:3"><label for="cr-4-3">Photo<small>4:3</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="cr-ratio" id="cr-3-2" value="3:2"><label for="cr-3-2">Print<small>3:2</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="cr-ratio" id="cr-16-9" value="16:9"><label for="cr-16-9">Wide<small>16:9</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="cr-ratio" id="cr-9-16" value="9:16"><label for="cr-9-16">Tall<small>9:16</small></label></div>
+        </div>
+      </fieldset>
+
+      <div class="crop-turn" role="group" aria-label="Turn and flip">
+        <button type="button" class="btn btn-sm" id="cr-left">{{icon:rotate-left}} Turn left</button>
+        <button type="button" class="btn btn-sm" id="cr-right">{{icon:rotate}} Turn right</button>
+        <button type="button" class="btn btn-sm" id="cr-flip">{{icon:flip}} Flip</button>
+        <button type="button" class="btn btn-sm btn-quiet" id="cr-all">Reset box</button>
+      </div>
+
+      <div class="crop-stage" id="cr-stage">
+        <canvas id="cr-view" class="crop-view" role="img" aria-label="Your picture"></canvas>
+        <div class="crop-box" id="cr-box" tabindex="0" role="group">
+          <span class="crop-size" id="cr-size" aria-hidden="true"></span>
+          <span class="crop-handle h-nw" data-handle="nw" aria-hidden="true"></span>
+          <span class="crop-handle h-ne" data-handle="ne" aria-hidden="true"></span>
+          <span class="crop-handle h-sw" data-handle="sw" aria-hidden="true"></span>
+          <span class="crop-handle h-se" data-handle="se" aria-hidden="true"></span>
+          <span class="crop-handle h-n" data-handle="n" aria-hidden="true"></span>
+          <span class="crop-handle h-s" data-handle="s" aria-hidden="true"></span>
+          <span class="crop-handle h-e" data-handle="e" aria-hidden="true"></span>
+          <span class="crop-handle h-w" data-handle="w" aria-hidden="true"></span>
+        </div>
+      </div>
+      <p class="work-note" id="cr-shrunk" hidden></p>
+      <p class="work-note">Drag the box or its corners. On a keyboard, select the box and use the arrow keys to move it (hold Shift for bigger steps, Alt to change its size).</p>
+
+      <div class="pdf-options crop-numbers">
+        <div class="field">
+          <label for="cr-x">From left</label>
+          <div class="input-wrap"><input id="cr-x" type="number" min="0" step="1" inputmode="numeric"><span class="affix">px</span></div>
+        </div>
+        <div class="field">
+          <label for="cr-y">From top</label>
+          <div class="input-wrap"><input id="cr-y" type="number" min="0" step="1" inputmode="numeric"><span class="affix">px</span></div>
+        </div>
+        <div class="field">
+          <label for="cr-w">Width</label>
+          <div class="input-wrap"><input id="cr-w" type="number" min="1" step="1" inputmode="numeric"><span class="affix">px</span></div>
+        </div>
+        <div class="field">
+          <label for="cr-h">Height</label>
+          <div class="input-wrap"><input id="cr-h" type="number" min="1" step="1" inputmode="numeric"><span class="affix">px</span></div>
+        </div>
+        <div class="field">
+          <label for="cr-format">Save as</label>
+          <div class="select-wrap">
+            <select id="cr-format">
+              <option value="same">Same type as the original</option>
+              <option value="jpg">JPG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WebP</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" id="cr-quality-field">
+          <label for="cr-quality">Quality: <output id="cr-quality-out" for="cr-quality">92%</output></label>
+          <input class="range" type="range" id="cr-quality" min="10" max="100" step="1" value="92">
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Crop</button>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Choose another picture</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your picture stays on your device. It's cropped by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to crop a picture</h2>
+    <ol class="steps">
+      <li><strong>Choose your picture</strong>, or drag it onto the box.</li>
+      <li><strong>Pick a shape</strong>, such as Square for a profile picture, or Free to crop any way you like. Turn or flip the picture first if it's the wrong way round.</li>
+      <li><strong>Drag the box</strong> over the part you want to keep, and drag its corners to change its size. You can also type exact numbers in pixels.</li>
+      <li><strong>Press "Crop"</strong>, check the preview, and download.</li>
+    </ol>
+
+    <h2>How the shapes work</h2>
+    <p>A shape (aspect ratio) is width compared with height. 1:1 is a square; 16:9 is 16 units wide for every 9 high, like a widescreen TV. When you pick a shape, the box starts as large as fits inside your picture, in the middle:</p>
+    <div class="formula">Box width   = picture width,  box height = width ÷ ratio
+If that's taller than the picture:
+Box height  = picture height, box width  = height × ratio
+Centred     = (picture size − box size) ÷ 2 on each side</div>
+
+    <h2>Worked example</h2>
+    <p>A phone photo is 4,032 × 3,024 pixels (a 4:3 shape).</p>
+    <div class="formula">Square (1:1)   4,032 ÷ 1 = 4,032 is taller than 3,024, so
+               height 3,024, width 3,024 × 1 = 3,024
+               from left (4,032 − 3,024) ÷ 2 = 504 px   →  3,024 × 3,024 px
+
+Wide (16:9)    height 4,032 ÷ 16 × 9 = 2,268 (fits)
+               from top (3,024 − 2,268) ÷ 2 = 378 px    →  4,032 × 2,268 px
+
+Portrait (4:5) 4,032 × 5 ÷ 4 = 5,040 is too tall, so
+               height 3,024, width 3,024 × 4 ÷ 5 = 2,419  →  2,419 × 3,024 px</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does cropping lower the quality?</summary>
+        <p>The pixels you keep aren't made any smaller or bigger, so they stay as sharp as the original. Saving as JPG or WebP leaves out a little fine detail; keep the quality at 90% or above, or choose PNG, if that matters.</p>
+      </details>
+      <details>
+        <summary>Which shape should I use for social media or a profile picture?</summary>
+        <p>Square (1:1) works for most profile pictures, and 4:5, 16:9 and 9:16 are common shapes for posts and stories. Each site sets its own sizes and changes them from time to time, so check the site's help pages if it matters.</p>
+      </details>
+      <details>
+        <summary>Can I make the cropped picture a set size, like 400 × 400 pixels?</summary>
+        <p>Crop it to the shape you want here, then use our <a href="{{root}}image/resize-image/">Resize Image</a> tool to make it exactly 400 × 400.</p>
+      </details>
+      <details>
+        <summary>Are my pictures uploaded?</summary>
+        <p>No. Everything happens in your own browser, and we never see your picture. The new picture doesn't copy over hidden details (EXIF data) such as the GPS location.</p>
+      </details>
+    </div>
+  </div>

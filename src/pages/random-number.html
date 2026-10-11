@@ -1,0 +1,94 @@
+  <section class="calculator" id="rn-tool" aria-label="Random number generator">
+    <form class="calc-form" id="rn-form" novalidate>
+      <fieldset class="choice-group span-2">
+        <legend>What do you want?</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="rn-mode" id="rn-mode-num" value="num" checked><label for="rn-mode-num">{{icon:dice}} Random numbers</label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="rn-mode" id="rn-mode-list" value="list"><label for="rn-mode-list">{{icon:text}} Pick from a list</label></div>
+        </div>
+      </fieldset>
+
+      <div class="span-2 qr-group" id="rn-num-fields">
+        <div class="field">
+          <label for="rn-min">From</label>
+          <div class="input-wrap"><input id="rn-min" type="text" inputmode="numeric" value="1" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="rn-max">To</label>
+          <div class="input-wrap"><input id="rn-max" type="text" inputmode="numeric" value="100" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="rn-count">How many numbers</label>
+          <div class="input-wrap"><input id="rn-count" type="text" inputmode="numeric" value="1" autocomplete="off"></div>
+        </div>
+        <div class="field rn-checks">
+          <label class="check-line"><input type="checkbox" id="rn-unique" checked> No repeats</label>
+          <label class="check-line"><input type="checkbox" id="rn-sort"> Sort small to big</label>
+        </div>
+      </div>
+
+      <div class="span-2 qr-group" id="rn-list-fields" hidden>
+        <div class="field qr-wide">
+          <label for="rn-list">Your list<span class="hint">One name or item per line</span></label>
+          <textarea id="rn-list" class="text-tool-input" rows="6" spellcheck="false">Alex
+Sam
+Priya
+Jordan
+Chen
+Maria</textarea>
+        </div>
+        <div class="field">
+          <label for="rn-picks">How many to pick</label>
+          <div class="input-wrap"><input id="rn-picks" type="text" inputmode="numeric" value="1" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="submit" class="btn btn-primary" id="rn-go">{{icon:dice}} Generate</button>
+        <span class="privacy-note">{{icon:lock}} Made on your device. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Result</h2>
+      <div class="result-main rn-main"><span id="rn-out">—</span></div>
+      <div class="rn-out-list" id="rn-out-list"></div>
+      <p class="tz-utc" id="rn-msg"></p>
+      <button type="button" class="btn btn-sm ts-copy" id="rn-copy">Copy</button>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use it</h2>
+    <ol class="steps">
+      <li><strong>Random numbers:</strong> type the smallest and largest number, and how many you want. Untick "No repeats" if the same number may come up twice, like rolling a die several times.</li>
+      <li><strong>Pick from a list:</strong> paste names, prizes or tasks, one per line, and choose how many to pick. Nobody is picked twice.</li>
+      <li><strong>Press Generate.</strong> Press it again for a new result.</li>
+    </ol>
+
+    <h2>How it works, and is it fair?</h2>
+    <p>Numbers come from your browser's secure random number generator (<code>crypto.getRandomValues</code>), which is designed to be unpredictable. We make sure every number in your range is exactly as likely as any other: a common shortcut (taking the remainder of a big random number) slightly favours small numbers, so we throw away the few values that would cause that.</p>
+    <div class="formula">Range size     = to − from + 1
+Each number    has a chance of 1 ÷ range size
+No repeats     each pick is removed before the next one
+
+From 1 to 100:          each number has a 1 in 100 chance (1%)
+6 names, pick 2:        each name has a 2 in 6 chance (33.3%) of being picked
+Dice: from 1 to 6, 3 numbers, repeats allowed</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I use it for a giveaway or prize draw?</summary>
+        <p>Yes, it picks fairly. To show people the draw was fair, share your screen or record it while you press Generate, and note the time shown under the result. Prize draws and competitions can have legal rules where you are, so check them if money or big prizes are involved.</p>
+      </details>
+      <details>
+        <summary>Can I get the same result again?</summary>
+        <p>No. Results aren't saved and can't be repeated, which is what makes them fair. Copy the result if you need to keep it.</p>
+      </details>
+      <details>
+        <summary>Can I make negative numbers?</summary>
+        <p>Yes. Type a negative number in "From", for example from −10 to 10.</p>
+      </details>
+    </div>
+  </div>

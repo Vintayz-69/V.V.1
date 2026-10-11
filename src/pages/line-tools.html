@@ -1,0 +1,94 @@
+  <section class="text-tool" aria-label="Remove duplicate lines and sort">
+    <form id="lt-form" novalidate>
+      <div class="tc-inputs">
+        <div class="field">
+          <label for="lt-in">Your list<span class="hint">One item per line</span></label>
+          <textarea id="lt-in" class="text-tool-input" rows="12" spellcheck="false" placeholder="Paste your list here…"></textarea>
+        </div>
+        <div class="field">
+          <label for="lt-out">Tidied list</label>
+          <textarea id="lt-out" class="text-tool-input" rows="12" spellcheck="false" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="tc-options">
+        <div class="tc-checks">
+          <label class="check-line"><input type="checkbox" id="lt-dedupe" checked> Remove duplicate lines</label>
+          <label class="check-line"><input type="checkbox" id="lt-case"> Treat capitals as the same (Apple = apple)</label>
+          <label class="check-line"><input type="checkbox" id="lt-trim" checked> Remove spaces at the start and end of lines</label>
+          <label class="check-line"><input type="checkbox" id="lt-empty" checked> Remove empty lines</label>
+        </div>
+        <div class="field lt-sort">
+          <label for="lt-sort">Order</label>
+          <div class="select-wrap">
+            <select id="lt-sort">
+              <option value="none">Keep the original order</option>
+              <option value="az">A to Z (and 1 to 9)</option>
+              <option value="za">Z to A (and 9 to 1)</option>
+              <option value="short">Shortest line first</option>
+              <option value="long">Longest line first</option>
+              <option value="reverse">Reverse the order</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <p class="tc-summary" id="lt-summary" role="status" aria-live="polite"></p>
+    <div class="tool-actions text-actions">
+      <button type="button" class="btn btn-primary" id="lt-copy">{{icon:check}} Copy result</button>
+      <button type="button" class="btn" id="lt-use">{{icon:refresh}} Tidy again from the result</button>
+      <button type="button" class="btn btn-quiet" id="lt-clear">{{icon:trash}} Clear</button>
+    </div>
+    <p class="pdf-privacy">{{icon:lock}} Tidied in your browser. Your list is never sent or saved.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to remove duplicate lines</h2>
+    <ol class="steps">
+      <li><strong>Paste your list</strong> into the first box, one item per line. It might be email addresses, names, keywords or product codes.</li>
+      <li><strong>Choose what to tidy</strong>: duplicates, empty lines, spaces, and the order. The tidied list updates as you go.</li>
+      <li><strong>Press "Copy result"</strong> and paste it where you need it.</li>
+    </ol>
+
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>Duplicates:</strong> the first time a line appears, it stays; later copies are removed. With "Treat capitals as the same", Apple and apple count as duplicates and the first one is kept as it was typed.</li>
+      <li><strong>Spaces:</strong> spaces and tabs at the start and end of each line are removed first, so "apple " and "apple" count as the same line.</li>
+      <li><strong>A to Z:</strong> sorts the way people expect rather than the way computers often do: capitals don't come first, accents are ignored, and numbers inside lines are compared as numbers, so "Item 2" comes before "Item 10".</li>
+      <li><strong>Steps happen in this order:</strong> spaces, empty lines, duplicates, then sorting.</li>
+    </ul>
+
+    <h2>Worked example</h2>
+    <p>A list of 8 lines, tidied with "Treat capitals as the same" ticked and the order set to A to Z:</p>
+    <div class="formula">Your list         Tidied list
+  banana            Apple
+  Apple             banana
+  item 10           item 2
+  apple             item 10
+  banana
+  (empty line)
+  item 2
+  item 10
+
+8 lines in, 4 lines out
+3 duplicates removed: apple, the second banana, the second item 10
+1 empty line removed</div>
+    <p>Without "Treat capitals as the same", apple stays, so the tidied list has 5 lines: Apple, apple, banana, item 2, item 10.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I see how many duplicates there were?</summary>
+        <p>Yes. The line under the boxes counts the lines before and after, the duplicates removed and the empty lines removed.</p>
+      </details>
+      <details>
+        <summary>How do I tidy a list separated by commas?</summary>
+        <p>Put each item on its own line first. In most spreadsheets, a column copies as one item per line, which is ready to paste here.</p>
+      </details>
+      <details>
+        <summary>Is my list saved or sent anywhere?</summary>
+        <p>No. Everything happens in your browser, and the list is gone when you close or reload the page. That matters for lists of email addresses or customer names: we never see them.</p>
+      </details>
+    </div>
+  </div>

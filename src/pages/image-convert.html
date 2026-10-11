@@ -1,0 +1,98 @@
+  <section class="pdf-tool" id="pdf-tool" aria-label="Image converter">
+    <div class="dropzone" id="pdf-drop">
+      <input class="visually-hidden" type="file" id="pdf-input" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.avif" multiple>
+      <span class="dropzone-icon">{{icon:upload}}</span>
+      <label class="btn btn-primary" for="pdf-input">Choose pictures</label>
+      <p class="dropzone-hint">or drop them here. WebP, PNG, JPG, GIF, BMP and AVIF all work.</p>
+    </div>
+
+    <div class="pdf-work" id="pdf-work" hidden>
+      <div class="work-head">
+        <h2 class="work-title">Pictures</h2>
+        <p class="work-note" id="images-summary"></p>
+      </div>
+      <ol class="file-list" id="file-list"></ol>
+
+      <div class="pdf-options">
+        <fieldset class="choice-group span-2">
+          <legend>Convert to</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="cv-to" id="cv-to-jpg" value="jpg" checked><label for="cv-to-jpg">JPG<small>Photos, works everywhere</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="cv-to" id="cv-to-png" value="png"><label for="cv-to-png">PNG<small>Logos, screenshots, see-through</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="cv-to" id="cv-to-webp" value="webp"><label for="cv-to-webp">WebP<small>Smaller files for websites</small></label></div>
+          </div>
+        </fieldset>
+        <div class="field" id="cv-quality-field">
+          <label for="cv-quality">Quality: <output id="cv-quality-out" for="cv-quality">92%</output><span class="hint">Lower means a smaller file</span></label>
+          <input class="range" type="range" id="cv-quality" min="10" max="100" step="1" value="92">
+        </div>
+        <div class="field" id="cv-background-field" hidden>
+          <label for="cv-background">Colour for see-through areas<span class="hint">JPG can't be see-through</span></label>
+          <input class="colour-input" type="color" id="cv-background" value="#ffffff">
+        </div>
+      </div>
+
+      <div class="tool-actions">
+        <button type="button" class="btn btn-primary" id="pdf-run">Convert to JPG</button>
+        <input class="visually-hidden" type="file" id="pdf-more" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.avif" multiple>
+        <label class="btn" for="pdf-more">{{icon:plus}} Add more pictures</label>
+        <button type="button" class="btn btn-quiet" id="pdf-reset">Start over</button>
+      </div>
+    </div>
+
+    <p class="pdf-status" id="pdf-status" role="status" aria-live="polite"></p>
+    <div class="pdf-result" id="pdf-result" hidden></div>
+    <p class="pdf-privacy">{{icon:lock}} Your pictures stay on your device. They're converted by your browser and never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to convert a picture</h2>
+    <ol class="steps">
+      <li><strong>Choose one or more pictures</strong>, or drag them onto the box. You can mix types.</li>
+      <li><strong>Pick JPG, PNG or WebP.</strong> For JPG and WebP you can also set the quality.</li>
+      <li><strong>Press "Convert"</strong> and download your picture, or all of them in one ZIP file.</li>
+    </ol>
+
+    <h2>Common conversions</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>From → to</th><th>Why people do it</th><th>What to know</th></tr></thead>
+        <tbody>
+          <tr><td><strong>WebP → JPG</strong></td><td>A picture saved from a website won't open in an older app, or a form won't accept it</td><td>Any see-through areas are filled with the colour you choose (white unless you change it)</td></tr>
+          <tr><td><strong>PNG → JPG</strong></td><td>A smaller file for a photo or a screenshot of a photo</td><td>Sharp text and lines can get slightly fuzzy edges</td></tr>
+          <tr><td><strong>JPG → PNG</strong></td><td>An app or print shop asks for PNG</td><td>The file gets bigger, and the picture doesn't get any sharper</td></tr>
+          <tr><td><strong>PNG or JPG → WebP</strong></td><td>Faster-loading pictures on a website</td><td>WebP keeps see-through areas; some older apps can't open it</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How it works</h2>
+    <p>Your browser opens the picture, draws it onto a blank canvas the same size, and saves the canvas in the new type. The size in pixels doesn't change. JPG and WebP save space by leaving out fine detail (the quality setting decides how much); PNG keeps every pixel exactly. Converting can't add detail that was lost before, so a blurry JPG stays blurry as a PNG.</p>
+    <div class="formula">photo.webp       →  photo.jpg
+Logo final.PNG   →  Logo final.jpg
+Two files with the same name in one ZIP  →  photo.jpg, photo (2).jpg</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I convert iPhone HEIC photos?</summary>
+        <p>Only if your browser can open HEIC files. Safari on an iPhone, iPad or Mac usually can; most other browsers can't. On the iPhone you can also choose Settings → Camera → Formats → Most Compatible, so new photos are saved as JPG.</p>
+      </details>
+      <details>
+        <summary>Can I convert to GIF, HEIC or ICO?</summary>
+        <p>No. Browsers can only save JPG, PNG and (in most browsers) WebP, and this tool works entirely in your browser.</p>
+      </details>
+      <details>
+        <summary>Does an animated GIF stay animated?</summary>
+        <p>No. Only the first frame is converted, because JPG and PNG can't hold animation.</p>
+      </details>
+      <details>
+        <summary>What happens to the photo's hidden details?</summary>
+        <p>The new file is drawn fresh, so hidden details (EXIF data) such as the camera model, date and GPS location aren't copied over. The picture is turned the right way up first.</p>
+      </details>
+      <details>
+        <summary>Are my pictures uploaded?</summary>
+        <p>No. Everything happens on your own device, and we never see your pictures.</p>
+      </details>
+    </div>
+  </div>
