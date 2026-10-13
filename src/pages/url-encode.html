@@ -1,0 +1,64 @@
+  <section class="text-tool" aria-label="URL encoder and decoder">
+    <form id="ue-form" novalidate>
+      <fieldset class="choice-group">
+        <legend class="visually-hidden">Encode or decode</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="ue-mode" id="ue-enc" value="enc" checked><label for="ue-enc">Encode<small>Text → %-encoded</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="ue-mode" id="ue-dec" value="dec"><label for="ue-dec">Decode<small>%-encoded → text</small></label></div>
+        </div>
+      </fieldset>
+      <div class="tc-inputs b64-boxes">
+        <div class="field">
+          <label for="ue-in">Input</label>
+          <textarea id="ue-in" class="text-tool-input mono-box" rows="6" spellcheck="false">café & croissants = £3.50?</textarea>
+        </div>
+        <div class="field">
+          <label for="ue-out">Result</label>
+          <textarea id="ue-out" class="text-tool-input mono-box" rows="6" spellcheck="false" readonly></textarea>
+        </div>
+      </div>
+      <p class="tc-summary" id="ue-msg" role="status" aria-live="polite"></p>
+      <div class="tc-options">
+        <div class="tc-checks">
+          <span id="ue-scope-row"><label class="check-line"><input type="checkbox" id="ue-full"> It's a whole address (keep : / ? &amp; = #)</label></span>
+          <label class="check-line"><input type="checkbox" id="ue-plus"> Spaces as + (form style)</label>
+        </div>
+        <div class="tc-buttons">
+          <button type="button" class="btn btn-primary" id="ue-copy">{{icon:check}} Copy result</button>
+          <button type="button" class="btn" id="ue-swap">{{icon:refresh}} Swap</button>
+        </div>
+      </div>
+      <div class="tc-result" id="ue-parts"></div>
+    </form>
+    <p class="pdf-privacy">{{icon:lock}} Encoded in your browser. Nothing is sent anywhere.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use it</h2>
+    <ol class="steps">
+      <li><strong>Choose Encode or Decode</strong> and paste your text.</li>
+      <li><strong>Encoding one value</strong> (like a search term or a parameter) is the default. Tick "It's a whole address" to encode a full link but keep its structure.</li>
+      <li><strong>Paste a full address</strong> starting with https:// to see its parts and every query parameter, decoded.</li>
+    </ol>
+
+    <h2>How URL encoding works</h2>
+    <p>Web addresses can only contain a small set of characters. Anything else, such as spaces, accents or symbols with a special meaning like &amp; and ?, is turned into bytes using UTF-8 and each byte is written as % followed by two hexadecimal digits. This is called percent-encoding, and the rules are in RFC 3986.</p>
+    <div class="formula">space  →  %20        &amp;  →  %26        =  →  %3D        ?  →  %3F
+é      →  %C3%A9   (2 bytes in UTF-8)     £  →  %C2%A3
+
+café &amp; croissants = £3.50?
+→ caf%C3%A9%20%26%20croissants%20%3D%20%C2%A33.50%3F</div>
+    <p>"Spaces as +" follows the older rule used when web forms send data (<code>application/x-www-form-urlencoded</code>), where a space becomes + instead of %20.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should I encode a value or the whole address?</summary>
+        <p>Encode each value on its own before you put it into an address: a search term containing &amp; would otherwise split into two parameters. "Whole address" mode is for fixing a full link that has spaces or accents in it, without breaking its slashes and question mark.</p>
+      </details>
+      <details>
+        <summary>Why does decoding fail?</summary>
+        <p>A % must be followed by two hexadecimal digits (0–9, A–F), and the bytes must make valid UTF-8 text. A lone % or a link cut short in the middle of a character can't be decoded.</p>
+      </details>
+    </div>
+  </div>

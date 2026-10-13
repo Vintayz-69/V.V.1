@@ -1,0 +1,101 @@
+  <section class="calculator" aria-label="Commission calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="sales">Sales</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="sales" type="text" inputmode="decimal" value="50000" autocomplete="off"></div>
+        <span class="error-msg">Enter sales of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="rate"><span id="rate-label">Commission rate</span></label>
+        <div class="input-wrap"><input id="rate" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0% to 100%.</span>
+      </div>
+      <div class="field span-2">
+        <label class="check-line"><input type="checkbox" id="tiered"> Higher rate above a threshold (tiered commission)</label>
+      </div>
+      <div class="field" id="field-threshold" hidden>
+        <label for="threshold">Threshold</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="threshold" type="text" inputmode="decimal" value="40000" autocomplete="off"></div>
+        <span class="error-msg">Enter a threshold of 0 or more.</span>
+      </div>
+      <div class="field" id="field-rate2" hidden>
+        <label for="rate2">Rate above the threshold</label>
+        <div class="input-wrap"><input id="rate2" type="text" inputmode="decimal" value="8" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0% to 100%.</span>
+      </div>
+      <div class="field">
+        <label for="base">Base pay<span class="hint">Optional, for the same period</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="base" type="text" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+        <span class="error-msg">Enter an amount of 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="goal">Commission goal<span class="hint">Optional: what sales do I need?</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="goal" type="text" inputmode="decimal" value="3000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more, or leave it empty.</span>
+      </div>
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="reset">{{icon:refresh}} Reset</button>
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Commission</h2>
+      <div class="result-main"><span id="out-commission">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Total pay (base + commission)</span><span id="out-total">—</span></li>
+        <li><span>Commission as % of sales</span><span id="out-effective">—</span></li>
+        <li><span>Sales needed for your goal</span><span id="out-needed">—</span></li>
+      </ul>
+      <p class="result-note">Before tax. Commission plans can have caps, clawbacks or rules about when a sale counts; check your own plan.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the commission calculator</h2>
+    <ol class="steps">
+      <li><strong>Type your sales</strong> for the period and your <strong>commission rate</strong>.</li>
+      <li><strong>Tiered plan?</strong> Tick the box and type the threshold and the higher rate paid on sales above it.</li>
+      <li><strong>Add base pay</strong> for the same period to see your total, and a <strong>goal</strong> to see the sales you'd need.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Flat rate     commission = sales × rate
+Tiered        commission = (sales up to the threshold × rate 1) + (sales above it × rate 2)
+Total pay     base pay + commission
+Sales needed  goal ÷ rate   (tiered: the threshold, plus what's left of the goal ÷ rate 2)</div>
+    <p>In a tiered plan like this, the higher rate applies only to the part of sales above the threshold, not to all of it. Some plans work differently ("retroactive" tiers pay the higher rate on everything once you pass the threshold), so check yours.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$50,000 of sales at 5%                              = $2,500 commission
+  with $2,000 base pay                             = $4,500 total pay
+
+Tiered: 5% up to $40,000, 8% above, on $60,000
+  $40,000 × 5% = $2,000 + $20,000 × 8% = $1,600    = $3,600 (6% of sales)
+
+Goal of $3,000 at 5%                               = $60,000 in sales needed
+Goal of $3,000, tiered as above                    = $40,000 + $1,000 ÷ 8% = $52,500</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is commission taxed?</summary>
+        <p>Yes: employees' commission is pay and is taxed like salary, and freelancers' commission is business income. This calculator shows amounts before tax. For take-home pay, see our <a href="{{root}}career/us-take-home-pay-calculator/">US</a> and <a href="{{root}}career/uk-take-home-pay-calculator/">UK</a> take-home pay calculators.</p>
+      </details>
+      <details>
+        <summary>Is commission worked out on sales or on profit?</summary>
+        <p>Either, depending on the plan. If yours pays on gross profit, type the profit as "Sales".</p>
+      </details>
+    </div>
+  </div>

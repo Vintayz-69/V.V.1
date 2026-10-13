@@ -11,7 +11,7 @@ const vm = require("vm");
 const JS = path.join(__dirname, "..", "public", "assets");
 
 function load(tool, extra = []) {
-  const sandbox = { window: { crypto: globalThis.crypto }, document: { getElementById: () => null }, crypto: globalThis.crypto, TextEncoder, TextDecoder };
+  const sandbox = { window: { crypto: globalThis.crypto }, document: { getElementById: () => null }, crypto: globalThis.crypto, TextEncoder, TextDecoder, URL };
   sandbox.window.ToolNest = {};
   vm.createContext(sandbox);
   for (const file of [...extra, `js/tools/${tool}.js`]) {
@@ -1541,6 +1541,139 @@ const TIME_LIBS = ["js/date-common.js"];
   check("timer toMs", T.toMs(0, 25, 0), 1500000);
 }
 
+// ---------------- More tools: fuel cost, unit price, sales tax, commission, UUID, URL, hash, regex
+{
+  const calc = load("fuel-cost");
+  // Page examples.
+  expectAll("fuel US", calc({ distance: 300, distUnit: "mi", economy: 30, econUnit: "mpg-us", price: 3.5, priceUnit: "usgal", people: 1 }), { usGallons: 10, cost: 35 });
+  check("fuel US return", calc({ distance: 300, distUnit: "mi", economy: 30, econUnit: "mpg-us", price: 3.5, priceUnit: "usgal", roundTrip: true, people: 1 }).cost, 70);
+  expectAll("fuel UK", calc({ distance: 200, distUnit: "mi", economy: 45, econUnit: "mpg-uk", price: 1.4, priceUnit: "litre", people: 1 }), { ukGallons: 4.44, litres: 20.2, cost: 28.29 });
+  expectAll("fuel Australia", calc({ distance: 500, distUnit: "km", economy: 6.5, econUnit: "l100", price: 1.9, priceUnit: "litre", people: 2 }), { litres: 32.5, cost: 61.75, perPerson: 30.88 });
+  check("fuel km per litre", calc({ distance: 150, distUnit: "km", economy: 15, econUnit: "kml", price: 2, priceUnit: "litre", people: 1 }).litres, 10);
+  // FAQ: 30 US MPG is about 36 UK MPG.
+  check("fuel US to UK mpg", Math.round(30 * 4.54609 / 3.785411784), 36);
+}
+
+{
+  const U = load("unit-price");
+  const r = U.compare([{ price: 3.49, size: 500, unit: "g" }, { price: 6.29, size: 1, unit: "kg" }]);
+  check("unit price small per kg", r.rows[0].per.kg, 6.98);
+  check("unit price big per kg", r.rows[1].per.kg, 6.29);
+  check("unit price best", r.rows.map((x) => x.best).join(), "false,true");
+  check("unit price 11% more", r.rows[0].extraPct, 11);
+  const v = U.compare([{ price: 1.29, size: 12, unit: "usfloz" }, { price: 2.49, size: 2, unit: "l" }]);
+  check("unit price can per litre", v.rows[0].per.l.toFixed(3), "3.635");
+  check("unit price bottle per litre", v.rows[1].per.l.toFixed(3), "1.245");
+  check("unit price 192% more", v.rows[0].extraPct, 192);
+  check("unit price lb = 16 oz", U.compare([{ price: 4, size: 1, unit: "lb" }, { price: 4, size: 16, unit: "oz" }]).rows.every((x) => x.best), true);
+  check("unit price mixed groups", !!U.compare([{ price: 1, size: 1, unit: "kg" }, { price: 1, size: 1, unit: "l" }]).error, true);
+  check("unit price per item", U.compare([{ price: 6, size: 12, unit: "item" }]).rows[0].per.item, 0.5);
+}
+
+{
+  const calc = load("sales-tax");
+  // Page examples.
+  expectAll("sales tax add 8.25%", calc({ amount: 100, rate: 8.25, mode: "add" }), { tax: 8.25, gross: 108.25 });
+  expectAll("sales tax add 6%", calc({ amount: 49.99, rate: 6, mode: "add" }), { tax: 3, gross: 52.99 });
+  expectAll("sales tax remove", calc({ amount: 54.13, rate: 8.25, mode: "remove" }), { net: 50, tax: 4.13, gross: 54.13 });
+  check("sales tax wrong way", Math.round(54.13 * (1 - 0.0825) * 100) / 100, 49.66);
+  expectAll("sales tax zero rate", calc({ amount: 20, rate: 0, mode: "remove" }), { net: 20, tax: 0 });
+}
+
+{
+  const calc = load("commission");
+  // Page examples.
+  expectAll("commission flat", calc({ sales: 50000, rate: 5 }), { commission: 2500, effectiveRate: 5 });
+  check("commission with base", calc({ sales: 50000, rate: 5, base: 2000 }).total, 4500);
+  const tier = { rate: 5, tiered: true, threshold: 40000, rate2: 8 };
+  expectAll("commission tiered", calc({ sales: 60000, ...tier }), { commission: 3600, effectiveRate: 6 });
+  check("commission tiered below threshold", calc({ sales: 30000, ...tier }).commission, 1500);
+  check("commission goal flat", calc.salesNeeded(3000, { rate: 5 }), 60000);
+  check("commission goal tiered", calc.salesNeeded(3000, tier), 52500);
+  check("commission goal under threshold", calc.salesNeeded(1000, tier), 20000);
+  check("commission goal impossible", calc.salesNeeded(100, { rate: 0 }), null);
+}
+
+{
+  const U = load("uuid");
+  let ok4 = true, ok7 = true;
+  const seen = new Set();
+  for (let i = 0; i < 500; i++) {
+    const a = U.v4();
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(a)) ok4 = false;
+    seen.add(a);
+    const b = U.v7();
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(b)) ok7 = false;
+  }
+  check("uuid v4 format", ok4, true);
+  check("uuid v4 all different", seen.size, 500);
+  check("uuid v7 format", ok7, true);
+  // Page example: 1,760,140,000,000 ms → 0199d084-fb00-7…
+  const e = U.v7(1760140000000);
+  check("uuid v7 time prefix", e.slice(0, 13), "0199d084-fb00");
+  expectAll("uuid inspect v7", U.inspect(e), { valid: true, version: 7, time: 1760140000000 });
+  check("uuid v7 date", new Date(U.inspect(e).time).toISOString(), "2025-10-10T23:46:40.000Z");
+  check("uuid v7 sorts by time", U.v7(1000) < U.v7(2000), true);
+  check("uuid format", U.format("0199d084-fb00-7000-8000-000000000000", { upper: true, hyphens: false, braces: true }), "{0199D084FB0070008000000000000000}");
+  check("uuid inspect braces/upper", U.inspect("{0199D084FB0070008000000000000000}").version, 7);
+  check("uuid inspect bad", U.inspect("not-a-uuid").valid, false);
+  check("uuid nil", U.inspect("00000000-0000-0000-0000-000000000000").nil, true);
+  // A version 1 UUID from RFC 9562 appendix A.1: 2022-02-22 19:22:22 UTC.
+  check("uuid v1 time", new Date(U.inspect("C232AB00-9414-11EC-B3C8-9F6BDECED846").time).toISOString(), "2022-02-22T19:22:22.000Z");
+}
+
+{
+  const U = load("url-encode");
+  // Page example.
+  check("url encode", U.encode("café & croissants = £3.50?", "component"), "caf%C3%A9%20%26%20croissants%20%3D%20%C2%A33.50%3F");
+  check("url encode plus", U.encode("a b", "component", true), "a+b");
+  check("url encode full keeps structure", U.encode("https://example.com/a b?x=1&y=é", "full"), "https://example.com/a%20b?x=1&y=%C3%A9");
+  check("url decode", U.decode("caf%C3%A9%20%26").text, "café &");
+  check("url decode plus", U.decode("a+b", true).text, "a b");
+  check("url decode error", !!U.decode("100%").error, true);
+  const p = U.parse("https://vintayz.com:8080/tools/?q=qr%20code&lang=en#top");
+  check("url parse host", p.parts[1][1], "vintayz.com");
+  check("url parse params", JSON.stringify(p.params), '[["q","qr code"],["lang","en"]]');
+  check("url parse bad", !!U.parse("not a url").error, true);
+}
+
+async function hashTests() {
+  const H = load("hash");
+  const c = require("crypto");
+  let ok = true;
+  for (let n = 0; n < 200; n++) {
+    const b = c.randomBytes(n * 13);
+    if (H.md5(new Uint8Array(b)) !== c.createHash("md5").update(b).digest("hex")) ok = false;
+  }
+  check("hash md5 matches Node (200 inputs)", ok, true);
+  const h = await H.hashAll(new TextEncoder().encode("hello"));
+  // Page examples.
+  check("hash md5 hello", h["MD5"], "5d41402abc4b2a76b9719d911017c592");
+  check("hash sha1 hello", h["SHA-1"], "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d");
+  check("hash sha256 hello", h["SHA-256"], "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+  check("hash sha512 hello", h["SHA-512"], c.createHash("sha512").update("hello").digest("hex"));
+  const H2 = await H.hashAll(new TextEncoder().encode("Hello"));
+  check("hash sha256 Hello", H2["SHA-256"], "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969");
+  check("hash match", H.match(h, "SHA256: 2CF24DBA5FB0A30E26E83B2AC5B9E29E1B161E5C1FA7425E73043362938B9824"), "SHA-256");
+  check("hash no match", H.match(h, "abc"), false);
+  check("hash empty md5", H.md5(new Uint8Array(0)), "d41d8cd98f00b204e9800998ecf8427e");
+}
+
+{
+  const R = load("regex-worker");
+  const t = "sent on 2026-10-13, paid by 2026-11-12";
+  // Page example.
+  check("regex dates", JSON.stringify(R.run(String.raw`\b\d{4}-\d{2}-\d{2}\b`, "g", t, null).matches.map((m) => [m.text, m.index])), '[["2026-10-13",8],["2026-11-12",28]]');
+  check("regex replace groups", R.run(String.raw`(\d{4})-(\d{2})-(\d{2})`, "g", t, "$3/$2/$1").replaced, "sent on 13/10/2026, paid by 12/11/2026");
+  check("regex named group", R.run(String.raw`(?<amount>[$£€]\s?\d[\d,]*(?:\.\d{2})?)`, "g", "for $1,250.00 and £980.50", null).matches.map((m) => m.named.amount).join("|"), "$1,250.00|£980.50");
+  check("regex not global = first only", R.run("a", "", "aaa", null).total, 1);
+  check("regex empty matches don't loop", R.run("x*", "g", "abc", null).total, 4);
+  check("regex invalid", !!R.run("(", "g", "x", null).error, true);
+  check("regex ignore case", R.run("hello", "gi", "Hello HELLO", null).total, 2);
+  const emails = R.run(String.raw`\b[\w.+-]+@[\w-]+\.[\w.-]+\b`, "g", "Invoice to sam@example.com. Copy accounts@example.co.uk.", null);
+  check("regex default email example", emails.matches.map((m) => m.text).join("|"), "sam@example.com|accounts@example.co.uk");
+}
+
 // ---------------- US federal tax brackets (2026)
 {
   const calc = load("us-tax-bracket", US_LIBS);
@@ -2081,7 +2214,10 @@ async function resumePdfTests() {
   }
 }
 
-imageSearchTests().catch((err) => {
+hashTests().catch((err) => {
+  failed++;
+  console.log(`FAIL  hash tests: ${err.message}`);
+}).then(imageSearchTests).catch((err) => {
   failed++;
   console.log(`FAIL  image search tests: ${err.message}`);
 }).then(resumePdfTests).catch((err) => {

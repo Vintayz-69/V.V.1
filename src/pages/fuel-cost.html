@@ -1,0 +1,129 @@
+  <section class="calculator" aria-label="Fuel cost calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="distance">Trip distance (one way)</label>
+        <div class="input-wrap"><input id="distance" type="text" inputmode="decimal" value="300" autocomplete="off"></div>
+        <span class="error-msg">Enter a distance of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="distUnit">Distance in</label>
+        <div class="select-wrap">
+          <select id="distUnit">
+            <option value="mi">Miles</option>
+            <option value="km">Kilometres</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="economy">Fuel economy<span class="hint">From your car's handbook or dashboard</span></label>
+        <div class="input-wrap"><input id="economy" type="text" inputmode="decimal" value="30" autocomplete="off"></div>
+        <span class="error-msg">Enter a fuel economy above 0.</span>
+      </div>
+      <div class="field">
+        <label for="econUnit">Economy measured in</label>
+        <div class="select-wrap">
+          <select id="econUnit">
+            <option value="mpg-us">MPG (US gallons)</option>
+            <option value="mpg-uk">MPG (UK gallons)</option>
+            <option value="l100">Litres per 100 km</option>
+            <option value="kml">Kilometres per litre</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="price">Fuel price</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="price" type="text" inputmode="decimal" value="3.50" autocomplete="off"></div>
+        <span class="error-msg">Enter a price of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="priceUnit">Price per</label>
+        <div class="select-wrap">
+          <select id="priceUnit">
+            <option value="usgal">US gallon</option>
+            <option value="ukgal">UK gallon</option>
+            <option value="litre">Litre</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="people">Split between</label>
+        <div class="input-wrap"><input id="people" type="text" inputmode="numeric" value="1" autocomplete="off"><span class="affix">people</span></div>
+        <span class="error-msg">Enter 1 to 100 people.</span>
+      </div>
+      <div class="field check-field">
+        <label class="check-line"><input type="checkbox" id="roundTrip"> Return trip (double the distance)</label>
+      </div>
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="reset">{{icon:refresh}} Reset</button>
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Fuel cost of the trip</h2>
+      <div class="result-main"><span id="out-cost">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Each person pays</span><span id="out-person">—</span></li>
+        <li><span>Fuel used</span><span id="out-fuel">—</span></li>
+        <li><span>Fuel cost per distance</span><span id="out-per-distance">—</span></li>
+        <li><span>Total distance</span><span id="out-total-distance">—</span></li>
+      </ul>
+      <p class="result-note">Real fuel use depends on speed, traffic, load and weather, so treat this as an estimate. For business mileage claims, use the official rate in our <a href="{{root}}us/business-mileage-deduction-calculator/">US</a> or <a href="{{root}}uk/business-mileage-allowance-calculator/">UK</a> mileage calculators instead.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the fuel cost calculator</h2>
+    <ol class="steps">
+      <li><strong>Type the distance</strong> one way, and tick "Return trip" if you're coming back.</li>
+      <li><strong>Type your car's fuel economy</strong> and choose how it's measured. US cars usually show MPG in US gallons, UK cars MPG in UK gallons, and Canadian and Australian cars litres per 100 km.</li>
+      <li><strong>Type the fuel price</strong> at the pump, per US gallon, UK gallon or litre.</li>
+      <li><strong>Split the cost</strong> between passengers if you're sharing.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <p>We work out how many litres the trip uses, then multiply by the price per litre. A US gallon and a UK gallon are different sizes, so an MPG figure from a UK car isn't the same as one from a US car.</p>
+    <div class="formula">1 US gallon = 3.785411784 litres      1 UK gallon = 4.54609 litres      1 mile = 1.609344 km
+
+MPG             fuel = miles ÷ MPG, in that country's gallons
+L/100 km        fuel = km × L/100 km ÷ 100
+km/L            fuel = km ÷ km/L
+Cost            fuel in litres × price per litre</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">US: 300 miles at 30 MPG (US), $3.50 a US gallon
+    300 ÷ 30 = 10 US gallons × $3.50 = $35.00      return trip: $70.00
+
+UK: 200 miles at 45 MPG (UK), £1.40 a litre
+    200 ÷ 45 = 4.44 UK gallons = 20.2 litres × £1.40 = £28.29
+
+Australia: 500 km at 6.5 L/100 km, A$1.90 a litre
+    500 × 6.5 ÷ 100 = 32.5 litres × A$1.90 = A$61.75   split between 2 = A$30.88 each</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why is UK MPG higher than US MPG for the same car?</summary>
+        <p>A UK gallon holds about 20% more than a US gallon, so a car goes further on one. 30 MPG in US gallons is about 36 MPG in UK gallons.</p>
+      </details>
+      <details>
+        <summary>Can I use this for an electric car?</summary>
+        <p>Not directly: it works in fuel volumes. For an electric car, multiply the kWh the trip uses by your price per kWh.</p>
+      </details>
+      <details>
+        <summary>Does it include tolls, parking or wear on the car?</summary>
+        <p>No, only fuel. Official mileage rates for business travel, like the IRS standard mileage rate or HMRC's approved mileage allowance, are meant to cover more than fuel, which is why they're higher than fuel cost alone.</p>
+      </details>
+    </div>
+  </div>

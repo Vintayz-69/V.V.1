@@ -1,0 +1,86 @@
+  <section class="calculator" aria-label="Sales tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+      <fieldset class="choice-group span-2">
+        <legend>What do you want to do?</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="mode" id="mode-add" value="add" checked><label for="mode-add">Add tax<small>Price → total with tax</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="mode" id="mode-remove" value="remove"><label for="mode-remove">Remove tax<small>Total → price before tax</small></label></div>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="amount" id="amount-label">Price before tax</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="amount" type="text" inputmode="decimal" value="100" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+      <div class="field">
+        <label for="rate">Sales tax rate<span class="hint">Your combined local rate</span></label>
+        <div class="input-wrap"><input id="rate" type="text" inputmode="decimal" value="8.25" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0% to 100%.</span>
+      </div>
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm btn-ghost" id="reset">{{icon:refresh}} Reset</button>
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2 id="out-title">Total with tax</h2>
+      <div class="result-main"><span id="out-gross">—</span></div>
+      <ul class="result-list">
+        <li><span>Price before tax</span><span id="out-net">—</span></li>
+        <li class="key"><span>Sales tax</span><span id="out-tax">—</span></li>
+        <li><span>Total with tax</span><span id="out-total">—</span></li>
+      </ul>
+      <p class="result-note">The rate you type is used as it is: we don't fill in any rates. For UK VAT, Canadian GST/HST or Australian GST, our <a href="{{root}}uk/vat-calculator/">VAT</a>, <a href="{{root}}ca/gst-hst-calculator/">GST/HST</a> and <a href="{{root}}au/gst-calculator/">GST</a> calculators use the official rates.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use the sales tax calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose "Add tax"</strong> to go from a price to the total, or <strong>"Remove tax"</strong> to find the price before tax from a receipt total.</li>
+      <li><strong>Type the amount and your sales tax rate.</strong> In the US the rate is usually the state rate plus any county and city rates, so check your state's department of revenue for the rate where the sale happens.</li>
+      <li><strong>Read the tax and the total.</strong></li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Add tax       tax   = price × rate ÷ 100
+              total = price + tax
+Remove tax    price = total ÷ (1 + rate ÷ 100)
+              tax   = total − price</div>
+    <p>To remove tax, divide; don't subtract the rate from the total. Taking 8.25% off a total that includes 8.25% tax gives too little, because the tax was worked out on the smaller, pre-tax price.</p>
+
+    <h2>Worked examples</h2>
+    <p>The rates below are only examples, not the rate anywhere in particular.</p>
+    <div class="formula">Add 8.25% to $100.00       tax $8.25      total $108.25
+Add 6% to $49.99           tax $3.00      total $52.99
+Remove 8.25% from $54.13   price $50.00   tax $4.13
+Wrong way: $54.13 − 8.25% = $49.66 (too low)</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why don't you fill in my state's rate?</summary>
+        <p>US sales tax rates depend on the state, county, city and sometimes special districts, and they change. Your state's department of revenue publishes the rate for each address. Typing your own rate keeps the answer right for where you are.</p>
+      </details>
+      <details>
+        <summary>Do I charge sales tax as a freelancer?</summary>
+        <p>It depends on what you sell and where. In many US states services aren't taxed but some are, and the rules for digital products differ again. Check your state's department of revenue, or ask an accountant.</p>
+      </details>
+      <details>
+        <summary>Why is my receipt a cent different?</summary>
+        <p>Shops round tax per item or per receipt, and the rule differs by state. We round the final tax to the nearest cent.</p>
+      </details>
+    </div>
+  </div>

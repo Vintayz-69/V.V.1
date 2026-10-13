@@ -1,0 +1,84 @@
+  <section class="text-tool" aria-label="UUID generator">
+    <form id="uu-form" novalidate>
+      <div class="tc-options uu-options">
+        <fieldset class="choice-group">
+          <legend>Version</legend>
+          <div class="choices">
+            <div class="choice"><input class="visually-hidden" type="radio" name="uu-ver" id="uu-v4" value="4" checked><label for="uu-v4">Version 4<small>Random</small></label></div>
+            <div class="choice"><input class="visually-hidden" type="radio" name="uu-ver" id="uu-v7" value="7"><label for="uu-v7">Version 7<small>Time-ordered</small></label></div>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="uu-count">How many</label>
+          <div class="select-wrap">
+            <select id="uu-count">
+              <option value="1">1</option>
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </div>
+        <div class="tc-checks">
+          <label class="check-line"><input type="checkbox" id="uu-upper"> UPPERCASE</label>
+          <label class="check-line"><input type="checkbox" id="uu-nohyphen"> No hyphens</label>
+          <label class="check-line"><input type="checkbox" id="uu-braces"> {Braces}</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="uu-out">Your UUIDs</label>
+        <textarea id="uu-out" class="text-tool-input mono-box" rows="6" spellcheck="false" readonly></textarea>
+      </div>
+      <div class="tool-actions text-actions">
+        <button type="button" class="btn btn-primary" id="uu-copy">{{icon:check}} Copy all</button>
+        <button type="button" class="btn" id="uu-again">{{icon:refresh}} New UUIDs</button>
+      </div>
+
+      <div class="tc-result">
+        <div class="field">
+          <label for="uu-check">Check a UUID<span class="hint">Paste one to see if it's valid, its version, and when it was made (versions 1, 6 and 7)</span></label>
+          <div class="input-wrap"><input id="uu-check" type="text" autocomplete="off" spellcheck="false" placeholder="e.g. 0199d084-fb00-7000-8000-000000000000"></div>
+        </div>
+        <p class="tc-summary" id="uu-check-out" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+    <p class="pdf-privacy">{{icon:lock}} Made on your device with secure random numbers. Nothing is sent or saved.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use the UUID generator</h2>
+    <ol class="steps">
+      <li><strong>Pick version 4 or 7</strong> and how many you need.</li>
+      <li><strong>Choose the format</strong>: uppercase, without hyphens, or in braces like some Microsoft tools use.</li>
+      <li><strong>Press "Copy all"</strong>. Press "New UUIDs" for a fresh set.</li>
+    </ol>
+
+    <h2>What is a UUID?</h2>
+    <p>A UUID (universally unique identifier, also called a GUID) is a 128-bit number used as an ID for database rows, files, orders and messages. It's written as 32 hexadecimal digits in groups of 8-4-4-4-12. The rules are in RFC 9562 (2024), which replaced RFC 4122.</p>
+    <ul>
+      <li><strong>Version 4</strong> is 122 random bits plus 6 fixed bits that mark the version and variant. Use it when you just need an ID nobody can guess or repeat.</li>
+      <li><strong>Version 7</strong> starts with the time in milliseconds, then random bits. New ones sort after older ones, which keeps database indexes tidy. It shows when it was made, so don't use it where that should stay private.</li>
+    </ul>
+    <div class="formula">xxxxxxxx-xxxx-4xxx-Nxxx-xxxxxxxxxxxx    version 4 (N is 8, 9, a or b)
+tttttttt-tttt-7xxx-Nxxx-xxxxxxxxxxxx    version 7 (t = milliseconds since 1970)
+
+Example v7:  0199d084-fb00-7…   →  0x0199d084fb00 = 1,760,140,000,000 ms
+                                     = 10 October 2025, 23:46:40 UTC</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can two UUIDs ever be the same?</summary>
+        <p>In theory yes, but with 122 random bits it's so unlikely that it isn't a practical concern, as long as they come from a good random number generator. Ours uses <code>crypto.getRandomValues</code>, the browser's secure generator.</p>
+      </details>
+      <details>
+        <summary>Is a GUID the same as a UUID?</summary>
+        <p>Yes. GUID is Microsoft's name for the same thing. Some Microsoft tools write them in uppercase and in braces, which the format options can match.</p>
+      </details>
+      <details>
+        <summary>Should I use UUIDs as passwords or secret links?</summary>
+        <p>Version 4 UUIDs are hard to guess, but they weren't designed as secrets. For passwords, use our <a href="{{root}}dev/password-generator/">password generator</a>.</p>
+      </details>
+    </div>
+  </div>

@@ -1,0 +1,94 @@
+  <section class="text-tool" aria-label="Regex tester">
+    <form id="rx-form" novalidate>
+      <div class="field">
+        <label for="rx-pattern">Regular expression<span class="hint">JavaScript syntax, without the slashes</span></label>
+        <div class="input-wrap rx-pattern-wrap"><span class="affix">/</span><input id="rx-pattern" type="text" autocomplete="off" spellcheck="false" value="\b[\w.+-]+@[\w-]+\.[\w.-]+\b"><span class="affix" id="rx-flags-show">/g</span></div>
+      </div>
+      <div class="tc-options rx-flags">
+        <div class="pw-checks rx-flag-list" role="group" aria-label="Flags">
+          <label class="check-line"><input type="checkbox" id="rx-fg" checked> g: find all matches</label>
+          <label class="check-line"><input type="checkbox" id="rx-fi"> i: ignore case</label>
+          <label class="check-line"><input type="checkbox" id="rx-fm"> m: ^ and $ match each line</label>
+          <label class="check-line"><input type="checkbox" id="rx-fs"> s: . matches line breaks</label>
+          <label class="check-line"><input type="checkbox" id="rx-fu"> u: Unicode</label>
+        </div>
+      </div>
+      <div class="quick-picks rx-examples" role="group" aria-label="Example patterns">
+        <span class="field-title">Try:</span>
+        <button type="button" class="btn btn-sm" data-rx="\b[\w.+-]+@[\w-]+\.[\w.-]+\b">Email addresses</button>
+        <button type="button" class="btn btn-sm" data-rx="https?://[^\s]+">Links</button>
+        <button type="button" class="btn btn-sm" data-rx="\b\d{4}-\d{2}-\d{2}\b">Dates (2026-10-13)</button>
+        <button type="button" class="btn btn-sm" data-rx="(?<amount>[$£€]\s?\d[\d,]*(?:\.\d{2})?)">Money amounts</button>
+      </div>
+      <div class="field">
+        <label for="rx-text">Test text</label>
+        <textarea id="rx-text" class="text-tool-input mono-box" rows="6" spellcheck="false">Invoice #1042 sent to sam@example.com on 2026-10-13 for $1,250.00.
+Copy to accounts@example.co.uk. Paid in full by 2026-11-12: £980.50
+See https://vintayz.com/freelance/invoice-generator/ for the template.</textarea>
+      </div>
+      <p class="tc-summary" id="rx-status" role="status" aria-live="polite"></p>
+      <div class="rx-view mono-box" id="rx-view" aria-label="Test text with matches highlighted"></div>
+      <div id="rx-groups"></div>
+      <div class="field">
+        <label class="check-line"><input type="checkbox" id="rx-do-replace"> Preview a replace</label>
+      </div>
+      <div id="rx-replace-box" hidden>
+        <div class="field">
+          <label for="rx-replace">Replace with<span class="hint">Use $1, $2 for groups, $&lt;name&gt; for named groups, $&amp; for the whole match</span></label>
+          <div class="input-wrap"><input id="rx-replace" type="text" autocomplete="off" spellcheck="false" value="[hidden]"></div>
+        </div>
+        <label class="visually-hidden" for="rx-replaced">Result after replacing</label>
+        <textarea id="rx-replaced" class="text-tool-input mono-box" rows="5" readonly></textarea>
+      </div>
+    </form>
+    <p class="pdf-privacy">{{icon:lock}} Tested in your browser. Your pattern and text are never sent anywhere.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use the regex tester</h2>
+    <ol class="steps">
+      <li><strong>Type your pattern</strong> without the surrounding slashes, and tick the flags you need.</li>
+      <li><strong>Paste some test text.</strong> Matches are highlighted as you type, and capture groups are listed in a table.</li>
+      <li><strong>Tick "Preview a replace"</strong> to see the text after a find-and-replace, using $1 or $&lt;name&gt; for groups.</li>
+    </ol>
+
+    <h2>Quick reference</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Pattern</th><th>Matches</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Pattern"><code>\d</code> <code>\w</code> <code>\s</code></td><td data-label="Matches">A digit; a letter, digit or underscore; a space, tab or line break</td></tr>
+          <tr><td data-label="Pattern"><code>.</code></td><td data-label="Matches">Any character except a line break (with the s flag, line breaks too)</td></tr>
+          <tr><td data-label="Pattern"><code>[abc]</code> <code>[^abc]</code></td><td data-label="Matches">One of a, b or c; any character except those</td></tr>
+          <tr><td data-label="Pattern"><code>*</code> <code>+</code> <code>?</code> <code>{2,4}</code></td><td data-label="Matches">0 or more; 1 or more; 0 or 1; 2 to 4 of the thing before</td></tr>
+          <tr><td data-label="Pattern"><code>^</code> <code>$</code> <code>\b</code></td><td data-label="Matches">Start; end (of each line with the m flag); a word boundary</td></tr>
+          <tr><td data-label="Pattern"><code>(…)</code> <code>(?&lt;name&gt;…)</code> <code>(?:…)</code></td><td data-label="Matches">A numbered group; a named group; a group that isn't captured</td></tr>
+          <tr><td data-label="Pattern"><code>a|b</code></td><td data-label="Matches">a or b</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Worked example</h2>
+    <div class="formula">Pattern  \b\d{4}-\d{2}-\d{2}\b   with g
+Text     "sent on 2026-10-13, paid by 2026-11-12"
+Matches  2026-10-13 (at 8) and 2026-11-12 (at 28)
+
+Pattern  (\d{4})-(\d{2})-(\d{2})   replace with  $3/$2/$1
+Result   "sent on 13/10/2026, paid by 12/11/2026"</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Which regex flavour does this use?</summary>
+        <p>JavaScript's, as built into your browser. Most patterns work the same in Python, Java, PHP and .NET, but some features differ, such as lookbehind support and how named groups are written. Test in your own language before relying on a pattern.</p>
+      </details>
+      <details>
+        <summary>Why did it say "stopped after 1 second"?</summary>
+        <p>Some patterns, especially nested repeats like <code>(a+)+</code>, can take an extremely long time on text that almost matches (called catastrophic backtracking). We run the match in the background and stop it after a second so the page doesn't freeze. The same pattern could slow down a real program, so it's worth rewriting.</p>
+      </details>
+      <details>
+        <summary>Is my text sent anywhere?</summary>
+        <p>No. Matching happens in your browser.</p>
+      </details>
+    </div>
+  </div>

@@ -31,6 +31,20 @@
 </section>
 
 <div class="container">
+  <section class="section finder" aria-labelledby="finder-title">
+    <h2 class="finder-title" id="finder-title">Find a tool</h2>
+    <form class="hub-search finder-search" id="home-search" action="all-tools/" role="search">
+      <label class="visually-hidden" for="home-search-input">Search all tools</label>
+      <span class="hub-search-icon">{{icon:search}}</span>
+      <input id="home-search-input" type="search" placeholder="What do you need? e.g. compress PDF, QR code, tax" autocomplete="off" spellcheck="false" enterkeyhint="search">
+      <button type="submit" class="btn btn-primary finder-go">Search</button>
+    </form>
+    <p class="finder-label">Browse by section</p>
+    <nav class="meta-row finder-chips" aria-label="All sections">{{sections}}<a class="chip chip-link" href="{{root}}all-tools/">All tools A–Z</a></nav>
+    <p class="finder-label">Popular tools</p>
+    <nav class="meta-row finder-chips" aria-label="Popular tools">{{popular}}</nav>
+  </section>
+
   <section class="section">
     <div class="section-head">
       <div>
@@ -110,6 +124,7 @@
     <ul class="card-grid">
 {{cards:business-pricing}}
 {{cards:business-ops}}
+{{cards:business-tax}}
     </ul>
   </section>
 

@@ -7371,3 +7371,293 @@ button.sol-slot {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Finding tools (13 October 2026): header search, homepage finder ---------- */
+
+.site-nav .nav-search {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  padding: 8px;
+}
+
+.site-nav li:has(> .nav-search) {
+  flex: none;
+}
+
+.site-nav .nav-search .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.finder {
+  margin-top: 32px;
+  padding: 26px 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.finder-title {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.finder-search {
+  display: flex;
+  gap: 10px;
+  max-width: none;
+  margin-top: 14px;
+}
+
+.finder-search input {
+  flex: 1;
+  min-width: 0;
+}
+
+.finder-search .finder-go {
+  flex: none;
+  height: 54px;
+}
+
+.finder-label {
+  margin: 18px 0 8px;
+  color: var(--subtle);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.finder-chips {
+  margin: 0;
+}
+
+.finder-chips .chip .icon {
+  width: 15px;
+  height: 15px;
+  color: var(--blue-600);
+}
+
+.chip-count {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--subtle);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ---------- More tools (13 October 2026) ---------- */
+
+/* Unit price rows */
+.up-currency {
+  max-width: 320px;
+  margin-bottom: 18px;
+}
+
+.up-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr 1.2fr;
+  gap: 10px 14px;
+  align-items: end;
+  padding: 14px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.up-row.is-best {
+  border-color: var(--green-600);
+  background: var(--green-50);
+}
+
+.up-row.invalid .input-wrap {
+  border-color: var(--red-600);
+}
+
+.up-out {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.up-out:empty {
+  display: none;
+}
+
+.up-row.is-best .up-out {
+  color: var(--green-600);
+  font-weight: 650;
+}
+
+.up-result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  margin-top: 8px;
+}
+
+.up-best-line {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Hash generator */
+.hs-list {
+  margin: 14px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hs-list li {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.hs-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.hs-value {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.hs-expect-field {
+  margin-top: 16px;
+}
+
+.hs-match {
+  margin: 10px 0 0;
+  font-weight: 650;
+}
+
+.hs-match.is-ok { color: var(--green-600); }
+.hs-match.is-bad { color: var(--red-600); }
+
+/* Regex tester */
+.rx-pattern-wrap input {
+  font-family: var(--mono);
+}
+
+.rx-flag-list {
+  width: 100%;
+}
+
+.rx-examples {
+  align-items: center;
+  margin: 16px 0;
+}
+
+.rx-examples .field-title {
+  margin: 0 4px 0 0;
+}
+
+.tc-summary.is-error {
+  color: var(--red-600);
+}
+
+.rx-view {
+  max-height: 320px;
+  margin: 10px 0 16px;
+  padding: 14px 16px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+
+.rx-view mark {
+  border-radius: 3px;
+  background: #fde68a;
+  color: #713f12;
+}
+
+.rx-view mark.rx-alt {
+  background: #bfdbfe;
+  color: #1e3a8a;
+}
+
+#rx-groups .table-wrap {
+  max-height: 260px;
+  overflow: auto;
+}
+
+#rx-groups td {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+#rx-replace-box[hidden] {
+  display: none;
+}
+
+.uu-options {
+  margin-bottom: 18px;
+}
+
+@media (max-width: 600px) {
+  .finder {
+    padding: 20px;
+  }
+
+  .finder-search .finder-go {
+    display: none;
+  }
+
+  .up-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .up-row .up-name {
+    grid-column: 1 / -1;
+  }
+
+  .hs-list li {
+    grid-template-columns: 1fr auto;
+  }
+
+  .hs-value {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* Phones: Resume is also in the Tools menu, so its own header link makes room for search. */
+@media (max-width: 740px) {
+  .site-nav .hide-xs {
+    display: none;
+  }
+}
+
+/* The narrowest phones (320px): PDF tools are in the Tools menu too. */
+@media (max-width: 359px) {
+  .site-nav .hide-xxs {
+    display: none;
+  }
+}
+
+/* Narrow laptops: the logo already links home, so the Home link makes room for search. */
+@media (max-width: 1100px) {
+  .site-nav .hide-lg {
+    display: none;
+  }
+}

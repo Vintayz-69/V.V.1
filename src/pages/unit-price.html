@@ -1,0 +1,89 @@
+  <section class="text-tool up-tool" aria-label="Unit price calculator">
+    <form id="up-form" novalidate>
+      <div class="field up-currency">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+      <div class="up-row" id="up-row-1">
+        <div class="field up-name"><label for="up-name-1">Product 1<span class="hint">Name (optional)</span></label><div class="input-wrap"><input id="up-name-1" type="text" autocomplete="off" value="Small pack" placeholder="e.g. Brand A"></div></div>
+        <div class="field"><label for="up-price-1">Price</label><div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="up-price-1" type="text" inputmode="decimal" autocomplete="off" value="3.49"></div></div>
+        <div class="field"><label for="up-size-1">Size</label><div class="input-wrap"><input id="up-size-1" type="text" inputmode="decimal" autocomplete="off" value="500"></div></div>
+        <div class="field"><label for="up-unit-1">Unit</label><div class="select-wrap"><select id="up-unit-1"><option value="g" selected>grams (g)</option><option value="kg">kilograms (kg)</option><option value="oz">ounces (oz)</option><option value="lb">pounds (lb)</option><option value="ml">millilitres (ml)</option><option value="l">litres (L)</option><option value="usfloz">US fluid ounces</option><option value="ukfloz">UK fluid ounces</option><option value="item">items (count)</option></select></div></div>
+        <p class="up-out" id="up-out-1" aria-live="polite"></p>
+      </div>
+      <div class="up-row" id="up-row-2">
+        <div class="field up-name"><label for="up-name-2">Product 2<span class="hint">Name (optional)</span></label><div class="input-wrap"><input id="up-name-2" type="text" autocomplete="off" value="Big pack" placeholder="e.g. Brand A"></div></div>
+        <div class="field"><label for="up-price-2">Price</label><div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="up-price-2" type="text" inputmode="decimal" autocomplete="off" value="6.29"></div></div>
+        <div class="field"><label for="up-size-2">Size</label><div class="input-wrap"><input id="up-size-2" type="text" inputmode="decimal" autocomplete="off" value="1"></div></div>
+        <div class="field"><label for="up-unit-2">Unit</label><div class="select-wrap"><select id="up-unit-2"><option value="g">grams (g)</option><option value="kg" selected>kilograms (kg)</option><option value="oz">ounces (oz)</option><option value="lb">pounds (lb)</option><option value="ml">millilitres (ml)</option><option value="l">litres (L)</option><option value="usfloz">US fluid ounces</option><option value="ukfloz">UK fluid ounces</option><option value="item">items (count)</option></select></div></div>
+        <p class="up-out" id="up-out-2" aria-live="polite"></p>
+      </div>
+      <div class="up-row" id="up-row-3">
+        <div class="field up-name"><label for="up-name-3">Product 3<span class="hint">Name (optional)</span></label><div class="input-wrap"><input id="up-name-3" type="text" autocomplete="off" value="" placeholder="e.g. Brand A"></div></div>
+        <div class="field"><label for="up-price-3">Price</label><div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="up-price-3" type="text" inputmode="decimal" autocomplete="off" value=""></div></div>
+        <div class="field"><label for="up-size-3">Size</label><div class="input-wrap"><input id="up-size-3" type="text" inputmode="decimal" autocomplete="off" value=""></div></div>
+        <div class="field"><label for="up-unit-3">Unit</label><div class="select-wrap"><select id="up-unit-3"><option value="g" selected>grams (g)</option><option value="kg">kilograms (kg)</option><option value="oz">ounces (oz)</option><option value="lb">pounds (lb)</option><option value="ml">millilitres (ml)</option><option value="l">litres (L)</option><option value="usfloz">US fluid ounces</option><option value="ukfloz">UK fluid ounces</option><option value="item">items (count)</option></select></div></div>
+        <p class="up-out" id="up-out-3" aria-live="polite"></p>
+      </div>
+      <div class="up-row" id="up-row-4">
+        <div class="field up-name"><label for="up-name-4">Product 4<span class="hint">Name (optional)</span></label><div class="input-wrap"><input id="up-name-4" type="text" autocomplete="off" value="" placeholder="e.g. Brand A"></div></div>
+        <div class="field"><label for="up-price-4">Price</label><div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="up-price-4" type="text" inputmode="decimal" autocomplete="off" value=""></div></div>
+        <div class="field"><label for="up-size-4">Size</label><div class="input-wrap"><input id="up-size-4" type="text" inputmode="decimal" autocomplete="off" value=""></div></div>
+        <div class="field"><label for="up-unit-4">Unit</label><div class="select-wrap"><select id="up-unit-4"><option value="g" selected>grams (g)</option><option value="kg">kilograms (kg)</option><option value="oz">ounces (oz)</option><option value="lb">pounds (lb)</option><option value="ml">millilitres (ml)</option><option value="l">litres (L)</option><option value="usfloz">US fluid ounces</option><option value="ukfloz">UK fluid ounces</option><option value="item">items (count)</option></select></div></div>
+        <p class="up-out" id="up-out-4" aria-live="polite"></p>
+      </div>
+    </form>
+    <div class="up-result" aria-live="polite">
+      <p class="up-best-line">Best value: <strong id="up-best">—</strong></p>
+      <p class="tc-summary" id="up-msg"></p>
+      <button type="button" class="btn btn-sm btn-quiet" id="up-clear">{{icon:trash}} Clear all</button>
+    </div>
+    <p class="pdf-privacy">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to compare prices</h2>
+    <ol class="steps">
+      <li><strong>Type the price and size</strong> of each pack, and pick the unit printed on it (grams, ounces, litres, items…).</li>
+      <li><strong>Compare up to four products.</strong> You can mix units of the same kind, such as grams and pounds, or millilitres and fluid ounces.</li>
+      <li><strong>The best value is highlighted</strong>, and each other product shows how much more it costs per unit.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <p>Every size is turned into the same small unit (grams, millilitres or items), then the price is divided by it. That gives a fair price per unit, whatever size the pack is.</p>
+    <div class="formula">Price per unit   = price ÷ size (in the same unit)
+How much more    = (this price per unit ÷ cheapest price per unit − 1) × 100
+
+1 oz = 28.349523125 g     1 lb = 453.59237 g
+1 US fl oz = 29.5735295625 ml     1 UK fl oz = 28.4130625 ml</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">500 g for $3.49   →  $6.98 per kg
+1 kg for $6.29    →  $6.29 per kg    ← best value; the small pack costs 11% more per kg
+
+12 US fl oz for $1.29  →  $3.635 per litre
+2 litres for $2.49     →  $1.245 per litre  ← best value (the can costs 192% more per litre)</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is the bigger pack always cheaper?</summary>
+        <p>No. Multi-buy deals and offers on small packs often make the smaller size cheaper per unit, which is why comparing the unit price is worth doing. And a cheaper pack only saves money if you'll use it all before it goes off.</p>
+      </details>
+      <details>
+        <summary>Shops already show unit prices. Why use this?</summary>
+        <p>Shop labels sometimes use different units for different products (per 100 g on one, per kg or per item on another), and online prices often don't show one. Typing the prices here puts them all on the same footing.</p>
+      </details>
+      <details>
+        <summary>Why can't I compare grams with millilitres?</summary>
+        <p>Weight and volume aren't the same thing: a litre of oil weighs less than a kilogram. Compare products measured the same way.</p>
+      </details>
+    </div>
+  </div>

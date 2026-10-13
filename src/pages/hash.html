@@ -1,0 +1,57 @@
+  <section class="text-tool" aria-label="Hash generator">
+    <form id="hs-form" novalidate>
+      <div class="field">
+        <label for="hs-text">Text to hash<span class="hint">Hashed as UTF-8 as you type</span></label>
+        <textarea id="hs-text" class="text-tool-input mono-box" rows="4" spellcheck="false">hello</textarea>
+      </div>
+      <div class="tool-actions">
+        <input class="visually-hidden" type="file" id="hs-file">
+        <label class="btn" for="hs-file">{{icon:upload}} Or choose a file</label>
+        <label class="check-line"><input type="checkbox" id="hs-upper"> UPPERCASE</label>
+      </div>
+      <p class="tc-summary" id="hs-source" role="status" aria-live="polite"></p>
+      <ul class="hs-list" id="hs-list" aria-label="Hashes"></ul>
+      <div class="field hs-expect-field">
+        <label for="hs-expect">Check against a checksum<span class="hint">Paste the hash the download page gives, to check the file is the right one</span></label>
+        <div class="input-wrap"><input id="hs-expect" type="text" autocomplete="off" spellcheck="false" placeholder="e.g. 2cf24dba5fb0…"></div>
+      </div>
+      <p class="hs-match" id="hs-match" role="status" aria-live="polite"></p>
+    </form>
+    <p class="pdf-privacy">{{icon:lock}} Hashed in your browser. Your text and files are never uploaded.</p>
+  </section>
+
+  <div class="content">
+    <h2>How to use the hash generator</h2>
+    <ol class="steps">
+      <li><strong>Type or paste text</strong>, or <strong>choose a file</strong>. Every hash appears at once.</li>
+      <li><strong>Checking a download?</strong> Paste the checksum from the download page into "Check against a checksum". A tick means the file is exactly the one the publisher made.</li>
+      <li><strong>Press "Copy"</strong> next to the hash you need.</li>
+    </ol>
+
+    <h2>What is a hash?</h2>
+    <p>A hash function turns any amount of data into a short, fixed-length fingerprint. The same input always gives the same hash, and changing a single character gives a completely different one, so hashes are used to check files haven't been damaged or changed.</p>
+    <div class="formula">"hello"
+MD5      5d41402abc4b2a76b9719d911017c592
+SHA-1    aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+SHA-256  2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+
+"Hello" (capital H) gives a completely different SHA-256:
+         185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969</div>
+    <p>SHA hashes come from your browser's built-in cryptography (<code>crypto.subtle</code>). Browsers don't include MD5, so we calculate it ourselves following its standard (RFC 1321), and we test it against a well-known implementation.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Which hash should I use?</summary>
+        <p>Use SHA-256 (or SHA-384 / SHA-512) for anything new. MD5 and SHA-1 are broken for security: people can make two different files with the same hash. They're still fine for spotting accidental damage, and many older download pages still list them.</p>
+      </details>
+      <details>
+        <summary>Can I hash passwords with this?</summary>
+        <p>Not for storing them. A plain hash of a password can be cracked quickly by guessing. Password storage needs a slow, salted method such as bcrypt, scrypt or Argon2, done by your server's software.</p>
+      </details>
+      <details>
+        <summary>Can a hash be turned back into the text?</summary>
+        <p>No. A hash is one-way. People can only guess inputs and compare hashes, which is why short or common inputs are easy to find.</p>
+      </details>
+    </div>
+  </div>

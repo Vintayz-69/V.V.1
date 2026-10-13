@@ -1000,6 +1000,71 @@ TOOLS = {
         icon="timer", group="time-zones", parent="time", go="Open tool",
         keywords="online timer countdown stopwatch alarm 5 minute timer 10 minute timer 25 minutes lap",
     ),
+    # More tools (13 October 2026)
+    "fuel-cost": dict(
+        path="tools/fuel-cost-calculator/",
+        name="Fuel Cost Calculator",
+        card="Fuel cost calculator",
+        short="Work out the fuel cost of a trip in miles or km, with US or UK MPG or L/100 km, and split it between passengers.",
+        icon="fuel", group="everyday-tools", parent="everyday",
+        keywords="gas cost petrol cost trip calculator road trip mpg litres per 100km fuel price split journey",
+    ),
+    "unit-price": dict(
+        path="tools/unit-price-calculator/",
+        name="Unit Price Calculator",
+        card="Unit price calculator",
+        short="Compare price per kg, ounce, litre or item for up to four packs and see which is the best value.",
+        icon="scales", group="everyday-tools", parent="everyday", go="Compare prices",
+        keywords="price per ounce price per kg cost per unit best value cheaper bigger pack grocery comparison",
+    ),
+    "sales-tax": dict(
+        path="business/sales-tax-calculator/",
+        name="Sales Tax Calculator",
+        card="Sales tax calculator",
+        short="Add sales tax to a price, or take it out of a total, at the rate you type. For any US state or city.",
+        icon="receipt", group="business-tax", parent="business",
+        keywords="sales tax add tax remove tax reverse tax before tax after tax rate percent us state",
+    ),
+    "commission": dict(
+        path="career/commission-calculator/",
+        name="Commission Calculator",
+        card="Commission calculator",
+        short="Work out commission on sales at a flat or tiered rate, total pay with base salary, and the sales you need for a goal.",
+        icon="percent", group="career-salary", parent="career",
+        keywords="sales commission rate tiered commission base salary plus commission earnings goal quota",
+    ),
+    "uuid": dict(
+        path="dev/uuid-generator/",
+        name="UUID Generator (v4 and v7)",
+        card="UUID generator",
+        short="Make random version 4 or time-ordered version 7 UUIDs (GUIDs), and check any UUID.",
+        icon="hash", group="dev-tools", parent="dev", go="Open tool",
+        keywords="uuid guid generator v4 v7 random unique id validator rfc 9562",
+    ),
+    "url-encode": dict(
+        path="dev/url-encode-decode/",
+        name="URL Encode and Decode",
+        card="URL encode & decode",
+        short="Percent-encode text for a web address or decode it back, and see an address's parts and query parameters.",
+        icon="globe", group="dev-tools", parent="dev", go="Open tool",
+        keywords="url encoder decoder percent encoding encodeuricomponent query string parameters parser",
+    ),
+    "hash": dict(
+        path="dev/hash-generator/",
+        name="Hash Generator (MD5, SHA-256)",
+        card="Hash generator",
+        short="Get the MD5, SHA-1, SHA-256 and SHA-512 hash of text or a file, and check a download's checksum.",
+        icon="shield", group="dev-tools", parent="dev", go="Open tool",
+        keywords="hash generator md5 sha1 sha256 sha512 checksum verify file integrity",
+    ),
+    "regex-tester": dict(
+        path="dev/regex-tester/",
+        name="Regex Tester",
+        card="Regex tester",
+        short="Test a JavaScript regular expression: highlighted matches, capture groups and a replace preview.",
+        icon="search", group="dev-tools", parent="dev", go="Open tool",
+        keywords="regex tester regular expression javascript match groups replace pattern test online",
+    ),
 }
 
 # Sections a tool can live in: key -> (breadcrumb name, path, header nav key).
@@ -1166,14 +1231,15 @@ MORE_GAMES_DAY = "2026-10-06"  # five more games, linked from the homepage
 GAME_CHIPS = ["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser, nothing saved"]
 GAME_LIBS = ["js/games-common.js"]
 SECTORS_DAY = "2026-10-11"  # /image/, /time/ and /text/ added on 11 October 2026
-POPULAR_DAY = "2026-10-11"  # QR code, password, timer, random number, discount, colour and Base64 tools
+POPULAR_DAY = "2026-10-11"
+MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
 IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
 TIME_LIBS = ["js/date-common.js"]
 TEXT_CHIPS = ["{{icon:check}} Free, no sign-up", "{{icon:lock}} Your text never leaves your browser"]
 
 PAGES = [
-    dict(path="", src="home.html", kind="home", nav="home", updated=SECTORS_DAY,
+    dict(path="", src="home.html", kind="home", nav="home", updated=MORE_DAY, libs=["js/home-search.js"],
          title="ToolNest by Vintayz: Free Money Calculators for Freelancers",
          description="Free calculators for freelancers in the US, UK, Canada and Australia. Price your work, plan your income and chase late payments."),
     dict(path="freelance/", src="freelance.html", kind="section", nav="tools",
@@ -2086,13 +2152,64 @@ PAGES = [
          intro="Every calculator, converter and maker on ToolNest, grouped by section. Type to find the one you need.",
          chips=TOOL_CHIPS),
 
+
+    # More tools (13 October 2026)
+    dict(tool="fuel-cost", src="fuel-cost.html", script="fuel-cost.js", updated=MORE_DAY,
+         title="Fuel Cost Calculator for a Trip (MPG or L/100 km) | Vintayz",
+         description="Work out the fuel cost of a road trip in miles or km, with US MPG, UK MPG or L/100 km, any fuel price, a return trip, and the cost per person.",
+         intro="Work out what a trip costs in fuel, with your car's MPG or L/100 km, and split it between passengers.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["unit-converter", "us-mileage", "uk-mileage"]),
+    dict(tool="unit-price", src="unit-price.html", script="unit-price.js", updated=MORE_DAY,
+         title="Unit Price Calculator: Which Is Better Value? | Vintayz",
+         description="Compare the price per kg, ounce, litre or item of up to four products to find the best value. Mix grams and pounds, or ml and fl oz.",
+         intro="Compare the price per gram, ounce, litre or item of up to four packs to see which is really cheaper.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["discount", "percentage", "unit-converter"]),
+    dict(tool="sales-tax", src="sales-tax.html", script="sales-tax.js", updated=MORE_DAY,
+         title="Sales Tax Calculator: Add or Remove Tax | ToolNest by Vintayz",
+         description="Add sales tax to a price or work out the price before tax from a total, at the rate you type. Works for any US state, county or city rate.",
+         intro="Add sales tax to a price, or take it out of a total that already includes it, at your own local rate.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["discount", "uk-vat", "ca-gst-hst"]),
+    dict(tool="commission", src="commission.html", script="commission.js", updated=MORE_DAY,
+         title="Commission Calculator (Flat or Tiered) | ToolNest by Vintayz",
+         description="Work out sales commission at a flat or tiered rate, your total pay with base salary, and the sales you need to hit a commission goal.",
+         intro="Work out commission on your sales, at a flat or tiered rate, plus your total pay and the sales you need for a goal.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["salary-to-hourly", "pay-rise", "profit-margin"]),
+    dict(tool="uuid", src="uuid.html", script="uuid.js", updated=MORE_DAY,
+         title="UUID Generator: v4 and v7 GUIDs | ToolNest by Vintayz",
+         description="Generate random version 4 or time-ordered version 7 UUIDs (GUIDs) in bulk, uppercase or without hyphens, and check any UUID. Made on your device.",
+         intro="Make random version 4 or time-ordered version 7 UUIDs, and check whether any UUID is valid.",
+         chips=["{{icon:lock}} Made on your device", "{{icon:check}} Free, no sign-up"],
+         related=["password-generator", "hash", "base64"]),
+    dict(tool="url-encode", src="url-encode.html", script="url-encode.js", updated=MORE_DAY,
+         title="URL Encode and Decode Online | ToolNest by Vintayz",
+         description="Percent-encode text for a URL or decode it back, with UTF-8 and form-style + spaces. See an address's parts and query parameters.",
+         intro="Percent-encode text for a web address or decode it back, and break an address into its parts.",
+         chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
+         related=["base64", "json-formatter", "regex-tester"]),
+    dict(tool="hash", src="hash.html", script="hash.js", updated=MORE_DAY,
+         title="Hash Generator: MD5, SHA-1, SHA-256 | ToolNest by Vintayz",
+         description="Get the MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hash of text or any file, and check a download against its checksum. Files are never uploaded.",
+         intro="Get the MD5 and SHA hashes of text or a file, and check a download against the checksum its publisher gives.",
+         chips=["{{icon:lock}} Files never leave your device", "{{icon:check}} Free, no sign-up"],
+         related=["base64", "uuid", "password-generator"]),
+    dict(tool="regex-tester", src="regex-tester.html", script="regex-tester.js", updated=MORE_DAY,
+         title="Regex Tester (JavaScript) | ToolNest by Vintayz",
+         description="Test JavaScript regular expressions with highlighted matches, capture groups, named groups and a find-and-replace preview. Runs in your browser.",
+         intro="Test a regular expression against your text, with matches highlighted, groups listed and a replace preview.",
+         chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
+         related=["text-compare", "url-encode", "json-formatter"]),
+
     dict(path="about/", src="about.html", kind="legal", nav="about", updated=PDF_DAY,
          title="About ToolNest by Vintayz", h1="About ToolNest",
          description="ToolNest builds free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia."),
     dict(path="contact/", src="contact.html", kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
-    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=SECTORS_DAY,
+    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=MORE_DAY,
          title="Privacy Policy | ToolNest by Vintayz", h1="Privacy Policy",
          description="How ToolNest handles personal information, cookies and analytics, and your privacy rights in the UK, the US and India."),
     dict(path="terms/", src="terms.html", kind="legal", updated=PDF_DAY,
@@ -2263,6 +2380,7 @@ ICONS = {
     "crop": '<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M2 6h14a2 2 0 0 1 2 2v14"/>',
     "rotate-left": '<path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v5h5"/>',
     "flip": '<path d="M12 3v18"/><path d="M9 7L4 17h5zM15 7l5 10h-5z"/>',
+    "fuel": '<path d="M4 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16M3 21h13M7 7h5v4H7z"/><path d="M15 10h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/>',
     "download": '<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
     "key": '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/>',
     "qr": '<rect x="3.5" y="3.5" width="6" height="6" rx="1"/><rect x="14.5" y="3.5" width="6" height="6" rx="1"/><rect x="3.5" y="14.5" width="6" height="6" rx="1"/><path d="M14.5 14.5h2.5v2.5M20.5 14.5v6h-3M14.5 18.5v2"/>',
@@ -2337,6 +2455,23 @@ def tool_card(slug, up, region=None):
 </a></li>"""
 
 
+# Shown on the homepage as quick links, across every section.
+POPULAR_TOOLS = ["hourly-rate", "invoice-generator", "pdf-merge", "pdf-compress", "image-compress", "qr-code",
+                 "password-generator", "time-zone", "word-counter", "percentage", "uk-take-home", "us-self-employment-tax",
+                 "timer", "sudoku"]
+
+
+def section_chips(up):
+    """A chip for every section that has live tools, with its number of tools."""
+    live = [p["tool"] for p in PAGES if p.get("kind") == "tool"]
+    out = []
+    for key, (pname, ppath, _) in PARENTS.items():
+        n = sum(1 for t in live if TOOLS[t].get("parent", "freelance") == key)
+        if n:
+            out.append(f'<a class="chip chip-link" href="{up}{ppath}">{html.escape(pname)} <span class="chip-count">{n}</span></a>')
+    return "".join(out)
+
+
 def all_tools_list(up):
     """Every live tool, grouped by section (in menu order), A to Z within each. Plain links, so
     search engines and visitors without JavaScript can reach every tool from one page."""
@@ -2389,6 +2524,11 @@ def expand(text, up, page=None):
             return tool_card(arg, up, region)
         if key == "alltools":
             return all_tools_list(up)
+        if key == "sections":
+            return section_chips(up)
+        if key == "popular":
+            return "".join(f'<a class="chip chip-link" href="{up}{TOOLS[t]["path"]}">{icon(TOOLS[t]["icon"])}{html.escape(TOOLS[t]["card"][0].upper() + TOOLS[t]["card"][1:])}</a>'
+                           for t in POPULAR_TOOLS if t in TOOLS)
         raise KeyError(m.group(0))
     return re.sub(r"\{\{(\w+)(?::([\w-]+))?\}\}", sub, text)
 
@@ -2515,7 +2655,8 @@ def header(page, up):
     # The Calculators menu lists every calculator section (PDF and Resume have their own links).
     sections = "\n".join(
         f'              <li><a href="{up}{path}"{cur(key)}>{icon(ic)}{name}</a></li>'
-        for key, name, path, ic in CALC_SECTIONS + [("all", "All tools A–Z", "all-tools/", "grid")])
+        for key, name, path, ic in CALC_SECTIONS[:1] + [("pdf", "PDF tools", "pdf/", "file"), ("resume", "Resume &amp; CV", "resume-maker/", "resume")]
+        + CALC_SECTIONS[1:] + [("all", "All tools A–Z", "all-tools/", "grid")])
     in_calcs = " is-current" if nav in [c[0] for c in CALC_SECTIONS] else ""
 
     # The Country menu is a <details> element, so it opens and closes without JavaScript.
@@ -2527,17 +2668,17 @@ def header(page, up):
     <a class="logo" href="{home}">{LOGO}ToolNest<span class="logo-by">by {OWNER}</span></a>
     <nav class="site-nav" aria-label="Main">
       <ul>
-        <li class="hide-md"><a href="{home}"{cur('home')}>Home</a></li>
+        <li class="hide-md hide-lg"><a href="{home}"{cur('home')}>Home</a></li>
         <li>
           <details class="nav-menu">
-            <summary class="nav-menu-button{in_calcs}"><span>Calc<span class="hide-sm-inline">ulators</span></span>{icon('chevron', 'icon nav-chevron')}</summary>
+            <summary class="nav-menu-button{in_calcs}"><span>Tools</span>{icon('chevron', 'icon nav-chevron')}</summary>
             <ul class="nav-menu-list nav-menu-list-start">
 {sections}
             </ul>
           </details>
         </li>
-        <li><a href="{up}pdf/"{cur('pdf')}>PDF<span class="hide-sm-inline"> tools</span></a></li>
-        <li><a href="{up}resume-maker/"{cur('resume')}>Resume</a></li>
+        <li class="hide-xxs"><a href="{up}pdf/"{cur('pdf')}>PDF<span class="hide-sm-inline"> tools</span></a></li>
+        <li class="hide-xs"><a href="{up}resume-maker/"{cur('resume')}>Resume</a></li>
         <li>
           <details class="nav-menu">
             <summary class="nav-menu-button{in_country}">{icon('globe')}<span class="nav-label">Country</span>{icon('chevron', 'icon nav-chevron')}</summary>
@@ -2546,6 +2687,7 @@ def header(page, up):
             </ul>
           </details>
         </li>
+        <li><a class="nav-search" href="{up}all-tools/#search" aria-label="Search all tools"{cur('all')}>{icon('search')}</a></li>
         <li class="hide-md"><a href="{up}about/"{cur('about')}>About</a></li>
         <li class="hide-md"><a class="nav-cta" href="{up}{TOOLS['hourly-rate']['path']}">Rate calculator</a></li>
         <li><button type="button" class="theme-switch" id="theme-toggle" role="switch" aria-checked="false" aria-label="Dark mode" hidden><span class="theme-switch-track" aria-hidden="true">{icon('sun', 'icon icon-sun')}{icon('moon', 'icon icon-moon')}<span class="theme-switch-knob"></span></span></button></li>
@@ -2618,7 +2760,7 @@ def footer(up):
       <nav aria-label="Business tools">
         <h2>Business</h2>
         <ul>
-{links(('business-pricing', 'business-ops'))}
+{links(('business-pricing', 'business-ops', 'business-tax'))}
           <li><a href="{up}business/">All business tools</a></li>
         </ul>
       </nav>

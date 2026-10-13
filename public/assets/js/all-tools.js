@@ -27,11 +27,23 @@
     status.textContent = q.trim() ? shown + (shown === 1 ? " tool matches." : " tools match.") : total + " free tools.";
   }
 
+  // From the header search button (#search) or the homepage box (#q=words).
+  function fromHash() {
+    var h = window.location.hash;
+    if (h.indexOf("#q=") === 0) {
+      try { input.value = decodeURIComponent(h.slice(3)); } catch (e) { input.value = ""; }
+      filter();
+    }
+    if (h === "#search" || h.indexOf("#q=") === 0) input.focus();
+  }
+
   input.addEventListener("input", filter);
+  window.addEventListener("hashchange", fromHash);
   input.addEventListener("keydown", function (e) {
     if (e.key !== "Enter") return;
     var first = document.querySelector(".az-list li:not([hidden]) a");
     if (first && input.value.trim()) first.click();
   });
   filter();
+  fromHash();
 })();

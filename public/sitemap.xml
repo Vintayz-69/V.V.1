@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vintayz.com/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/freelance/</loc>
@@ -226,11 +226,11 @@
   </url>
   <url>
     <loc>https://vintayz.com/business/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/career/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/education/</loc>
@@ -314,11 +314,11 @@
   </url>
   <url>
     <loc>https://vintayz.com/dev/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/tools/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/finance/compound-interest-calculator/</loc>
@@ -558,7 +558,39 @@
   </url>
   <url>
     <loc>https://vintayz.com/all-tools/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/tools/fuel-cost-calculator/</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/tools/unit-price-calculator/</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/business/sales-tax-calculator/</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/career/commission-calculator/</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/dev/uuid-generator/</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/dev/url-encode-decode/</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/dev/hash-generator/</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://vintayz.com/dev/regex-tester/</loc>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/about/</loc>
@@ -570,7 +602,7 @@
   </url>
   <url>
     <loc>https://vintayz.com/privacy-policy/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://vintayz.com/terms/</loc>

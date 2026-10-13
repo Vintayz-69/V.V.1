@@ -99,10 +99,12 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Payment Processing Fee Calculator](https://vintayz.com/business/payment-fee-calculator/): Work out card processing fees, your net payout, and how much to invoice to cover the fee.
 - [Profit Margin & Markup Calculator](https://vintayz.com/business/profit-margin-calculator/): Find your gross margin, markup percentage and net profit from your costs and selling price.
 - [Quote and Estimate Generator](https://vintayz.com/business/quote-generator/): Make a clear price quote or estimate for a client and download it as a PDF. No sign-up.
+- [Sales Tax Calculator](https://vintayz.com/business/sales-tax-calculator/): Add sales tax to a price, or take it out of a total, at the rate you type. For any US state or city.
 
 ## Career & Salary
 
 - [Career & Salary](https://vintayz.com/career/): all career & salary
+- [Commission Calculator](https://vintayz.com/career/commission-calculator/): Work out commission on sales at a flat or tiered rate, total pay with base salary, and the sales you need for a goal.
 - [Job Offer Comparison Calculator](https://vintayz.com/career/job-offer-comparison-calculator/): Compare two job offers on salary, bonus, benefits, hours and commuting, and see which pays more per hour.
 - [Overtime Pay Calculator](https://vintayz.com/career/overtime-calculator/): Work out weekly pay with time-and-a-half and double-time hours.
 - [Pay Rise Calculator](https://vintayz.com/career/pay-rise-calculator/): See your raise as a percentage and in money, and whether it beats inflation.
@@ -127,9 +129,13 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Developer Tools](https://vintayz.com/dev/): all developer tools
 - [Base64 Encode and Decode](https://vintayz.com/dev/base64-encode-decode/): Encode text to Base64 or decode it back, standard or URL-safe, and turn files into data URLs.
 - [Color Converter (HEX, RGB, HSL)](https://vintayz.com/dev/color-converter/): Convert colours between HEX, RGB, HSL, HSV and CMYK, with shades and contrast against white and black.
+- [Hash Generator (MD5, SHA-256)](https://vintayz.com/dev/hash-generator/): Get the MD5, SHA-1, SHA-256 and SHA-512 hash of text or a file, and check a download's checksum.
 - [JSON Formatter & Validator](https://vintayz.com/dev/json-formatter/): Beautify, minify, and validate JSON code 100% locally in your browser with instant syntax error highlighting.
 - [Password Generator](https://vintayz.com/dev/password-generator/): Make strong random passwords with your choice of length, letters, numbers and symbols. Made on your device.
+- [Regex Tester](https://vintayz.com/dev/regex-tester/): Test a JavaScript regular expression: highlighted matches, capture groups and a replace preview.
 - [Unix Timestamp Converter](https://vintayz.com/dev/unix-timestamp-converter/): Convert epoch timestamps in seconds or milliseconds to dates in UTC and your time zone, and back.
+- [URL Encode and Decode](https://vintayz.com/dev/url-encode-decode/): Percent-encode text for a web address or decode it back, and see an address's parts and query parameters.
+- [UUID Generator (v4 and v7)](https://vintayz.com/dev/uuid-generator/): Make random version 4 or time-ordered version 7 UUIDs (GUIDs), and check any UUID.
 - [WCAG Color Contrast Checker](https://vintayz.com/dev/color-contrast-checker/): Check text and background color combinations against WCAG 2.1 AA and AAA legal web accessibility standards.
 
 ## Personal Finance
@@ -144,10 +150,12 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 
 - [Everyday Utilities](https://vintayz.com/tools/): all everyday utilities
 - [Discount Calculator](https://vintayz.com/tools/discount-calculator/): Work out the sale price and what you save, with a second discount or sales tax, and the percent off between two prices.
+- [Fuel Cost Calculator](https://vintayz.com/tools/fuel-cost-calculator/): Work out the fuel cost of a trip in miles or km, with US or UK MPG or L/100 km, and split it between passengers.
 - [Percentage Calculator](https://vintayz.com/tools/percentage-calculator/): Work out X% of a number, what percent one number is of another, percentage change, and adding or taking off a percent.
 - [QR Code Generator](https://vintayz.com/tools/qr-code-generator/): Make a free QR code for a link, text, Wi-Fi network, email or phone number. Download PNG or SVG. Never expires.
 - [Random Number Generator and Picker](https://vintayz.com/tools/random-number-generator/): Fair random numbers in any range, with or without repeats, or random picks from a list of names.
 - [Tip & Bill Split Calculator](https://vintayz.com/tools/tip-calculator/): Evenly split restaurant bills, work out custom gratuity percentages, and round up totals cleanly.
+- [Unit Price Calculator](https://vintayz.com/tools/unit-price-calculator/): Compare price per kg, ounce, litre or item for up to four packs and see which is the best value.
 - [Universal Unit Converter](https://vintayz.com/tools/unit-converter/): Convert between metric and imperial measurements for length, weight, temperature, volume and area.
 
 ## Image Tools
