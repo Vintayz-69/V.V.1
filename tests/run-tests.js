@@ -2703,6 +2703,24 @@ async function resumePdfTests() {
   for (const [t, need] of [[90, 104.6], [85, 84.6], [80, 64.6], [70, 24.6]]) check(`weighted grade final for ${t}%`, (t - wg.earned) / 0.25, need);
 }
 
+// ---------------- Late payment interest table (2026-10-17)
+{
+  const lp = load("late-payment", ["data/rates-uk.js"]);
+  const add = (d, n) => { const t = new Date(d + "T00:00:00Z"); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
+  for (const [a, n, i, e, c] of [[1000, 30, 9.66, 70, 79.66], [1000, 60, 19.32, 70, 89.32], [1000, 90, 28.97, 70, 98.97],
+    [5000, 30, 48.29, 70, 118.29], [5000, 60, 96.58, 70, 166.58], [5000, 90, 144.86, 70, 214.86],
+    [20000, 30, 193.15, 100, 293.15], [20000, 60, 386.3, 100, 486.3], [20000, 90, 579.45, 100, 679.45]]) {
+    expectAll(`late payment £${a} ${n} days`, lp.calculate({ mode: "uk", amount: a, dueDate: "2026-08-01", paidDate: add("2026-08-01", n), baseRate: 3.75, includeComp: true }), { days: n, interest: i, extra: e, claim: c });
+  }
+  // The data file gives 3.75% for both 2026 reference dates (31 Dec 2025 and 30 Jun 2026).
+  const sb = { window: {} }; vm.createContext(sb);
+  vm.runInContext(fs.readFileSync(path.join(JS, "data/rates-uk.js"), "utf8"), sb);
+  const R = sb.window.ToolNestRatesUK;
+  const rateOn = (d) => R.bankRate.find((b) => b.from <= d).rate;
+  check("Bank Rate on 31 Dec 2025", rateOn("2025-12-31"), 3.75);
+  check("Bank Rate on 30 Jun 2026", rateOn("2026-06-30"), 3.75);
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);

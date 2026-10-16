@@ -17,7 +17,8 @@
  * Bank Rate changes to the top of `bankRate`, and move `checkedUpTo` forward.
  */
 window.ToolNestRatesUK = {
-  checkedUpTo: "2026-09-28",
+  // 2026-10-17: Bank Rate still 3.75% after the 17 September 2026 decision (next decision 5 November 2026).
+  checkedUpTo: "2026-10-17",
   statutoryAddOn: 8,
   // Bank Rate changes, newest first: { from: date the new rate took effect, rate: % }
   bankRate: [

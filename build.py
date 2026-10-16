@@ -1488,9 +1488,9 @@ PAGES = [
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
          related=["au-sole-trader-tax", "retirement-savings", "au-take-home"]),
 
-    dict(tool="late-payment", src="late-payment.html", script="late-payment.js", libs=["data/rates-uk.js"],
-         title="Late Payment Interest Calculator (UK & US) | ToolNest by Vintayz",
-         description="Calculate interest on an overdue invoice. Includes UK statutory interest (8% + base rate) and fixed compensation, or use your contract rate.",
+    dict(tool="late-payment", src="late-payment.html", updated=MONEY_DAY, script="late-payment.js", libs=["data/rates-uk.js"],
+         title="Invoice Late Payment Interest Calculator (UK & US) | Vintayz",
+         description="Calculate late payment interest on an overdue invoice: UK statutory interest (8% + Bank Rate) and fixed compensation, or your contract rate.",
          intro="Work out how much interest and compensation you can claim on an overdue invoice, using UK statutory interest or the rate in your contract.",
          chips=["{{icon:globe}} UK statutory or contract rate"] + TOOL_CHIPS,
          related=["project-pricing", "hourly-rate", "billable-hours", "date-add"]),
