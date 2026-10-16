@@ -46,34 +46,63 @@
   </section>
 
   <div class="content">
-    <h2>Understanding WCAG accessibility ratios</h2>
-    <p>Web Content Accessibility Guidelines (WCAG) define how contrasting text must be compared to its background to ensure people with visual impairments or color blindness can read it comfortably:</p>
+    <h2>WCAG contrast levels</h2>
+    <p>The Web Content Accessibility Guidelines (WCAG) set minimum contrast ratios between text and its background, so that people with low vision or colour blindness can read it:</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Target Level</th><th>Required Ratio</th><th>Where it applies</th></tr></thead>
+        <thead><tr><th>Level</th><th>Ratio needed</th><th>Where it applies</th></tr></thead>
         <tbody>
-          <tr><td><strong>WCAG AA (Normal)</strong></td><td>4.5 : 1</td><td>Body paragraphs, captions, input field text, subheadings under 18pt.</td></tr>
-          <tr><td><strong>WCAG AA (Large)</strong></td><td>3.0 : 1</td><td>Headings 18pt+ (24px) or bold text 14pt+ (18.66px).</td></tr>
-          <tr><td><strong>WCAG AAA (Enhanced)</strong></td><td>7.0 : 1</td><td>Highest tier of accessibility for maximum legibility.</td></tr>
-          <tr><td><strong>UI Components</strong></td><td>3.0 : 1</td><td>Input borders, active button outlines, and graphical icons.</td></tr>
+          <tr><td><strong>AA, normal text</strong></td><td>4.5 : 1</td><td>Body text, captions, labels and text in input boxes.</td></tr>
+          <tr><td><strong>AA, large text</strong></td><td>3 : 1</td><td>Text at least 18pt (24px), or bold text at least 14pt (about 18.7px).</td></tr>
+          <tr><td><strong>AAA, normal text</strong></td><td>7 : 1</td><td>The stricter level, for the easiest reading.</td></tr>
+          <tr><td><strong>AAA, large text</strong></td><td>4.5 : 1</td><td>Large text at the stricter level.</td></tr>
+          <tr><td><strong>Parts of the page you use</strong></td><td>3 : 1</td><td>Input borders, button outlines, focus rings and icons that carry meaning.</td></tr>
         </tbody>
       </table>
     </div>
+    <p>Most websites aim for level AA.</p>
 
-    <h2>How contrast ratio is calculated</h2>
-    <div class="formula">Luminance (L)    = 0.2126 × R + 0.7152 × G + 0.0722 × B (sRGB adjusted)
-Contrast Ratio   = (L1 + 0.05) ÷ (L2 + 0.05)
-Where L1 is the relative luminance of the lighter color, and L2 is the darker color.</div>
+    <h2>How the contrast ratio is calculated</h2>
+    <div class="formula">For each of red, green and blue:
+  c = value ÷ 255
+  c = c ÷ 12.92                       if c ≤ 0.03928
+  c = ((c + 0.055) ÷ 1.055) ^ 2.4     otherwise
+
+Luminance (L)   = 0.2126 × R + 0.7152 × G + 0.0722 × B
+Contrast ratio  = (L1 + 0.05) ÷ (L2 + 0.05)
+                  L1 = the lighter colour, L2 = the darker colour</div>
+    <p>The ratio goes from 1:1 (the same colour twice) to 21:1 (black on white). Green counts for most of the brightness because our eyes are most sensitive to it.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">#000000 on #ffffff   21 : 1     passes everything
+#777777 on #ffffff   4.48 : 1   fails AA for normal text, passes for large text
+#767676 on #ffffff   4.54 : 1   passes AA for normal text</div>
+    <p>The two greys look almost the same, but only the darker one passes AA for body text. That's why it's worth checking the numbers instead of trusting your eyes.</p>
+
+    <h2>How to fix a colour that fails</h2>
+    <ul>
+      <li><strong>Darken the text or lighten the background</strong> (or the other way round on a dark background) until the ratio passes. Small changes are often enough.</li>
+      <li><strong>Make the text bigger or bold</strong> if it's a heading. Large text only needs 3:1 for AA.</li>
+      <li><strong>Check every state</strong>, not just the normal one: links, hover and focus colours, disabled buttons that still need to be read, and placeholder text.</li>
+      <li><strong>Check text on pictures</strong> against the lightest and darkest parts of the picture behind it, or add a solid background behind the text.</li>
+      <li><strong>Don't use colour alone</strong> to show meaning, such as red for an error. Add words or an icon too.</li>
+    </ul>
 
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>
-        <summary>Why is color contrast legally important?</summary>
-        <p>In the United States (ADA Title III), United Kingdom (Equality Act 2010), and European Union (European Accessibility Act), public-facing websites can face lawsuits if people with disabilities cannot read their content.</p>
+        <summary>Do I have to meet WCAG?</summary>
+        <p>WCAG is the standard most accessibility rules and guidance point to, and level AA is the usual target. Whether it's a legal requirement for your website depends on your country and what kind of organisation you are, so check the guidance that applies to you. Either way, good contrast makes your site easier for everyone to read, for example on a phone in bright sunlight.</p>
       </details>
       <details>
-        <summary>Does pure black on pure white cause eye strain?</summary>
-        <p>While #000000 on #ffffff provides the maximum possible ratio (21:1), many modern designers use a very dark slate (such as #0f172a or #1e293b) to provide high contrast (&gt; 12:1) while softening contrast fatigue on OLED screens.</p>
+        <summary>Do logos need to pass?</summary>
+        <p>No. WCAG makes an exception for logos and brand names, and for text that's purely decorative or part of a picture that isn't meant to be read.</p>
+      </details>
+      <details>
+        <summary>What about dark mode?</summary>
+        <p>Check both themes. A colour that passes on a white background can fail on a dark one, so test each pair of text and background colours you actually use.</p>
       </details>
     </div>
+
+    <p class="sources"><strong>Source:</strong> <a href="https://www.w3.org/TR/WCAG22/" rel="noopener">W3C: Web Content Accessibility Guidelines (WCAG) 2.2</a>.</p>
   </div>

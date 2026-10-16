@@ -14,6 +14,8 @@
  *        Saskatchewan https://www.saskatchewan.ca/business/taxes-licensing-and-reporting/provincial-taxes-policies-and-bulletins/provincial-sales-tax ,
  *        Manitoba https://www.gov.mb.ca/finance/taxation/taxes/retail.html
  *   QST is not pre-filled: visitors enter it from Revenu Québec.
+ *   GST/HST small supplier threshold ($30,000 in one calendar quarter or over four in a row; most businesses),
+ *     checked 2026-10-16: https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/when-register-charge.html
  *
  * TO UPDATE: every January (CRA publishes new brackets, CPP and EI in November/December).
  */
@@ -35,6 +37,10 @@ window.ToolNestTaxCA = {
     threshold: 3000, quebecThreshold: 1800,
     dueDates: ["2026-03-15", "2026-06-15", "2026-09-15", "2026-12-15"]
   },
+
+  // GST/HST registration: most businesses must register above this much in taxable sales (charities and
+  // public service bodies use other thresholds). Quoted on the GST/HST calculator page.
+  gstSmallSupplierThreshold: 30000,
 
   // GST/HST rate and provincial sales tax (null = enter it yourself).
   salesTax: {

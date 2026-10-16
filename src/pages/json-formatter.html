@@ -31,26 +31,63 @@
   </section>
 
   <div class="content">
-    <h2>Why use a private, client-side JSON formatter?</h2>
-    <p>Many online JSON formatters upload your text to their servers, where sensitive API keys, customer emails, internal database records, or passwords can be logged and stored. ToolNest parses and formats JSON <strong>entirely in your browser memory</strong>. Not a single byte is transmitted to us or anyone else.</p>
-
-    <h2>How to format and validate your JSON</h2>
+    <h2>How to format and check your JSON</h2>
     <ol class="steps">
-      <li><strong>Paste or type your JSON code</strong> into the editor above.</li>
-      <li><strong>Check the live status badge:</strong> If there is a syntax error (such as a missing bracket, unquoted key, or trailing comma), the exact error message will appear immediately.</li>
-      <li><strong>Click "Beautify"</strong> to indent nested keys with 2 spaces for easy reading, or <strong>"Minify"</strong> to strip whitespace and reduce payload size for production APIs.</li>
-      <li><strong>Click "Copy to clipboard"</strong> to grab the clean code with one click.</li>
+      <li><strong>Paste or type your JSON</strong> into the box above.</li>
+      <li><strong>Look at the status badge.</strong> If something is wrong, such as a missing bracket, a key without quotes or an extra comma, the error message appears straight away.</li>
+      <li><strong>Press "Beautify"</strong> to indent it with 2 spaces so it's easy to read, or <strong>"Minify"</strong> to remove all spaces and line breaks and make it as small as possible.</li>
+      <li><strong>Press "Copy to clipboard"</strong> to copy the result.</li>
     </ol>
+
+    <h2>Example</h2>
+    <p>JSON from an API often arrives on one long line:</p>
+    <div class="formula">{"name":"Alice","skills":["design","writing"],"active":true}</div>
+    <p>After "Beautify", each key is on its own line and nested items are indented:</p>
+    <div class="formula">{
+  "name": "Alice",
+  "skills": [
+    "design",
+    "writing"
+  ],
+  "active": true
+}</div>
+
+    <h2>Common JSON errors and how to fix them</h2>
+    <p>JSON looks like JavaScript, but its rules are stricter. These are the mistakes that cause most errors:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Problem</th><th>Wrong</th><th>Right</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Problem">Comma after the last item</td><td data-label="Wrong"><code>{"a": 1,}</code></td><td data-label="Right"><code>{"a": 1}</code></td></tr>
+          <tr><td data-label="Problem">Single quotes</td><td data-label="Wrong"><code>{'a': 'x'}</code></td><td data-label="Right"><code>{"a": "x"}</code></td></tr>
+          <tr><td data-label="Problem">Key without quotes</td><td data-label="Wrong"><code>{a: 1}</code></td><td data-label="Right"><code>{"a": 1}</code></td></tr>
+          <tr><td data-label="Problem">Comments</td><td data-label="Wrong"><code>{"a": 1 // note}</code></td><td data-label="Right"><code>{"a": 1}</code></td></tr>
+          <tr><td data-label="Problem">Values JSON doesn't have</td><td data-label="Wrong"><code>{"a": undefined}</code></td><td data-label="Right"><code>{"a": null}</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>JSON also has no <code>NaN</code> or <code>Infinity</code>, and text inside quotes can't contain a real line break: write <code>\n</code> instead.</p>
+
+    <h2>Your data stays on your device</h2>
+    <p>JSON often contains things you shouldn't share, such as API keys, customer details or internal records. This formatter checks and formats your JSON with your browser's own built-in JSON engine. Nothing you paste is sent to us or anyone else, and it's gone when you close the page.</p>
 
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>
-        <summary>What causes common JSON parsing errors?</summary>
-        <p>The most common JSON errors are: (1) trailing commas after the last item in an object or array, (2) single quotes instead of double quotes around keys and strings, and (3) missing closing braces or brackets.</p>
+        <summary>What causes most JSON errors?</summary>
+        <p>A comma after the last item in a list or object, single quotes instead of double quotes, and a missing closing bracket or brace. The table above shows how to fix each one.</p>
       </details>
       <details>
-        <summary>Does this tool work with large files?</summary>
-        <p>Yes. Because parsing happens directly on your device's CPU with standard browser native JSON engines, it easily handles large files of several megabytes with near-instant speed.</p>
+        <summary>Can I format a large file?</summary>
+        <p>Yes. Files of a few megabytes are usually formatted in a moment. Very large files can be slow on older phones and computers, because all the work happens on your own device.</p>
+      </details>
+      <details>
+        <summary>What's the difference between JSON and a JavaScript object?</summary>
+        <p>A JavaScript object can use single quotes, keys without quotes, comments and values like <code>undefined</code>. JSON allows none of these. If you've copied an object out of JavaScript code, you may need to fix those parts before it counts as valid JSON.</p>
+      </details>
+      <details>
+        <summary>Should I beautify or minify?</summary>
+        <p>Beautify when people need to read it, for example when you're checking an API response or editing a settings file. Minify when a program reads it and size matters, for example data sent over a network.</p>
       </details>
     </div>
   </div>

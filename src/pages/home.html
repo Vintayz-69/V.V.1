@@ -39,8 +39,6 @@
       <input id="home-search-input" type="search" placeholder="What do you need? e.g. compress PDF, QR code, tax" autocomplete="off" spellcheck="false" enterkeyhint="search">
       <button type="submit" class="btn btn-primary finder-go">Search</button>
     </form>
-    <p class="finder-label">Browse by section</p>
-    <nav class="meta-row finder-chips" aria-label="All sections">{{sections}}<a class="chip chip-link" href="{{root}}all-tools/">All tools A–Z</a></nav>
     <p class="finder-label">Popular tools</p>
     <nav class="meta-row finder-chips" aria-label="Popular tools">{{popular}}</nav>
   </section>
@@ -48,212 +46,88 @@
   <section class="section">
     <div class="section-head">
       <div>
-        <span class="kicker">Pricing</span>
-        <h2>Price your work with confidence</h2>
-        <p>Know the least you need to charge before you send a quote.</p>
+        <span class="kicker">Start here</span>
+        <h2>Price your work and get paid</h2>
+        <p>The tools freelancers use most: work out your rate, plan your hours, send an invoice and chase late payments.</p>
       </div>
+      <a class="btn btn-sm" href="{{root}}freelance/">All freelancer tools</a>
     </div>
     <ul class="card-grid">
-{{cards:pricing}}
+{{tool:hourly-rate}}
+{{tool:day-rate}}
+{{tool:project-pricing}}
+{{tool:billable-hours}}
+{{tool:invoice-generator}}
+{{tool:late-payment}}
     </ul>
   </section>
 
   <section class="section">
     <div class="section-head">
       <div>
-        <span class="kicker">Income</span>
-        <h2>Plan and protect your income</h2>
-        <p>See what your rate really adds up to, and claim what you're owed when clients pay late.</p>
+        <span class="kicker">Tax by country</span>
+        <h2>Tax calculators for your country</h2>
+        <p>Pricing and planning tools work everywhere. Each country also has its own tax calculators, built on official figures.</p>
       </div>
     </div>
-    <ul class="card-grid">
-{{cards:income}}
+    <ul class="country-grid">
+      <li><a class="country" href="{{root}}us/">{{flag:us}}<div><strong>United States</strong><span class="status">Open US tools →</span></div></a></li>
+      <li><a class="country" href="{{root}}uk/">{{flag:uk}}<div><strong>United Kingdom</strong><span class="status">Open UK tools →</span></div></a></li>
+      <li><a class="country" href="{{root}}ca/"><span class="code">CA</span><div><strong>Canada</strong><span class="status">Open CA tools →</span></div></a></li>
+      <li><a class="country" href="{{root}}au/"><span class="code">AU</span><div><strong>Australia</strong><span class="status">Open AU tools →</span></div></a></li>
     </ul>
   </section>
 
   <section class="section">
     <div class="section-head">
       <div>
-        <span class="kicker">Planning</span>
-        <h2>Build a safety net</h2>
-        <p>Smooth out irregular income, prepare for quiet months and plan for retirement.</p>
+        <span class="kicker">Browse by category</span>
+        <h2>Money and work</h2>
+        <p>Calculators for running a business, planning your pay and managing your own money.</p>
       </div>
     </div>
-    <ul class="card-grid">
-{{cards:planning}}
+    <ul class="card-grid cat-grid">
+{{categories:money}}
     </ul>
   </section>
 
   <section class="section">
     <div class="section-head">
       <div>
-        <span class="kicker">PDF tools</span>
-        <h2>Fix a PDF in seconds</h2>
-        <p>Merge, split, compress and convert PDFs for free. Your files are handled by your own browser and never uploaded.</p>
+        <span class="kicker">Browse by category</span>
+        <h2>Files and documents</h2>
+        <p>Work with PDFs, pictures and text, and write a resume. Everything happens in your browser, so your files are never uploaded.</p>
       </div>
-      <a class="btn btn-sm" href="{{root}}pdf/">All PDF tools</a>
     </div>
-    <ul class="card-grid">
-{{featured:pdf}}
+    <ul class="card-grid cat-grid">
+{{categories:files}}
     </ul>
   </section>
 
   <section class="section">
     <div class="section-head">
       <div>
-        <span class="kicker">Resume &amp; CV</span>
-        <h2>Make a resume for the country you're applying in</h2>
-        <p>Each country expects something different. Build your resume and cover letter in the right format and download a PDF, free. Nothing you type leaves your device.</p>
+        <span class="kicker">Browse by category</span>
+        <h2>Everyday and study</h2>
+        <p>Quick everyday maths, dates and time zones, and tools for students and developers.</p>
       </div>
-      <a class="btn btn-sm" href="{{root}}resume-maker/">All resume makers</a>
+      <a class="btn btn-sm" href="{{root}}all-tools/">All tools A–Z</a>
     </div>
-    <ul class="card-grid">
-{{cards:resume}}
+    <ul class="card-grid cat-grid">
+{{categories:more}}
     </ul>
   </section>
 
   <section class="section">
     <div class="section-head">
       <div>
-        <span class="kicker">Business &amp; E-Commerce</span>
-        <h2>Protect your margins and overheads</h2>
-        <p>Pricing, margin, quote and payment fee tools for small businesses, agencies and online sellers.</p>
+        <span class="kicker">Take a break</span>
+        <h2>Brain games</h2>
+        <p>Short puzzles and tests for a break between tasks. Nothing is saved or sent anywhere.</p>
       </div>
-      <a class="btn btn-sm" href="{{root}}business/">All business tools</a>
     </div>
-    <ul class="card-grid">
-{{cards:business-pricing}}
-{{cards:business-ops}}
-{{cards:business-tax}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Career &amp; Salary</span>
-        <h2>Know what your time is really worth</h2>
-        <p>Convert your salary into hourly and daily rates, work out overtime, and see what a pay rise is really worth.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}career/">All career tools</a>
-    </div>
-    <ul class="card-grid">
-{{cards:career-salary}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Student &amp; Writing</span>
-        <h2>Fast writing &amp; academic utilities</h2>
-        <p>Count words, make APA, MLA and Harvard references, and work out your GPA, degree class or the grade you need.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}education/">All study tools</a>
-    </div>
-    <ul class="card-grid">
-{{cards:education-writing}}
-{{cards:education-gpa}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Personal Finance</span>
-        <h2>Compound interest &amp; mortgage math</h2>
-        <p>Project long-term compound growth with monthly deposits and calculate monthly mortgage payments privately.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}finance/">All finance tools</a>
-    </div>
-    <ul class="card-grid">
-{{cards:finance-invest}}
-    </ul>
-  </section>
-
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Developer &amp; Design</span>
-        <h2>Browser-based code &amp; accessibility tools</h2>
-        <p>Make strong passwords, format JSON, encode Base64, convert colour codes and check WCAG 2.1 contrast, without uploading anything.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}dev/">All developer tools</a>
-    </div>
-    <ul class="card-grid">
-{{cards:dev-tools}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Everyday Utilities</span>
-        <h2>Quick daily math &amp; conversions</h2>
-        <p>Make a QR code, work out a discount, pick a random winner, split a bill and convert units.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}tools/">All everyday tools</a>
-    </div>
-    <ul class="card-grid">
-{{cards:everyday-tools}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Image Tools</span>
-        <h2>Resize, compress and convert pictures</h2>
-        <p>Get photos to the right size and file type for a website, an email or an upload form. Your pictures never leave your device.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}image/">All image tools</a>
-    </div>
-    <ul class="card-grid">
-{{featured:image}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Date &amp; Time</span>
-        <h2>Deadlines, dates and time zones</h2>
-        <p>Count the days to a deadline, find the date 30 days from now, and plan calls with clients in other countries.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}time/">All date and time tools</a>
-    </div>
-    <ul class="card-grid">
-{{tool:time-zone}}
-{{tool:date-difference}}
-{{tool:date-add}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Text Tools</span>
-        <h2>Change, compare and tidy text</h2>
-        <p>Fix text typed in capitals, see what changed between two drafts, and clean up lists, all in your browser.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}text/">All text tools</a>
-    </div>
-    <ul class="card-grid">
-{{cards:text-tools}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Brain Games</span>
-        <h2>Take a short break</h2>
-        <p>Play Solitaire or Sudoku between tasks, or test your typing speed, maths and memory. Free, and nothing is saved.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}games/">All games</a>
-    </div>
-    <ul class="card-grid">
+    <ul class="card-grid cat-grid">
+{{categories:fun}}
 {{featured:games}}
     </ul>
   </section>
@@ -263,6 +137,7 @@
       <div>
         <span class="kicker">Why ToolNest</span>
         <h2>Built for accuracy and privacy</h2>
+        <p>ToolNest is made by Kunal Rajput, a student in India, who builds and tests every tool. <a href="{{root}}about/">See how the tools are checked</a>.</p>
       </div>
     </div>
     <ul class="features">
@@ -281,22 +156,6 @@
         <h3>Made for four countries</h3>
         <p>Choose US, UK, Canadian or Australian currency. Country tax tools use official IRS, HMRC, CRA and ATO figures.</p>
       </li>
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Coverage</span>
-        <h2>Where our tools work</h2>
-        <p>Pricing and planning tools work everywhere. Each country also has its own tax calculators, built on official figures.</p>
-      </div>
-    </div>
-    <ul class="country-grid">
-      <li><a class="country" href="{{root}}us/">{{flag:us}}<div><strong>United States</strong><span class="status">Open US tools →</span></div></a></li>
-      <li><a class="country" href="{{root}}uk/">{{flag:uk}}<div><strong>United Kingdom</strong><span class="status">Open UK tools →</span></div></a></li>
-      <li><a class="country" href="{{root}}ca/"><span class="code">CA</span><div><strong>Canada</strong><span class="status">Open CA tools →</span></div></a></li>
-      <li><a class="country" href="{{root}}au/"><span class="code">AU</span><div><strong>Australia</strong><span class="status">Open AU tools →</span></div></a></li>
     </ul>
   </section>
 </div>

@@ -39,6 +39,30 @@ SHA-256  2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
          185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969</div>
     <p>SHA hashes come from your browser's built-in cryptography (<code>crypto.subtle</code>). Browsers don't include MD5, so we calculate it ourselves following its standard (RFC 1321), and we test it against a well-known implementation.</p>
 
+    <h2>Which hash is it? Check the length</h2>
+    <p>If a download page gives you a checksum without saying which kind, its length tells you. Each hash always has the same number of characters:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Hash</th><th class="num">Characters</th><th class="num">Bits</th></tr></thead>
+        <tbody>
+          <tr><td>MD5</td><td class="num">32</td><td class="num">128</td></tr>
+          <tr><td>SHA-1</td><td class="num">40</td><td class="num">160</td></tr>
+          <tr><td>SHA-256</td><td class="num">64</td><td class="num">256</td></tr>
+          <tr><td>SHA-384</td><td class="num">96</td><td class="num">384</td></tr>
+          <tr><td>SHA-512</td><td class="num">128</td><td class="num">512</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Capital and small letters don't matter: <code>2CF24D…</code> and <code>2cf24d…</code> are the same hash. The checksum box ignores the difference, and also ignores a label in front such as <code>sha256:</code>.</p>
+
+    <h2>Checking a file on your own computer</h2>
+    <p>You can also get a file's hash with tools already on your computer. Replace <code>file.zip</code> with your file's name:</p>
+    <div class="formula">Windows (PowerShell)      Get-FileHash .\file.zip -Algorithm SHA256
+Windows (Command Prompt)  certutil -hashfile file.zip SHA256
+Mac (Terminal)            shasum -a 256 file.zip
+Linux                     sha256sum file.zip</div>
+    <p>Compare the result with the checksum on the download page. If even one character is different, the file isn't the one the publisher made: download it again from the official site.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>

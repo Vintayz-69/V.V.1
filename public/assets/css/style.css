@@ -7661,3 +7661,38 @@ button.sol-slot {
     display: none;
   }
 }
+
+/* ---------- Compact footer: brand + five link groups ---------- */
+.footer-grid-compact {
+  grid-template-columns: 1.6fr repeat(5, 1fr);
+}
+
+@media (max-width: 960px) {
+  .footer-grid-compact {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid-compact {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+  }
+}
+
+/* Homepage category cards: four across, so groups of four fill a row. */
+.card-grid.cat-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .card-grid.cat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .card-grid.cat-grid {
+    grid-template-columns: 1fr;
+  }
+}

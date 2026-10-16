@@ -38,12 +38,13 @@
       <h2>Conversion result</h2>
       <div class="result-main"><span id="out-convert-result">16.0934</span></div>
       <p id="out-convert-equation" class="convert-equation">10 Miles (mi) = 16.0934 Kilometers (km)</p>
-      <p class="result-note">Conversions utilize standard International System of Units (SI) and US Customary / Imperial conversion factors.</p>
+      <p class="result-note">Uses the exact international definitions of each unit, such as 1 inch = 2.54 cm.</p>
     </div>
   </section>
 
   <div class="content">
-    <h2>Common metric &amp; imperial reference factors</h2>
+    <h2>Common conversions and quick rules of thumb</h2>
+    <p>The rules of thumb are close enough for a rough answer in your head. Use the converter when the exact figure matters, such as for recipes, building work or shipping weights.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Measurement</th><th>Standard Conversion Factor</th><th>Practical Rule of Thumb</th></tr></thead>
@@ -52,20 +53,36 @@
           <tr><td><strong>Inches to Centimeters</strong></td><td>1 in = 2.54 cm</td><td>Multiply inches by 2.5</td></tr>
           <tr><td><strong>Pounds to Kilograms</strong></td><td>1 lb = 0.453592 kg</td><td>Divide pounds by 2.2 (e.g. 150 lbs &approx; 68 kg)</td></tr>
           <tr><td><strong>US Gallons to Liters</strong></td><td>1 gal = 3.78541 L</td><td>Multiply gallons by 3.8</td></tr>
-          <tr><td><strong>Celsius to Fahrenheit</strong></td><td>°F = (°C × 9/5) + 32</td><td>Double °C and add 30 for a quick rough estimate</td></tr>
+          <tr><td><strong>Celsius to Fahrenheit</strong></td><td>°F = (°C × 9/5) + 32</td><td>Double °C and add 30. Good for weather, less so for hot temperatures (boiling water gives 230 °F, not 212 °F)</td></tr>
         </tbody>
       </table>
     </div>
 
+    <h2>Worked examples</h2>
+    <div class="formula">10 miles to km         10 × 1.609344            = 16.09 km
+150 pounds to kg       150 × 0.45359237         = 68.04 kg
+5 US gallons to litres 5 × 3.785411784          = 18.93 L
+100 °C to °F           100 × 9/5 + 32           = 212 °F
+32 °F to °C            (32 − 32) × 5/9          = 0 °C</div>
+
+    <h2>How the conversions work</h2>
+    <p>Each unit is first changed into one base unit: metres for length, kilograms for weight, litres for volume and square metres for area. It's then changed from the base unit into the unit you want. Because every unit is linked to the same base, you can convert between any two units in a group, such as feet to miles or ounces to stone, without a separate table for each pair.</p>
+    <p>Temperature works differently, because the scales don't start at the same zero. Fahrenheit is converted with a formula rather than a single number to multiply by.</p>
+    <p>Many imperial and US units are defined exactly in metric terms. Since an international agreement in 1959, one inch is exactly 2.54 cm and one pound is exactly 0.45359237 kg, so these conversions are exact. Results are rounded to make them easier to read.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>
-        <summary>What is the difference between a US gallon and an Imperial gallon?</summary>
-        <p>A US liquid gallon is exactly 3.785411784 liters, whereas an Imperial gallon (historically used in the UK and Canada) is significantly larger at exactly 4.54609 liters (approx. 20% larger).</p>
+        <summary>What is the difference between a US gallon and an imperial gallon?</summary>
+        <p>A US gallon is exactly 3.785411784 litres. An imperial gallon, used in the UK, is exactly 4.54609 litres, about 20% bigger. Fuel economy in miles per gallon is not the same in the two countries for this reason. Our <a href="{{root}}tools/fuel-cost-calculator/">fuel cost calculator</a> handles both.</p>
       </details>
       <details>
-        <summary>What is the base unit used for conversions?</summary>
-        <p>All length measurements are mathematically normalized through the SI base meter (m), mass through the kilogram (kg), and volume through the liter (L) to ensure maximum floating-point precision.</p>
+        <summary>Are US cups and fluid ounces the same as UK ones?</summary>
+        <p>No. This converter uses US cups, pints and fluid ounces. UK (imperial) pints and fluid ounces are a different size, so a recipe from another country may need a different conversion.</p>
+      </details>
+      <details>
+        <summary>Why is my result rounded?</summary>
+        <p>Long decimals are hard to read and rarely needed. The calculation itself uses the full conversion factor, so rounding only affects how the answer is shown.</p>
       </details>
     </div>
   </div>

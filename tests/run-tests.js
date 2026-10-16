@@ -376,6 +376,8 @@ const CA_LIBS = ["data/tax-ca.js", "js/ca-tax.js"];
   expectAll("CA B.C. add with PST", calc({ province: "BC", mode: "add", amount: 1000, pst: 0.07 }), { gst: 50, pst: 70, after: 1120 });
   expectAll("CA Nova Scotia remove", calc({ province: "NS", mode: "remove", amount: 1140, pst: 0 }), { before: 1000, gst: 140 });
   expectAll("CA Alberta remove", calc({ province: "AB", mode: "remove", amount: 525, pst: 0 }), { before: 500, gst: 25 });
+  // Page text: "$1,000 including HST" in Ontario leaves $884.96 before tax
+  expectAll("CA Ontario remove $1,000", calc({ province: "ON", mode: "remove", amount: 1000, pst: 0 }), { before: 884.96 });
 }
 
 // ---------------- Australia (2026–27)
@@ -539,6 +541,9 @@ function loadResume(country) {
     { grossProfit: 150, grossMargin: 42.86, markup: 75, netProfit: 100, netMargin: 28.57 });
   expectAll("profit-margin break-even", calc({ cost: 50, revenue: 50, expenses: 0 }),
     { grossProfit: 0, grossMargin: 0, markup: 0, netProfit: 0, netMargin: 0 });
+  // Page text: adding a 40% markup to a $60 cost gives a 28.6% margin, not 40%
+  expectAll("profit-margin markup is not margin", calc({ cost: 60, revenue: 84, expenses: 0 }),
+    { grossProfit: 24, grossMargin: 28.57, markup: 40 });
 }
 
 // ---------------- Break-Even Analysis Calculator (Stage 4 Business)
@@ -915,6 +920,9 @@ function loadResume(country) {
   check("json-formatter valid status", valid.valid, true);
   check("json-formatter key count", valid.keys, 2);
   check("json-formatter beautified", valid.pretty.includes('  "name": "Alice"'), true);
+  // Page text: the "Example" section shows exactly this output
+  check("json-formatter page example", calc({ text: '{"name":"Alice","skills":["design","writing"],"active":true}' }).pretty,
+    ['{', '  "name": "Alice",', '  "skills": [', '    "design",', '    "writing"', '  ],', '  "active": true', '}'].join(String.fromCharCode(10)));
   const invalid = calc({ text: '{"broken": json}' });
   check("json-formatter invalid status", invalid.valid, false);
   const empty = calc({ text: '   ' });
@@ -930,6 +938,10 @@ function loadResume(country) {
   check("color-contrast mid grey ratio", mid.ratio, 4.48);
   check("color-contrast mid grey fails AA normal", mid.aaNormal, false);
   check("color-contrast mid grey passes AA large", mid.aaLarge, true);
+  // Page text: one shade darker passes AA for normal text
+  const darker = calc({ fg: "#767676", bg: "#ffffff" });
+  check("color-contrast #767676 ratio", darker.ratio, 4.54);
+  check("color-contrast #767676 passes AA normal", darker.aaNormal, true);
   const same = calc({ fg: "#ffffff", bg: "#ffffff" });
   check("color-contrast same color ratio", same.ratio, 1);
   check("color-contrast same color fails AA", same.aaNormal, false);
@@ -944,6 +956,8 @@ function loadResume(country) {
     { tipAmount: 15.39, total: 100.89, perPersonTotal: 33.63 });
   expectAll("tip round up", calc({ bill: 42.30, tipPct: 15, split: 1, roundUp: true }),
     { tipAmount: 6.70, total: 49.00, perPersonTotal: 49.00, effectivePct: 15.8 });
+  expectAll("tip before rounding up", calc({ bill: 42.30, tipPct: 15, split: 1, roundUp: false }),
+    { tipAmount: 6.35, total: 48.65 });
 }
 
 // ---------------- Universal Unit Converter
@@ -976,9 +990,46 @@ function loadResume(country) {
     { roas: 2.5, roasPct: 250, netProfit: 250, netMargin: 10.0, breakEvenRoas: 2.0, cpa: 20, aov: 50 });
   expectAll("roas 1.0x loss campaign", calc({ adSpend: 500, revenue: 500, cogs: 30, otherExpenses: 0, orders: 10 }),
     { roas: 1.0, roasPct: 100, netProfit: -150, breakEvenRoas: 1.43 });
+  // Page text: a 2.5x ROAS still loses money when product costs are 65% of revenue
+  expectAll("roas 2.5x with 65% costs loses money", calc({ adSpend: 1000, revenue: 2500, cogs: 65, otherExpenses: 0, orders: 50 }),
+    { roas: 2.5, netProfit: -125, breakEvenRoas: 2.86 });
 }
 
 // ================ Tools added 5 October 2026 (one per section)
+
+// ---------------- Effective hourly rate (worked by hand)
+{
+  const calc = load("effective-hourly-rate");
+  // Sam: $2,400 fee, 40 hours, 3% payment fee, $100 costs, $60 target.
+  // fees 2,400 × 3% = 72; kept 2,400 − 72 − 100 = 2,228; 2,228 ÷ 40 = 55.70;
+  // hours at target 2,228 ÷ 60 = 37.13; fee needed (60 × 40 + 100) ÷ 0.97 = 2,577.32
+  expectAll("effective-hourly Sam", calc({ fee: 2400, hours: 40, feePct: 3, expenses: 100, target: 60 }),
+    { fees: 72, net: 2228, effective: 55.7, gap: -4.3, hoursAtTarget: 37.13, feeNeeded: 2577.32 });
+  // £1,500 for 25 hours, no fees or costs: 1,500 ÷ 25 = 60, no target
+  const plain = calc({ fee: 1500, hours: 25, feePct: 0, expenses: 0, target: null });
+  expectAll("effective-hourly no fees", plain, { fees: 0, net: 1500, effective: 60 });
+  check("effective-hourly no target", plain.feeNeeded, undefined);
+  // $800 on a platform taking 10%, 20 hours, $50 target: kept 720; 36 an hour;
+  // hours at target 720 ÷ 50 = 14.4; fee needed 50 × 20 ÷ 0.9 = 1,111.11
+  expectAll("effective-hourly platform", calc({ fee: 800, hours: 20, feePct: 10, expenses: 0, target: 50 }),
+    { fees: 80, net: 720, effective: 36, gap: -14, hoursAtTarget: 14.4, feeNeeded: 1111.11 });
+}
+
+// ---------------- Rate increase (worked by hand)
+{
+  const calc = load("rate-increase");
+  // $75 → $90, 100 hours a month, 10% of work lost:
+  // now 7,500; all stay 9,000; rise 20%; break-even loss 1 − 75/90 = 16.67%; hours to match 7,500 ÷ 90 = 83.33;
+  // after 90 × 90 = 8,100; change +600
+  expectAll("rate-increase 75 to 90", calc({ oldRate: 75, newRate: 90, hours: 100, loss: 10 }),
+    { now: 7500, allStay: 9000, rise: 20, breakEvenLoss: 16.67, hoursToMatch: 83.33, after: 8100, change: 600 });
+  // £50 → £55, 80 hours, 15% lost: break-even 9.09%; after 55 × 68 = 3,740; change −260
+  expectAll("rate-increase loses money", calc({ oldRate: 50, newRate: 55, hours: 80, loss: 15 }),
+    { now: 4000, allStay: 4400, rise: 10, breakEvenLoss: 9.09, hoursToMatch: 72.73, after: 3740, change: -260 });
+  // $100 → $125, 60 hours, 20% lost is exactly break-even: 125 × 48 = 6,000
+  expectAll("rate-increase exactly even", calc({ oldRate: 100, newRate: 125, hours: 60, loss: 20 }),
+    { rise: 25, breakEvenLoss: 20, hoursToMatch: 48, after: 6000, change: 0 });
+}
 
 // ---------------- Freelance retainer
 {
@@ -1627,6 +1678,7 @@ const TIME_LIBS = ["js/date-common.js"];
   // Page example.
   check("url encode", U.encode("café & croissants = £3.50?", "component"), "caf%C3%A9%20%26%20croissants%20%3D%20%C2%A33.50%3F");
   check("url encode plus", U.encode("a b", "component", true), "a+b");
+  check("url encode mailto subject", U.encode("Invoice #104", "component"), "Invoice%20%23104");
   check("url encode full keeps structure", U.encode("https://example.com/a b?x=1&y=é", "full"), "https://example.com/a%20b?x=1&y=%C3%A9");
   check("url decode", U.decode("caf%C3%A9%20%26").text, "café &");
   check("url decode plus", U.decode("a+b", true).text, "a b");

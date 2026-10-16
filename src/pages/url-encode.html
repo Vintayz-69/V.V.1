@@ -50,11 +50,39 @@ café &amp; croissants = £3.50?
 → caf%C3%A9%20%26%20croissants%20%3D%20%C2%A33.50%3F</div>
     <p>"Spaces as +" follows the older rule used when web forms send data (<code>application/x-www-form-urlencoded</code>), where a space becomes + instead of %20.</p>
 
+    <h2>Which characters need encoding?</h2>
+    <p>Letters A to Z and a to z, the digits 0 to 9, and the four symbols <code>- . _ ~</code> never need encoding. Some other symbols have a special job in an address, so they must be encoded when they're part of a value:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Character</th><th>Its job in an address</th><th>Encoded</th></tr></thead>
+        <tbody>
+          <tr><td><code>?</code></td><td>Starts the query (the part with parameters)</td><td><code>%3F</code></td></tr>
+          <tr><td><code>&amp;</code></td><td>Separates one parameter from the next</td><td><code>%26</code></td></tr>
+          <tr><td><code>=</code></td><td>Separates a parameter's name from its value</td><td><code>%3D</code></td></tr>
+          <tr><td><code>#</code></td><td>Starts the part the browser keeps to itself</td><td><code>%23</code></td></tr>
+          <tr><td><code>/</code></td><td>Separates folders in the path</td><td><code>%2F</code></td></tr>
+          <tr><td>space</td><td>Not allowed in an address at all</td><td><code>%20</code> (or + in form data)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Everyday uses</h2>
+    <ul>
+      <li><strong>Search links.</strong> To link to a search for <em>tax &amp; VAT</em>, encode the words first, or the &amp; ends the search term early.</li>
+      <li><strong>Email links.</strong> A <code>mailto:</code> link with a subject needs the subject encoded: <em>Invoice #104</em> becomes <code>Invoice%20%23104</code>. Without it, everything after the # is lost.</li>
+      <li><strong>Campaign links.</strong> Values in tracking parameters, such as a campaign name with spaces, need encoding so the link works everywhere.</li>
+      <li><strong>Reading a link.</strong> Decode a long link from an email or an advert to see where it really goes and what it's sending.</li>
+    </ul>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>
         <summary>Should I encode a value or the whole address?</summary>
         <p>Encode each value on its own before you put it into an address: a search term containing &amp; would otherwise split into two parameters. "Whole address" mode is for fixing a full link that has spaces or accents in it, without breaking its slashes and question mark.</p>
+      </details>
+      <details>
+        <summary>Which JavaScript function does each mode match?</summary>
+        <p>Encoding one value works like <code>encodeURIComponent()</code>, which encodes every special character. "It's a whole address" works like <code>encodeURI()</code>, which leaves characters such as / ? &amp; and = alone so the address keeps working.</p>
       </details>
       <details>
         <summary>Why does decoding fail?</summary>

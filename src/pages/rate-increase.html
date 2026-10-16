@@ -1,0 +1,130 @@
+  <section class="calculator" aria-label="Freelance rate increase calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="oldRate">Your current rate<span class="hint">Per hour (or per day)</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="oldRate" type="text" inputmode="decimal" value="75" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="newRate">Your new rate</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="newRate" type="text" inputmode="decimal" value="90" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours you bill a month now<span class="hint">Or days, if you use a day rate</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="100" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 1 and 744.</span>
+      </div>
+
+      <div class="field">
+        <label for="loss">Work you might lose<span class="hint">Your guess, as a share of your hours</span></label>
+        <div class="input-wrap"><input id="loss" type="text" inputmode="decimal" value="10" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 100%.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>You could lose up to</h2>
+      <div class="result-main"><span id="out-breakeven">—</span> <small>of your work and still earn the same</small></div>
+      <ul class="result-list">
+        <li><span>Rate increase</span><span id="out-rise">—</span></li>
+        <li><span>Monthly income now</span><span id="out-now">—</span></li>
+        <li><span>At the new rate, if no work is lost</span><span id="out-all-stay">—</span></li>
+        <li><span>Hours a month to earn the same as now</span><span id="out-hours-match">—</span></li>
+        <li class="key"><span>Monthly income after the work you might lose</span><span id="out-after">—</span></li>
+        <li class="key"><span>Change from now</span><span id="out-change">—</span></li>
+      </ul>
+      <p class="result-note">Before tax. Fewer hours for the same income also means more free time or room for new clients.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your income if you lose more or less work</h2>
+    <p>Monthly income at your new rate, for different amounts of lost work:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Work lost</th><th class="num">Monthly income</th><th class="num">Change from now</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Why a rate rise is less risky than it feels</h2>
+    <p>The worry with raising your rates is losing clients. But at a higher rate, each hour you keep earns more, so you can lose some work and still earn the same. This calculator shows exactly how much. For example, a 20% rate rise means you could lose a sixth of your work (16.67%) and your income wouldn't change, while working fewer hours.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your current rate and your new rate.</strong> They can be hourly or daily, as long as both are the same kind.</li>
+      <li><strong>Enter how many hours (or days) you bill in a typical month</strong> at your current rate.</li>
+      <li><strong>Guess how much work you might lose</strong> when you raise your rate, such as a client who may leave. Try a few numbers to see the range.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Rate increase        = (new rate ÷ current rate − 1) × 100
+Income now           = current rate × hours a month
+Break-even loss      = (1 − current rate ÷ new rate) × 100
+Hours to earn same   = income now ÷ new rate
+Income after loss    = new rate × hours × (1 − work lost %)</div>
+    <p>The break-even loss is always smaller than the rate increase. A 20% rise lets you lose 16.67% of your work, not 20%, because the remaining work is a smaller base.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>A 20% rise.</strong> Alex bills 100 hours a month at $75 and raises the rate to $90. Alex expects to lose about 10% of the work.</p>
+    <div class="formula">Rate increase        = 90 ÷ 75 − 1                 = 20.0%
+Income now           = 75 × 100                    = $7,500
+Break-even loss      = 1 − 75 ÷ 90                 = 16.7%
+Hours to earn same   = 7,500 ÷ 90                  = 83.3 hours
+Income after loss    = 90 × 100 × 0.90             = $8,100 (+$600)</div>
+    <p>Even after losing 10% of the work, Alex earns $600 more a month while working 10 fewer hours.</p>
+    <p><strong>A small rise with a bigger loss.</strong> Jamie raises £50 to £55 (10%) on 80 hours a month, but expects to lose 15% of the work. The break-even loss is only 9.1%, so income falls from £4,000 to <strong>£3,740</strong>, a drop of £260 a month. With a small rise, keeping clients matters more.</p>
+    <p><strong>Exactly break-even.</strong> A rise from $100 to $125 (25%) on 60 hours a month allows a 20% loss. Losing exactly 20% leaves 48 hours at $125, which is <strong>$6,000</strong>, the same as now.</p>
+
+    <h2>Tips for raising your rates</h2>
+    <ul>
+      <li><strong>Give notice.</strong> Tell existing clients well ahead, for example a month or two, so the change doesn't come as a surprise.</li>
+      <li><strong>Start with new clients.</strong> Quoting your new rate to new clients first is a low-risk way to test it.</li>
+      <li><strong>Explain the value, not your costs.</strong> Clients care about results: faster turnaround, experience, the work you've delivered for them.</li>
+      <li><strong>Review your rates regularly</strong>, for example once a year, so each rise is small rather than one big jump after years at the same rate.</li>
+    </ul>
+    <p>Not sure what your new rate should be? Work it out from the income you want with the <a href="{{root}}freelance/freelance-hourly-rate-calculator/">freelance hourly rate calculator</a>, or see what your fixed-price projects really pay with the <a href="{{root}}freelance/effective-hourly-rate-calculator/">effective hourly rate calculator</a>.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Tax.</strong> All figures are before income tax.</li>
+      <li><strong>New clients</strong> you might win at the new rate, which would add to the income shown.</li>
+      <li><strong>Timing.</strong> It compares one typical month before and after. In real life, clients may move to the new rate at different times.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How much should I raise my rates?</summary>
+        <p>There's no single right amount. Start from the rate you need to reach your income goal, then look at what similar freelancers charge. This calculator then shows how much work you could afford to lose at that rate.</p>
+      </details>
+      <details>
+        <summary>Can I use this for a day rate or a monthly retainer?</summary>
+        <p>For a day rate, yes: enter days instead of hours. For retainers, enter the monthly fee as the rate and 1 as the "hours", and the work lost as the chance of losing that retainer. Our <a href="{{root}}freelance/retainer-calculator/">retainer calculator</a> helps you set the fee itself.</p>
+      </details>
+      <details>
+        <summary>What if I'm lowering my rate?</summary>
+        <p>This calculator is for rate rises, so the new rate must be higher. To see what a lower rate earns at different hours, use the <a href="{{root}}freelance/hourly-to-annual-income-calculator/">hourly to annual income calculator</a>.</p>
+      </details>
+    </div>
+  </div>

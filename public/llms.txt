@@ -9,9 +9,11 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Freelancer Tools](https://vintayz.com/freelance/): all freelancer tools
 - [Billable Hours Calculator](https://vintayz.com/freelance/billable-hours-calculator/): Work out how many hours you can realistically bill once admin and sales are counted.
 - [Contractor Day Rate Calculator](https://vintayz.com/freelance/contractor-day-rate-calculator/): Work out the day rate you need, allowing for holidays and gaps between contracts.
+- [Effective Hourly Rate Calculator](https://vintayz.com/freelance/effective-hourly-rate-calculator/): See what a fixed-price project really paid per hour, once revisions, calls, fees and costs are counted.
 - [Emergency Fund Calculator for Freelancers](https://vintayz.com/freelance/emergency-fund-calculator/): Work out how much cash to keep for quiet months, and how long it will take to save.
 - [Freelance Hourly Rate Calculator](https://vintayz.com/freelance/freelance-hourly-rate-calculator/): Find the hourly rate you need to hit your take-home income goal after tax, expenses and time off.
 - [Freelance Invoice Generator](https://vintayz.com/freelance/invoice-generator/): Create, customize and download professional freelance invoices as PDFs. No sign-up, no watermarks, files stay on your device.
+- [Freelance Rate Increase Calculator](https://vintayz.com/freelance/rate-increase-calculator/): See how much work you could lose after raising your rate and still earn the same.
 - [Freelance Retainer Calculator](https://vintayz.com/freelance/retainer-calculator/): Turn your hourly rate into a monthly retainer fee, and see what the client's real usage does to your rate.
 - [Hourly to Annual Income Calculator](https://vintayz.com/freelance/hourly-to-annual-income-calculator/): See what an hourly rate adds up to per day, week, month and year.
 - [Income Smoothing Calculator](https://vintayz.com/freelance/income-smoothing-calculator/): Turn irregular freelance income into a steady monthly salary with a safety buffer.
@@ -20,6 +22,38 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Retirement Savings Calculator](https://vintayz.com/freelance/retirement-savings-calculator/): See what your pension or retirement savings could grow to, and the income they might give you.
 - [Timesheet Calculator](https://vintayz.com/freelance/timesheet-calculator/): Add up a week of start and finish times, less breaks, and see what to bill at your hourly rate.
 - [Working Days Calculator](https://vintayz.com/freelance/business-days-calculator/): Count working days between two dates, or add working days to a date, skipping US or UK public holidays.
+
+## Business Tools
+
+- [Business Tools](https://vintayz.com/business/): all business tools
+- [Break-Even Analysis Calculator](https://vintayz.com/business/break-even-calculator/): Find the exact unit volume and sales revenue needed to cover fixed overheads and start making a profit.
+- [Customer Lifetime Value Calculator](https://vintayz.com/business/customer-lifetime-value-calculator/): Work out what a customer is worth in gross profit, compared with what it costs to win them (LTV:CAC).
+- [E-Commerce ROAS & Break-Even Calculator](https://vintayz.com/business/roas-calculator/): Calculate Return On Ad Spend, break-even ROAS based on product profit margins, and true campaign net profits.
+- [Payment Processing Fee Calculator](https://vintayz.com/business/payment-fee-calculator/): Work out card processing fees, your net payout, and how much to invoice to cover the fee.
+- [Profit Margin & Markup Calculator](https://vintayz.com/business/profit-margin-calculator/): Find your gross margin, markup percentage and net profit from your costs and selling price.
+- [Quote and Estimate Generator](https://vintayz.com/business/quote-generator/): Make a clear price quote or estimate for a client and download it as a PDF. No sign-up.
+- [Sales Tax Calculator](https://vintayz.com/business/sales-tax-calculator/): Add sales tax to a price, or take it out of a total, at the rate you type. For any US state or city.
+
+## Career & Salary
+
+- [Career & Salary](https://vintayz.com/career/): all career & salary
+- [Commission Calculator](https://vintayz.com/career/commission-calculator/): Work out commission on sales at a flat or tiered rate, total pay with base salary, and the sales you need for a goal.
+- [Job Offer Comparison Calculator](https://vintayz.com/career/job-offer-comparison-calculator/): Compare two job offers on salary, bonus, benefits, hours and commuting, and see which pays more per hour.
+- [Overtime Pay Calculator](https://vintayz.com/career/overtime-calculator/): Work out weekly pay with time-and-a-half and double-time hours.
+- [Pay Rise Calculator](https://vintayz.com/career/pay-rise-calculator/): See your raise as a percentage and in money, and whether it beats inflation.
+- [Salary to Hourly Calculator](https://vintayz.com/career/salary-to-hourly-calculator/): Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates.
+- [UK Holiday Entitlement Calculator](https://vintayz.com/career/uk-holiday-entitlement-calculator/): Your minimum paid holiday in days or hours, including part-time and irregular hours.
+- [UK Statutory Redundancy Pay Calculator](https://vintayz.com/career/uk-redundancy-pay-calculator/): Work out the legal minimum redundancy pay from your age, service and weekly pay.
+- [UK Take-Home Pay Calculator (2026/27)](https://vintayz.com/career/uk-take-home-pay-calculator/): Your salary after Income Tax, National Insurance, student loan and pension for 2026 to 2027.
+- [US Take-Home Pay Calculator (2026)](https://vintayz.com/career/us-take-home-pay-calculator/): Calculate your net W-2 paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax.
+
+## Personal Finance
+
+- [Personal Finance](https://vintayz.com/finance/): all personal finance
+- [Compound Interest Calculator](https://vintayz.com/finance/compound-interest-calculator/): See how regular deposits and compound interest grow your investments over time, with a year-by-year schedule.
+- [Monthly Expenses Calculator](https://vintayz.com/finance/monthly-expenses-calculator/): Add up your monthly bills and spending, see your yearly total and what's left from your pay.
+- [Mortgage Payment Calculator](https://vintayz.com/finance/mortgage-calculator/): Calculate monthly principal, interest, taxes and insurance payments for fixed-rate home loans.
+- [Savings Goal Calculator](https://vintayz.com/finance/savings-goal-calculator/): Find how much to save each month to reach a goal by a set date, with interest added.
 
 ## United States
 
@@ -90,29 +124,41 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [UK CV Maker](https://vintayz.com/resume-maker/uk-cv-maker/): A UK CV on A4 with a personal profile and references line, following National Careers Service advice.
 - [US Resume Builder](https://vintayz.com/resume-maker/us-resume-builder/): A one-column US resume on Letter paper, following the US Department of Labor's CareerOneStop advice.
 
-## Business Tools
+## Image Tools
 
-- [Business Tools](https://vintayz.com/business/): all business tools
-- [Break-Even Analysis Calculator](https://vintayz.com/business/break-even-calculator/): Find the exact unit volume and sales revenue needed to cover fixed overheads and start making a profit.
-- [Customer Lifetime Value Calculator](https://vintayz.com/business/customer-lifetime-value-calculator/): Work out what a customer is worth in gross profit, compared with what it costs to win them (LTV:CAC).
-- [E-Commerce ROAS & Break-Even Calculator](https://vintayz.com/business/roas-calculator/): Calculate Return On Ad Spend, break-even ROAS based on product profit margins, and true campaign net profits.
-- [Payment Processing Fee Calculator](https://vintayz.com/business/payment-fee-calculator/): Work out card processing fees, your net payout, and how much to invoice to cover the fee.
-- [Profit Margin & Markup Calculator](https://vintayz.com/business/profit-margin-calculator/): Find your gross margin, markup percentage and net profit from your costs and selling price.
-- [Quote and Estimate Generator](https://vintayz.com/business/quote-generator/): Make a clear price quote or estimate for a client and download it as a PDF. No sign-up.
-- [Sales Tax Calculator](https://vintayz.com/business/sales-tax-calculator/): Add sales tax to a price, or take it out of a total, at the rate you type. For any US state or city.
+- [Image Tools](https://vintayz.com/image/): all image tools
+- [Compress Image](https://vintayz.com/image/compress-image/): Make JPG, PNG and WebP pictures smaller for email and uploads, to a quality you choose or under a file size.
+- [Crop Image](https://vintayz.com/image/crop-image/): Cut a picture to the part you want, free or to a shape such as square or 16:9, and turn or flip it.
+- [Image Converter (JPG, PNG, WebP)](https://vintayz.com/image/convert-image/): Change pictures to JPG, PNG or WebP: WebP to JPG, PNG to JPG, JPG to PNG and more.
+- [Resize Image](https://vintayz.com/image/resize-image/): Make photos and pictures a new size in pixels or by a percentage, one at a time or many at once.
 
-## Career & Salary
+## Text Tools
 
-- [Career & Salary](https://vintayz.com/career/): all career & salary
-- [Commission Calculator](https://vintayz.com/career/commission-calculator/): Work out commission on sales at a flat or tiered rate, total pay with base salary, and the sales you need for a goal.
-- [Job Offer Comparison Calculator](https://vintayz.com/career/job-offer-comparison-calculator/): Compare two job offers on salary, bonus, benefits, hours and commuting, and see which pays more per hour.
-- [Overtime Pay Calculator](https://vintayz.com/career/overtime-calculator/): Work out weekly pay with time-and-a-half and double-time hours.
-- [Pay Rise Calculator](https://vintayz.com/career/pay-rise-calculator/): See your raise as a percentage and in money, and whether it beats inflation.
-- [Salary to Hourly Calculator](https://vintayz.com/career/salary-to-hourly-calculator/): Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates.
-- [UK Holiday Entitlement Calculator](https://vintayz.com/career/uk-holiday-entitlement-calculator/): Your minimum paid holiday in days or hours, including part-time and irregular hours.
-- [UK Statutory Redundancy Pay Calculator](https://vintayz.com/career/uk-redundancy-pay-calculator/): Work out the legal minimum redundancy pay from your age, service and weekly pay.
-- [UK Take-Home Pay Calculator (2026/27)](https://vintayz.com/career/uk-take-home-pay-calculator/): Your salary after Income Tax, National Insurance, student loan and pension for 2026 to 2027.
-- [US Take-Home Pay Calculator (2026)](https://vintayz.com/career/us-take-home-pay-calculator/): Calculate your net W-2 paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax.
+- [Text Tools](https://vintayz.com/text/): all text tools
+- [Case Converter](https://vintayz.com/text/case-converter/): Change text to Sentence case, lower case, UPPER CASE, Title Case, camelCase, snake_case and more.
+- [Remove Duplicate Lines and Sort](https://vintayz.com/text/remove-duplicate-lines/): Tidy a list: remove repeated and empty lines, trim spaces, and sort A to Z, by number or by length.
+- [Text Compare (Find the Differences)](https://vintayz.com/text/text-compare/): Paste two versions of a text and see exactly what was added and removed, by line or by word.
+
+## Everyday Utilities
+
+- [Everyday Utilities](https://vintayz.com/tools/): all everyday utilities
+- [Discount Calculator](https://vintayz.com/tools/discount-calculator/): Work out the sale price and what you save, with a second discount or sales tax, and the percent off between two prices.
+- [Fuel Cost Calculator](https://vintayz.com/tools/fuel-cost-calculator/): Work out the fuel cost of a trip in miles or km, with US or UK MPG or L/100 km, and split it between passengers.
+- [Percentage Calculator](https://vintayz.com/tools/percentage-calculator/): Work out X% of a number, what percent one number is of another, percentage change, and adding or taking off a percent.
+- [QR Code Generator](https://vintayz.com/tools/qr-code-generator/): Make a free QR code for a link, text, Wi-Fi network, email or phone number. Download PNG or SVG. Never expires.
+- [Random Number Generator and Picker](https://vintayz.com/tools/random-number-generator/): Fair random numbers in any range, with or without repeats, or random picks from a list of names.
+- [Tip & Bill Split Calculator](https://vintayz.com/tools/tip-calculator/): Evenly split restaurant bills, work out custom gratuity percentages, and round up totals cleanly.
+- [Unit Price Calculator](https://vintayz.com/tools/unit-price-calculator/): Compare price per kg, ounce, litre or item for up to four packs and see which is the best value.
+- [Universal Unit Converter](https://vintayz.com/tools/unit-converter/): Convert between metric and imperial measurements for length, weight, temperature, volume and area.
+
+## Date & Time
+
+- [Date & Time](https://vintayz.com/time/): all date & time
+- [Add or Subtract Days from a Date](https://vintayz.com/time/add-days-to-date-calculator/): Find the date a number of days, weeks, months or years before or after any date, such as 30 days from today.
+- [Days Between Dates Calculator](https://vintayz.com/time/days-between-dates-calculator/): Count the days between two dates, in days, weeks, and years, months and days.
+- [Online Timer and Stopwatch](https://vintayz.com/time/online-timer/): A countdown timer with an alarm sound, and a stopwatch with laps. Free, in your browser.
+- [Time Zone Converter](https://vintayz.com/time/time-zone-converter/): See a time in several cities at once, with summer time, and find hours that work for everyone.
+- [Week Number Calculator](https://vintayz.com/time/week-number-calculator/): Find the week number of any date (ISO and US style), and the dates of any week of the year.
 
 ## Education & Writing
 
@@ -137,50 +183,6 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [URL Encode and Decode](https://vintayz.com/dev/url-encode-decode/): Percent-encode text for a web address or decode it back, and see an address's parts and query parameters.
 - [UUID Generator (v4 and v7)](https://vintayz.com/dev/uuid-generator/): Make random version 4 or time-ordered version 7 UUIDs (GUIDs), and check any UUID.
 - [WCAG Color Contrast Checker](https://vintayz.com/dev/color-contrast-checker/): Check text and background color combinations against WCAG 2.1 AA and AAA legal web accessibility standards.
-
-## Personal Finance
-
-- [Personal Finance](https://vintayz.com/finance/): all personal finance
-- [Compound Interest Calculator](https://vintayz.com/finance/compound-interest-calculator/): See how regular deposits and compound interest grow your investments over time, with a year-by-year schedule.
-- [Monthly Expenses Calculator](https://vintayz.com/finance/monthly-expenses-calculator/): Add up your monthly bills and spending, see your yearly total and what's left from your pay.
-- [Mortgage Payment Calculator](https://vintayz.com/finance/mortgage-calculator/): Calculate monthly principal, interest, taxes and insurance payments for fixed-rate home loans.
-- [Savings Goal Calculator](https://vintayz.com/finance/savings-goal-calculator/): Find how much to save each month to reach a goal by a set date, with interest added.
-
-## Everyday Utilities
-
-- [Everyday Utilities](https://vintayz.com/tools/): all everyday utilities
-- [Discount Calculator](https://vintayz.com/tools/discount-calculator/): Work out the sale price and what you save, with a second discount or sales tax, and the percent off between two prices.
-- [Fuel Cost Calculator](https://vintayz.com/tools/fuel-cost-calculator/): Work out the fuel cost of a trip in miles or km, with US or UK MPG or L/100 km, and split it between passengers.
-- [Percentage Calculator](https://vintayz.com/tools/percentage-calculator/): Work out X% of a number, what percent one number is of another, percentage change, and adding or taking off a percent.
-- [QR Code Generator](https://vintayz.com/tools/qr-code-generator/): Make a free QR code for a link, text, Wi-Fi network, email or phone number. Download PNG or SVG. Never expires.
-- [Random Number Generator and Picker](https://vintayz.com/tools/random-number-generator/): Fair random numbers in any range, with or without repeats, or random picks from a list of names.
-- [Tip & Bill Split Calculator](https://vintayz.com/tools/tip-calculator/): Evenly split restaurant bills, work out custom gratuity percentages, and round up totals cleanly.
-- [Unit Price Calculator](https://vintayz.com/tools/unit-price-calculator/): Compare price per kg, ounce, litre or item for up to four packs and see which is the best value.
-- [Universal Unit Converter](https://vintayz.com/tools/unit-converter/): Convert between metric and imperial measurements for length, weight, temperature, volume and area.
-
-## Image Tools
-
-- [Image Tools](https://vintayz.com/image/): all image tools
-- [Compress Image](https://vintayz.com/image/compress-image/): Make JPG, PNG and WebP pictures smaller for email and uploads, to a quality you choose or under a file size.
-- [Crop Image](https://vintayz.com/image/crop-image/): Cut a picture to the part you want, free or to a shape such as square or 16:9, and turn or flip it.
-- [Image Converter (JPG, PNG, WebP)](https://vintayz.com/image/convert-image/): Change pictures to JPG, PNG or WebP: WebP to JPG, PNG to JPG, JPG to PNG and more.
-- [Resize Image](https://vintayz.com/image/resize-image/): Make photos and pictures a new size in pixels or by a percentage, one at a time or many at once.
-
-## Date & Time
-
-- [Date & Time](https://vintayz.com/time/): all date & time
-- [Add or Subtract Days from a Date](https://vintayz.com/time/add-days-to-date-calculator/): Find the date a number of days, weeks, months or years before or after any date, such as 30 days from today.
-- [Days Between Dates Calculator](https://vintayz.com/time/days-between-dates-calculator/): Count the days between two dates, in days, weeks, and years, months and days.
-- [Online Timer and Stopwatch](https://vintayz.com/time/online-timer/): A countdown timer with an alarm sound, and a stopwatch with laps. Free, in your browser.
-- [Time Zone Converter](https://vintayz.com/time/time-zone-converter/): See a time in several cities at once, with summer time, and find hours that work for everyone.
-- [Week Number Calculator](https://vintayz.com/time/week-number-calculator/): Find the week number of any date (ISO and US style), and the dates of any week of the year.
-
-## Text Tools
-
-- [Text Tools](https://vintayz.com/text/): all text tools
-- [Case Converter](https://vintayz.com/text/case-converter/): Change text to Sentence case, lower case, UPPER CASE, Title Case, camelCase, snake_case and more.
-- [Remove Duplicate Lines and Sort](https://vintayz.com/text/remove-duplicate-lines/): Tidy a list: remove repeated and empty lines, trim spaces, and sort A to Z, by number or by length.
-- [Text Compare (Find the Differences)](https://vintayz.com/text/text-compare/): Paste two versions of a text and see exactly what was added and removed, by line or by word.
 
 ## Brain Games
 

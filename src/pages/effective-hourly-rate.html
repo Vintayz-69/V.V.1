@@ -1,0 +1,142 @@
+  <section class="calculator" aria-label="Effective hourly rate calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fee">Project fee<span class="hint">What the client pays, before sales tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="fee" type="text" inputmode="decimal" value="2400" autocomplete="off"></div>
+        <span class="error-msg">Enter a fee above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours you really spent<span class="hint">Include revisions, calls, emails and admin</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 0.25 and 10,000 hours.</span>
+      </div>
+
+      <div class="field">
+        <label for="feePct">Platform or payment fee<span class="hint">0 if the client pays you directly with no fee</span></label>
+        <div class="input-wrap"><input id="feePct" type="text" inputmode="decimal" value="3" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 90%.</span>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Costs for this project<span class="hint">Software, stock images, subcontractors</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="expenses" type="text" inputmode="decimal" value="100" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="target">Your target hourly rate<span class="hint">Optional. Leave empty to skip the comparison.</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="target" type="text" inputmode="decimal" value="60" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate above 0, or leave it empty.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your effective hourly rate</h2>
+      <div class="result-main"><span id="out-effective">—</span> <small>/ hour</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Money you keep from the project</span><span id="out-net">—</span></li>
+        <li><span>Taken by platform or payment fees</span><span id="out-fees">—</span></li>
+        <li><span>Compared with your target</span><span id="out-gap">—</span></li>
+        <li><span>Hours that would have hit your target</span><span id="out-hours-target">—</span></li>
+        <li><span>Fee that would have hit your target</span><span id="out-fee-needed">—</span></li>
+      </ul>
+      <p class="result-note">Before income tax. Tax depends on your country and your total income for the year.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your rate if the project took longer or shorter</h2>
+    <p>The same fee, fees and costs, spread over different numbers of hours:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Hours spent</th><th class="num">Effective hourly rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="2">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Why your real rate is lower than you think</h2>
+    <p>When you agree a fixed price, you usually have a number of hours in mind. Then the project grows: an extra round of changes, a few more calls, emails, invoicing and chasing payment. None of that is billed separately, so every extra hour lowers what you earned per hour. Fees taken by a platform or a payment provider lower it again.</p>
+    <p>Your effective hourly rate is what you really earned for each hour, once all of this is counted. It's the fairest way to compare fixed-price projects with each other and with your normal hourly rate.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the project fee</strong> the client paid, without sales tax, VAT or GST.</li>
+      <li><strong>Enter every hour you spent</strong>, not just the hours of "real" work. Count revisions, meetings, calls, emails, research and admin. A time tracker or your calendar helps.</li>
+      <li><strong>Enter any percentage fee</strong> taken by a freelance platform or payment provider, and any costs you paid for this project.</li>
+      <li><strong>Add your target hourly rate</strong> to see how the project compares and what you'd need to charge next time.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Fees taken            = project fee × fee %
+Money you keep        = project fee − fees taken − project costs
+Effective hourly rate = money you keep ÷ hours spent
+
+Hours to hit target   = money you keep ÷ target rate
+Fee to hit target     = (target rate × hours spent + project costs) ÷ (1 − fee %)</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>A website that took longer than planned.</strong> Sam charged $2,400 for a website, planning on 30 hours. With two extra rounds of changes and several calls it took 40 hours. The client paid by card with a 3% fee, and Sam spent $100 on a theme and plugins. Sam's target is $60 an hour.</p>
+    <div class="formula">Fees taken            = 2,400 × 3%                  = $72.00
+Money you keep        = 2,400 − 72 − 100            = $2,228.00
+Effective hourly rate = 2,228 ÷ 40                  = $55.70 an hour
+
+Compared with target  = 55.70 − 60                  = $4.30 below
+Hours to hit target   = 2,228 ÷ 60                  = 37.13 hours
+Fee to hit target     = (60 × 40 + 100) ÷ 0.97      = $2,577.32</div>
+    <p>If the project had taken the 30 hours Sam planned, the rate would have been well above target. The extra 10 hours cost Sam the difference. Next time, Sam could quote about $2,580 for similar work, or limit the number of revision rounds in the quote.</p>
+    <p><strong>A job through a freelance platform.</strong> Priya earns $800 for a project on a platform that keeps 10%. It takes 20 hours and her target is $50 an hour.</p>
+    <div class="formula">Money you keep        = 800 − 80                    = $720.00
+Effective hourly rate = 720 ÷ 20                    = $36.00 an hour
+Fee to hit target     = 50 × 20 ÷ 0.90              = $1,111.11</div>
+    <p><strong>A simple case.</strong> £1,500 for 25 hours, paid directly with no fees or costs, is exactly <strong>£60 an hour</strong>.</p>
+
+    <h2>Ways to raise your effective rate</h2>
+    <ul>
+      <li><strong>Limit revisions in your quote</strong>, for example two rounds of changes, with extra rounds charged by the hour.</li>
+      <li><strong>Write down what's included</strong>, so new requests become a new quote instead of free extra work.</li>
+      <li><strong>Track your time on every project</strong>, so your next quote is based on how long similar work really takes.</li>
+      <li><strong>Include fees in your price.</strong> If a platform keeps 10%, your quote needs to be higher to end up with the same amount.</li>
+    </ul>
+    <p>To set your rate from the income you want, use the <a href="{{root}}freelance/freelance-hourly-rate-calculator/">freelance hourly rate calculator</a>. To price a new project with a buffer for extra work, use the <a href="{{root}}freelance/project-pricing-calculator/">project pricing calculator</a>.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Income tax</strong> and, in some countries, self-employment tax or National Insurance. The rate shown is before tax.</li>
+      <li><strong>Your general business costs</strong>, such as your computer, insurance and accounting. Enter only costs that belong to this project.</li>
+      <li><strong>Fixed fees per payment</strong>, such as 30 cents per card payment. Add them to project costs if you want to include them.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should I count time spent on the proposal?</summary>
+        <p>If you won the project, yes: it was part of the work needed to get paid. Counting it shows how much time each project really takes from start to finish.</p>
+      </details>
+      <details>
+        <summary>What is a good effective hourly rate?</summary>
+        <p>Compare it with the rate you need to reach your income goal after time off, unpaid admin and tax. That number is different for everyone, so work yours out with the hourly rate calculator and use it as your target here.</p>
+      </details>
+      <details>
+        <summary>Does this work for day rates?</summary>
+        <p>Yes. Enter the number of days instead of hours, and your target day rate instead of an hourly rate. The result is then your effective day rate.</p>
+      </details>
+    </div>
+  </div>

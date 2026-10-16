@@ -16,6 +16,7 @@ Placeholders you can use inside src/pages files:
   {{featured:PARENT}} cards for the tools marked featured=True in a section (e.g. pdf)
   {{soon:GROUP}}      "coming soon" cards (planning, tax)
   {{tool:KEY}}        one card for a single tool, e.g. {{tool:uk-vat}} (to show a tool on a second hub)
+  {{categories:GROUP}} homepage cards, one per section (money, files, more, fun; see HOME_CATEGORIES)
 """
 import hashlib
 import html
@@ -761,6 +762,20 @@ TOOLS = {
         short="Turn your hourly rate into a monthly retainer fee, and see what the client's real usage does to your rate.",
         icon="calendar", group="pricing", keywords="monthly retainer fee agreement reserved hours discount",
     ),
+    "effective-hourly-rate": dict(
+        path="freelance/effective-hourly-rate-calculator/",
+        name="Effective Hourly Rate Calculator",
+        card="Effective hourly rate calculator",
+        short="See what a fixed-price project really paid per hour, once revisions, calls, fees and costs are counted.",
+        icon="target", group="pricing", keywords="real hourly rate fixed price project scope creep revisions platform fee upwork fiverr",
+    ),
+    "rate-increase": dict(
+        path="freelance/rate-increase-calculator/",
+        name="Freelance Rate Increase Calculator",
+        card="Rate increase calculator",
+        short="See how much work you could lose after raising your rate and still earn the same.",
+        icon="trending", group="pricing", keywords="raise rates price increase lose clients break even new rate",
+    ),
     "customer-lifetime-value": dict(
         path="business/customer-lifetime-value-calculator/",
         name="Customer Lifetime Value Calculator",
@@ -1068,8 +1083,13 @@ TOOLS = {
 }
 
 # Sections a tool can live in: key -> (breadcrumb name, path, header nav key).
+# In site order (All tools page, llms.txt, section chips): money and work, countries, files and
+# documents, then everyday, study and fun.
 PARENTS = {
     "freelance": ("Freelancer Tools", "freelance/", "tools"),
+    "business": ("Business Tools", "business/", "business"),
+    "career": ("Career & Salary", "career/", "career"),
+    "finance": ("Personal Finance", "finance/", "finance"),
     "global": ("Global Tools", "global/", "global"),
     "us": ("United States", "us/", "us"),
     "uk": ("United Kingdom", "uk/", "uk"),
@@ -1077,16 +1097,13 @@ PARENTS = {
     "australia": ("Australia", "au/", "au"),
     "pdf": ("PDF Tools", "pdf/", "pdf"),
     "resume": ("Resume & CV Maker", "resume-maker/", "resume"),
-    "business": ("Business Tools", "business/", "business"),
-    "career": ("Career & Salary", "career/", "career"),
+    "image": ("Image Tools", "image/", "image"),
+    "text": ("Text Tools", "text/", "text"),
+    "everyday": ("Everyday Utilities", "tools/", "everyday"),
+    "time": ("Date & Time", "time/", "time"),
     "education": ("Education & Writing", "education/", "education"),
     "dev": ("Developer Tools", "dev/", "dev"),
-    "finance": ("Personal Finance", "finance/", "finance"),
     "health": ("Health & Fitness", "health/", "health"),
-    "everyday": ("Everyday Utilities", "tools/", "everyday"),
-    "image": ("Image Tools", "image/", "image"),
-    "time": ("Date & Time", "time/", "time"),
-    "text": ("Text Tools", "text/", "text"),
     "games": ("Brain Games", "games/", "games"),
 }
 
@@ -1233,13 +1250,14 @@ GAME_LIBS = ["js/games-common.js"]
 SECTORS_DAY = "2026-10-11"  # /image/, /time/ and /text/ added on 11 October 2026
 POPULAR_DAY = "2026-10-11"
 MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
+CONTENT_DAY = "2026-10-16"  # AdSense "low-value content" fixes: owner name, working email, fuller About and tool pages
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
 IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
 TIME_LIBS = ["js/date-common.js"]
 TEXT_CHIPS = ["{{icon:check}} Free, no sign-up", "{{icon:lock}} Your text never leaves your browser"]
 
 PAGES = [
-    dict(path="", src="home.html", kind="home", nav="home", updated=MORE_DAY, libs=["js/home-search.js"],
+    dict(path="", src="home.html", kind="home", nav="home", updated=CONTENT_DAY, libs=["js/home-search.js"],
          title="ToolNest by Vintayz: Free Money Calculators for Freelancers",
          description="Free calculators for freelancers in the US, UK, Canada and Australia. Price your work, plan your income and chase late payments."),
     dict(path="freelance/", src="freelance.html", kind="section", nav="tools",
@@ -1287,7 +1305,7 @@ PAGES = [
          intro="Turn your estimated hours, hourly rate and project costs into a fixed-price quote, with a safety buffer and deposit worked out for you.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["hourly-rate", "day-rate", "quote-generator"]),
-    dict(tool="hourly-to-annual", src="hourly-to-annual.html", script="hourly-to-annual.js",
+    dict(tool="hourly-to-annual", src="hourly-to-annual.html", updated=CONTENT_DAY, script="hourly-to-annual.js",
          title="Hourly to Annual Income Calculator | ToolNest by Vintayz",
          description="Convert an hourly rate into daily, weekly, monthly and yearly income. Set your own hours and weeks worked. Free, in USD, GBP, CAD or AUD.",
          intro="See what an hourly rate adds up to per day, week, month and year, based on the hours and weeks you actually work.",
@@ -1423,7 +1441,7 @@ PAGES = [
          intro="Find the contract hourly rate that matches a salaried job in Canada, once benefits and employer CPP are counted.",
          chips=["{{icon:globe}} Canada, tax year 2026"] + TOOL_CHIPS,
          related=["ca-self-employed-tax", "ca-cpp-ei", "ca-gst-hst"]),
-    dict(tool="ca-gst-hst", src="ca-gst-hst.html", script="ca-gst-hst.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
+    dict(tool="ca-gst-hst", src="ca-gst-hst.html", updated=CONTENT_DAY, script="ca-gst-hst.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
          title="GST/HST Calculator for Every Province | ToolNest by Vintayz",
          description="Add or remove GST/HST for any Canadian province or territory, including Ontario 13% HST, Nova Scotia 14% and B.C. PST.",
          intro="Add GST or HST to a price, or work out the tax inside a total, for any Canadian province or territory.",
@@ -1436,7 +1454,7 @@ PAGES = [
          intro="Work out the tax and Medicare levy on your 2026–27 sole trader income, including the small business income tax offset.",
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
          related=["au-voluntary-super", "au-gst", "au-employee-vs-contractor"]),
-    dict(tool="au-gst", src="au-gst.html", script="au-gst.js", libs=["data/tax-au.js", "js/au-tax.js"],
+    dict(tool="au-gst", src="au-gst.html", updated=CONTENT_DAY, script="au-gst.js", libs=["data/tax-au.js", "js/au-tax.js"],
          title="GST Calculator Australia: Add or Remove 10% | ToolNest by Vintayz",
          description="Add 10% GST to a price or work out the GST in a GST-inclusive total. Includes when sole traders must register for GST.",
          intro="Add 10% GST to a price, or work out how much GST is inside a total.",
@@ -1633,14 +1651,14 @@ PAGES = [
          related=["late-payment", "invoice-generator", "timesheet", "date-difference"]),
 
     # Business Tools
-    dict(tool="profit-margin", src="profit-margin.html", script="profit-margin.js",
+    dict(tool="profit-margin", src="profit-margin.html", updated=CONTENT_DAY, script="profit-margin.js",
          title="Profit Margin & Markup Calculator | ToolNest by Vintayz",
          description="Calculate gross margin, markup percentage, and net profit from your costs and selling price. Free, in USD, GBP, CAD or AUD.",
          intro="Find your gross margin, markup percentage and net profit from your direct costs and selling price.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["break-even", "payment-fee", "customer-lifetime-value"]),
 
-    dict(tool="break-even", src="break-even.html", script="break-even.js",
+    dict(tool="break-even", src="break-even.html", updated=CONTENT_DAY, script="break-even.js",
          title="Break-Even Analysis Calculator | ToolNest by Vintayz",
          description="Free break-even calculator: find how many units and how much revenue you need to cover your fixed costs, with a profit and loss table.",
          intro="Work out how many units you need to sell to cover your fixed overheads and start making a profit.",
@@ -1661,7 +1679,7 @@ PAGES = [
          related=["invoice-generator", "uk-vat", "profit-margin"]),
 
     # Career Tools
-    dict(tool="salary-to-hourly", src="salary-to-hourly.html", script="salary-to-hourly.js",
+    dict(tool="salary-to-hourly", src="salary-to-hourly.html", updated=CONTENT_DAY, script="salary-to-hourly.js",
          title="Salary to Hourly Calculator: Annual Pay to Hourly | ToolNest by Vintayz",
          description="Convert annual salary to hourly, daily, weekly, bi-weekly and overtime wage equivalents. Customize hours and paid weeks.",
          intro="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates based on your work schedule.",
@@ -1724,7 +1742,7 @@ PAGES = [
          intro="Work out your overall degree mark and classification, and what you need in your final year for a First or a 2:1.",
          chips=["{{flag:uk}} UK universities"] + TOOL_CHIPS,
          related=["final-grade", "citation", "word-counter"]),
-    dict(tool="final-grade", src="final-grade.html", script="final-grade.js", updated=NEW_DAY,
+    dict(tool="final-grade", src="final-grade.html", script="final-grade.js", updated=CONTENT_DAY,
          title="Final Grade Calculator: What Do I Need on My Final | ToolNest by Vintayz",
          description="Find the score you need on your final exam to reach the course grade you want, and see the grade you'd get for different exam scores.",
          intro="Find out what you need to score on your final exam to get the overall grade you want.",
@@ -1758,7 +1776,7 @@ PAGES = [
          chips=TOOL_CHIPS + [CURRENCY_CHIP]),
 
     # Tool pages (Part 1 & Part 2)
-    dict(tool="compound-interest", src="compound-interest.html", script="compound-interest.js", updated=NEW_DAY,
+    dict(tool="compound-interest", src="compound-interest.html", script="compound-interest.js", updated=CONTENT_DAY,
          title="Compound Interest Calculator: Savings Growth | ToolNest by Vintayz",
          description="Calculate compound interest with regular monthly deposits, annual returns and a year-by-year growth table. Free in USD, GBP, CAD, AUD.",
          intro="See how compound interest and regular monthly contributions grow your savings over time, with a year-by-year schedule.",
@@ -1786,42 +1804,42 @@ PAGES = [
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Health data stays on your device"],
          related=["tdee-calculator", "unit-converter", "emergency-fund"]),
 
-    dict(tool="json-formatter", src="json-formatter.html", script="json-formatter.js", updated=NEW_DAY,
+    dict(tool="json-formatter", src="json-formatter.html", script="json-formatter.js", updated=CONTENT_DAY,
          title="JSON Formatter, Validator & Minifier Online | ToolNest by Vintayz",
          description="Format, prettify, minify and validate JSON data instantly. 100% private in your browser with zero server uploads.",
          intro="Format and validate your JSON data with 2-space indentation or minify it for production. Runs entirely in your browser memory.",
          chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
          related=["color-contrast", "unix-timestamp", "unit-converter", "text-compare"]),
 
-    dict(tool="color-contrast", src="color-contrast.html", script="color-contrast.js", updated=NEW_DAY,
+    dict(tool="color-contrast", src="color-contrast.html", script="color-contrast.js", updated=CONTENT_DAY,
          title="WCAG Color Contrast Checker (AA & AAA) | ToolNest by Vintayz",
          description="Check foreground and background color contrast ratios against WCAG 2.1 Level AA and AAA accessibility standards. Live preview.",
          intro="Test foreground and background color pairs against WCAG 2.1 accessibility benchmarks to ensure digital compliance.",
          chips=["{{icon:lock}} Evaluated locally", "{{icon:check}} WCAG 2.1 standards"],
          related=["json-formatter", "word-counter", "unix-timestamp"]),
 
-    dict(tool="tip-calculator", src="tip.html", script="tip.js", updated=NEW_DAY,
+    dict(tool="tip-calculator", src="tip.html", script="tip.js", updated=CONTENT_DAY,
          title="Tip & Bill Split Calculator: Even Diners Split | ToolNest by Vintayz",
          description="Calculate tips (10% to 25%) and evenly split the bill between friends. Optional round-up to nearest dollar. Free, in USD, GBP, CAD, AUD.",
          intro="Evenly split food and drinks bills with tips, with quick preset buttons and an optional round-up toggle.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["unit-converter", "profit-margin", "percentage"]),
 
-    dict(tool="unit-converter", src="unit-converter.html", script="unit-converter.js", updated=NEW_DAY,
+    dict(tool="unit-converter", src="unit-converter.html", script="unit-converter.js", updated=CONTENT_DAY,
          title="Universal Unit Converter: Length, Weight, Temp | ToolNest by Vintayz",
          description="Convert between metric and imperial units for length (mi to km), weight (lbs to kg), temperature (°C to °F), volume and area.",
          intro="Convert instantly between metric and imperial measurement systems with standard scientific precision.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Converted locally"],
          related=["tip-calculator", "bmi-calculator", "timesheet", "percentage"]),
 
-    dict(tool="us-salaried-pay", src="us-take-home-pay.html", script="us-take-home-pay.js", libs=["data/tax-us.js"], updated=NEW_DAY,
+    dict(tool="us-salaried-pay", src="us-take-home-pay.html", script="us-take-home-pay.js", libs=["data/tax-us.js"], updated=CONTENT_DAY,
          title="US Take-Home Pay Calculator 2026 (W-2 Salary) | ToolNest by Vintayz",
          description="Calculate your net paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax. Monthly and bi-weekly.",
          intro="See what you take home from your annual W-2 salary in 2026 after federal income tax, FICA payroll taxes, and state taxes.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
          related=["overtime", "us-tax-bracket", "us-take-home"]),
 
-    dict(tool="roas-calculator", src="roas.html", script="roas.js", updated=NEW_DAY,
+    dict(tool="roas-calculator", src="roas.html", script="roas.js", updated=CONTENT_DAY,
          title="E-Commerce ROAS Calculator: Break-Even Ad Spend | ToolNest by Vintayz",
          description="Calculate Return On Ad Spend (ROAS) and break-even ROAS from product margins to see real net profit from ad campaigns.",
          intro="Find your campaign ROAS, break-even ROAS based on cost of goods sold, and true net profit after advertising spend.",
@@ -1933,6 +1951,18 @@ PAGES = [
          intro="Turn your hourly rate into a monthly retainer fee, and see what you really earn per hour once you know how many hours the client uses.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["project-pricing", "quote-generator", "invoice-generator"]),
+    dict(tool="effective-hourly-rate", src="effective-hourly-rate.html", script="effective-hourly-rate.js", updated=CONTENT_DAY,
+         title="Effective Hourly Rate Calculator for Freelancers | ToolNest by Vintayz",
+         description="Find what a fixed-price project really paid per hour once revisions, calls, platform fees and costs are counted, and the fee that would have hit your target.",
+         intro="See what a fixed-price project really paid you per hour, once every hour, fee and cost is counted.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["project-pricing", "hourly-rate", "rate-increase"]),
+    dict(tool="rate-increase", src="rate-increase.html", script="rate-increase.js", updated=CONTENT_DAY,
+         title="Freelance Rate Increase Calculator | ToolNest by Vintayz",
+         description="Raising your freelance rates? See how much work you could lose and still earn the same, and your income at the new rate. In USD, GBP, CAD or AUD.",
+         intro="See how much work you could lose after raising your rate and still earn the same, and what you'd earn at the new rate.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["hourly-rate", "effective-hourly-rate", "retainer"]),
     dict(tool="customer-lifetime-value", src="customer-lifetime-value.html", script="customer-lifetime-value.js", updated=SECTIONS_DAY,
          title="Customer Lifetime Value (CLV) Calculator | ToolNest by Vintayz",
          description="Calculate customer lifetime value from order value, orders a year, margin and how long customers stay, and compare it with your cost to win them (LTV:CAC).",
@@ -2184,13 +2214,13 @@ PAGES = [
          intro="Make random version 4 or time-ordered version 7 UUIDs, and check whether any UUID is valid.",
          chips=["{{icon:lock}} Made on your device", "{{icon:check}} Free, no sign-up"],
          related=["password-generator", "hash", "base64"]),
-    dict(tool="url-encode", src="url-encode.html", script="url-encode.js", updated=MORE_DAY,
+    dict(tool="url-encode", src="url-encode.html", script="url-encode.js", updated=CONTENT_DAY,
          title="URL Encode and Decode Online | ToolNest by Vintayz",
          description="Percent-encode text for a URL or decode it back, with UTF-8 and form-style + spaces. See an address's parts and query parameters.",
          intro="Percent-encode text for a web address or decode it back, and break an address into its parts.",
          chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
          related=["base64", "json-formatter", "regex-tester"]),
-    dict(tool="hash", src="hash.html", script="hash.js", updated=MORE_DAY,
+    dict(tool="hash", src="hash.html", script="hash.js", updated=CONTENT_DAY,
          title="Hash Generator: MD5, SHA-1, SHA-256 | ToolNest by Vintayz",
          description="Get the MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hash of text or any file, and check a download against its checksum. Files are never uploaded.",
          intro="Get the MD5 and SHA hashes of text or a file, and check a download against the checksum its publisher gives.",
@@ -2203,16 +2233,16 @@ PAGES = [
          chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
          related=["text-compare", "url-encode", "json-formatter"]),
 
-    dict(path="about/", src="about.html", kind="legal", nav="about", updated=PDF_DAY,
+    dict(path="about/", src="about.html", kind="legal", nav="about", updated=CONTENT_DAY,
          title="About ToolNest by Vintayz", h1="About ToolNest",
          description="ToolNest builds free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia."),
-    dict(path="contact/", src="contact.html", kind="legal",
+    dict(path="contact/", src="contact.html", updated=CONTENT_DAY, kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
-    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=MORE_DAY,
+    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=CONTENT_DAY,
          title="Privacy Policy | ToolNest by Vintayz", h1="Privacy Policy",
          description="How ToolNest handles personal information, cookies and analytics, and your privacy rights in the UK, the US and India."),
-    dict(path="terms/", src="terms.html", kind="legal", updated=PDF_DAY,
+    dict(path="terms/", src="terms.html", kind="legal", updated=CONTENT_DAY,
          title="Terms of Use | ToolNest by Vintayz", h1="Terms of Use",
          description="The terms that apply when you use the ToolNest website and calculators."),
     dict(path="disclaimer/", src="disclaimer.html", kind="legal", updated=SECTORS_DAY,
@@ -2461,6 +2491,51 @@ POPULAR_TOOLS = ["hourly-rate", "invoice-generator", "pdf-merge", "pdf-compress"
                  "timer", "sudoku"]
 
 
+# Homepage "Browse by category" cards: one card per section, in three groups ({{categories:GROUP}}).
+# The countries have their own homepage section, so they aren't repeated here.
+HOME_CATEGORIES = {
+    "money": ["freelance", "business", "career", "finance"],
+    "files": ["pdf", "resume", "image", "text"],
+    "more": ["everyday", "time", "education", "dev"],
+    "fun": ["games"],
+}
+SECTION_BLURBS = {
+    "freelance": "Hourly and day rates, project pricing, billable hours, invoices, timesheets and late payment interest.",
+    "business": "Profit margin, break-even, payment fees, quotes, ad spend, customer value and sales tax.",
+    "career": "Salary to hourly, pay rises, overtime, commission, job offers and take-home pay.",
+    "finance": "Compound interest, mortgage payments, savings goals and monthly expenses.",
+    "pdf": "Merge, split, compress, rotate, sign and convert PDFs. Files never leave your device.",
+    "resume": "Resume and CV makers for the US, UK, Canada and Australia, plus cover and resignation letters.",
+    "image": "Resize, compress, convert and crop pictures in your browser.",
+    "text": "Change text case, compare two texts and remove duplicate lines.",
+    "everyday": "Percentages, discounts, tips, unit conversions, QR codes, random numbers and fuel cost.",
+    "time": "Days between dates, adding days, week numbers, time zones and an online timer.",
+    "education": "Word counter, citations, GPA, weighted and final grades, and UK degree classes.",
+    "dev": "JSON formatter, password, UUID and hash generators, Base64, URL encoding, regex and colours.",
+    "games": "Sudoku, solitaire, puzzles, and typing and memory tests for a short break.",
+}
+
+
+def category_cards(group, up):
+    """One card per section in a homepage group, with how many live tools it has."""
+    live = [p["tool"] for p in PAGES if p.get("kind") == "tool"]
+    menu = {path: (name, ic) for _, name, path, ic in CALC_SECTIONS + FILE_SECTIONS}
+    out = []
+    for key in HOME_CATEGORIES[group]:
+        ppath = PARENTS[key][1]
+        n = sum(1 for t in live if TOOLS[t].get("parent", "freelance") == key)
+        if not n:
+            continue
+        name, ic = menu[ppath]
+        out.append(f"""<li><a class="card" href="{up}{ppath}">
+  <div class="card-top"><span class="card-icon">{icon(ic)}</span><span class="badge">{n} tools</span></div>
+  <h3>{name}</h3>
+  <p>{SECTION_BLURBS[key]}</p>
+  <span class="go">See all {n} {icon('arrow')}</span>
+</a></li>""")
+    return "\n".join(out)
+
+
 def section_chips(up):
     """A chip for every section that has live tools, with its number of tools."""
     live = [p["tool"] for p in PAGES if p.get("kind") == "tool"]
@@ -2516,6 +2591,8 @@ def expand(text, up, page=None):
             return flag(arg)
         if key == "cards":
             return "\n".join(tool_card(s, up, region) for s, t in TOOLS.items() if t["group"] == arg)
+        if key == "categories":
+            return category_cards(arg, up)
         if key == "featured":
             return "\n".join(tool_card(s, up, region) for s, t in TOOLS.items() if t.get("parent") == arg and t.get("featured"))
         if key == "soon":
@@ -2608,18 +2685,21 @@ def json_ld(page):
 
 
 # The header's Calculators menu: (nav key, name, path, icon).
+# The header's Tools menu, in the same order as PARENTS. PDF and Resume also have their own header
+# links, so they're listed apart (FILE_SECTIONS) and don't mark the Tools menu as current.
 CALC_SECTIONS = [("tools", "Freelance calculators", "freelance/", "briefcase"),
-                 ("finance", "Personal finance", "finance/", "dollar"),
                  ("business", "Business tools", "business/", "trending"),
                  ("career", "Career &amp; salary", "career/", "clock"),
-                 ("health", "Health &amp; fitness", "health/", "heart"),
-                 ("dev", "Developer tools", "dev/", "code"),
-                 ("everyday", "Everyday tools", "tools/", "formula"),
+                 ("finance", "Personal finance", "finance/", "dollar"),
                  ("image", "Image tools", "image/", "image"),
-                 ("time", "Date &amp; time", "time/", "calendar"),
                  ("text", "Text tools", "text/", "type-icon"),
+                 ("everyday", "Everyday tools", "tools/", "formula"),
+                 ("time", "Date &amp; time", "time/", "calendar"),
                  ("education", "Writing &amp; study", "education/", "award"),
+                 ("dev", "Developer tools", "dev/", "code"),
+                 ("health", "Health &amp; fitness", "health/", "heart"),
                  ("games", "Brain games", "games/", "gamepad")]
+FILE_SECTIONS = [("pdf", "PDF tools", "pdf/", "file"), ("resume", "Resume &amp; CV", "resume-maker/", "resume")]
 if not HEALTH_TOOLS:
     CALC_SECTIONS = [s for s in CALC_SECTIONS if s[0] != "health"]
 
@@ -2655,8 +2735,8 @@ def header(page, up):
     # The Calculators menu lists every calculator section (PDF and Resume have their own links).
     sections = "\n".join(
         f'              <li><a href="{up}{path}"{cur(key)}>{icon(ic)}{name}</a></li>'
-        for key, name, path, ic in CALC_SECTIONS[:1] + [("pdf", "PDF tools", "pdf/", "file"), ("resume", "Resume &amp; CV", "resume-maker/", "resume")]
-        + CALC_SECTIONS[1:] + [("all", "All tools A–Z", "all-tools/", "grid")])
+        for key, name, path, ic in CALC_SECTIONS[:4] + FILE_SECTIONS + CALC_SECTIONS[4:]
+        + [("all", "All tools A–Z", "all-tools/", "grid")])
     in_calcs = " is-current" if nav in [c[0] for c in CALC_SECTIONS] else ""
 
     # The Country menu is a <details> element, so it opens and closes without JavaScript.
@@ -2698,146 +2778,42 @@ def header(page, up):
 
 
 def footer(up):
+    """Five tidy groups that link to the section pages (each section page lists its own tools),
+    plus the company and legal links every page needs (LEGAL.md section 3)."""
     home = up or "./"
 
-    def links(group, featured_only=False):
-        return "\n".join(f'          <li><a href="{up}{t["path"]}">{t["card"][0].upper() + t["card"][1:]}</a></li>'
-                         for t in TOOLS.values()
-                         if t["group"] in group and (t.get("featured") or not featured_only))
-
-    global_link = f'          <li><a href="{up}global/">Worldwide (Global)</a></li>\n' if REGIONAL_COPIES else ""
-    health_nav = (f"""      <nav aria-label="Health and fitness">
-        <h2>Health &amp; Fitness</h2>
+    def group(label, items):
+        rows = "\n".join(f'          <li><a href="{up}{path}">{name}</a></li>' for name, path in items)
+        return f"""      <nav aria-label="{label}">
+        <h2>{label}</h2>
         <ul>
-{links(('health-fitness',))}
-          <li><a href="{up}health/">All health tools</a></li>
+{rows}
         </ul>
-      </nav>
-""" if HEALTH_TOOLS else "")
+      </nav>"""
+
+    money = [("Freelancer tools", "freelance/"), ("Business tools", "business/"), ("Career &amp; salary", "career/"),
+             ("Personal finance", "finance/"), ("Hourly rate calculator", TOOLS["hourly-rate"]["path"]),
+             ("Invoice generator", TOOLS["invoice-generator"]["path"])]
+    countries = ([("Worldwide (Global)", "global/")] if REGIONAL_COPIES else []) + [
+        ("United States", "us/"), ("United Kingdom", "uk/"), ("Canada", "ca/"), ("Australia", "au/")]
+    files = [("PDF tools", "pdf/"), ("Resume &amp; CV makers", "resume-maker/"), ("Image tools", "image/"),
+             ("Text tools", "text/")]
+    more = [("Everyday tools", "tools/"), ("Date &amp; time", "time/"), ("Writing &amp; study", "education/"),
+            ("Developer tools", "dev/")] + ([("Health &amp; fitness", "health/")] if HEALTH_TOOLS else []) + [
+            ("Brain games", "games/"), ("All tools A–Z", "all-tools/")]
+    company = [("About", "about/"), ("Contact", "contact/"), ("Privacy Policy", "privacy-policy/"),
+               ("Terms of Use", "terms/"), ("Disclaimer", "disclaimer/")]
+    groups = "\n".join([group("Money &amp; work", money), group("Countries", countries),
+                         group("Files &amp; documents", files), group("More tools", more), group("Company", company)])
 
     return f"""<footer class="site-footer">
   <div class="container">
-    <div class="footer-grid">
-      <div>
+    <div class="footer-grid footer-grid-compact">
+      <div class="footer-brand">
         <a class="logo" href="{home}">{LOGO}ToolNest<span class="logo-by">by {OWNER}</span></a>
         <p class="about-text">Free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia, plus PDF, image, text and everyday tools that run in your browser and never upload your files.</p>
       </div>
-      <nav aria-label="Pricing tools">
-        <h2>Pricing</h2>
-        <ul>
-{links(('pricing',))}
-        </ul>
-      </nav>
-      <nav aria-label="Income tools">
-        <h2>Income &amp; planning</h2>
-        <ul>
-{links(('income', 'planning'))}
-        </ul>
-      </nav>
-      <nav aria-label="Countries">
-        <h2>Countries</h2>
-        <ul>
-{global_link}          <li><a href="{up}us/">United States</a></li>
-          <li><a href="{up}uk/">United Kingdom</a></li>
-          <li><a href="{up}ca/">Canada</a></li>
-          <li><a href="{up}au/">Australia</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="PDF tools">
-        <h2>PDF tools</h2>
-        <ul>
-{links(('pdf-organize', 'pdf-convert', 'pdf-edit'), featured_only=True)}
-          <li><a href="{up}pdf/">All PDF tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Resume and CV makers">
-        <h2>Resume &amp; CV</h2>
-        <ul>
-{links(('resume',))}
-          <li><a href="{up}resume-maker/">All resume makers</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Business tools">
-        <h2>Business</h2>
-        <ul>
-{links(('business-pricing', 'business-ops', 'business-tax'))}
-          <li><a href="{up}business/">All business tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Career tools">
-        <h2>Career &amp; Salary</h2>
-        <ul>
-{links(('career-salary', 'career-country'))}
-          <li><a href="{up}career/">All career tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Writing and study tools">
-        <h2>Writing &amp; Study</h2>
-        <ul>
-{links(('education-writing', 'education-gpa'))}
-          <li><a href="{up}education/">All study tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Personal finance">
-        <h2>Finance</h2>
-        <ul>
-{links(('finance-invest',))}
-          <li><a href="{up}finance/">All finance tools</a></li>
-        </ul>
-      </nav>
-{health_nav}      <nav aria-label="Developer tools">
-        <h2>Developer</h2>
-        <ul>
-{links(('dev-tools',))}
-          <li><a href="{up}dev/">All developer tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Everyday tools">
-        <h2>Everyday Tools</h2>
-        <ul>
-{links(('everyday-tools',))}
-          <li><a href="{up}tools/">All everyday tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Image tools">
-        <h2>Image Tools</h2>
-        <ul>
-{links(('image-edit',))}
-          <li><a href="{up}image/">All image tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Date and time tools">
-        <h2>Date &amp; Time</h2>
-        <ul>
-{links(('time-dates', 'time-zones'))}
-          <li><a href="{up}time/">All date and time tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Text tools">
-        <h2>Text Tools</h2>
-        <ul>
-{links(('text-tools',))}
-          <li><a href="{up}text/">All text tools</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Brain games">
-        <h2>Games</h2>
-        <ul>
-{links(('games-classic', 'games-puzzle', 'games-skill'))}
-          <li><a href="{up}games/">All games</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Company">
-        <h2>Company</h2>
-        <ul>
-          <li><a href="{up}all-tools/">All tools A–Z</a></li>
-          <li><a href="{up}about/">About</a></li>
-          <li><a href="{up}contact/">Contact</a></li>
-          <li><a href="{up}privacy-policy/">Privacy Policy</a></li>
-          <li><a href="{up}terms/">Terms of Use</a></li>
-          <li><a href="{up}disclaimer/">Disclaimer</a></li>
-        </ul>
-      </nav>
+{groups}
     </div>
     <div class="footer-bottom">
       <p>© <span id="year">{TODAY[:4]}</span> {OWNER}. ToolNest is part of {OWNER}. All rights reserved.</p>
