@@ -7662,9 +7662,9 @@ button.sol-slot {
   }
 }
 
-/* ---------- Compact footer: brand + five link groups ---------- */
+/* ---------- Compact footer: brand + six link groups ---------- */
 .footer-grid-compact {
-  grid-template-columns: 1.6fr repeat(5, 1fr);
+  grid-template-columns: 1.6fr repeat(6, 1fr);
 }
 
 @media (max-width: 960px) {

@@ -32,6 +32,16 @@
             </div>
           </div>
 
+          <div class="field">
+            <label for="inv-title">Title on the invoice<span class="hint">"Tax invoice" is for businesses registered for GST in Australia</span></label>
+            <div class="select-wrap">
+              <select id="inv-title">
+                <option value="invoice">Invoice</option>
+                <option value="tax">Tax invoice</option>
+              </select>
+            </div>
+          </div>
+
           <div class="inv-grid-2">
             <div class="field">
               <label for="inv-date">Invoice date</label>
@@ -124,7 +134,7 @@
         <div class="inv-paper" id="invoice-paper">
           <div class="inv-paper-header">
             <div>
-              <h2 class="inv-paper-title">INVOICE</h2>
+              <h2 class="inv-paper-title" id="prev-title">INVOICE</h2>
               <div class="inv-paper-meta" id="prev-inv-num">INV-2026-001</div>
             </div>
             <div class="inv-paper-dates">
@@ -198,6 +208,41 @@ Total Amount Due    = Taxable Amount + Tax</div>
 
     <h2>Worked example</h2>
     <p>Sarah Chen completed a brand identity project for $2,500, 25 hours of UI design at $85/hour ($2,125), and design system guidelines for $750. Her subtotal was <strong>$5,375.00</strong>. Sarah gave a 5% repeat client discount ($268.75), reducing the taxable amount to $5,106.25. With 0% sales tax applied, her total invoice due was <strong>$5,106.25</strong>.</p>
+
+    <h2>What an invoice must show in each country</h2>
+    <p>The rules are different in each country. Here's what each government says, in short. The generator has boxes for the invoice number, dates, both parties' details, line items, tax and payment notes. Items without their own box, such as a supply date, a GST/HST number or an ABN, can go in your business details line or the notes. Check every invoice before you send it.</p>
+
+    <h3>United Kingdom</h3>
+    <p>GOV.UK says every invoice must include:</p>
+    <ul>
+      <li>a unique identification number</li>
+      <li>your name (or company name), address and contact information</li>
+      <li>the name and address of the customer you're invoicing</li>
+      <li>a clear description of what you're charging for</li>
+      <li>the date the goods or service were provided (supply date) and the date of the invoice</li>
+      <li>the amounts being charged, the VAT amount if applicable, and the total amount owed</li>
+    </ul>
+    <p>Sole traders must show their own name and any business name they use, plus an address where legal documents can be delivered if they use a business name. Limited companies must use their full name as it appears on the certificate of incorporation. If you and your customer are both VAT registered, you must use a VAT invoice, which needs more details. Source: <a href="https://www.gov.uk/invoicing-and-taking-payment-from-customers/invoices-what-they-must-include" rel="noopener">GOV.UK: what invoices must include</a>.</p>
+
+    <h3>United States</h3>
+    <p>The IRS doesn't publish a list of what a freelancer's invoice must show. It treats invoices as records that support the income you report, so keep a copy of every invoice you send. Many freelancers include an invoice number, dates, both parties' details, what the work was, the amount and the payment terms. Sales tax rules are set by each state. Source: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/what-kind-of-records-should-i-keep" rel="noopener">IRS: what kind of records should I keep</a>.</p>
+
+    <h3>Canada</h3>
+    <p>If you're registered for GST/HST, your business customers need certain details on your invoice to claim input tax credits. The CRA's requirements depend on the total sale:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Total sale</th><th>Invoice needs</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Total sale">Under $100</td><td data-label="Invoice needs">Your business or trading name, the invoice date, and the total amount</td></tr>
+          <tr><td data-label="Total sale">$100 to $499.99</td><td data-label="Invoice needs">All of the above, plus your GST/HST registration number and the GST/HST charged (or a note that the price includes it)</td></tr>
+          <tr><td data-label="Total sale">$500 or more</td><td data-label="Invoice needs">All of the above, plus the buyer's name, a brief description of the services, and the terms of payment</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Source: <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/calculate-prepare-report/input-tax-credit.html" rel="noopener">CRA: input tax credits</a>.</p>
+
+    <h3>Australia</h3>
+    <p>If you're registered for GST, your invoice to a business customer should be a tax invoice. The Australian Government's business.gov.au says it must include the words "tax invoice", your business name, your ABN, the date you issue it, a short description of what you sold (with quantity and price) and the GST amount, if any. The ATO adds that for sales of $1,000 or more, it must also show the buyer's identity or ABN. Choose "Tax invoice" in the Title box above to print those words on your PDF. If you're not registered for GST, business.gov.au says there's no law setting out what a regular invoice must contain; label it "invoice", not "tax invoice". Sources: <a href="https://business.gov.au/finance/payments-and-invoicing/how-to-invoice" rel="noopener">business.gov.au: how to invoice</a> and <a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/tax-invoices" rel="noopener">ATO: tax invoices</a>.</p>
 
     <h2>Frequently asked questions</h2>
     <div class="faq">

@@ -53,6 +53,7 @@
 
   var defaultInvoice = {
     currency: "USD",
+    docTitle: "invoice",
     senderName: "Sarah Chen Design",
     senderEmail: "sarah@chencreative.com",
     senderAddress: "Seattle, WA, United States",
@@ -112,6 +113,8 @@
 
   function readFromForm() {
     state.currency = document.getElementById("inv-currency").value;
+    var titleBox = document.getElementById("inv-title");
+    state.docTitle = titleBox && titleBox.value === "tax" ? "tax" : "invoice";
     state.senderName = document.getElementById("inv-from-name").value;
     state.senderEmail = document.getElementById("inv-from-email").value;
     state.senderAddress = document.getElementById("inv-from-address").value;
@@ -138,6 +141,8 @@
 
   function populateForm() {
     document.getElementById("inv-currency").value = state.currency;
+    var titleBox = document.getElementById("inv-title");
+    if (titleBox) titleBox.value = state.docTitle === "tax" ? "tax" : "invoice";
     document.getElementById("inv-from-name").value = state.senderName || "";
     document.getElementById("inv-from-email").value = state.senderEmail || "";
     document.getElementById("inv-from-address").value = state.senderAddress || "";
@@ -193,9 +198,17 @@
     });
   }
 
+  // "Tax invoice" is the wording Australia's GST rules ask for; quotes always say "QUOTE".
+  function titleText() {
+    return KIND === "invoice" && state.docTitle === "tax" ? "TAX INVOICE" : WORDS.title;
+  }
+
   function update() {
     readFromForm();
     var r = calculate(state);
+
+    var prevTitle = document.getElementById("prev-title");
+    if (prevTitle) prevTitle.textContent = titleText();
 
     // Update symbols in form
     document.querySelectorAll(".inv-cur-sym").forEach(function (el) {
@@ -355,7 +368,7 @@
 
       // Header
       y -= 20;
-      text(WORDS.title, margin, 24, fontBold, navy);
+      text(titleText(), margin, 24, fontBold, navy);
       textRight("Date: " + (state.invoiceDate || ""), right, 10, font, textDark);
       y -= 16;
       text(state.invoiceNumber || WORDS.number, margin, 11, font, subtle);
@@ -526,8 +539,9 @@
     update();
   });
 
-  document.querySelectorAll("#inv-currency, #inv-from-name, #inv-from-email, #inv-from-address, #inv-to-name, #inv-to-email, #inv-to-address, #inv-number, #inv-date, #inv-due, #inv-discount, #inv-tax, #inv-notes").forEach(function (inp) {
+  document.querySelectorAll("#inv-currency, #inv-title, #inv-from-name, #inv-from-email, #inv-from-address, #inv-to-name, #inv-to-email, #inv-to-address, #inv-number, #inv-date, #inv-due, #inv-discount, #inv-tax, #inv-notes").forEach(function (inp) {
     inp.addEventListener("input", update);
+    inp.addEventListener("change", update);
   });
 
   document.getElementById("btn-download-pdf").addEventListener("click", downloadPdf);

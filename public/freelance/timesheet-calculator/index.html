@@ -22,7 +22,7 @@
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../../assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <script src="../../assets/js/theme.js?v=d0cb052c"></script>
-<link rel="stylesheet" href="../../assets/css/style.css?v=a8079bc0">
+<link rel="stylesheet" href="../../assets/css/style.css?v=f06f2781">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,7 +58,7 @@
       "description": "Add up a week of start and finish times, less breaks, including night shifts. See total hours, overtime and pay. Free, in USD, GBP, CAD or AUD.",
       "inLanguage": "en",
       "isAccessibleForFree": true,
-      "dateModified": "2026-09-30",
+      "dateModified": "2026-10-17",
       "publisher": {
         "@type": "Organization",
         "name": "Vintayz",
@@ -233,6 +233,30 @@ Night shift 22:00 to 06:00, 30-minute break = 7 h 30 min = 7.50 hours
 8:15 to 16:45, 45-minute break              = 7 h 45 min = 7.75 hours
 45 hours at £18, overtime after 40 at 1.5×  = 40 × 18 + 5 × 27 = £855.00</div>
 
+    <h2>A full week, step by step</h2>
+    <p>Jo works irregular days and is paid £16 an hour, with unpaid breaks:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Day</th><th>Start</th><th>Finish</th><th class="num">Break</th><th class="num">Hours</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Day">Monday</td><td data-label="Start">8:30</td><td data-label="Finish">17:00</td><td class="num" data-label="Break">30 min</td><td class="num" data-label="Hours">8:00</td></tr>
+          <tr><td data-label="Day">Tuesday</td><td data-label="Start">9:00</td><td data-label="Finish">18:15</td><td class="num" data-label="Break">45 min</td><td class="num" data-label="Hours">8:30</td></tr>
+          <tr><td data-label="Day">Wednesday</td><td data-label="Start">9:00</td><td data-label="Finish">17:30</td><td class="num" data-label="Break">30 min</td><td class="num" data-label="Hours">8:00</td></tr>
+          <tr><td data-label="Day">Thursday</td><td data-label="Start">8:00</td><td data-label="Finish">16:00</td><td class="num" data-label="Break">30 min</td><td class="num" data-label="Hours">7:30</td></tr>
+          <tr><td data-label="Day">Friday</td><td data-label="Start">9:00</td><td data-label="Finish">15:00</td><td class="num" data-label="Break">none</td><td class="num" data-label="Hours">6:00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Total: 38 hours. 38 × £16 = <strong>£608.00</strong> for the week. Type the same times into the calculator to check.</p>
+
+    <h2>Common timesheet mistakes</h2>
+    <ul>
+      <li><strong>Writing 7.30 for seven and a half hours.</strong> In decimal hours that's 7.5. Billing 7.30 hours loses 12 minutes of pay each time.</li>
+      <li><strong>Forgetting shifts that cross midnight.</strong> 22:00 to 06:00 is 8 hours, not −16. The calculator adds a day when the finish is earlier than the start.</li>
+      <li><strong>Taking off paid breaks.</strong> Only take off breaks you aren't paid for. Your contract or employer's policy says which ones are paid.</li>
+      <li><strong>Rounding each day differently.</strong> If your employer or client rounds time (for example to the nearest 15 minutes), use the same rule every day and check it's written down.</li>
+    </ul>
+
     <h2>Minutes to decimal hours</h2>
     <div class="table-wrap">
       <table>
@@ -252,6 +276,14 @@ Night shift 22:00 to 06:00, 30-minute break = 7 h 30 min = 7.50 hours
       <details>
         <summary>Why is 7 hours 30 minutes shown as 7.5?</summary>
         <p>Pay is worked out on decimal hours, where 30 minutes is half an hour (0.5), not 0.30. Both are shown, so you can use whichever your client or employer asks for.</p>
+      </details>
+      <details>
+        <summary>How do I turn decimal hours back into minutes?</summary>
+        <p>Multiply the part after the decimal point by 60. 7.6 hours is 7 hours and 0.6 × 60 = 36 minutes, so 7 h 36 min.</p>
+      </details>
+      <details>
+        <summary>Can I use this for overtime?</summary>
+        <p>Yes. Enter the weekly hours after which overtime starts, such as 40, and the overtime rate, such as 1.5. Hours above the limit are paid at the higher rate. For more overtime options, such as double time, use our <a href="../../career/overtime-calculator/">overtime calculator</a>.</p>
       </details>
       <details>
         <summary>Is my timesheet saved?</summary>
@@ -298,7 +330,7 @@ Night shift 22:00 to 06:00, 30-minute break = 7 h 30 min = 7.50 hours
     <div class="disclaimer">
       <p><strong>Disclaimer:</strong> results are estimates for planning only and are not tax, legal or financial advice. Rules and rates vary by country, state and personal situation. Check with a qualified accountant before making decisions. <a href="../../disclaimer/">Read the full disclaimer</a>.</p>
     </div>
-    <p class="updated">Last updated: <time datetime="2026-09-30">30 September 2026</time></p>
+    <p class="updated">Last updated: <time datetime="2026-10-17">17 October 2026</time></p>
   </div>
 </div>
 </main>
@@ -319,6 +351,18 @@ Night shift 22:00 to 06:00, 30-minute break = 7 h 30 min = 7.50 hours
           <li><a href="../../finance/">Personal finance</a></li>
           <li><a href="../../freelance/freelance-hourly-rate-calculator/">Hourly rate calculator</a></li>
           <li><a href="../../freelance/invoice-generator/">Invoice generator</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Tax calculators">
+        <h2>Tax calculators</h2>
+        <ul>
+          <li><a href="../../us/self-employment-tax-calculator/">US self-employment tax</a></li>
+          <li><a href="../../us/quarterly-estimated-tax-calculator/">US quarterly estimated tax</a></li>
+          <li><a href="../../us/1099-vs-w2-calculator/">US 1099 vs W-2</a></li>
+          <li><a href="../../uk/self-employed-tax-calculator/">UK self-employed tax</a></li>
+          <li><a href="../../career/uk-take-home-pay-calculator/">UK take-home pay</a></li>
+          <li><a href="../../uk/sole-trader-vs-limited-company-calculator/">UK sole trader vs Ltd</a></li>
+          <li><a href="../../ca/self-employed-tax-calculator/">Canada self-employed tax</a></li>
         </ul>
       </nav>
       <nav aria-label="Countries">

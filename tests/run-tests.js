@@ -2266,6 +2266,198 @@ async function resumePdfTests() {
   }
 }
 
+// ---------------- Money page upgrades (2026-10-17): every number quoted in the new example tables
+{
+  // Hourly rate: four freelancers, two currencies
+  const hr = load("hourly-rate");
+  expectAll("hourly-rate designer", hr({ income: 55000, expenses: 4000, tax: 25, weeksOff: 5, hours: 40, billable: 65 }), { billableHours: 1222, hourly: 63.28 });
+  expectAll("hourly-rate developer", hr({ income: 90000, expenses: 5000, tax: 30, weeksOff: 6, hours: 40, billable: 75 }), { billableHours: 1380, hourly: 96.79 });
+  expectAll("hourly-rate copywriter", hr({ income: 32000, expenses: 1500, tax: 20, weeksOff: 6, hours: 35, billable: 60 }), { billableHours: 966, hourly: 42.96 });
+  expectAll("hourly-rate VA", hr({ income: 24000, expenses: 1000, tax: 15, weeksOff: 6, hours: 30, billable: 80 }), { billableHours: 1104, hourly: 26.48 });
+  check("hourly-rate Alex 7.5-hour day about $480", Math.round(hr({ income: 60000, expenses: 6000, tax: 25, weeksOff: 4, hours: 40, billable: 70 }).hourly * 7.5), 480);
+
+  // US self-employment tax at $40k, $75k, $120k (single, no wages)
+  const se = load("us-self-employment-tax", US_LIBS);
+  expectAll("US SE $40k", se({ profit: 40000, status: "single", wages: 0 }), { netEarnings: 36940, socialSecurity: 4580.56, medicare: 1071.26, total: 5651.82, deductibleHalf: 2825.91, additionalMedicare: 0 });
+  expectAll("US SE $75k", se({ profit: 75000, status: "single", wages: 0 }), { netEarnings: 69262.5, socialSecurity: 8588.55, medicare: 2008.61, total: 10597.16, deductibleHalf: 5298.58 });
+  expectAll("US SE $120k", se({ profit: 120000, status: "single", wages: 0 }), { netEarnings: 110820, socialSecurity: 13741.68, medicare: 3213.78, total: 16955.46, deductibleHalf: 8477.73 });
+  check("US SE 14.13% of profit", Math.round(se({ profit: 75000, status: "single", wages: 0 }).effective * 10000) / 100, 14.13);
+
+  // UK self-employed at £25k, £50k, £100k
+  const ukse = load("uk-self-employed-tax", UK_LIBS);
+  for (const [p, it, ni, th, pm] of [[25000, 2486, 745.8, 21768.2, 1814.02], [50000, 7486, 2245.8, 40268.2, 3355.68], [100000, 27432, 3256.6, 69311.4, 5775.95]]) {
+    const r = ukse({ profit: p, region: "ruk" });
+    expectAll(`UK SE £${p}`, { ...r, perMonth: r.takeHome / 12 }, { incomeTax: it, class4: ni, takeHome: th, perMonth: pm });
+  }
+
+  // UK take-home table and the £100k trap
+  const th = load("uk-take-home", UK_LIBS);
+  const paye = (salary) => th({ salary, region: "ruk", pensionPct: 0, pensionType: "net", plan: "none", postgraduate: false });
+  for (const [s, it, ni, take, pm] of [
+    [25000, 2486, 994.4, 21519.6, 1793.3], [30000, 3486, 1394.4, 25119.6, 2093.3], [35000, 4486, 1794.4, 28719.6, 2393.3],
+    [40000, 5486, 2194.4, 32319.6, 2693.3], [45000, 6486, 2594.4, 35919.6, 2993.3], [50000, 7486, 2994.4, 39519.6, 3293.3],
+    [60000, 11432, 3210.6, 45357.4, 3779.78], [70000, 15432, 3410.6, 51157.4, 4263.12], [80000, 19432, 3610.6, 56957.4, 4746.45],
+    [90000, 23432, 3810.6, 62757.4, 5229.78], [100000, 27432, 4010.6, 68557.4, 5713.12]]) {
+    expectAll(`UK PAYE table £${s}`, paye(s), { incomeTax: it, ni, takeHome: take, monthly: pm });
+  }
+  check("UK PAYE £50k to £60k gain", paye(60000).takeHome - paye(50000).takeHome, 5837.8);
+  check("UK PAYE £110k take-home", paye(110000).takeHome, 72357.4);
+  check("UK PAYE £125,140 take-home", paye(125140).takeHome, 78110.6);
+  check("UK PAYE £100k trap: extra tax", paye(110000).incomeTax - paye(100000).incomeTax, 6000);
+  check("UK PAYE £100k trap: extra NI", paye(110000).ni - paye(100000).ni, 200);
+
+  // Sole trader vs limited company: table, and the company never ahead from £20k to £200k
+  const st = load("uk-sole-trader-vs-ltd", UK_LIBS);
+  for (const [p, sole, ltd] of [[30000, 25468.2, 24403.45], [40000, 32868.2, 31632.7], [50000, 40268.2, 38861.95], [60000, 46111.4, 46091.2],
+    [80000, 57711.4, 55764.87], [100000, 69311.4, 65209.62], [150000, 92040.4, 85109.9]]) {
+    const r = st({ profit: p, region: "ruk", salary: 12570, companyCosts: 0 });
+    check(`UK sole vs ltd £${p} sole`, r.sole.takeHome, sole);
+    check(`UK sole vs ltd £${p} ltd`, r.ltd.takeHome, ltd);
+  }
+  // Page: with no running costs the company only wins between about £60,200 and £60,500, by about £15 at most;
+  // with £500 of running costs it never wins from £20,000 to £200,000.
+  let lowWin = Infinity, highWin = 0, bestGain = 0, aheadWithCosts = 0;
+  for (let p = 20000; p <= 200000; p += 50) {
+    const r = st({ profit: p, region: "ruk", salary: 12570, companyCosts: 0 });
+    const gain = r.ltd.takeHome - r.sole.takeHome;
+    if (gain > 0) { lowWin = Math.min(lowWin, p); highWin = Math.max(highWin, p); bestGain = Math.max(bestGain, gain); }
+    const c = st({ profit: p, region: "ruk", salary: 12570, companyCosts: 500 });
+    if (c.ltd.takeHome > c.sole.takeHome) aheadWithCosts++;
+  }
+  check("UK company wins from about £60,200", lowWin >= 60150 && lowWin <= 60250, true);
+  check("UK company wins up to about £60,500", highWin >= 60450 && highWin <= 60550, true);
+  check("UK company best gain about £15", Math.round(bestGain), 15);
+  check("UK company never ahead with £500 costs", aheadWithCosts, 0);
+
+  // Contractor day rate: Marcus (US)
+  expectAll("day-rate Marcus US", load("day-rate")({ income: 80000, expenses: 6000, tax: 28, daysOff: 26, benchWeeks: 6, hoursPerDay: 8 }),
+    { days: 204, day: 574.07, hourly: 71.76 });
+
+  // 1099 vs W-2: Taylor
+  expectAll("US 1099 Taylor", load("us-1099-vs-w2", US_LIBS)({ salary: 75000, benefits: 9000, rate: 50, hours: 35, weeks: 46 }),
+    { employerTax: 5737.5, w2Value: 89737.5, hours: 1610, breakEven: 55.74, gross1099: 80500, difference: -9237.5 });
+
+  // Canada self-employed, before provincial tax
+  const ca = load("ca-self-employed-tax", CA_LIBS);
+  for (const [e, cpp, fed, left] of [[40000, 4343.5, 2688.63, 32967.87], [60000, 6723.5, 5155.43, 48121.07], [90000, 9292.9, 10666.44, 70040.66]]) {
+    const r = ca({ earnings: e, provincial: 0 });
+    check(`CA SE $${e} CPP`, r.cpp.total, cpp);
+    check(`CA SE $${e} federal`, r.federal, fed);
+    check(`CA SE $${e} left`, r.takeHome, left);
+  }
+}
+
+// ---------------- Thin page deepening, batch 1 (2026-10-17): numbers quoted in the new sections
+{
+  // Commission: tiered table, retroactive comparison, two offers
+  const com = load("commission");
+  const tier = { rate: 5, tiered: true, threshold: 40000, rate2: 8 };
+  for (const [s, c] of [[30000, 1500], [40000, 2000], [50000, 2800], [60000, 3600], [80000, 5200]]) check(`commission tiered $${s}`, com({ sales: s, ...tier }).commission, c);
+  const retro = (s) => (s > 40000 ? s * 0.08 : s * 0.05);
+  for (const [s, c] of [[30000, 1500], [40000, 2000], [50000, 4000], [60000, 4800], [80000, 6400]]) check(`commission retroactive $${s}`, retro(s), c);
+  check("commission offers break-even", (55000 - 45000) / (0.03 - 0.01), 500000);
+  check("commission offer A at $300k", com({ sales: 300000, rate: 3, base: 45000 }).total, 54000);
+  check("commission offer B at $300k", com({ sales: 300000, rate: 1, base: 55000 }).total, 58000);
+  check("commission rate from payslip", 2500 / 50000 * 100, 5);
+
+  // Sales tax: round total, rate from receipt, per-item rounding
+  const st = load("sales-tax");
+  expectAll("sales tax $50 total at 7%", st({ amount: 50, rate: 7, mode: "remove" }), { net: 46.73, tax: 3.27 });
+  check("sales tax rate from receipt", 5.6 / 80 * 100, 7);
+  check("sales tax per item", st({ amount: 0.99, rate: 8.25, mode: "add" }).tax * 3, 0.24);
+  check("sales tax on total", st({ amount: 2.97, rate: 8.25, mode: "add" }).tax, 0.25);
+  check("sales tax mental 8% of $45", 45 * 0.08, 3.6);
+
+  // Savings goal tables
+  const sg = load("savings-goal");
+  for (const [m, plain, at4, int4] of [[12, 833.33, 818.17, 182.01], [24, 416.67, 400.92, 378.02], [36, 277.78, 261.91, 571.37], [60, 166.67, 150.83, 950.09]]) {
+    check(`savings $10k ${m}m no interest`, sg({ goal: 10000, current: 0, months: m, rate: 0 }).monthly, plain);
+    expectAll(`savings $10k ${m}m at 4%`, sg({ goal: 10000, current: 0, months: m, rate: 4 }), { monthly: at4, interest: int4 });
+  }
+  check("savings Sara 48 months", sg({ goal: 20000, current: 2000, months: 48, rate: 4 }).monthly, 339.76);
+  check("savings Sara $5,000 start", sg({ goal: 20000, current: 5000, months: 36, rate: 4 }).monthly, 376.19);
+  check("savings Sara 5%", sg({ goal: 20000, current: 2000, months: 36, rate: 5 }).monthly, 456.14);
+  check("savings biweekly", 464.77 * 12 / 26, 214.51);
+  check("savings weekly", 464.77 * 12 / 52, 107.25);
+
+  // Overtime table and yearly figure
+  const ot = load("overtime");
+  for (const r of [15, 18, 20, 25, 30]) {
+    check(`overtime ${r} x1.25`, r * 1.25, Math.round(r * 125) / 100);
+    check(`overtime ${r} x1.5`, ot({ rate: r, regular: 0, overtime: 1, overtimeRate: 1.5, double: 0, weeks: 1 }).overtimeHourly, r * 1.5);
+    check(`overtime ${r} x2`, ot({ rate: r, regular: 0, overtime: 0, overtimeRate: 1.5, double: 1, weeks: 1 }).doubleHourly, r * 2);
+  }
+  expectAll("overtime 48 weeks", ot({ rate: 20, regular: 40, overtime: 5, overtimeRate: 1.5, double: 0, weeks: 48 }), { yearly: 45600 });
+  check("overtime extra over 48 weeks", 150 * 48, 7200);
+  check("overtime UK average example", 450 / 47.5, 9.47);
+
+  // Pay rise table and compounding
+  const pr = load("pay-rise");
+  for (const [p, np, inc, m, w] of [[2, 51000, 1000, 83.33, 19.23], [3, 51500, 1500, 125, 28.85], [5, 52500, 2500, 208.33, 48.08], [10, 55000, 5000, 416.67, 96.15]]) {
+    expectAll(`pay rise ${p}% on $50k`, pr({ mode: "percent", current: 50000, percent: p, inflation: null }), { newPay: np, increase: inc, monthly: m, weekly: w });
+  }
+  check("pay rise 3% five years", 50000 * 1.03 ** 5, 57963.7);
+
+  // Timesheet week
+  const T = load("timesheet");
+  const rows = [{ start: "8:30", end: "17:00", breakMin: "30" }, { start: "9:00", end: "18:15", breakMin: "45" }, { start: "9:00", end: "17:30", breakMin: "30" },
+    { start: "8:00", end: "16:00", breakMin: "30" }, { start: "9:00", end: "15:00", breakMin: "" }];
+  check("timesheet Jo days", rows.map((r) => T.hhmm(T.rowMinutes(r))).join(" "), "8:00 8:30 8:00 7:30 6:00");
+  expectAll("timesheet Jo week", T.calculate({ rows, rate: 16, overtimeAfter: null, overtimeRate: 1.5 }), { hours: 38, pay: 608 });
+  check("timesheet 7.30 vs 7.5 minutes lost", (7.5 - 7.3) * 60, 12);
+
+  // Australia: employee vs contractor
+  const ae = load("au-employee-vs-contractor", AU_LIBS);
+  for (const [w, be, diff] of [[40, 70, 0], [42, 66.67, 5320], [44, 63.64, 10640], [46, 60.87, 15960], [48, 58.33, 21280]]) {
+    expectAll(`AU contractor Liam ${w} weeks`, ae({ salary: 95000, benefits: 0, rate: 70, hours: 38, weeks: w }), { breakEven: be, difference: diff });
+  }
+  expectAll("AU contractor Mia", ae({ salary: 120000, benefits: 0, rate: 80, hours: 38, weeks: 42 }),
+    { super: 14400, package: 134400, hours: 1596, breakEven: 84.21, gross: 127680, difference: -6720 });
+
+  // Canada: employee vs contractor
+  const ce = load("ca-employee-vs-contractor", CA_LIBS);
+  for (const [w, be, diff] of [[42, 55.39, -621.45], [44, 52.88, 3503.55], [46, 50.58, 7628.55], [48, 48.47, 11753.55]]) {
+    expectAll(`CA contractor Sanjay ${w} weeks`, ce({ salary: 75000, benefits: 8000, rate: 55, hours: 37.5, weeks: w }), { breakEven: be, difference: diff });
+  }
+  expectAll("CA contractor Olivia", ce({ salary: 90000, benefits: 10000, rate: 60, hours: 35, weeks: 44 }),
+    { employerCpp: 4646.45, package: 104646.45, hours: 1540, breakEven: 67.95, gross: 92400, difference: -12246.45 });
+  check("CA contractor Sanjay % above salary per hour", Math.round((50.58 / (75000 / 1950) - 1) * 100), 32);
+  check("CA contractor Olivia % above salary per hour", Math.round((67.95 / (90000 / 1820) - 1) * 100), 37);
+
+  // Australia: GST table and discounted invoice
+  const g = load("au-gst", AU_LIBS);
+  for (const [a, add, rb, rg] of [[100, 110, 90.91, 9.09], [250, 275, 227.27, 22.73], [500, 550, 454.55, 45.45], [1000, 1100, 909.09, 90.91], [2500, 2750, 2272.73, 227.27], [5000, 5500, 4545.45, 454.55]]) {
+    check(`AU GST add $${a}`, g({ mode: "add", amount: a }).after, add);
+    expectAll(`AU GST remove $${a}`, g({ mode: "remove", amount: a }), { before: rb, gst: rg });
+  }
+  expectAll("AU GST discounted invoice", g({ mode: "add", amount: 2000 * 0.9 }), { gst: 180, after: 1980 });
+
+  // Australia: voluntary super at different incomes
+  const sup = load("au-voluntary-super", AU_LIBS);
+  for (const [i, saved, net, change] of [[60000, 3350, 1850, -6650], [90000, 3200, 1700, -6800], [150000, 3900, 2400, -6100]]) {
+    expectAll(`AU super $${i}`, sup({ income: i, employer: i * 0.12, extra: 10000 }), { taxSaved: saved, contributionsTax: 1500, netBenefit: net, takeHomeChange: change, overCap: false });
+  }
+  expectAll("AU super $200k over cap", sup({ income: 200000, employer: 24000, extra: 10000 }), { concessional: 34000, overCap: true });
+
+  // UK: working from home, mileage
+  const wfh = load("uk-work-from-home", UK_LIBS);
+  for (const [h, y] of [[24, 0], [40, 120], [80, 216], [120, 312]]) check(`UK WFH year at ${h} hours`, wfh.calculate({ hours: h, months: 12, bills: 0, share: 0 }).simplified, y);
+  check("UK WFH £312 saves at 26%", 312 * 0.26, 81.12);
+  expectAll("UK WFH Tom", wfh.calculate({ hours: 60, months: 10, bills: 4000, share: 15 }), { simplified: 180, actual: 600, best: "actual" });
+  const mil = load("uk-mileage", UK_LIBS);
+  for (const [m, now, before] of [[2000, 1100, 900], [5000, 2750, 2250], [10000, 5500, 4500], [15000, 6750, 5750], [20000, 8000, 7000]]) {
+    check(`UK mileage ${m} 2026-27`, mil({ year: "2026-27", vehicle: "car", miles: m, taxRate: 0 }).allowance, now);
+    check(`UK mileage ${m} 2025-26`, mil({ year: "2025-26", vehicle: "car", miles: m, taxRate: 0 }).allowance, before);
+  }
+  expectAll("UK mileage Dev motorcycle", mil({ year: "2026-27", vehicle: "motorcycle", miles: 4000, taxRate: 26 }), { allowance: 960, saving: 249.6 });
+
+  // Canada: instalment situations
+  const ci = load("ca-instalments", CA_LIBS);
+  expectAll("CA instalments first big year", ci({ current: 9000, last: 1500, before: 0, quebec: false }), { required: false, lower: 0 });
+  expectAll("CA instalments Quebec", ci({ current: 4000, last: 2500, before: 1000, quebec: true }), { threshold: 1800, required: true, lower: 625 });
+  expectAll("CA instalments income fell", ci({ current: 6000, last: 14000, before: 12000, quebec: false }), { required: true, currentYear: 1500, priorYear: 3500, lower: 1500 });
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);

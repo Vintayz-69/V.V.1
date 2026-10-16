@@ -22,7 +22,7 @@
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../../assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <script src="../../assets/js/theme.js?v=d0cb052c"></script>
-<link rel="stylesheet" href="../../assets/css/style.css?v=a8079bc0">
+<link rel="stylesheet" href="../../assets/css/style.css?v=f06f2781">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,7 +58,7 @@
       "description": "Add sales tax to a price or work out the price before tax from a total, at the rate you type. Works for any US state, county or city rate.",
       "inLanguage": "en",
       "isAccessibleForFree": true,
-      "dateModified": "2026-10-13",
+      "dateModified": "2026-10-17",
       "publisher": {
         "@type": "Organization",
         "name": "Vintayz",
@@ -206,6 +206,32 @@ Add 6% to $49.99           tax $3.00      total $52.99
 Remove 8.25% from $54.13   price $50.00   tax $4.13
 Wrong way: $54.13 − 8.25% = $49.66 (too low)</div>
 
+    <h2>Three everyday sums the calculator helps with</h2>
+
+    <h3>1. Setting a price so the total is a round number</h3>
+    <p>Say you sell at a market and want customers to pay exactly $50.00 including 7% tax. Choose "Remove tax" and type 50 and 7:</p>
+    <div class="formula">Price before tax = 50 ÷ 1.07   = $46.73
+Tax              = 50 − 46.73  = $3.27</div>
+    <p>So your price tag is $46.73 before tax. The 7% here is only an example rate.</p>
+
+    <h3>2. Finding the rate from a receipt</h3>
+    <p>If a receipt shows the price and the tax, the rate is tax ÷ price × 100. A receipt with $80.00 of goods and $5.60 tax used a rate of 5.60 ÷ 80 × 100 = 7%. Because tax is rounded to the cent, small amounts can give a slightly odd rate, so use the biggest receipt you have.</p>
+
+    <h3>3. Why tax per item and tax on the total can differ</h3>
+    <p>Three items at $0.99 each, at 8.25%:</p>
+    <div class="formula">Tax on each item  = 0.99 × 8.25% = $0.08, × 3 items = $0.24
+Tax on the total  = 2.97 × 8.25%                   = $0.25</div>
+    <p>Both are rounded correctly, but they're a cent apart. Which one a shop uses depends on its till and the state's rules, so a one-cent difference on a receipt isn't usually a mistake.</p>
+
+    <h2>Sales tax, VAT and GST: what's the difference?</h2>
+    <p>US sales tax is usually added at the till on top of the shelf price, and the rate depends on where the sale happens. The UK, Canada and Australia use a national VAT, GST or HST instead, with set national rates and their own rules for businesses that register to charge it. For those countries, use our tools with the official rates built in:</p>
+    <ul>
+      <li><a href="../../uk/vat-calculator/">UK VAT calculator</a></li>
+      <li><a href="../../ca/gst-hst-calculator/">Canada GST/HST calculator</a></li>
+      <li><a href="../../au/gst-calculator/">Australia GST calculator</a></li>
+    </ul>
+    <p>If you invoice clients, our <a href="../../freelance/invoice-generator/">invoice generator</a> adds a tax line for you.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>
@@ -218,7 +244,15 @@ Wrong way: $54.13 − 8.25% = $49.66 (too low)</div>
       </details>
       <details>
         <summary>Why is my receipt a cent different?</summary>
-        <p>Shops round tax per item or per receipt, and the rule differs by state. We round the final tax to the nearest cent.</p>
+        <p>Shops round tax per item or per receipt, and the rule differs by state. We round the final tax to the nearest cent. See the $0.99 example above.</p>
+      </details>
+      <details>
+        <summary>How do I add sales tax in my head?</summary>
+        <p>Find 10% by moving the decimal point one place, then adjust. For 8% of $45: 10% is $4.50, 1% is $0.45, so 8% is 4.50 − 0.90 = $3.60. The calculator is quicker for odd rates such as 8.25%.</p>
+      </details>
+      <details>
+        <summary>Is the rate the same across a whole state?</summary>
+        <p>Often not. Many states let counties and cities add their own rate on top of the state rate, so two shops in the same state can charge different totals. Your state's department of revenue publishes the rates.</p>
       </details>
     </div>
   </div>
@@ -251,7 +285,7 @@ Wrong way: $54.13 − 8.25% = $49.66 (too low)</div>
     <div class="disclaimer">
       <p><strong>Disclaimer:</strong> results are estimates for planning only and are not tax, legal or financial advice. Rules and rates vary by country, state and personal situation. Check with a qualified accountant before making decisions. <a href="../../disclaimer/">Read the full disclaimer</a>.</p>
     </div>
-    <p class="updated">Last updated: <time datetime="2026-10-13">13 October 2026</time></p>
+    <p class="updated">Last updated: <time datetime="2026-10-17">17 October 2026</time></p>
   </div>
 </div>
 </main>
@@ -272,6 +306,18 @@ Wrong way: $54.13 − 8.25% = $49.66 (too low)</div>
           <li><a href="../../finance/">Personal finance</a></li>
           <li><a href="../../freelance/freelance-hourly-rate-calculator/">Hourly rate calculator</a></li>
           <li><a href="../../freelance/invoice-generator/">Invoice generator</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Tax calculators">
+        <h2>Tax calculators</h2>
+        <ul>
+          <li><a href="../../us/self-employment-tax-calculator/">US self-employment tax</a></li>
+          <li><a href="../../us/quarterly-estimated-tax-calculator/">US quarterly estimated tax</a></li>
+          <li><a href="../../us/1099-vs-w2-calculator/">US 1099 vs W-2</a></li>
+          <li><a href="../../uk/self-employed-tax-calculator/">UK self-employed tax</a></li>
+          <li><a href="../../career/uk-take-home-pay-calculator/">UK take-home pay</a></li>
+          <li><a href="../../uk/sole-trader-vs-limited-company-calculator/">UK sole trader vs Ltd</a></li>
+          <li><a href="../../ca/self-employed-tax-calculator/">Canada self-employed tax</a></li>
         </ul>
       </nav>
       <nav aria-label="Countries">

@@ -22,7 +22,7 @@
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../../assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <script src="../../assets/js/theme.js?v=d0cb052c"></script>
-<link rel="stylesheet" href="../../assets/css/style.css?v=a8079bc0">
+<link rel="stylesheet" href="../../assets/css/style.css?v=f06f2781">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,7 +58,7 @@
       "description": "Compare a contract rate with a salary plus 12% super in Australia. Find the break-even hourly rate once paid leave is counted.",
       "inLanguage": "en",
       "isAccessibleForFree": true,
-      "dateModified": "2026-09-28",
+      "dateModified": "2026-10-17",
       "publisher": {
         "@type": "Organization",
         "name": "Vintayz",
@@ -132,7 +132,7 @@
     <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../au/">Australia</a></li><li aria-current="page">Employee vs Contractor Calculator (Australia)</li></ol></nav>
     <h1>Employee vs Contractor Calculator (Australia)</h1>
     <p class="intro">Find the contract hourly rate that matches an Australian salary once 12% super and paid leave are counted.</p>
-    <div class="meta-row"><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg> Australia, 2026–27</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Free, no sign-up</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Runs in your browser</span></div>
+    <div class="meta-row"><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg> Australia, 2026–27</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Free, no sign-up</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Runs in your browser</span><a class="chip chip-link" href="#sources"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Official figures checked 28 September 2026</a></div>
   </div>
 </section>
 <div class="container">
@@ -211,6 +211,31 @@ Break-even rate  = 106,400 ÷ 1,672       = $63.64/hour
 Contract income  = 70 × 1,672            = 117,040</div>
     <p>The contract needs at least <strong>$63.64 an hour</strong>. At $70 it's worth about <strong>$10,640 more</strong> a year, before insurance, equipment and accounting costs.</p>
 
+    <h2>How the weeks you work change the answer</h2>
+    <p>The biggest unknown for most contractors is how many weeks a year they'll actually be paid. Here is Liam's $95,000 job against the $70-an-hour contract, at 38 hours a week:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paid weeks a year</th><th class="num">Break-even rate</th><th class="num">Contract better by</th></tr></thead>
+        <tbody>
+          <tr><td>40</td><td class="num">$70.00</td><td class="num">$0</td></tr>
+          <tr><td>42</td><td class="num">$66.67</td><td class="num">$5,320</td></tr>
+          <tr><td>44</td><td class="num">$63.64</td><td class="num">$10,640</td></tr>
+          <tr><td>46</td><td class="num">$60.87</td><td class="num">$15,960</td></tr>
+          <tr><td>48</td><td class="num">$58.33</td><td class="num">$21,280</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>At 40 paid weeks the two are exactly level. Every extra paid week adds $2,660 to the contract (38 hours × $70). Weeks off include holidays, public holidays, sick days and any time between contracts.</p>
+
+    <h2>Second example: when the job pays more</h2>
+    <p>Mia is offered $120,000 plus super, or a contract at $80 an hour for 38 hours a week. She expects about 42 paid weeks a year.</p>
+    <div class="formula">Super            = 120,000 × 12%       = 14,400
+Employee package = 120,000 + 14,400    = 134,400
+Contract hours   = 38 × 42             = 1,596
+Break-even rate  = 134,400 ÷ 1,596     = $84.21/hour
+Contract income  = 80 × 1,596          = 127,680</div>
+    <p>Here the job is worth about <strong>$6,720 more</strong>. $80 an hour sounds higher than $120,000 a year, but once super and unpaid weeks are counted, Mia would need at least $84.21 an hour to match it.</p>
+
     <h2>What this calculator doesn't cover</h2>
     <ul>
       <li>Income tax, which is similar either way, and business deductions available to contractors.</li>
@@ -228,9 +253,17 @@ Contract income  = 70 × 1,672            = 117,040</div>
         <summary>Should my rate include GST?</summary>
         <p>Quote your rate excluding GST. If you're registered for GST, add 10% on your invoices. Our <a href="../../au/gst-calculator/">GST calculator</a> does the maths.</p>
       </details>
+      <details>
+        <summary>How many paid weeks should I assume?</summary>
+        <p>There's no official figure. Start with 52, take off the leave you want, public holidays and a few sick days, then any weeks you expect between contracts. If you've contracted before, your own records from past years are the best guide. The table above shows how much each week matters.</p>
+      </details>
+      <details>
+        <summary>What tax will I pay as a contractor?</summary>
+        <p>Income tax uses the same rates either way, but as a sole trader no one withholds it for you. Our <a href="../../au/sole-trader-tax-calculator/">sole trader tax calculator</a> estimates it, including the Medicare levy.</p>
+      </details>
     </div>
 
-    <p class="sources"><strong>Source:</strong> <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/super-guarantee" rel="noopener">ATO super guarantee rate</a>.</p>
+    <p class="sources" id="sources"><strong>Sources:</strong> <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/super-guarantee" rel="noopener">ATO super guarantee rate</a>, <a href="https://www.fairwork.gov.au/leave/annual-leave" rel="noopener">Fair Work: annual leave</a>, <a href="https://www.fairwork.gov.au/leave/sick-and-carers-leave/paid-sick-and-carers-leave" rel="noopener">Fair Work: paid sick and carer's leave</a>.</p>
   </div>
 
   <section class="section">
@@ -261,7 +294,7 @@ Contract income  = 70 × 1,672            = 117,040</div>
     <div class="disclaimer">
       <p><strong>Disclaimer:</strong> results are estimates for planning only and are not tax, legal or financial advice. Rules and rates vary by country, state and personal situation. Check with a qualified accountant before making decisions. <a href="../../disclaimer/">Read the full disclaimer</a>.</p>
     </div>
-    <p class="updated">Last updated: <time datetime="2026-09-28">28 September 2026</time></p>
+    <p class="updated">Last updated: <time datetime="2026-10-17">17 October 2026</time></p>
   </div>
 </div>
 </main>
@@ -282,6 +315,18 @@ Contract income  = 70 × 1,672            = 117,040</div>
           <li><a href="../../finance/">Personal finance</a></li>
           <li><a href="../../freelance/freelance-hourly-rate-calculator/">Hourly rate calculator</a></li>
           <li><a href="../../freelance/invoice-generator/">Invoice generator</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Tax calculators">
+        <h2>Tax calculators</h2>
+        <ul>
+          <li><a href="../../us/self-employment-tax-calculator/">US self-employment tax</a></li>
+          <li><a href="../../us/quarterly-estimated-tax-calculator/">US quarterly estimated tax</a></li>
+          <li><a href="../../us/1099-vs-w2-calculator/">US 1099 vs W-2</a></li>
+          <li><a href="../../uk/self-employed-tax-calculator/">UK self-employed tax</a></li>
+          <li><a href="../../career/uk-take-home-pay-calculator/">UK take-home pay</a></li>
+          <li><a href="../../uk/sole-trader-vs-limited-company-calculator/">UK sole trader vs Ltd</a></li>
+          <li><a href="../../ca/self-employed-tax-calculator/">Canada self-employed tax</a></li>
         </ul>
       </nav>
       <nav aria-label="Countries">

@@ -1251,6 +1251,7 @@ SECTORS_DAY = "2026-10-11"  # /image/, /time/ and /text/ added on 11 October 202
 POPULAR_DAY = "2026-10-11"
 MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
 CONTENT_DAY = "2026-10-16"  # AdSense "low-value content" fixes: owner name, working email, fuller About and tool pages
+MONEY_DAY = "2026-10-17"  # 10 money pages deepened: more worked examples, official dates and rules, FAQs
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
 IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
 TIME_LIBS = ["js/date-common.js"]
@@ -1287,13 +1288,13 @@ PAGES = [
          intro="Free tools for sole traders, freelancers and contractors in the UK, plus what's different about working for yourself here.",
          chips=["{{flag:uk}} Built for the UK", "{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
 
-    dict(tool="hourly-rate", src="hourly-rate.html", script="hourly-rate.js",
+    dict(tool="hourly-rate", src="hourly-rate.html", updated=MONEY_DAY, script="hourly-rate.js",
          title="Freelance Hourly Rate Calculator | ToolNest by Vintayz",
          description="Work out the hourly rate you need to charge as a freelancer, after tax, expenses, time off and unpaid hours. Free, in USD, GBP, CAD or AUD.",
          intro="Find the hourly rate you need to charge to reach your take-home income goal, after tax, business expenses, time off and the hours clients don't pay for.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["day-rate", "project-pricing", "billable-hours"]),
-    dict(tool="day-rate", src="day-rate.html", script="day-rate.js",
+    dict(tool="day-rate", src="day-rate.html", updated=MONEY_DAY, script="day-rate.js",
          title="Contractor Day Rate Calculator | ToolNest by Vintayz",
          description="Work out the day rate you need as a contractor or freelancer, allowing for tax, expenses, holidays and gaps between contracts.",
          intro="Work out the day rate you need to charge, allowing for tax, expenses, holidays, public holidays and the gaps between contracts.",
@@ -1335,19 +1336,19 @@ PAGES = [
          intro="Turn up-and-down freelance income into a steady monthly salary, and see how big a buffer you need to make it work.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["emergency-fund", "billable-hours", "hourly-rate"]),
-    dict(tool="us-self-employment-tax", src="us-self-employment-tax.html", script="us-self-employment-tax.js", libs=["data/tax-us.js", "js/us-tax.js"],
+    dict(tool="us-self-employment-tax", src="us-self-employment-tax.html", updated=MONEY_DAY, script="us-self-employment-tax.js", libs=["data/tax-us.js", "js/us-tax.js"],
          title="Self-Employment Tax Calculator 2026 | ToolNest by Vintayz",
          description="Calculate 2026 self-employment tax on your 1099 or Schedule C profit: Social Security, Medicare, Additional Medicare and the deductible half.",
          intro="Work out the Social Security and Medicare tax you owe on your 2026 freelance profit, and how much of it you can deduct.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
          related=["us-take-home", "us-quarterly-tax", "us-mileage"]),
-    dict(tool="us-quarterly-tax", src="us-quarterly-tax.html", script="us-quarterly-tax.js", libs=["data/tax-us.js", "js/us-tax.js"],
+    dict(tool="us-quarterly-tax", src="us-quarterly-tax.html", updated=MONEY_DAY, script="us-quarterly-tax.js", libs=["data/tax-us.js", "js/us-tax.js"],
          title="Quarterly Estimated Tax Calculator 2026 | ToolNest by Vintayz",
          description="Work out your 2026 quarterly estimated tax payments for self-employed income, with IRS due dates and the safe harbor that avoids penalties.",
          intro="See how much to pay the IRS each quarter for 2026, the safe harbor amount that avoids an underpayment penalty, and when each payment is due.",
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
          related=["us-take-home", "us-self-employment-tax", "us-tax-bracket"]),
-    dict(tool="us-1099-vs-w2", src="us-1099-vs-w2.html", script="us-1099-vs-w2.js", libs=["data/tax-us.js", "js/us-tax.js"],
+    dict(tool="us-1099-vs-w2", src="us-1099-vs-w2.html", updated=MONEY_DAY, script="us-1099-vs-w2.js", libs=["data/tax-us.js", "js/us-tax.js"],
          title="1099 vs W-2 Calculator: Contractor vs Employee | ToolNest by Vintayz",
          description="Compare a 1099 contractor rate with a W-2 salary and benefits. Find the break-even hourly rate, including employer payroll taxes.",
          intro="Find the 1099 hourly rate that matches a W-2 job once benefits, employer payroll tax and unpaid time off are counted.",
@@ -1372,7 +1373,7 @@ PAGES = [
          chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
          related=["us-mileage", "us-take-home", "us-quarterly-tax"]),
 
-    dict(tool="uk-self-employed-tax", src="uk-self-employed-tax.html", script="uk-self-employed-tax.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
+    dict(tool="uk-self-employed-tax", src="uk-self-employed-tax.html", updated=MONEY_DAY, script="uk-self-employed-tax.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
          title="Self-Employed Tax Calculator UK 2026/27 | ToolNest by Vintayz",
          description="Calculate Income Tax and Class 4 National Insurance on your self-employed profits for 2026 to 2027. Includes Scottish rates and take-home pay.",
          intro="Work out the Income Tax and National Insurance you'll pay on your self-employed profits for 2026 to 2027, and what you'll take home.",
@@ -1384,19 +1385,19 @@ PAGES = [
          intro="See how much Self Assessment tax is due on 31 January and 31 July 2027, and whether you need to make payments on account at all.",
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
          related=["uk-self-employed-tax", "uk-work-from-home", "uk-dividend-tax"]),
-    dict(tool="uk-sole-trader-vs-ltd", src="uk-sole-trader-vs-ltd.html", script="uk-sole-trader-vs-ltd.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
+    dict(tool="uk-sole-trader-vs-ltd", src="uk-sole-trader-vs-ltd.html", updated=MONEY_DAY, script="uk-sole-trader-vs-ltd.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
          title="Sole Trader vs Limited Company Calculator 2026/27 | ToolNest by Vintayz",
          description="Compare take-home pay as a sole trader and a limited company director for 2026 to 2027, with the new dividend tax rates and 15% employer NI.",
          intro="Compare your take-home pay as a sole trader and as a limited company director for 2026 to 2027, using the latest dividend and NI rates.",
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
          related=["uk-self-employed-tax", "uk-dividend-tax", "uk-payments-on-account"]),
-    dict(tool="uk-mileage", src="uk-mileage.html", script="uk-mileage.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
+    dict(tool="uk-mileage", src="uk-mileage.html", updated=MONEY_DAY, script="uk-mileage.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
          title="Business Mileage Allowance Calculator UK (55p) | ToolNest by Vintayz",
          description="Calculate your business mileage claim with HMRC rates: 55p a mile for cars and vans from April 2026 (45p before), 25p after 10,000 miles.",
          intro="Work out your business mileage claim using HMRC's rates, including the rise to 55p a mile for cars and vans from 6 April 2026.",
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
          related=["uk-work-from-home", "uk-self-employed-tax", "uk-sole-trader-vs-ltd"]),
-    dict(tool="uk-work-from-home", src="uk-work-from-home.html", script="uk-work-from-home.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
+    dict(tool="uk-work-from-home", src="uk-work-from-home.html", updated=MONEY_DAY, script="uk-work-from-home.js", libs=["data/tax-uk.js", "js/uk-tax.js"],
          title="Working From Home Expenses Calculator (UK) | ToolNest by Vintayz",
          description="Compare HMRC's simplified flat rate for working from home (£10, £18 or £26 a month) with a share of your actual bills, and claim the higher.",
          intro="Compare HMRC's flat rate for working from home with a share of your actual household bills, and see which lets you claim more.",
@@ -1418,24 +1419,24 @@ PAGES = [
          chips=["{{icon:globe}} Built for Canada", "{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
     dict(path="au/", src="australia.html", kind="section", nav="au", region="au",
          title="Sole Trader Tax Calculators for Australia | ToolNest by Vintayz",
-         description="Free 2026–27 calculators for Australian workers and sole traders: take-home pay, income tax and Medicare levy, GST, employee vs contractor and voluntary super.",
+         description="Free 2026–27 calculators for Australian workers and sole traders: take-home pay, tax and Medicare levy, GST, contractor vs employee and super.",
          h1="Calculators for Sole Traders in Australia",
          intro="Free tools for freelancers and sole traders in Australia, built on 2026–27 ATO figures.",
          chips=["{{icon:globe}} Built for Australia", "{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
 
-    dict(tool="ca-self-employed-tax", src="ca-self-employed-tax.html", script="ca-self-employed-tax.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
+    dict(tool="ca-self-employed-tax", src="ca-self-employed-tax.html", updated=MONEY_DAY, script="ca-self-employed-tax.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
          title="Self-Employed Tax Calculator Canada 2026 | ToolNest by Vintayz",
          description="Estimate 2026 federal income tax and CPP (including CPP2) on self-employment income in Canada, with your own provincial tax estimate.",
          intro="Work out federal income tax and both halves of CPP on your 2026 self-employment income, and estimate what you'll take home.",
          chips=["{{icon:globe}} Canada, tax year 2026"] + TOOL_CHIPS,
          related=["ca-instalments", "ca-cpp-ei", "ca-employee-vs-contractor"]),
-    dict(tool="ca-instalments", src="ca-instalments.html", script="ca-instalments.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
+    dict(tool="ca-instalments", src="ca-instalments.html", updated=MONEY_DAY, script="ca-instalments.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
          title="Tax Instalments Calculator Canada 2026 | ToolNest by Vintayz",
          description="Find out if you need to pay CRA tax instalments in 2026, and compare current-year and prior-year options with the four due dates.",
          intro="Check whether you need to pay tax instalments to the CRA for 2026, and how much to pay each quarter.",
          chips=["{{icon:globe}} Canada, tax year 2026"] + TOOL_CHIPS,
          related=["ca-self-employed-tax", "income-smoothing", "ca-gst-hst"]),
-    dict(tool="ca-employee-vs-contractor", src="ca-employee-vs-contractor.html", script="ca-employee-vs-contractor.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
+    dict(tool="ca-employee-vs-contractor", src="ca-employee-vs-contractor.html", updated=MONEY_DAY, script="ca-employee-vs-contractor.js", libs=["data/tax-ca.js", "js/ca-tax.js"],
          title="Employee vs Contractor Calculator Canada | ToolNest by Vintayz",
          description="Compare a contract rate with a salaried job in Canada. Find the break-even hourly rate including benefits and employer CPP.",
          intro="Find the contract hourly rate that matches a salaried job in Canada, once benefits and employer CPP are counted.",
@@ -1454,19 +1455,19 @@ PAGES = [
          intro="Work out the tax and Medicare levy on your 2026–27 sole trader income, including the small business income tax offset.",
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
          related=["au-voluntary-super", "au-gst", "au-employee-vs-contractor"]),
-    dict(tool="au-gst", src="au-gst.html", updated=CONTENT_DAY, script="au-gst.js", libs=["data/tax-au.js", "js/au-tax.js"],
+    dict(tool="au-gst", src="au-gst.html", updated=MONEY_DAY, script="au-gst.js", libs=["data/tax-au.js", "js/au-tax.js"],
          title="GST Calculator Australia: Add or Remove 10% | ToolNest by Vintayz",
          description="Add 10% GST to a price or work out the GST in a GST-inclusive total. Includes when sole traders must register for GST.",
          intro="Add 10% GST to a price, or work out how much GST is inside a total.",
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
          related=["au-sole-trader-tax", "project-pricing", "au-employee-vs-contractor"]),
-    dict(tool="au-employee-vs-contractor", src="au-employee-vs-contractor.html", script="au-employee-vs-contractor.js", libs=["data/tax-au.js", "js/au-tax.js"],
+    dict(tool="au-employee-vs-contractor", src="au-employee-vs-contractor.html", updated=MONEY_DAY, script="au-employee-vs-contractor.js", libs=["data/tax-au.js", "js/au-tax.js"],
          title="Employee vs Contractor Calculator Australia | ToolNest by Vintayz",
          description="Compare a contract rate with a salary plus 12% super in Australia. Find the break-even hourly rate once paid leave is counted.",
          intro="Find the contract hourly rate that matches an Australian salary once 12% super and paid leave are counted.",
          chips=["{{icon:globe}} Australia, 2026–27"] + TOOL_CHIPS,
          related=["au-sole-trader-tax", "au-gst", "au-take-home"]),
-    dict(tool="au-voluntary-super", src="au-voluntary-super.html", script="au-voluntary-super.js", libs=["data/tax-au.js", "js/au-tax.js"],
+    dict(tool="au-voluntary-super", src="au-voluntary-super.html", updated=MONEY_DAY, script="au-voluntary-super.js", libs=["data/tax-au.js", "js/au-tax.js"],
          title="Voluntary Super Contribution Calculator 2026–27 | ToolNest by Vintayz",
          description="See how much tax you save by salary sacrificing or making deductible super contributions in 2026–27, with the $32,500 cap check.",
          intro="See how much tax you could save by adding extra concessional contributions to super in 2026–27.",
@@ -1630,13 +1631,13 @@ PAGES = [
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"]),
 
     # Invoice Generator
-    dict(tool="invoice-generator", src="invoice-generator.html", script="invoice-generator.js", libs=["vendor/pdf-lib/pdf-lib.min.js"],
+    dict(tool="invoice-generator", src="invoice-generator.html", updated=MONEY_DAY, script="invoice-generator.js", libs=["vendor/pdf-lib/pdf-lib.min.js"],
          title="Freelance Invoice Generator, Free PDF | ToolNest by Vintayz",
          description="Make a professional freelance invoice and download it as a PDF, free. No sign-up and no watermark. Your details never leave your device.",
          intro="Generate clean, professional invoices and download them as PDFs. Runs completely in your browser with zero server uploads.",
          chips=[CURRENCY_CHIP, "{{icon:lock}} Files never leave your device", "{{icon:check}} Free, no watermark"],
          related=["uk-vat", "late-payment", "retainer"]),
-    dict(tool="timesheet", src="timesheet.html", script="timesheet.js", updated=NEW_DAY,
+    dict(tool="timesheet", src="timesheet.html", script="timesheet.js", updated=MONEY_DAY,
          title="Timesheet Calculator: Add Up Hours and Pay | ToolNest by Vintayz",
          description="Add up a week of start and finish times, less breaks, including night shifts. See total hours, overtime and pay. Free, in USD, GBP, CAD or AUD.",
          intro="Enter your start and finish times for each day. The calculator takes off your breaks, adds up the hours and works out your pay.",
@@ -1685,21 +1686,21 @@ PAGES = [
          intro="Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates based on your work schedule.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["hourly-to-annual", "us-1099-vs-w2", "job-offer"]),
-    dict(tool="pay-rise", src="pay-rise.html", script="pay-rise.js", updated=NEW_DAY,
+    dict(tool="pay-rise", src="pay-rise.html", script="pay-rise.js", updated=MONEY_DAY,
          title="Pay Rise Calculator: Percent, Amount and Inflation | ToolNest by Vintayz",
          description="Work out a pay rise as a percentage or in money, see the extra you get each month, and check whether it beats inflation. Free, in USD, GBP, CAD or AUD.",
          intro="See how big a raise really is: as a percentage, in money each month and week, and after inflation.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["salary-to-hourly", "uk-take-home", "job-offer"]),
-    dict(tool="overtime", src="overtime.html", script="overtime.js", updated=NEW_DAY,
+    dict(tool="overtime", src="overtime.html", script="overtime.js", updated=MONEY_DAY,
          title="Overtime Pay Calculator: Time and a Half | ToolNest by Vintayz",
          description="Work out overtime pay at time and a half and double time, your total weekly pay and your average hourly rate. Free, in USD, GBP, CAD or AUD.",
          intro="Work out your pay for a week with overtime, at time and a half, double time or your own rate.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["salary-to-hourly", "timesheet", "pay-rise"]),
-    dict(tool="uk-take-home", src="uk-take-home.html", script="uk-take-home.js", libs=["data/tax-uk.js", "js/uk-tax.js"], updated=NEW_DAY,
+    dict(tool="uk-take-home", src="uk-take-home.html", script="uk-take-home.js", libs=["data/tax-uk.js", "js/uk-tax.js"], updated=MONEY_DAY,
          title="UK Take-Home Pay Calculator 2026/27 (PAYE) | ToolNest by Vintayz",
-         description="Work out your salary after tax for 2026 to 2027: Income Tax, National Insurance, student loan and pension. Monthly and weekly take-home pay, including Scotland.",
+         description="Work out your salary after tax for 2026 to 2027: Income Tax, National Insurance, student loan and pension. Monthly and weekly pay, including Scotland.",
          intro="See what you take home from your salary in 2026 to 2027 after Income Tax, National Insurance, student loan repayments and your pension.",
          chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
          related=["uk-dividend-tax", "uk-holiday", "uk-self-employed-tax"]),
@@ -1953,7 +1954,7 @@ PAGES = [
          related=["project-pricing", "quote-generator", "invoice-generator"]),
     dict(tool="effective-hourly-rate", src="effective-hourly-rate.html", script="effective-hourly-rate.js", updated=CONTENT_DAY,
          title="Effective Hourly Rate Calculator for Freelancers | ToolNest by Vintayz",
-         description="Find what a fixed-price project really paid per hour once revisions, calls, platform fees and costs are counted, and the fee that would have hit your target.",
+         description="Find what a fixed-price project really paid per hour once revisions, calls, platform fees and costs are counted, and the fee that would hit your target.",
          intro="See what a fixed-price project really paid you per hour, once every hour, fee and cost is counted.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["project-pricing", "hourly-rate", "rate-increase"]),
@@ -1981,7 +1982,7 @@ PAGES = [
          intro="Enter each part of your course with its weight and your score to see your grade so far.",
          chips=["{{icon:check}} Free, no sign-up", "{{icon:lock}} Runs in your browser"],
          related=["final-grade", "gpa-calculator", "uk-degree"]),
-    dict(tool="savings-goal", src="savings-goal.html", script="savings-goal.js", updated=SECTIONS_DAY,
+    dict(tool="savings-goal", src="savings-goal.html", script="savings-goal.js", updated=MONEY_DAY,
          title="Savings Goal Calculator: How Much to Save | ToolNest by Vintayz",
          description="Find how much to save each month to reach a savings goal by a set date, with interest added monthly. Free, in USD, GBP, CAD or AUD.",
          intro="Find out how much to put aside each month to reach your savings goal in time, including the interest your savings earn.",
@@ -2013,7 +2014,7 @@ PAGES = [
          related=["pdf-compress", "pdf-watermark", "pdf-sign"]),
     dict(tool="resignation-letter", src="resignation-letter.html", script="resignation-letter.js", libs=RESUME_LIBS, updated=SECTIONS_DAY,
          title="Free Resignation Letter Maker (PDF) | ToolNest by Vintayz",
-         description="Write a polite, professional resignation letter with your last working day and download it as a PDF. For the US, UK, Canada and Australia. Nothing is uploaded.",
+         description="Write a polite, professional resignation letter with your last working day and download it as a PDF. For the US, UK, Canada and Australia. No uploads.",
          intro="Write a clear, polite resignation letter with your last working day, and download it as a PDF or copy it into an email.",
          chips=["{{icon:globe}} US · UK · Canada · Australia"] + RESUME_CHIPS,
          related=["cover-letter", "resume-us", "uk-redundancy"]),
@@ -2152,7 +2153,7 @@ PAGES = [
          related=["password-generator", "line-tools", "percentage"]),
     dict(tool="password-generator", src="password-generator.html", script="password-generator.js", updated=POPULAR_DAY,
          title="Strong Password Generator | ToolNest by Vintayz",
-         description="Make strong, random passwords with your choice of length, letters, numbers and symbols. Made on your device with secure random numbers, never sent or saved.",
+         description="Make strong, random passwords with your choice of length, letters, numbers and symbols. Made on your device, never sent or saved.",
          intro="Make strong random passwords with the length and characters you choose. They're made on your device and never sent or saved.",
          chips=["{{icon:lock}} Made on your device, never sent", "{{icon:check}} Free, no sign-up"],
          related=["qr-code", "base64", "random-number"]),
@@ -2196,13 +2197,13 @@ PAGES = [
          intro="Compare the price per gram, ounce, litre or item of up to four packs to see which is really cheaper.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["discount", "percentage", "unit-converter"]),
-    dict(tool="sales-tax", src="sales-tax.html", script="sales-tax.js", updated=MORE_DAY,
+    dict(tool="sales-tax", src="sales-tax.html", script="sales-tax.js", updated=MONEY_DAY,
          title="Sales Tax Calculator: Add or Remove Tax | ToolNest by Vintayz",
          description="Add sales tax to a price or work out the price before tax from a total, at the rate you type. Works for any US state, county or city rate.",
          intro="Add sales tax to a price, or take it out of a total that already includes it, at your own local rate.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["discount", "uk-vat", "ca-gst-hst"]),
-    dict(tool="commission", src="commission.html", script="commission.js", updated=MORE_DAY,
+    dict(tool="commission", src="commission.html", script="commission.js", updated=MONEY_DAY,
          title="Commission Calculator (Flat or Tiered) | ToolNest by Vintayz",
          description="Work out sales commission at a flat or tiered rate, your total pay with base salary, and the sales you need to hit a commission goal.",
          intro="Work out commission on your sales, at a flat or tiered rate, plus your total pay and the sales you need for a goal.",
@@ -2794,6 +2795,12 @@ def footer(up):
     money = [("Freelancer tools", "freelance/"), ("Business tools", "business/"), ("Career &amp; salary", "career/"),
              ("Personal finance", "finance/"), ("Hourly rate calculator", TOOLS["hourly-rate"]["path"]),
              ("Invoice generator", TOOLS["invoice-generator"]["path"])]
+    # The country tax calculators are the site's most valuable pages, so every page links to them.
+    tax = [(name, TOOLS[k]["path"]) for name, k in (
+        ("US self-employment tax", "us-self-employment-tax"), ("US quarterly estimated tax", "us-quarterly-tax"),
+        ("US 1099 vs W-2", "us-1099-vs-w2"), ("UK self-employed tax", "uk-self-employed-tax"),
+        ("UK take-home pay", "uk-take-home"), ("UK sole trader vs Ltd", "uk-sole-trader-vs-ltd"),
+        ("Canada self-employed tax", "ca-self-employed-tax"))]
     countries = ([("Worldwide (Global)", "global/")] if REGIONAL_COPIES else []) + [
         ("United States", "us/"), ("United Kingdom", "uk/"), ("Canada", "ca/"), ("Australia", "au/")]
     files = [("PDF tools", "pdf/"), ("Resume &amp; CV makers", "resume-maker/"), ("Image tools", "image/"),
@@ -2803,7 +2810,7 @@ def footer(up):
             ("Brain games", "games/"), ("All tools A–Z", "all-tools/")]
     company = [("About", "about/"), ("Contact", "contact/"), ("Privacy Policy", "privacy-policy/"),
                ("Terms of Use", "terms/"), ("Disclaimer", "disclaimer/")]
-    groups = "\n".join([group("Money &amp; work", money), group("Countries", countries),
+    groups = "\n".join([group("Money &amp; work", money), group("Tax calculators", tax), group("Countries", countries),
                          group("Files &amp; documents", files), group("More tools", more), group("Company", company)])
 
     return f"""<footer class="site-footer">
@@ -2857,6 +2864,19 @@ def tool_bars(section, up):
     </nav>"""
 
 
+def data_checked(page):
+    """Date the official figures used by a tool were last checked, read from its data file in
+    public/assets/data/ (the `checked` or `checkedUpTo` field). None for tools with no official figures."""
+    dates = []
+    for lib in page.get("libs", []):
+        if lib.startswith("data/"):
+            with open(os.path.join(OUT, "assets", *lib.split("/")), encoding="utf-8") as f:
+                m = re.search(r'checked(?:UpTo)?:\s*"(\d{4}-\d{2}-\d{2})"', f.read())
+            if m:
+                dates.append(m.group(1))
+    return min(dates) if dates else None
+
+
 def page_hero(page, up):
     home = up or "./"
     crumbs = [f'<li><a href="{home}">Home</a></li>']
@@ -2867,7 +2887,13 @@ def page_hero(page, up):
     intro = f'\n    <p class="intro">{page["intro"]}</p>' if page.get("intro") else ""
     chips = ""
     if page.get("chips"):
-        chips = '\n    <div class="meta-row">' + "".join(f'<span class="chip">{c}</span>' for c in page["chips"]) + "</div>"
+        chips = '\n    <div class="meta-row">' + "".join(f'<span class="chip">{c}</span>' for c in page["chips"])
+        checked = data_checked(page)
+        if checked:
+            # LEGAL.md §6: show near the top when the official figures were last checked, linked to the sources.
+            chips += (f'<a class="chip chip-link" href="#sources">{icon("check")} Official figures checked '
+                      f'{human_date(checked)}</a>')
+        chips += "</div>"
     search = ""
     if page.get("search"):
         # Filters the cards below as you type (assets/js/tool-search.js). Nothing typed leaves the page.
@@ -3024,6 +3050,7 @@ def render(page):
     up = "../" * depth_of(page["path"])
     with open(os.path.join(SRC, page["src"]), encoding="utf-8") as f:
         body = f.read()
+    body = body.replace('<p class="sources">', '<p class="sources" id="sources">', 1)
     main_html = expand(main_content(page, up, body), up, page)
     if page.get("default_currency"):
         main_html = apply_currency_defaults(main_html, page["default_currency"], page.get("currency_symbol"))

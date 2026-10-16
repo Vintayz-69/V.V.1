@@ -22,7 +22,7 @@
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../../assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <script src="../../assets/js/theme.js?v=d0cb052c"></script>
-<link rel="stylesheet" href="../../assets/css/style.css?v=a8079bc0">
+<link rel="stylesheet" href="../../assets/css/style.css?v=f06f2781">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,7 +58,7 @@
       "description": "Add 10% GST to a price or work out the GST in a GST-inclusive total. Includes when sole traders must register for GST.",
       "inLanguage": "en",
       "isAccessibleForFree": true,
-      "dateModified": "2026-10-16",
+      "dateModified": "2026-10-17",
       "publisher": {
         "@type": "Organization",
         "name": "Vintayz",
@@ -132,7 +132,7 @@
     <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../au/">Australia</a></li><li aria-current="page">GST Calculator Australia</li></ol></nav>
     <h1>GST Calculator Australia</h1>
     <p class="intro">Add 10% GST to a price, or work out how much GST is inside a total.</p>
-    <div class="meta-row"><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg> Australia, 2026–27</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Free, no sign-up</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Runs in your browser</span></div>
+    <div class="meta-row"><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg> Australia, 2026–27</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Free, no sign-up</span><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Runs in your browser</span><a class="chip chip-link" href="#sources"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Official figures checked 28 September 2026</a></div>
   </div>
 </section>
 <div class="container">
@@ -183,6 +183,31 @@ Removing GST:  price = total ÷ 1.1        GST = total ÷ 11</div>
 $1,100 including GST  → GST $100    → $1,000 excluding GST
 $550 including GST    → GST $50     → $500 excluding GST</div>
 
+    <h2>GST on common amounts</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Amount</th><th class="num">Add GST: total</th><th class="num">GST added</th><th class="num">Remove GST: price before GST</th><th class="num">GST inside</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Amount">$100</td><td class="num" data-label="Add GST: total">$110.00</td><td class="num" data-label="GST added">$10.00</td><td class="num" data-label="Remove GST: price before GST">$90.91</td><td class="num" data-label="GST inside">$9.09</td></tr>
+          <tr><td data-label="Amount">$250</td><td class="num" data-label="Add GST: total">$275.00</td><td class="num" data-label="GST added">$25.00</td><td class="num" data-label="Remove GST: price before GST">$227.27</td><td class="num" data-label="GST inside">$22.73</td></tr>
+          <tr><td data-label="Amount">$500</td><td class="num" data-label="Add GST: total">$550.00</td><td class="num" data-label="GST added">$50.00</td><td class="num" data-label="Remove GST: price before GST">$454.55</td><td class="num" data-label="GST inside">$45.45</td></tr>
+          <tr><td data-label="Amount">$1,000</td><td class="num" data-label="Add GST: total">$1,100.00</td><td class="num" data-label="GST added">$100.00</td><td class="num" data-label="Remove GST: price before GST">$909.09</td><td class="num" data-label="GST inside">$90.91</td></tr>
+          <tr><td data-label="Amount">$2,500</td><td class="num" data-label="Add GST: total">$2,750.00</td><td class="num" data-label="GST added">$250.00</td><td class="num" data-label="Remove GST: price before GST">$2,272.73</td><td class="num" data-label="GST inside">$227.27</td></tr>
+          <tr><td data-label="Amount">$5,000</td><td class="num" data-label="Add GST: total">$5,500.00</td><td class="num" data-label="GST added">$500.00</td><td class="num" data-label="Remove GST: price before GST">$4,545.45</td><td class="num" data-label="GST inside">$454.55</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>"Add GST" treats the amount as a price before GST. "Remove GST" treats it as a total that already includes GST.</p>
+
+    <h2>A freelancer's invoice with a discount</h2>
+    <p>Take the discount off first, then add GST to what's left. A designer quotes $2,000 for a logo and gives a 10% discount:</p>
+    <div class="formula">Price            = $2,000.00
+Discount 10%     = −$200.00
+Price before GST = $1,800.00
+GST 10%          = $180.00
+Total to pay     = $1,980.00</div>
+    <p>Adding GST first and then discounting gives the same total here, but the GST line on the invoice must match the discounted price. Our <a href="../../freelance/invoice-generator/">invoice generator</a> applies the discount before tax, and can print "Tax invoice" at the top for GST-registered businesses.</p>
+
     <h2>A common mistake: dividing by 10</h2>
     <p>To find the GST inside a price that already includes it, divide by 11, not 10. GST is 10% of the price <em>before</em> GST, so it's one part in eleven of the total.</p>
     <div class="formula">$1,100 including GST
@@ -220,9 +245,17 @@ $550 including GST    → GST $50     → $500 excluding GST</div>
         <summary>Do freelancers have to charge GST?</summary>
         <p>Only once you're registered. If your turnover is under $75,000 and you haven't registered, don't add GST to your invoices.</p>
       </details>
+      <details>
+        <summary>What should a tax invoice show?</summary>
+        <p>Our <a href="../../freelance/invoice-generator/">invoice generator page</a> lists what Australia's tax invoice rules require, with links to the official sources.</p>
+      </details>
+      <details>
+        <summary>What's the difference between GST in Australia and other countries?</summary>
+        <p>Australia's GST rate is 10%. Canada's GST/HST and the UK's VAT use different rates and rules. See our <a href="../../ca/gst-hst-calculator/">Canada GST/HST</a> and <a href="../../uk/vat-calculator/">UK VAT</a> calculators.</p>
+      </details>
     </div>
 
-    <p class="sources"><strong>Source:</strong> <a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst" rel="noopener">ATO: registering for GST</a>.</p>
+    <p class="sources" id="sources"><strong>Source:</strong> <a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst" rel="noopener">ATO: registering for GST</a>.</p>
   </div>
 
   <section class="section">
@@ -253,7 +286,7 @@ $550 including GST    → GST $50     → $500 excluding GST</div>
     <div class="disclaimer">
       <p><strong>Disclaimer:</strong> results are estimates for planning only and are not tax, legal or financial advice. Rules and rates vary by country, state and personal situation. Check with a qualified accountant before making decisions. <a href="../../disclaimer/">Read the full disclaimer</a>.</p>
     </div>
-    <p class="updated">Last updated: <time datetime="2026-10-16">16 October 2026</time></p>
+    <p class="updated">Last updated: <time datetime="2026-10-17">17 October 2026</time></p>
   </div>
 </div>
 </main>
@@ -274,6 +307,18 @@ $550 including GST    → GST $50     → $500 excluding GST</div>
           <li><a href="../../finance/">Personal finance</a></li>
           <li><a href="../../freelance/freelance-hourly-rate-calculator/">Hourly rate calculator</a></li>
           <li><a href="../../freelance/invoice-generator/">Invoice generator</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Tax calculators">
+        <h2>Tax calculators</h2>
+        <ul>
+          <li><a href="../../us/self-employment-tax-calculator/">US self-employment tax</a></li>
+          <li><a href="../../us/quarterly-estimated-tax-calculator/">US quarterly estimated tax</a></li>
+          <li><a href="../../us/1099-vs-w2-calculator/">US 1099 vs W-2</a></li>
+          <li><a href="../../uk/self-employed-tax-calculator/">UK self-employed tax</a></li>
+          <li><a href="../../career/uk-take-home-pay-calculator/">UK take-home pay</a></li>
+          <li><a href="../../uk/sole-trader-vs-limited-company-calculator/">UK sole trader vs Ltd</a></li>
+          <li><a href="../../ca/self-employed-tax-calculator/">Canada self-employed tax</a></li>
         </ul>
       </nav>
       <nav aria-label="Countries">
