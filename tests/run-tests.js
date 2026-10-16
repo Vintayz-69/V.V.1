@@ -2690,6 +2690,19 @@ async function resumePdfTests() {
   expectAll("guide Priya day rate", load("day-rate")({ income: 60000, expenses: 5000, tax: 30, daysOff: 33, benchWeeks: 4, hoursPerDay: 7.5 }), { days: 207, day: 438.23, hourly: 58.43 });
 }
 
+// ---------------- Off-topic page deepening, batch 3b (2026-10-17)
+{
+  check("snake max food", 15 * 15 - 3, 222);
+  for (const [n, c] of [[4, 6561], [6, 531441], [8, 43046721]]) check(`sequence memory 9^${n}`, 9 ** n, c);
+  const MM = load("memory-match");
+  for (const [m, sc] of [[8, 100], [10, 80], [12, 67], [16, 50], [20, 40]]) check(`memory match 8 pairs in ${m}`, Math.round(8 / m * 100), sc);
+  const gpa = load("gpa-calculator");
+  const course = (g) => ({ courses: [{ credits: 3, grade: "A" }, { credits: 4, grade: g }, { credits: 4, grade: "A-" }, { credits: 3, grade: "A" }] });
+  for (const [g, v] of [["A", 3.91], ["A-", 3.83], ["B+", 3.71], ["B", 3.63], ["C", 3.34]]) check(`GPA with Calculus ${g}`, gpa(course(g)).gpa, v);
+  const wg = load("weighted-grade")({ rows: [{ weight: 20, score: 92 }, { weight: 15, score: 85 }, { weight: 25, score: 78 }, { weight: 15, score: 88 }, { weight: 25, score: "" }] });
+  for (const [t, need] of [[90, 104.6], [85, 84.6], [80, 64.6], [70, 24.6]]) check(`weighted grade final for ${t}%`, (t - wg.earned) / 0.25, need);
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);
