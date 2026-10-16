@@ -2661,6 +2661,35 @@ async function resumePdfTests() {
   for (const [y2, need] of [[50, 65], [55, 62.5], [60, 60], [65, 57.5]]) check(`degree 2:1 after ${y2}`, (60 * 3 - y2) / 2, need);
 }
 
+// ---------------- Freelance tax set-aside calculator (all four countries)
+{
+  const ALL = ["data/tax-us.js", "js/us-tax.js", "data/tax-uk.js", "js/uk-tax.js", "data/tax-ca.js", "js/ca-tax.js", "data/tax-au.js", "js/au-tax.js"];
+  const sa = load("tax-set-aside", ALL);
+  // Page examples: each matches the country's own calculator.
+  expectAll("set-aside US $60k single", sa({ country: "us", profit: 60000, payment: 2000, status: "single", stateRate: 0 }), { tax: 12037.2, fromPayment: 401.24 });
+  check("set-aside US rate", Math.round(sa({ country: "us", profit: 60000, payment: 0, status: "single", stateRate: 0 }).rate * 1000) / 10, 20.1);
+  expectAll("set-aside UK £40k", sa({ country: "uk", profit: 40000, payment: 2000, region: "ruk" }), { tax: 7131.8, fromPayment: 356.59 });
+  check("set-aside UK parts", load("uk-self-employed-tax", UK_LIBS)({ profit: 40000, region: "ruk" }).incomeTax, 5486);
+  check("set-aside UK class 4", load("uk-self-employed-tax", UK_LIBS)({ profit: 40000, region: "ruk" }).class4, 1645.8);
+  expectAll("set-aside CA $60k 5%", sa({ country: "ca", profit: 60000, payment: 2000, provincial: 5 }), { tax: 14682.59, fromPayment: 489.42 });
+  expectAll("set-aside AU $80k", sa({ country: "au", profit: 80000, payment: 2000, eligible: true }), { tax: 15120, fromPayment: 378, takeHome: 64880 });
+  check("set-aside AU no offset costs $1,000 more", sa({ country: "au", profit: 80000, payment: 0, eligible: false }).tax, 16120);
+  check("set-aside US with 5% state", sa({ country: "us", profit: 80000, payment: 0, status: "single", stateRate: 5 }).tax, 20647.47);
+  expectAll("set-aside zero profit", sa({ country: "uk", profit: 0, payment: 1000, region: "ruk" }), { tax: 0, rate: 0, fromPayment: 0 });
+  check("set-aside keep + aside = payment", Math.round((sa({ country: "ca", profit: 60000, payment: 2000, provincial: 5 }).keepFromPayment + 489.42) * 100) / 100, 2000);
+}
+
+// ---------------- Guides: numbers quoted in the two guides
+{
+  const poa = load("uk-payments-on-account", UK_LIBS);
+  expectAll("guide Priya first January", poa({ lastBill: 7131.8, paidOnAccount: 0, atSource: 0, nextBill: null }), { eachPayment: 3565.9, january: 10697.7 });
+  const hr = load("hourly-rate")({ income: 60000, expenses: 6000, tax: 25, weeksOff: 4, hours: 40, billable: 70 });
+  check("guide Alex 7.5-hour day", hr.hourly * 7.5, 479.91);
+  check("guide Alex 8-hour day", hr.day, 511.9);
+  check("guide one unpaid hour a day for 200 days", Math.round(hr.hourly * 200 / 100) * 100, 12800);
+  expectAll("guide Priya day rate", load("day-rate")({ income: 60000, expenses: 5000, tax: 30, daysOff: 33, benchWeeks: 4, hoursPerDay: 7.5 }), { days: 207, day: 438.23, hourly: 58.43 });
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);

@@ -15,6 +15,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Freelance Invoice Generator](https://vintayz.com/freelance/invoice-generator/): Create, customize and download professional freelance invoices as PDFs. No sign-up, no watermarks, files stay on your device.
 - [Freelance Rate Increase Calculator](https://vintayz.com/freelance/rate-increase-calculator/): See how much work you could lose after raising your rate and still earn the same.
 - [Freelance Retainer Calculator](https://vintayz.com/freelance/retainer-calculator/): Turn your hourly rate into a monthly retainer fee, and see what the client's real usage does to your rate.
+- [Freelance Tax Set-Aside Calculator](https://vintayz.com/freelance/tax-set-aside-calculator/): How much of each payment to save for tax in the US, UK, Canada or Australia.
 - [Hourly to Annual Income Calculator](https://vintayz.com/freelance/hourly-to-annual-income-calculator/): See what an hourly rate adds up to per day, week, month and year.
 - [Income Smoothing Calculator](https://vintayz.com/freelance/income-smoothing-calculator/): Turn irregular freelance income into a steady monthly salary with a safety buffer.
 - [Late Payment Interest Calculator](https://vintayz.com/freelance/late-payment-interest-calculator/): Calculate interest and fixed compensation on an overdue invoice, including UK statutory interest.

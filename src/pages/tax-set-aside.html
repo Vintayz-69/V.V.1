@@ -1,0 +1,180 @@
+  <section class="calculator" aria-label="Tax set-aside calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="country">Where you pay tax</label>
+        <div class="select-wrap">
+          <select id="country">
+            <option value="us">United States (2026)</option>
+            <option value="uk">United Kingdom (2026 to 2027)</option>
+            <option value="ca">Canada (2026)</option>
+            <option value="au">Australia (2026–27)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="profit">Expected profit this year<span class="hint">Income minus business expenses</span></label>
+        <div class="input-wrap"><span class="affix" data-country-symbol>$</span><input id="profit" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="payment">A payment you've just received<span class="hint">To see how much of it to keep aside</span></label>
+        <div class="input-wrap"><span class="affix" data-country-symbol>$</span><input id="payment" type="text" inputmode="decimal" value="2000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field" id="field-status">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" id="field-state">
+        <label for="stateRate">State income tax rate<span class="hint">Your own flat estimate; 0 if none</span></label>
+        <div class="input-wrap"><input id="stateRate" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 15.</span>
+      </div>
+
+      <div class="field" id="field-region" hidden>
+        <label for="region">Where you live</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" id="field-provincial" hidden>
+        <label for="provincial">Provincial tax estimate<span class="hint">% of taxable income; your own estimate</span></label>
+        <div class="input-wrap"><input id="provincial" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 25.</span>
+      </div>
+
+      <div class="field" id="field-eligible" hidden>
+        <label for="eligible">Small business income tax offset</label>
+        <div class="select-wrap">
+          <select id="eligible">
+            <option value="yes">Yes: sole trader, turnover under $5 million</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Set aside about</h2>
+      <div class="result-main"><span id="out-rate">—</span> <small>of each payment</small></div>
+      <ul class="result-list">
+        <li class="key"><span>From this payment, set aside</span><span id="out-payment">—</span></li>
+        <li><span>Yours to spend</span><span id="out-keep">—</span></li>
+        <li><span>Estimated tax for the year</span><span id="out-tax">—</span></li>
+        <li><span>About this much a month</span><span id="out-monthly">—</span></li>
+        <li><span>Left after tax for the year</span><span id="out-take">—</span></li>
+      </ul>
+      <p class="result-note">An estimate of income tax and self-employment tax or contributions only. If you charge sales tax, VAT or GST, keep that apart too: it isn't yours.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Set-aside rate at other profit levels</h2>
+    <p>Using the country and settings you chose above:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Yearly profit</th><th class="num">Estimated tax</th><th class="num">Set aside</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+    <p>The rate rises with profit, because more of it falls into higher tax bands. Re-check it when your income changes a lot.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose your country</strong> and enter the profit you expect this year. If you're not sure, use last year's profit or your best guess, and update it as the year goes on.</li>
+      <li><strong>Fill in the extra boxes</strong> for your country, such as filing status in the US or where you live in the UK.</li>
+      <li><strong>Enter a payment you've just received</strong> to see how much of it to move into a separate tax savings account.</li>
+      <li><strong>Do it every time you're paid.</strong> When the tax is due, the money is already waiting.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Yearly tax      = the country's tax on your profit (see below)
+Set-aside rate  = yearly tax ÷ yearly profit
+From a payment  = payment × set-aside rate</div>
+    <ul>
+      <li><strong>US:</strong> federal income tax (standard deduction and the QBI deduction) plus self-employment tax and Additional Medicare Tax, and your own flat state estimate. The same method as our <a href="{{root}}us/freelancer-take-home-pay-calculator/">freelancer take-home pay calculator</a>.</li>
+      <li><strong>UK:</strong> Income Tax and Class 4 National Insurance, as in our <a href="{{root}}uk/self-employed-tax-calculator/">self-employed tax calculator</a>.</li>
+      <li><strong>Canada:</strong> federal tax and both halves of CPP (with CPP2), plus your provincial estimate, as in our <a href="{{root}}ca/self-employed-tax-calculator/">self-employed tax calculator</a>.</li>
+      <li><strong>Australia:</strong> income tax after the low income and small business offsets, plus the full 2% Medicare levy, as in our <a href="{{root}}au/sole-trader-tax-calculator/">sole trader tax calculator</a>.</li>
+    </ul>
+
+    <h2>Worked examples</h2>
+    <p>Each person has the profit shown and no other income. Each has just been paid 2,000 in their own currency.</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Freelancer</th><th class="num">Yearly profit</th><th class="num">Estimated tax</th><th class="num">Set aside</th><th class="num">From a 2,000 payment</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Freelancer">US, single, no state tax</td><td class="num" data-label="Yearly profit">$60,000</td><td class="num" data-label="Estimated tax">$12,037.20</td><td class="num" data-label="Set aside">20.1%</td><td class="num" data-label="From a 2,000 payment">$401.24</td></tr>
+          <tr><td data-label="Freelancer">UK, England</td><td class="num" data-label="Yearly profit">£40,000</td><td class="num" data-label="Estimated tax">£7,131.80</td><td class="num" data-label="Set aside">17.8%</td><td class="num" data-label="From a 2,000 payment">£356.59</td></tr>
+          <tr><td data-label="Freelancer">Canada, 5% provincial estimate</td><td class="num" data-label="Yearly profit">$60,000</td><td class="num" data-label="Estimated tax">$14,682.59</td><td class="num" data-label="Set aside">24.5%</td><td class="num" data-label="From a 2,000 payment">$489.42</td></tr>
+          <tr><td data-label="Freelancer">Australia, sole trader</td><td class="num" data-label="Yearly profit">$80,000</td><td class="num" data-label="Estimated tax">$15,120.00</td><td class="num" data-label="Set aside">18.9%</td><td class="num" data-label="From a 2,000 payment">$378.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The UK freelancer, for example, pays £5,486 Income Tax and £1,645.80 Class 4 National Insurance on £40,000 of profit: £7,131.80, or 17.8%. Moving £356.59 of every £2,000 into a separate account covers it.</p>
+
+    <h2>Why a separate account helps</h2>
+    <p>No one takes tax out of a freelancer's pay, so the full amount lands in your account and it's easy to spend it. Then the bill arrives months later, all at once. Moving the set-aside share out on the day you're paid keeps the two apart. Many banks let you open a separate savings account for this.</p>
+    <p>When the tax is due, pay it from that account:</p>
+    <ul>
+      <li><strong>US:</strong> quarterly estimated tax payments. Our <a href="{{root}}us/quarterly-estimated-tax-calculator/">quarterly tax calculator</a> shows the amounts and dates.</li>
+      <li><strong>UK:</strong> Self Assessment by 31 January, and payments on account. See our <a href="{{root}}uk/payments-on-account-calculator/">payments on account calculator</a>.</li>
+      <li><strong>Canada:</strong> balance owing by April 30, and instalments if you need them. See our <a href="{{root}}ca/tax-instalments-calculator/">instalments calculator</a>.</li>
+      <li><strong>Australia:</strong> when you lodge your return, and PAYG instalments if the ATO asks you to pay them.</li>
+    </ul>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Other income, such as a salary from a job, savings interest or rent. If you have a job too, your rate on freelance profit can be higher than shown.</li>
+      <li>Credits, allowances and deductions beyond the ones listed above, and student loan or HELP repayments.</li>
+      <li>Exact US state and Canadian provincial tax. Both are your own flat estimate.</li>
+      <li>Sales tax, VAT, GST or HST you charge clients. Keep that separate as well.</li>
+      <li>Australia's reduced Medicare levy for low incomes: the full 2% is used, so on a low income the estimate may be a little high.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is there a standard percentage freelancers should save?</summary>
+        <p>No single percentage is right for everyone. It depends on your country, your profit and your situation, which is why this calculator works it out from the official tax rates. In the examples above it ranges from about 18% to 25%.</p>
+      </details>
+      <details>
+        <summary>Should I set aside a percentage of my income or my profit?</summary>
+        <p>Tax is charged on profit, so the rate here is worked out on profit. If your expenses are small, applying it to each payment is close enough. If they're large, applying it to each payment sets aside a little more than you need, which is the safer mistake.</p>
+      </details>
+      <details>
+        <summary>What if I set aside too much?</summary>
+        <p>Then you have money left after paying your tax bill. Many freelancers keep it as a start on next year's tax or an emergency fund. Our <a href="{{root}}freelance/emergency-fund-calculator/">emergency fund calculator</a> shows how much cash to keep for quiet months.</p>
+      </details>
+      <details>
+        <summary>My income changes a lot. Which profit should I enter?</summary>
+        <p>Enter your best estimate for the whole year, then update it every few months. Our <a href="{{root}}freelance/income-smoothing-calculator/">income smoothing calculator</a> helps turn uneven income into a steady monthly amount.</p>
+      </details>
+      <details>
+        <summary>Is this the tax I'll actually pay?</summary>
+        <p>It's an estimate based on the rules above and the official rates for this tax year. Your real bill depends on everything on your return. An accountant can give you an exact figure.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> the official figures behind each country's tax come from <a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" rel="noopener">the IRS</a>, <a href="https://www.gov.uk/income-tax-rates" rel="noopener">GOV.UK</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/tax-rates-brackets/current-year.html" rel="noopener">the CRA</a> and <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents" rel="noopener">the ATO</a>. Each country calculator linked above lists its full sources.</p>
+  </div>

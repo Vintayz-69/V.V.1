@@ -102,6 +102,13 @@ TOOLS = {
         short="Calculate interest and fixed compensation on an overdue invoice, including UK statutory interest.",
         icon="receipt", group="income",
     ),
+    "tax-set-aside": dict(
+        path="freelance/tax-set-aside-calculator/",
+        name="Freelance Tax Set-Aside Calculator",
+        card="Tax set-aside calculator",
+        short="How much of each payment to save for tax in the US, UK, Canada or Australia.",
+        icon="shield", group="planning", keywords="how much to save for tax self-employed set aside",
+    ),
     "emergency-fund": dict(
         path="freelance/emergency-fund-calculator/",
         name="Emergency Fund Calculator for Freelancers",
@@ -1318,6 +1325,13 @@ PAGES = [
          intro="Work out how many hours you can really bill each week and year once admin, sales, learning and time off are taken out.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["hourly-rate", "hourly-to-annual", "project-pricing"]),
+    dict(tool="tax-set-aside", src="tax-set-aside.html", updated=MONEY_DAY, script="tax-set-aside.js",
+         libs=["data/tax-us.js", "js/us-tax.js", "data/tax-uk.js", "js/uk-tax.js", "data/tax-ca.js", "js/ca-tax.js", "data/tax-au.js", "js/au-tax.js"],
+         title="How Much to Save for Tax: Freelancer Calculator | Vintayz",
+         description="Work out what share of each payment to save for tax as a freelancer in the US, UK, Canada or Australia, using this year's official rates.",
+         intro="Find out what share of every payment to keep aside for tax, based on your expected profit and this year's official tax rates.",
+         chips=["{{icon:globe}} US · UK · Canada · Australia"] + TOOL_CHIPS,
+         related=["us-quarterly-tax", "uk-payments-on-account", "emergency-fund"]),
     dict(tool="emergency-fund", src="emergency-fund.html", updated=MONEY_DAY, script="emergency-fund.js",
          title="Emergency Fund Calculator for Freelancers | ToolNest by Vintayz",
          description="Work out how big your emergency fund should be as a freelancer, how many months your savings cover and how long it will take to save the rest.",
@@ -2234,6 +2248,22 @@ PAGES = [
          chips=["{{icon:lock}} 100% private, runs in browser", "{{icon:check}} Free, no sign-up"],
          related=["text-compare", "url-encode", "json-formatter"]),
 
+    dict(path="guides/", src="guides.html", kind="guide", updated=MONEY_DAY,
+         title="Freelancer Money Guides | ToolNest by Vintayz", h1="Guides",
+         description="Plain-English guides to freelance tax and pricing in the US, UK, Canada and Australia, each with worked numbers and a free calculator.",
+         intro="Plain-English guides to the money side of freelancing, each with worked numbers and a calculator to try."),
+    dict(path="guides/freelance-taxes-first-year-checklist/", src="guide-first-year-taxes.html", kind="guide", updated=MONEY_DAY,
+         title="First-Year Freelance Tax Checklist: US, UK, CA, AU | Vintayz",
+         h1="Your First Year of Freelance Taxes: a Checklist",
+         description="What to do about tax in your first year as a freelancer in the US, UK, Canada or Australia: registering, saving, deadlines and records.",
+         intro="The tax steps to take in your first year as a freelancer, country by country, with the official deadlines and links to check them.",
+         related=["tax-set-aside", "us-quarterly-tax", "uk-payments-on-account", "ca-instalments"]),
+    dict(path="guides/day-rate-vs-hourly-rate/", src="guide-day-vs-hourly.html", kind="guide", updated=MONEY_DAY,
+         title="Day Rate vs Hourly Rate for Freelancers | Vintayz",
+         h1="Day Rate vs Hourly Rate: How to Price Freelance Work",
+         description="When to charge by the day and when by the hour, how to convert between them without losing money, and worked examples in USD and GBP.",
+         intro="How to choose between a day rate and an hourly rate, and how to convert one into the other without undercharging.",
+         related=["hourly-rate", "day-rate", "project-pricing", "billable-hours"]),
     dict(path="about/", src="about.html", kind="legal", nav="about", updated=CONTENT_DAY,
          title="About ToolNest by Vintayz", h1="About ToolNest",
          description="ToolNest builds free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia."),
@@ -2256,6 +2286,9 @@ PAGES = [
 # Health tools: LEGAL.md section 2 says tools never ask for health information.
 REGIONAL_COPIES = False
 HEALTH_TOOLS = False
+# Guides are new written pages, so they stay out of Google (noindex, not in the sitemap) until the
+# owner has read them (LEGAL.md section 2: every page reviewed by a human). Set True after review.
+GUIDES_REVIEWED = False
 if not HEALTH_TOOLS:
     for key in ("tdee-calculator", "bmi-calculator"):
         del TOOLS[key]
@@ -2653,6 +2686,8 @@ def json_ld(page):
         if page["kind"] == "tool":
             pname, ppath, _ = PARENTS[page["parent"]]
             items.append({"@type": "ListItem", "position": 2, "name": pname, "item": f"{DOMAIN}/{ppath}"})
+        if page["kind"] == "guide" and page["path"] != "guides/":
+            items.append({"@type": "ListItem", "position": 2, "name": "Guides", "item": f"{DOMAIN}/guides/"})
         items.append({"@type": "ListItem", "position": len(items) + 1, "name": page["h1"]})
         graph.append({"@type": "BreadcrumbList", "itemListElement": items})
     if page["kind"] == "tool":
@@ -2667,6 +2702,13 @@ def json_ld(page):
             "dateModified": page["updated"],
             "publisher": {"@type": "Organization", "name": OWNER, "url": f"{DOMAIN}/"},
             "offers": {"@type": "Offer", "price": "0", "priceCurrency": curr},
+        })
+    if page["kind"] == "guide" and page["path"] != "guides/":
+        graph.append({
+            "@type": "Article", "headline": page["h1"], "url": url, "description": page["description"],
+            "inLanguage": "en", "dateModified": page["updated"],
+            "author": {"@type": "Organization", "name": OWNER, "url": f"{DOMAIN}/"},
+            "publisher": {"@type": "Organization", "name": OWNER, "url": f"{DOMAIN}/"},
         })
     if page["kind"] == "section":
         # The tools a hub lists, so search engines see the hub as a collection of them.
@@ -2794,7 +2836,7 @@ def footer(up):
 
     money = [("Freelancer tools", "freelance/"), ("Business tools", "business/"), ("Career &amp; salary", "career/"),
              ("Personal finance", "finance/"), ("Hourly rate calculator", TOOLS["hourly-rate"]["path"]),
-             ("Invoice generator", TOOLS["invoice-generator"]["path"])]
+             ("Invoice generator", TOOLS["invoice-generator"]["path"]), ("Guides", "guides/")]
     # The country tax calculators are the site's most valuable pages, so every page links to them.
     tax = [(name, TOOLS[k]["path"]) for name, k in (
         ("US self-employment tax", "us-self-employment-tax"), ("US quarterly estimated tax", "us-quarterly-tax"),
@@ -2883,6 +2925,8 @@ def page_hero(page, up):
     if page["kind"] == "tool":
         pname, ppath, _ = PARENTS[page["parent"]]
         crumbs.append(f'<li><a href="{up}{ppath}">{pname}</a></li>')
+    if page["kind"] == "guide" and page["path"] != "guides/":
+        crumbs.append(f'<li><a href="{up}guides/">Guides</a></li>')
     crumbs.append(f'<li aria-current="page">{page["h1"]}</li>')
     intro = f'\n    <p class="intro">{page["intro"]}</p>' if page.get("intro") else ""
     chips = ""
@@ -2965,6 +3009,31 @@ def main_content(page, up, body):
         return f"{hero}\n<div class=\"container\">\n{body}\n  {other_sections(page, up)}\n</div>"
     if kind == "legal":
         return f"{hero}\n<div class=\"container\">\n  <div class=\"content legal\">\n{body}\n{updated_line(page)}\n  </div>\n</div>"
+    if kind == "guide":
+        tools = ""
+        if page.get("related"):
+            cards = "\n".join(tool_card(s, up) for s in page["related"])
+            tools = f"""<section class="section">
+    <div class="section-head"><div><span class="kicker">Try the numbers</span><h2>Calculators for this guide</h2></div>
+      <a class="btn btn-sm" href="{up}guides/">All guides</a></div>
+    <ul class="card-grid">
+{cards}
+    </ul>
+  </section>"""
+        note = ("<strong>Disclaimer:</strong> this guide is general information, not tax, legal or financial advice. "
+                "Rules change and depend on your situation, so check the official sources linked above or ask a "
+                "qualified accountant before making decisions.")
+        return f"""{hero}
+<div class="container">
+{body}
+  {tools}
+  <div class="content">
+    <div class="disclaimer">
+      <p>{note} <a href="{up}disclaimer/">Read the full disclaimer</a>.</p>
+    </div>
+    {updated_line(page)}
+  </div>
+</div>"""
     # tool
     if page["parent"] == "image":
         note = ("<strong>Keep your original:</strong> this tool makes a new copy of your picture on your own device. "
@@ -3077,6 +3146,9 @@ def render(page):
     if ADSENSE_PUBLISHER_ID:  # AdSense asks for this on every page
         verify += f'<meta name="google-adsense-account" content="{ADSENSE_PUBLISHER_ID}">\n'
 
+    if page["kind"] == "guide" and not GUIDES_REVIEWED:
+        verify += '<meta name="robots" content="noindex">\n'
+
     og_loc = page.get("og_locale", "en_US")
 
     return f"""<!doctype html>
@@ -3186,7 +3258,7 @@ def main():
 
     urls = "\n".join(
         f"  <url>\n    <loc>{DOMAIN}/{p['path']}</loc>\n    <lastmod>{p['updated']}</lastmod>\n  </url>"
-        for p in PAGES)
+        for p in PAGES if GUIDES_REVIEWED or p.get("kind") != "guide")
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n'
           f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n")
