@@ -85,6 +85,24 @@ Gross-Up Amount    = (Target Amount + Fixed Fee) ÷ (1 − (Percentage Fee ÷ 10
     <p>A web developer bills a client <strong>$1,000.00</strong> through Stripe (2.9% + $0.30). The processing fee is $29.00 (percentage) + $0.30 (fixed) = <strong>$29.30</strong>, giving a net payout of <strong>$970.70</strong>.</p>
     <p>If the contract specifies that the client covers transaction fees so the developer nets exactly $1,000.00, the invoice amount should be <strong>$1,030.18</strong>: ($1,000 + $0.30) ÷ (1 − 0.029) = $1,030.18. Stripe takes $30.18 in total fees, leaving exactly $1,000.00 in the developer's bank.</p>
 
+    <h2>Fees at different amounts (2.9% + $0.30)</h2>
+    <p>Using Stripe's standard US online card rate from the table above:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Invoice amount</th><th class="num">Fee</th><th class="num">You receive</th><th class="num">Effective rate</th><th class="num">Invoice to receive the full amount</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Invoice amount">$5</td><td class="num" data-label="Fee">$0.44</td><td class="num" data-label="You receive">$4.56</td><td class="num" data-label="Effective rate">8.90%</td><td class="num" data-label="Invoice to receive the full amount">$5.46</td></tr>
+          <tr><td data-label="Invoice amount">$50</td><td class="num" data-label="Fee">$1.75</td><td class="num" data-label="You receive">$48.25</td><td class="num" data-label="Effective rate">3.50%</td><td class="num" data-label="Invoice to receive the full amount">$51.80</td></tr>
+          <tr><td data-label="Invoice amount">$100</td><td class="num" data-label="Fee">$3.20</td><td class="num" data-label="You receive">$96.80</td><td class="num" data-label="Effective rate">3.20%</td><td class="num" data-label="Invoice to receive the full amount">$103.30</td></tr>
+          <tr><td data-label="Invoice amount">$500</td><td class="num" data-label="Fee">$14.80</td><td class="num" data-label="You receive">$485.20</td><td class="num" data-label="Effective rate">2.96%</td><td class="num" data-label="Invoice to receive the full amount">$515.24</td></tr>
+          <tr><td data-label="Invoice amount">$1,000</td><td class="num" data-label="Fee">$29.30</td><td class="num" data-label="You receive">$970.70</td><td class="num" data-label="Effective rate">2.93%</td><td class="num" data-label="Invoice to receive the full amount">$1,030.18</td></tr>
+          <tr><td data-label="Invoice amount">$5,000</td><td class="num" data-label="Fee">$145.30</td><td class="num" data-label="You receive">$4,854.70</td><td class="num" data-label="Effective rate">2.91%</td><td class="num" data-label="Invoice to receive the full amount">$5,149.64</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>On big invoices the effective rate settles just above 2.9%. On small ones, the fixed 30 cents dominates. If you send many small invoices, combining them into one monthly invoice can cut fees noticeably.</p>
+    <p>Fees are a business cost. Add a year's worth to your expenses in our <a href="{{root}}freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a> so your rate covers them.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>

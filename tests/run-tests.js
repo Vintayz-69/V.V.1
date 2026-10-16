@@ -2458,6 +2458,174 @@ async function resumePdfTests() {
   expectAll("CA instalments income fell", ci({ current: 6000, last: 14000, before: 12000, quebec: false }), { required: true, currentYear: 1500, priorYear: 3500, lower: 1500 });
 }
 
+// ---------------- Thin page deepening, batch 2a (2026-10-17): US and UK tax pages
+{
+  const th = load("us-take-home", US_LIBS);
+  for (const [p, st, total, take, share] of [[40000, "single", 7426.93, 32573.07, 18.6], [60000, "single", 12037.2, 47962.8, 20.1], [100000, "single", 22364.55, 77635.45, 22.4],
+    [150000, "single", 37607.62, 112392.38, 25.1], [100000, "mfj", 19464.13, 80535.87, 19.5], [150000, "mfj", 30989.8, 119010.2, 20.7]]) {
+    const r = th({ profit: p, status: st, stateRate: 0 });
+    expectAll(`US take-home table $${p} ${st}`, { ...r, share: Math.round(r.total / p * 1000) / 10 }, { total, takeHome: take, share });
+  }
+  check("US take-home set-aside example", 2000 * 0.25, 500);
+
+  const ho = load("us-home-office", US_LIBS);
+  for (const [c, reg, best] of [[8000, 1000, "simplified"], [12000, 1500, "regular"], [18000, 2250, "regular"]]) {
+    expectAll(`US home office Sam $${c}`, ho({ office: 250, home: 2000, expenses: c, profit: 50000 }), { simplified: 1250, regular: reg, best });
+  }
+  check("US home office level point", ho({ office: 250, home: 2000, expenses: 10000, profit: 50000 }).regular, 1250);
+  check("US home office Alex saving at 30%", 3200 * 0.3, 960);
+
+  const mi = load("us-mileage", US_LIBS);
+  for (const [m, even, late] of [[1000, 742.5, 760], [3000, 2227.5, 2280], [5000, 3712.5, 3800], [10000, 7425, 7600]]) {
+    check(`US mileage ${m} split`, mi({ year: "2026", milesByPeriod: [m / 2, m / 2], extra: 0, taxRate: 0 }).deduction, even);
+    check(`US mileage ${m} from July`, mi({ year: "2026", milesByPeriod: [0, m], extra: 0, taxRate: 0 }).deduction, late);
+  }
+  check("US mileage FAQ saving", mi({ year: "2026", milesByPeriod: [0, 5000], extra: 0, taxRate: 30 }).saving, 1140);
+
+  const tb = load("us-tax-bracket", US_LIBS);
+  for (const [i, st, taxable, tax, marg, eff] of [[40000, "single", 23900, 2620, 0.12, 6.55], [60000, "single", 43900, 5020, 0.12, 8.37], [100000, "single", 83900, 13170, 0.22, 13.17],
+    [150000, "single", 133900, 24734, 0.24, 16.49], [60000, "mfj", 27800, 2840, 0.12, 4.73], [100000, "mfj", 67800, 7640, 0.12, 7.64], [150000, "mfj", 117800, 15340, 0.22, 10.23]]) {
+    expectAll(`US brackets table $${i} ${st}`, tb({ income: i, status: st, itemized: null }), { taxable, tax, marginal: marg, effective: eff });
+  }
+  check("US brackets raise $75k to $80k", tb({ income: 80000, status: "single", itemized: null }).tax - tb({ income: 75000, status: "single", itemized: null }).tax, 1100);
+
+  const poa = load("uk-payments-on-account", UK_LIBS);
+  expectAll("UK POA Tom second year", poa({ lastBill: 9000, paidOnAccount: 8000, atSource: 0, nextBill: 7000 }), { eachPayment: 4500, january: 5500, july: 4500, balancingNext: -2000 });
+  expectAll("UK POA Amir", poa({ lastBill: 1800, paidOnAccount: 0, atSource: 8000, nextBill: null }), { needed: false, january: 1800, july: 0 });
+  expectAll("UK POA Beth", poa({ lastBill: 3000, paidOnAccount: 0, atSource: 6000, nextBill: null }), { needed: true, eachPayment: 1500, january: 4500, july: 1500 });
+  check("UK POA Amir share", Math.round(8000 / 9800 * 1000) / 10, 81.6);
+  check("UK POA Beth share", Math.round(6000 / 9000 * 1000) / 10, 66.7);
+
+  const vat = load("uk-vat", ["data/tax-uk.js"]);
+  for (const [a, add, inside, before] of [[100, 120, 16.67, 83.33], [500, 600, 83.33, 416.67], [1000, 1200, 166.67, 833.33], [2500, 3000, 416.67, 2083.33]]) {
+    check(`UK VAT add £${a}`, vat({ mode: "add", amount: a, rate: "standard" }).after, add);
+    expectAll(`UK VAT remove £${a}`, vat({ mode: "remove", amount: a, rate: "standard" }), { vat: inside, before });
+  }
+  check("UK VAT day rate £400", vat({ mode: "add", amount: 400, rate: "standard" }).after, 480);
+
+  const dv = load("uk-dividend-tax", UK_LIBS);
+  for (const [d, basic, higher, tax, eff, keep] of [[10000, 9500, 0, 1021.25, 10.21, 8978.75], [20000, 19500, 0, 2096.25, 10.48, 17903.75], [30000, 29500, 0, 3171.25, 10.57, 26828.75],
+    [50000, 37200, 12300, 8396.25, 16.79, 41603.75], [80000, 37200, 42300, 19121.25, 23.9, 60878.75]]) {
+    expectAll(`UK dividends £${d}`, dv({ other: 12570, dividends: d, region: "ruk" }), { allowanceUsed: 500, basic, higher, dividendTax: tax, effective: eff, keep });
+  }
+
+  const hol = load("uk-holiday", ["data/employment-uk.js"]);
+  for (const [d, e] of [[1, 5.6], [2, 11.2], [3, 16.8], [4, 22.4], [5, 28], [6, 28]]) check(`UK holiday ${d} days table`, hol({ mode: "days", days: d }).entitlement, e);
+  check("UK holiday starts 3 months in", 28 * 9 / 12, 21);
+}
+
+// ---------------- Thin page deepening, batch 2b (2026-10-17): Australia, Canada, UK redundancy, general money tools
+{
+  const st = load("au-sole-trader-tax", AU_LIBS);
+  for (const [i, tax, med, take, eff] of [[40000, 2171.8, 800, 37028.2, 7.43], [60000, 7420, 1200, 51380, 14.37], [80000, 13520, 1600, 64880, 18.9],
+    [100000, 19520, 2000, 78480, 21.52], [150000, 35570, 3000, 111430, 25.71]]) {
+    const r = st({ income: i, eligible: true });
+    expectAll(`AU sole trader $${i}`, { ...r, eff: Math.round(r.total / i * 10000) / 100 }, { incomeTax: tax, medicare: med, takeHome: take, eff });
+  }
+  expectAll("AU sole trader $40k offsets", st({ income: 40000, eligible: true }), { basic: 3270, lito: 575, smallBusinessOffset: 523.2 });
+  check("AU small business offset full from about $52,400", st({ income: 52400, eligible: true }).smallBusinessOffset < 1000 && st({ income: 52500, eligible: true }).smallBusinessOffset === 1000, true);
+  check("AU set-aside 19% of $10,000", 10000 * 0.19, 1900);
+
+  const th = load("au-take-home", AU_LIBS);
+  for (const [i, tax, med, take, ft, mo] of [[50000, 5270, 1000, 43730, 1681.92, 3644.17], [70000, 11520, 1400, 57080, 2195.38, 4756.67], [90000, 17520, 1800, 70680, 2718.46, 5890],
+    [100000, 20520, 2000, 77480, 2980, 6456.67], [120000, 26520, 2400, 91080, 3503.08, 7590], [150000, 36570, 3000, 110430, 4247.31, 9202.5]]) {
+    expectAll(`AU take-home $${i}`, th({ salary: i, includesSuper: false }), { incomeTax: tax, medicare: med, takeHome: take, fortnightly: ft, monthly: mo });
+  }
+  check("AU take-home LITO at $50k", th({ salary: 50000, includesSuper: false }).lito, 250);
+  expectAll("AU take-home $100k package", th({ salary: 100000, includesSuper: true }), { base: 89285.71, superAmount: 10714.29, takeHome: 70194.29 });
+  check("AU package difference", 77480 - th({ salary: 100000, includesSuper: true }).takeHome, 7285.71);
+
+  const ce = load("ca-cpp-ei", ["data/tax-ca.js"]);
+  for (const [i, cpp, cpp2, ei, tot, per] of [[40000, 2171.75, 0, 652, 2823.75, 108.61], [50000, 2766.75, 0, 815, 3581.75, 137.76], [60000, 3361.75, 0, 978, 4339.75, 166.91],
+    [70000, 3956.75, 0, 1123.07, 5079.82, 195.38], [80000, 4230.45, 216, 1123.07, 5569.52, 214.21], [90000, 4230.45, 416, 1123.07, 5769.52, 221.9]]) {
+    expectAll(`CA CPP/EI $${i}`, ce({ salary: i, periods: 26 }), { cpp, cpp2, ei, employee: tot, perPeriod: per });
+  }
+  check("CA employer on $60k", ce({ salary: 60000, periods: 26 }).employer, 4730.95);
+
+  const gh = load("ca-gst-hst", CA_LIBS);
+  for (const [a, h, t] of [[500, 65, 565], [1000, 130, 1130], [2500, 325, 2825], [5000, 650, 5650]]) {
+    expectAll(`CA HST Ontario $${a}`, gh({ province: "ON", mode: "add", amount: a, pst: 0 }), { gst: h, after: t });
+  }
+
+  const rd = load("uk-redundancy", ["data/employment-uk.js"]);
+  for (const [a, y, w, pay] of [[35, 10, 10, 6000], [45, 10, 12, 7200], [55, 15, 22, 13200], [50, 20, 24.5, 14700]]) {
+    expectAll(`UK redundancy age ${a}, ${y} years`, rd({ age: a, years: y, weekly: 600 }), { weeks: w, pay });
+  }
+
+  const bh = load("billable-hours");
+  for (const [u, pct, yr, rev, per] of [[16, 0.6, 1104, 82800, 45], [12, 0.7, 1288, 96600, 52.5], [8, 0.8, 1472, 110400, 60], [4, 0.9, 1656, 124200, 67.5]]) {
+    expectAll(`billable unpaid ${u}`, bh({ hours: 40, weeksOff: 6, admin: u, sales: 0, learning: 0, other: 0, rate: 75 }), { pct, year: yr, revenue: rev, perHourWorked: per });
+  }
+  check("billable one unpaid hour costs", 46 * 75, 3450);
+
+  const jo = load("job-offer");
+  const offerA = { salary: 50000, bonus: 0, benefits: 0, hours: 37.5, days: 0, cost: 0, time: 0 };
+  for (const [d, cc, v, h, hr] of [[0, 0, 60000, 2340, 25.64], [100, 1500, 58500, 2490, 23.49], [200, 3000, 57000, 2640, 21.59]]) {
+    expectAll(`job offer B ${d} days`, jo({ a: offerA, b: { salary: 55000, bonus: 5000, benefits: 0, hours: 45, days: d, cost: 15, time: 1.5 } }).b, { commuteCost: cc, value: v, hours: h, hourly: hr });
+  }
+  expectAll("job offer B 37.5 h hybrid", jo({ a: offerA, b: { salary: 55000, bonus: 5000, benefits: 0, hours: 37.5, days: 100, cost: 15, time: 1.5 } }).b, { value: 58500, hours: 2100, hourly: 27.86 });
+
+  const ef = load("emergency-fund");
+  for (const [m, t, g, mo] of [[3, 10500, 5500, 7], [6, 21000, 16000, 20], [9, 31500, 26500, 34], [12, 42000, 37000, 47]]) {
+    expectAll(`emergency fund ${m} months`, ef({ personal: 3000, business: 500, months: m, saved: 5000, save: 800 }), { target: t, gap: g, monthsToGoal: mo });
+  }
+
+  const rt = load("retainer");
+  for (const [u, r, un] of [[20, 67.5, 0], [16, 84.38, 4], [12, 112.5, 8], [10, 135, 10]]) {
+    expectAll(`retainer used ${u}`, rt({ rate: 75, hours: 20, discount: 10, months: 6, used: u }), { atUsage: r, unused: un });
+  }
+
+  for (const [t, m, sal] of [[25, 10, 3037.5], [25, 0, 3375], [30, 10, 2835], [20, 10, 3240]]) {
+    check(`income smoothing salary ${t}/${m}`, 4500 * (1 - t / 100) * (1 - m / 100), sal);
+  }
+
+  const pf = load("payment-fee");
+  for (const [a, f, n, e, g] of [[5, 0.44, 4.56, 8.9, 5.46], [50, 1.75, 48.25, 3.5, 51.8], [100, 3.2, 96.8, 3.2, 103.3], [500, 14.8, 485.2, 2.96, 515.24],
+    [1000, 29.3, 970.7, 2.93, 1030.18], [5000, 145.3, 4854.7, 2.91, 5149.64]]) {
+    expectAll(`payment fee $${a}`, pf({ amount: a, pct: 2.9, fixedFee: 0.3 }), { fee: f, net: n, effectiveRate: e, grossUp: g });
+  }
+
+  const pp = load("project-pricing");
+  for (const [b, pr, dep, eff] of [[0, 3200, 1600, 75], [10, 3520, 1760, 83], [15, 3680, 1840, 87], [20, 3840, 1920, 91], [30, 4160, 2080, 99]]) {
+    expectAll(`project pricing buffer ${b}%`, pp({ hours: 40, rate: 75, costs: 200, buffer: b, deposit: 50 }), { price: pr, deposit: dep, effective: eff });
+  }
+
+  const ro = load("roas");
+  for (const [c, be, np] of [[20, 1.25, 1400], [30, 1.43, 1100], [40, 1.67, 800], [50, 2, 500], [60, 2.5, 200], [70, 3.33, -100]]) {
+    expectAll(`ROAS cogs ${c}%`, ro({ adSpend: 1000, revenue: 3000, cogs: c, otherExpenses: 0, orders: 30 }), { roas: 3, breakEvenRoas: be, netProfit: np });
+  }
+
+  const ha = load("hourly-to-annual");
+  for (const [r, y52, m52, y46] of [[15, 31200, 2600, 27600], [20, 41600, 3466.67, 36800], [25, 52000, 4333.33, 46000], [30, 62400, 5200, 55200], [40, 83200, 6933.33, 73600], [50, 104000, 8666.67, 92000]]) {
+    expectAll(`hourly-to-annual $${r} 52 weeks`, ha({ rate: r, hours: 40, days: 5, weeks: 52 }), { annual: y52, monthly: m52 });
+    check(`hourly-to-annual $${r} 46 weeks`, ha({ rate: r, hours: 40, days: 5, weeks: 46 }).annual, y46);
+  }
+
+  const rs = load("retirement-savings");
+  for (const [age, m, pot, paid, inc] of [[25, 500, 811662.18, 250000, 32466.49], [30, 500, 609391.64, 220000, 24375.67], [35, 500, 450907.38, 190000, 18036.3],
+    [30, 250, 332275.9, 115000, 13291.04], [30, 1000, 1163623.13, 430000, 46544.93]]) {
+    expectAll(`retirement start ${age}, $${m}`, rs({ age, retireAge: 65, current: 10000, monthly: m, returnPct: 5, withdrawPct: 4 }), { pot, contributed: paid, yearlyIncome: inc });
+  }
+
+  const cl = load("customer-lifetime-value");
+  for (const [o, y, v, r, pb] of [[4, 3, 360, 3, 12], [5, 3, 450, 3.75, 9.6], [4, 4, 480, 4, 12], [5, 4, 600, 5, 9.6]]) {
+    expectAll(`CLV ${o} orders ${y} years`, cl({ order: 50, orders: o, margin: 60, years: y, cac: 120 }), { clv: v, ratio: r, payback: pb });
+  }
+
+  const B = load("business-days", ["data/holidays.js"]);
+  const last = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const eng = [21, 20, 22, 20, 19, 22, 23, 20, 22, 22, 21, 21];
+  const us = [20, 19, 22, 22, 20, 21, 22, 21, 21, 21, 19, 22];
+  for (let m = 1; m <= 12; m++) {
+    const mm = String(m).padStart(2, "0");
+    check(`working days 2026-${mm} England`, B.countBetween(`2026-${mm}-01`, `2026-${mm}-${last[m - 1]}`, "england-and-wales", true).days, eng[m - 1]);
+    check(`working days 2026-${mm} US`, B.countBetween(`2026-${mm}-01`, `2026-${mm}-${last[m - 1]}`, "us", true).days, us[m - 1]);
+  }
+  check("working days 2026 England", B.countBetween("2026-01-01", "2026-12-31", "england-and-wales", true).days, 253);
+  check("working days 2026 US", B.countBetween("2026-01-01", "2026-12-31", "us", true).days, 250);
+  check("weekdays 2026", B.countBetween("2026-01-01", "2026-12-31", "none", true).days, 261);
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);
