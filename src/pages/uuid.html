@@ -66,6 +66,18 @@ tttttttt-tttt-7xxx-Nxxx-xxxxxxxxxxxx    version 7 (t = milliseconds since 1970)
 Example v7:  0199d084-fb00-7…   →  0x0199d084fb00 = 1,760,140,000,000 ms
                                      = 10 October 2025, 23:46:40 UTC</div>
 
+    <h2>UUID v4, v7 or a counting number?</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>ID type</th><th>Good for</th><th>Watch out for</th></tr></thead>
+        <tbody>
+          <tr><td data-label="ID type">1, 2, 3… (auto-increment)</td><td data-label="Good for">Small, simple tables in one database</td><td data-label="Watch out for">Easy to guess, and shows how many records you have</td></tr>
+          <tr><td data-label="ID type">UUID v4</td><td data-label="Good for">IDs made in many places at once, IDs people shouldn't guess</td><td data-label="Watch out for">Random order can make large database indexes slower</td></tr>
+          <tr><td data-label="ID type">UUID v7</td><td data-label="Good for">Database keys that sort by creation time</td><td data-label="Watch out for">Anyone can read when it was made</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>

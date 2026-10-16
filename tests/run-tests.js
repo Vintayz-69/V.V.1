@@ -2626,6 +2626,41 @@ async function resumePdfTests() {
   check("weekdays 2026", B.countBetween("2026-01-01", "2026-12-31", "none", true).days, 261);
 }
 
+// ---------------- Off-topic page deepening, batch 3a (2026-10-17)
+{
+  const pc = load("percentage");
+  check("percent tip 18% of 45", pc({ mode: "of", a: 18, b: 45 }).result, 8.1);
+  check("percent 25% off 80", pc({ mode: "adjust", a: 25, b: 80 }).down, 60);
+  check("percent 42 of 50", pc({ mode: "what", a: 42, b: 50 }).result, 84);
+  check("percent rent change", pc({ mode: "change", a: 1200, b: 1290 }).result, 7.5);
+  check("percent late fee", pc({ mode: "adjust", a: 3, b: 2500 }).up, 2575);
+  check("percent original after 20% off", 64 / 0.8, 80);
+  check("percent original after 5% rise", 2100 / 1.05, 2000);
+
+  check("unit price multi-buy per item", 5 / 3, 1.67);
+  check("unit price single costs more", Math.round((1.89 / (5 / 3) - 1) * 100), 13);
+
+  check("random odds 3 of 50", 3 / 50 * 100, 6);
+  check("random dice face", 100 / 6, 16.67);
+
+  for (const [n, len] of [[100, 136], [1000, 1336], [10000, 13336], [1048576, 1398104]]) {
+    check(`base64 length for ${n} bytes`, load("base64").encode("a".repeat(n)).length, len);
+  }
+
+  const T = (t) => new Date(t * 1000).toISOString().slice(0, 19);
+  check("timestamp 1e9", T(1e9), "2001-09-09T01:46:40");
+  check("timestamp 1.7e9", T(1.7e9), "2023-11-14T22:13:20");
+  check("timestamp 2e9", T(2e9), "2033-05-18T03:33:20");
+  check("timestamp 2038", T(2147483647), "2038-01-19T03:14:07");
+
+  check("regex digits only", /^\d+$/.test("12345") && !/^\d+$/.test("12a45"), true);
+  check("regex doubled word", (/\b(\w+)\s+\1\b/i.exec("the the cat") || [])[0], "the the");
+  check("regex trim spaces", "  hi  ".replace(/^\s+|\s+$/g, ""), "hi");
+  check("regex thousands", (/\b\d{1,3}(,\d{3})*(\.\d+)?\b/.exec("total 1,234.56 due") || [])[0], "1,234.56");
+
+  for (const [y2, need] of [[50, 65], [55, 62.5], [60, 60], [65, 57.5]]) check(`degree 2:1 after ${y2}`, (60 * 3 - y2) / 2, need);
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);
