@@ -58,6 +58,14 @@
       <li><strong>Switch between rows and columns.</strong> Each square you fill gives you new information for the other direction.</li>
     </ul>
 
+    <h2>A first-move trick: the overlap</h2>
+    <p>When a clue is long compared with its row, some squares must be filled wherever the block goes. Imagine the block pushed as far left as it can go, then as far right. The squares covered both times are certain.</p>
+    <div class="formula">Row of 10 squares, clue 7
+Pushed left:   ■■■■■■■□□□
+Pushed right:  □□□■■■■■■■
+Certain:       □□□■■■■□□□   (7 + 7 − 10 = 4 squares)</div>
+    <p>The rule: certain squares = 2 × clue − row length, when that's more than 0. A clue of 5 in a row of 10 gives none; a clue of 8 gives 6.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>

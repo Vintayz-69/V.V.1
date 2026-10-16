@@ -58,7 +58,7 @@
       "description": "Get the MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hash of text or any file, and check a download against its checksum. Files are never uploaded.",
       "inLanguage": "en",
       "isAccessibleForFree": true,
-      "dateModified": "2026-10-16",
+      "dateModified": "2026-10-17",
       "publisher": {
         "@type": "Organization",
         "name": "Vintayz",
@@ -201,6 +201,14 @@ Mac (Terminal)            shasum -a 256 file.zip
 Linux                     sha256sum file.zip</div>
     <p>Compare the result with the checksum on the download page. If even one character is different, the file isn't the one the publisher made: download it again from the official site.</p>
 
+    <h2>One letter changes everything</h2>
+    <p>Changing a single capital letter gives a completely different hash. That's what makes hashes useful for spotting changed files:</p>
+    <div class="formula">MD5("hello")      = 5d41402abc4b2a76b9719d911017c592
+MD5("Hello")      = 8b1a9953c4611296a827abf8c47804d7
+SHA-256("hello")  = 2cf24dba5fb0a30e…
+SHA-256("Hello")  = 185f8db32271fe25…</div>
+    <p>Type "hello" into the tool above to check these yourself.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>
@@ -246,7 +254,7 @@ Linux                     sha256sum file.zip</div>
     <div class="disclaimer">
       <p><strong>Disclaimer:</strong> results are estimates for planning only and are not tax, legal or financial advice. Rules and rates vary by country, state and personal situation. Check with a qualified accountant before making decisions. <a href="../../disclaimer/">Read the full disclaimer</a>.</p>
     </div>
-    <p class="updated">Last updated: <time datetime="2026-10-16">16 October 2026</time></p>
+    <p class="updated">Last updated: <time datetime="2026-10-17">17 October 2026</time></p>
   </div>
 </div>
 </main>

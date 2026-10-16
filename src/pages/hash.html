@@ -63,6 +63,14 @@ Mac (Terminal)            shasum -a 256 file.zip
 Linux                     sha256sum file.zip</div>
     <p>Compare the result with the checksum on the download page. If even one character is different, the file isn't the one the publisher made: download it again from the official site.</p>
 
+    <h2>One letter changes everything</h2>
+    <p>Changing a single capital letter gives a completely different hash. That's what makes hashes useful for spotting changed files:</p>
+    <div class="formula">MD5("hello")      = 5d41402abc4b2a76b9719d911017c592
+MD5("Hello")      = 8b1a9953c4611296a827abf8c47804d7
+SHA-256("hello")  = 2cf24dba5fb0a30e…
+SHA-256("Hello")  = 185f8db32271fe25…</div>
+    <p>Type "hello" into the tool above to check these yourself.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>

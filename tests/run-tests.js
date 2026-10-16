@@ -2721,6 +2721,75 @@ async function resumePdfTests() {
   check("Bank Rate on 30 Jun 2026", rateOn("2026-06-30"), 3.75);
 }
 
+// ---------------- Off-topic page deepening, batches 3c–3e (2026-10-17)
+{
+  for (const [w, r, sp] of [[300, 1.5, 2.31], [500, 2.5, 3.85], [1000, 5, 7.69], [1500, 7.5, 11.54], [2500, 12.5, 19.23]]) {
+    const x = load("word-counter")({ text: Array(w).fill("word").join(" ") });
+    check(`word counter ${w} reading`, x.readingTimeMin, r);
+    check(`word counter ${w} speaking`, x.speakingTimeMin, sp);
+  }
+  check("word counter 5-minute talk", 5 * 130, 650);
+
+  const fg = load("final-grade");
+  for (const [w, n] of [[20, 88], [30, 84.67], [40, 83], [50, 82]]) check(`final grade weight ${w}`, fg({ current: 78, weight: w, target: 80 }).needed, n);
+
+  const da = load("date-add", ["data/holidays.js", "js/date-common.js"]);
+  const sb = { window: {}, document: { getElementById: () => null } }; vm.createContext(sb);
+  vm.runInContext(fs.readFileSync(path.join(JS, "js/date-common.js"), "utf8"), sb);
+  for (const [n, d] of [[7, "Friday 8 January 2027"], [14, "Friday 15 January 2027"], [30, "Sunday 31 January 2027"], [60, "Tuesday 2 March 2027"], [90, "Thursday 1 April 2027"]]) {
+    check(`add ${n} days to 1 Jan 2027`, sb.window.ToolNestDate.longDate(da({ y: 2027, m: 1, d: 1 }, { days: n }, 1).date, false), d);
+  }
+
+  const fc = load("fuel-cost");
+  for (const [m, g, c] of [[20, 5, 17.5], [25, 4, 14], [30, 3.33, 11.67], [40, 2.5, 8.75]]) {
+    expectAll(`fuel per 100 miles at ${m} mpg`, fc({ distance: 100, distUnit: "mi", economy: m, econUnit: "mpg-us", price: 3.5, priceUnit: "usgal", people: 1 }), { usGallons: g, cost: c });
+  }
+
+  const di = load("discount");
+  for (const [a, b, pay, off] of [[20, 10, 72, 28], [25, 25, 56.25, 43.75], [30, 20, 56, 44], [50, 20, 40, 60]]) {
+    expectAll(`discount ${a} then ${b}`, di({ price: 100, off: a, extra: b }), { sale: pay, totalOff: off });
+    check(`discount ${b} then ${a} same`, di({ price: 100, off: b, extra: a }).sale, pay);
+  }
+
+  const tp = load("tip");
+  for (const [b, p, t] of [[20, 15, 3], [20, 18, 3.6], [20, 20, 4], [50, 15, 7.5], [50, 18, 9], [50, 20, 10], [100, 15, 15], [100, 18, 18], [100, 20, 20]]) {
+    check(`tip ${p}% of $${b}`, tp({ bill: b, tipPct: p, split: 1, roundUp: false }).tipAmount, t);
+  }
+
+  for (const [l, bits] of [[8, 51.9], [12, 77.9], [16, 103.9], [20, 129.8]]) check(`password ${l} chars bits`, Math.round(l * Math.log2(90) * 10) / 10, bits);
+
+  const crypto = require("crypto");
+  check("md5 hello", crypto.createHash("md5").update("hello").digest("hex"), "5d41402abc4b2a76b9719d911017c592");
+  check("md5 Hello", crypto.createHash("md5").update("Hello").digest("hex"), "8b1a9953c4611296a827abf8c47804d7");
+  check("sha256 hello start", crypto.createHash("sha256").update("hello").digest("hex").slice(0, 16), "2cf24dba5fb0a30e");
+  check("sha256 Hello start", crypto.createHash("sha256").update("Hello").digest("hex").slice(0, 16), "185f8db32271fe25");
+
+  const C = load("color-converter");
+  for (const [h, rgb, hsl, cmyk] of [["#ffffff", "255,255,255", "0,0,100", "0,0,0,0"], ["#000000", "0,0,0", "0,0,0", "0,0,0,100"], ["#ff0000", "255,0,0", "0,100,50", "0,100,100,0"],
+    ["#1d4ed8", "29,78,216", "224,76,48", "87,64,0,15"], ["#16a34a", "22,163,74", "142,76,36", "87,0,55,36"]]) {
+    const x = C.parse(h);
+    check(`colour ${h} rgb`, [x.r, x.g, x.b].join(","), rgb);
+    const l = C.toHsl(x); check(`colour ${h} hsl`, [l.h, l.s, l.l].join(","), hsl);
+    const k = C.toCmyk(x); check(`colour ${h} cmyk`, [k.c, k.m, k.y, k.k].join(","), cmyk);
+  }
+
+  const F = load("four-in-a-row");
+  check("four in a row lines", F.LINES.length, 69);
+  check("four in a row bottom row", [0, 1, 2, 3, 4, 5, 6].map((c) => F.LINES.filter((l) => l.includes(35 + c)).length).join(","), "3,4,5,7,5,4,3");
+  check("four in a row third row up, middle", F.LINES.filter((l) => l.includes(21 + 3)).length, 13);
+
+  for (const [clue, len, sure] of [[7, 10, 4], [5, 10, 0], [8, 10, 6]]) check(`nonogram overlap ${clue}/${len}`, Math.max(0, 2 * clue - len), sure);
+  for (const [t, n] of [[64, 32], [256, 128], [1024, 512], [2048, 1024]]) check(`merge tile ${t}`, t / 2, n);
+  let f9 = 1; for (let i = 2; i <= 9; i++) f9 *= i;
+  check("sliding 3x3 arrangements", f9 / 2, 181440);
+  let f16 = 1n; for (let i = 2n; i <= 16n; i++) f16 *= i;
+  check("sliding 4x4 arrangements", (f16 / 2n).toString(), "10461394944000");
+  const places = (N, L, dirs) => dirs.reduce((sum, [dr, dc]) => sum + (N - (dr ? L - 1 : 0)) * (N - (dc ? L - 1 : 0)), 0);
+  const FWD = [[0, 1], [1, 0], [1, 1], [-1, 1]];
+  check("word search easy places", places(10, 5, FWD), 192);
+  check("word search hard places", places(12, 5, FWD.concat([[0, -1], [-1, 0], [-1, -1], [1, -1]])), 640);
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);

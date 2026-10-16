@@ -438,6 +438,10 @@ module.exports = async function pdfTests(check, expectAll) {
     expectAll("A4 at 150 DPI", T.renderSize(595.28, 841.89, 150), { width: 1240, height: 1754 });
     expectAll("A4 at 300 DPI", T.renderSize(595.28, 841.89, 300), { width: 2480, height: 3508 });
     expectAll("Letter at 300 DPI", T.renderSize(612, 792, 300), { width: 2550, height: 3300 });
+    // Page table: A4 and Letter at 72 and 150 DPI.
+    expectAll("A4 at 72 DPI", T.renderSize(595.28, 841.89, 72), { width: 595, height: 842 });
+    expectAll("Letter at 72 DPI", T.renderSize(612, 792, 72), { width: 612, height: 792 });
+    expectAll("Letter at 150 DPI", T.renderSize(612, 792, 150), { width: 1275, height: 1650 });
     // A0 at 300 DPI would be 9,933 × 14,043 pixels; capped to 16 million pixels: scale √(16,000,000 ÷ (2,383.94 × 3,370.39)) = 1.41115
     const big = T.renderSize(2383.94, 3370.39, 300);
     check("A0 capped scale", big.scale.toFixed(5), "1.41115");

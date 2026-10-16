@@ -58,7 +58,7 @@
       "description": "Free nonogram puzzles, also called paint by numbers. Use the clues to fill the grid. 5×5, 10×10 or 15×15, new puzzle every time.",
       "inLanguage": "en",
       "isAccessibleForFree": true,
-      "dateModified": "2026-10-09",
+      "dateModified": "2026-10-17",
       "publisher": {
         "@type": "Organization",
         "name": "Vintayz",
@@ -196,6 +196,14 @@
       <li><strong>Switch between rows and columns.</strong> Each square you fill gives you new information for the other direction.</li>
     </ul>
 
+    <h2>A first-move trick: the overlap</h2>
+    <p>When a clue is long compared with its row, some squares must be filled wherever the block goes. Imagine the block pushed as far left as it can go, then as far right. The squares covered both times are certain.</p>
+    <div class="formula">Row of 10 squares, clue 7
+Pushed left:   ■■■■■■■□□□
+Pushed right:  □□□■■■■■■■
+Certain:       □□□■■■■□□□   (7 + 7 − 10 = 4 squares)</div>
+    <p>The rule: certain squares = 2 × clue − row length, when that's more than 0. A clue of 5 in a row of 10 gives none; a clue of 8 gives 6.</p>
+
     <h2>Frequently asked questions</h2>
     <div class="faq">
       <details>
@@ -241,7 +249,7 @@
     <div class="disclaimer">
       <p><strong>Just for fun:</strong> these games run in your browser and save nothing, so scores are forgotten when you close or reload the page. Speeds and times include your own device's delay, so treat them as a rough guide, not a medical or professional test. <a href="../../disclaimer/">Read the full disclaimer</a>.</p>
     </div>
-    <p class="updated">Last updated: <time datetime="2026-10-09">9 October 2026</time></p>
+    <p class="updated">Last updated: <time datetime="2026-10-17">17 October 2026</time></p>
   </div>
 </div>
 </main>
