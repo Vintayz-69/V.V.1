@@ -5,8 +5,8 @@
       <h1>Money calculators for freelancers that <span class="hl">show their working</span></h1>
       <p class="lead">Price your work, plan your income and chase late payments with fast, free calculators. Every formula is explained, every example is checked, and your numbers never leave your device.</p>
       <div class="hero-actions">
-        <a class="btn btn-light" href="{{root}}freelance/freelance-hourly-rate-calculator/">Calculate your hourly rate {{icon:arrow}}</a>
-        <a class="btn btn-ghost-dark" href="{{root}}all-tools/">Browse all tools</a>
+        <a class="btn btn-primary" href="{{root}}freelance/freelance-hourly-rate-calculator/">Calculate your hourly rate {{icon:arrow}}</a>
+        <a class="btn" href="{{root}}all-tools/">Browse all tools</a>
       </div>
       <ul class="trust-list">
         <li>{{icon:check}} Free, no sign-up</li>
@@ -36,7 +36,7 @@
     <form class="hub-search finder-search" id="home-search" action="all-tools/" role="search">
       <label class="visually-hidden" for="home-search-input">Search all tools</label>
       <span class="hub-search-icon">{{icon:search}}</span>
-      <input id="home-search-input" type="search" placeholder="What do you need? e.g. compress PDF, QR code, tax" autocomplete="off" spellcheck="false" enterkeyhint="search">
+      <input id="home-search-input" type="search" placeholder="What do you need? e.g. hourly rate, salary, VAT" autocomplete="off" spellcheck="false" enterkeyhint="search">
       <button type="submit" class="btn btn-primary finder-go">Search</button>
     </form>
     <p class="finder-label">Popular tools</p>
@@ -59,6 +59,25 @@
 {{tool:billable-hours}}
 {{tool:invoice-generator}}
 {{tool:late-payment}}
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Pay and money</span>
+        <h2>Plan your pay</h2>
+        <p>Turn a salary into an hourly rate and back, see your take-home pay, and plan your monthly costs and mortgage.</p>
+      </div>
+      <a class="btn btn-sm" href="{{root}}career/">All career and salary tools</a>
+    </div>
+    <ul class="card-grid">
+{{tool:salary-to-hourly}}
+{{tool:hourly-to-annual}}
+{{tool:pay-rise}}
+{{tool:uk-take-home}}
+{{tool:monthly-expenses}}
+{{tool:mortgage}}
     </ul>
   </section>
 
@@ -94,42 +113,12 @@
   <section class="section">
     <div class="section-head">
       <div>
-        <span class="kicker">Browse by category</span>
-        <h2>Files and documents</h2>
-        <p>Work with PDFs, pictures and text, and write a resume. Everything happens in your browser, so your files are never uploaded.</p>
+        <span class="kicker">Also free</span>
+        <h2>More free tools</h2>
+        <p>ToolNest also has PDF, image and text tools, everyday helpers, study and developer tools, and short brain games. They all run in your browser.</p>
       </div>
+      <a class="btn btn-sm" href="{{root}}more-tools/">See more free tools</a>
     </div>
-    <ul class="card-grid cat-grid">
-{{categories:files}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Browse by category</span>
-        <h2>Everyday and study</h2>
-        <p>Quick everyday maths, dates and time zones, and tools for students and developers.</p>
-      </div>
-      <a class="btn btn-sm" href="{{root}}all-tools/">All tools A–Z</a>
-    </div>
-    <ul class="card-grid cat-grid">
-{{categories:more}}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Take a break</span>
-        <h2>Brain games</h2>
-        <p>Short puzzles and tests for a break between tasks. Nothing is saved or sent anywhere.</p>
-      </div>
-    </div>
-    <ul class="card-grid cat-grid">
-{{categories:fun}}
-{{featured:games}}
-    </ul>
   </section>
 
   <section class="section">

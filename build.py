@@ -1090,20 +1090,20 @@ TOOLS = {
 }
 
 # Sections a tool can live in: key -> (breadcrumb name, path, header nav key).
-# In site order (All tools page, llms.txt, section chips): money and work, countries, files and
-# documents, then everyday, study and fun.
+# In site order (All tools page, llms.txt, section chips): money and work, countries, then the
+# other free tools (files, everyday, study and fun).
 PARENTS = {
     "freelance": ("Freelancer Tools", "freelance/", "tools"),
     "business": ("Business Tools", "business/", "business"),
     "career": ("Career & Salary", "career/", "career"),
     "finance": ("Personal Finance", "finance/", "finance"),
+    "resume": ("Resume & CV Maker", "resume-maker/", "resume"),
     "global": ("Global Tools", "global/", "global"),
     "us": ("United States", "us/", "us"),
     "uk": ("United Kingdom", "uk/", "uk"),
     "canada": ("Canada", "ca/", "ca"),
     "australia": ("Australia", "au/", "au"),
     "pdf": ("PDF Tools", "pdf/", "pdf"),
-    "resume": ("Resume & CV Maker", "resume-maker/", "resume"),
     "image": ("Image Tools", "image/", "image"),
     "text": ("Text Tools", "text/", "text"),
     "everyday": ("Everyday Utilities", "tools/", "everyday"),
@@ -1259,6 +1259,7 @@ POPULAR_DAY = "2026-10-11"
 MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
 CONTENT_DAY = "2026-10-16"  # AdSense "low-value content" fixes: owner name, working email, fuller About and tool pages
 MONEY_DAY = "2026-10-17"  # 10 money pages deepened: more worked examples, official dates and rules, FAQs
+ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
 IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
 TIME_LIBS = ["js/date-common.js"]
@@ -2190,6 +2191,13 @@ PAGES = [
          chips=TOOL_CHIPS,
          related=["timesheet", "time-zone", "billable-hours"]),
 
+    dict(path="more-tools/", src="more-tools.html", kind="section", nav="more", updated=ORGANIZE_DAY,
+         title="More Free Tools: PDF, Image, Text and Games | Vintayz",
+         description="Free tools beyond our money calculators: PDF, image and text tools, dates and time, everyday maths, study and developer tools, and brain games.",
+         h1="More Free Tools",
+         intro="Besides calculators for freelancers, ToolNest has PDF, image and text tools, everyday helpers and short games. They all run in your browser.",
+         chips=TOOL_CHIPS),
+
     dict(path="all-tools/", src="all-tools.html", kind="section", nav="all", updated=POPULAR_DAY, libs=["js/tool-search.js", "js/all-tools.js"],
          title="All Free Tools A to Z | ToolNest by Vintayz",
          description="Every free ToolNest tool in one place: calculators, PDF, image, text, date and time tools, resume makers and games. Search or browse by section.",
@@ -2519,20 +2527,24 @@ def tool_card(slug, up, region=None):
 </a></li>"""
 
 
-# Shown on the homepage as quick links, across every section.
-POPULAR_TOOLS = ["hourly-rate", "invoice-generator", "pdf-merge", "pdf-compress", "image-compress", "qr-code",
-                 "password-generator", "time-zone", "word-counter", "percentage", "uk-take-home", "us-self-employment-tax",
-                 "timer", "sudoku"]
+# Shown on the homepage as quick links: the money tools people search for most (Search Console).
+POPULAR_TOOLS = ["hourly-rate", "salary-to-hourly", "day-rate", "project-pricing", "invoice-generator",
+                 "business-days", "resume-uk", "mortgage", "monthly-expenses", "uk-take-home",
+                 "us-self-employment-tax", "late-payment"]
 
 
-# Homepage "Browse by category" cards: one card per section, in three groups ({{categories:GROUP}}).
-# The countries have their own homepage section, so they aren't repeated here.
+# "Browse by category" cards: one card per section ({{categories:GROUP}}). "money" is on the
+# homepage; the rest are on the More free tools page, so the homepage and menu stay focused on
+# money and work. The countries have their own homepage section, so they aren't repeated here.
 HOME_CATEGORIES = {
     "money": ["freelance", "business", "career", "finance"],
     "files": ["pdf", "resume", "image", "text"],
     "more": ["everyday", "time", "education", "dev"],
     "fun": ["games"],
 }
+# Sections linked from the menu, the footer and the "Explore" chips. Every other section is
+# reached through the More free tools page.
+MAIN_SECTIONS = ["freelance", "business", "career", "finance", "resume", "us", "uk", "canada", "australia"]
 SECTION_BLURBS = {
     "freelance": "Hourly and day rates, project pricing, billable hours, invoices, timesheets and late payment interest.",
     "business": "Profit margin, break-even, payment fees, quotes, ad spend, customer value and sales tax.",
@@ -2775,12 +2787,13 @@ def header(page, up):
     countries = "\n".join("              " + country(*c) for c in COUNTRIES)
     in_country = " is-current" if nav in [c[0] for c in COUNTRIES] else ""
 
-    # The Calculators menu lists every calculator section (PDF and Resume have their own links).
+    # The Tools menu lists the money and work sections, then one link to everything else.
     sections = "\n".join(
         f'              <li><a href="{up}{path}"{cur(key)}>{icon(ic)}{name}</a></li>'
-        for key, name, path, ic in CALC_SECTIONS[:4] + FILE_SECTIONS + CALC_SECTIONS[4:]
-        + [("all", "All tools A–Z", "all-tools/", "grid")])
-    in_calcs = " is-current" if nav in [c[0] for c in CALC_SECTIONS] else ""
+        for key, name, path, ic in CALC_SECTIONS[:4] + FILE_SECTIONS[1:]
+        + [("more", "More free tools", "more-tools/", "plus"), ("all", "All tools A–Z", "all-tools/", "grid")])
+    in_calcs = " is-current" if nav in [c[0] for c in CALC_SECTIONS] + ["more", "pdf"] else ""
+    on_salary = ' aria-current="page"' if page.get("tool") == "salary-to-hourly" else ""
 
     # The Country menu is a <details> element, so it opens and closes without JavaScript.
     # common.js adds opening on mouse hover, the open/close animation, and closing on Escape and a click outside.
@@ -2800,7 +2813,7 @@ def header(page, up):
             </ul>
           </details>
         </li>
-        <li class="hide-xxs"><a href="{up}pdf/"{cur('pdf')}>PDF<span class="hide-sm-inline"> tools</span></a></li>
+        <li class="hide-xxs"><a href="{up}{TOOLS['salary-to-hourly']['path']}"{on_salary}>Salary<span class="hide-sm-inline"> to hourly</span></a></li>
         <li class="hide-xs"><a href="{up}resume-maker/"{cur('resume')}>Resume</a></li>
         <li>
           <details class="nav-menu">
@@ -2834,9 +2847,15 @@ def footer(up):
         </ul>
       </nav>"""
 
-    money = [("Freelancer tools", "freelance/"), ("Business tools", "business/"), ("Career &amp; salary", "career/"),
-             ("Personal finance", "finance/"), ("Hourly rate calculator", TOOLS["hourly-rate"]["path"]),
-             ("Invoice generator", TOOLS["invoice-generator"]["path"]), ("Guides", "guides/")]
+    freelance = [("Freelancer tools", "freelance/")] + [(name, TOOLS[k]["path"]) for name, k in (
+        ("Hourly rate calculator", "hourly-rate"), ("Day rate calculator", "day-rate"),
+        ("Project pricing calculator", "project-pricing"), ("Invoice generator", "invoice-generator"),
+        ("Working days calculator", "business-days"))] + [("Business tools", "business/")]
+    pay = [("Career &amp; salary", "career/")] + [(name, TOOLS[k]["path"]) for name, k in (
+        ("Salary to hourly", "salary-to-hourly"), ("Hourly to annual", "hourly-to-annual"))] + [
+        ("Personal finance", "finance/")] + [(name, TOOLS[k]["path"]) for name, k in (
+        ("Mortgage calculator", "mortgage"), ("Monthly expenses", "monthly-expenses"))] + [
+        ("Resume &amp; CV makers", "resume-maker/")]
     # The country tax calculators are the site's most valuable pages, so every page links to them.
     tax = [(name, TOOLS[k]["path"]) for name, k in (
         ("US self-employment tax", "us-self-employment-tax"), ("US quarterly estimated tax", "us-quarterly-tax"),
@@ -2845,22 +2864,20 @@ def footer(up):
         ("Canada self-employed tax", "ca-self-employed-tax"))]
     countries = ([("Worldwide (Global)", "global/")] if REGIONAL_COPIES else []) + [
         ("United States", "us/"), ("United Kingdom", "uk/"), ("Canada", "ca/"), ("Australia", "au/")]
-    files = [("PDF tools", "pdf/"), ("Resume &amp; CV makers", "resume-maker/"), ("Image tools", "image/"),
-             ("Text tools", "text/")]
-    more = [("Everyday tools", "tools/"), ("Date &amp; time", "time/"), ("Writing &amp; study", "education/"),
-            ("Developer tools", "dev/")] + ([("Health &amp; fitness", "health/")] if HEALTH_TOOLS else []) + [
-            ("Brain games", "games/"), ("All tools A–Z", "all-tools/")]
+    # Every other section is one click away on the More free tools page.
+    more = [("More free tools", "more-tools/"), ("All tools A–Z", "all-tools/"), ("Guides", "guides/")]
     company = [("About", "about/"), ("Contact", "contact/"), ("Privacy Policy", "privacy-policy/"),
                ("Terms of Use", "terms/"), ("Disclaimer", "disclaimer/")]
-    groups = "\n".join([group("Money &amp; work", money), group("Tax calculators", tax), group("Countries", countries),
-                         group("Files &amp; documents", files), group("More tools", more), group("Company", company)])
+    countries += more
+    groups = "\n".join([group("Freelance &amp; pricing", freelance), group("Pay &amp; money", pay),
+                         group("Tax calculators", tax), group("Countries &amp; more", countries), group("Company", company)])
 
     return f"""<footer class="site-footer">
   <div class="container">
     <div class="footer-grid footer-grid-compact">
       <div class="footer-brand">
         <a class="logo" href="{home}">{LOGO}ToolNest<span class="logo-by">by {OWNER}</span></a>
-        <p class="about-text">Free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia, plus PDF, image, text and everyday tools that run in your browser and never upload your files.</p>
+        <p class="about-text">Free calculators for freelancers and self-employed people in the US, UK, Canada and Australia: rates, pay, tax and invoices. Everything runs in your browser, so your numbers never leave your device.</p>
       </div>
 {groups}
     </div>
@@ -2984,10 +3001,12 @@ def related(page, up):
 
 
 def other_sections(page, up):
-    """Links to every other section, so visitors can move on from a section page."""
+    """Links to the main sections and the More free tools page, so visitors can move on from a section page."""
     live = {p["path"] for p in PAGES if p.get("kind") == "section"}
-    links = "".join(f'<a class="chip chip-link" href="{up}{path}">{html.escape(name)}</a>'
-                    for name, path, _ in PARENTS.values() if path in live and path != page["path"])
+    links = "".join(f'<a class="chip chip-link" href="{up}{PARENTS[k][1]}">{html.escape(PARENTS[k][0])}</a>'
+                    for k in MAIN_SECTIONS if PARENTS[k][1] in live and PARENTS[k][1] != page["path"])
+    if page["path"] != "more-tools/":
+        links += f'<a class="chip chip-link" href="{up}more-tools/">More free tools</a>'
     if page["path"] != "all-tools/":
         links += f'<a class="chip chip-link" href="{up}all-tools/">All tools A–Z</a>'
     return f"""<section class="section">

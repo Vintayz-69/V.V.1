@@ -56,6 +56,16 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Mortgage Payment Calculator](https://vintayz.com/finance/mortgage-calculator/): Calculate monthly principal, interest, taxes and insurance payments for fixed-rate home loans.
 - [Savings Goal Calculator](https://vintayz.com/finance/savings-goal-calculator/): Find how much to save each month to reach a goal by a set date, with interest added.
 
+## Resume & CV Maker
+
+- [Resume & CV Maker](https://vintayz.com/resume-maker/): all resume & cv maker
+- [Australian Resume Builder](https://vintayz.com/resume-maker/australia-resume-builder/): An Australian resume on A4 with key skills and referees, following Workforce Australia's template.
+- [Canadian Resume Builder](https://vintayz.com/resume-maker/canada-resume-builder/): A Canadian resume of up to two pages, with volunteer work and languages, following Job Bank advice.
+- [Cover Letter Maker](https://vintayz.com/resume-maker/cover-letter-maker/): Write a cover letter laid out for the US, UK, Canada or Australia, and download it as a PDF.
+- [Resignation Letter Maker](https://vintayz.com/resume-maker/resignation-letter-maker/): Write a polite resignation letter with your last working day, for the US, UK, Canada or Australia, and download it as a PDF.
+- [UK CV Maker](https://vintayz.com/resume-maker/uk-cv-maker/): A UK CV on A4 with a personal profile and references line, following National Careers Service advice.
+- [US Resume Builder](https://vintayz.com/resume-maker/us-resume-builder/): A one-column US resume on Letter paper, following the US Department of Labor's CareerOneStop advice.
+
 ## United States
 
 - [United States](https://vintayz.com/us/): all united states
@@ -114,16 +124,6 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Rotate PDF Pages](https://vintayz.com/pdf/rotate-pdf/): Turn sideways or upside-down pages the right way up: one page or all of them.
 - [Sign a PDF](https://vintayz.com/pdf/sign-pdf/): Draw or type your signature, place it on the page and save the signed PDF.
 - [Split PDF](https://vintayz.com/pdf/split-pdf/): Split a PDF into smaller files by page ranges, or one file per page.
-
-## Resume & CV Maker
-
-- [Resume & CV Maker](https://vintayz.com/resume-maker/): all resume & cv maker
-- [Australian Resume Builder](https://vintayz.com/resume-maker/australia-resume-builder/): An Australian resume on A4 with key skills and referees, following Workforce Australia's template.
-- [Canadian Resume Builder](https://vintayz.com/resume-maker/canada-resume-builder/): A Canadian resume of up to two pages, with volunteer work and languages, following Job Bank advice.
-- [Cover Letter Maker](https://vintayz.com/resume-maker/cover-letter-maker/): Write a cover letter laid out for the US, UK, Canada or Australia, and download it as a PDF.
-- [Resignation Letter Maker](https://vintayz.com/resume-maker/resignation-letter-maker/): Write a polite resignation letter with your last working day, for the US, UK, Canada or Australia, and download it as a PDF.
-- [UK CV Maker](https://vintayz.com/resume-maker/uk-cv-maker/): A UK CV on A4 with a personal profile and references line, following National Careers Service advice.
-- [US Resume Builder](https://vintayz.com/resume-maker/us-resume-builder/): A one-column US resume on Letter paper, following the US Department of Labor's CareerOneStop advice.
 
 ## Image Tools
 
