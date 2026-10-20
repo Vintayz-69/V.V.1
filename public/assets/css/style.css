@@ -1336,6 +1336,17 @@ a.country .status {
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
+
+  /* A long value, such as "Thursday, November 19, 2026", is too long for one line on a phone. */
+  .result-bar-long .result-bar-label {
+    flex-shrink: 0;
+  }
+
+  .result-bar-long strong {
+    font-size: 1.05rem;
+    white-space: normal;
+    text-align: right;
+  }
 }
 
 /* ---------- Article parts ---------- */

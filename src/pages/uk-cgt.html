@@ -1,0 +1,122 @@
+  <section class="calculator" aria-label="UK Capital Gains Tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="gains">Gains in 2026 to 2027<span class="hint">Selling price minus what you paid and costs such as fees, added up for everything you sold</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="gains" type="text" inputmode="decimal" value="20000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="losses">Losses to set against them<span class="hint">Optional. Losses on other assets</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="losses" type="text" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+        <span class="error-msg">Enter an amount of 0 or more, or leave it empty.</span>
+      </div>
+
+      <div class="field">
+        <label for="income">Your income this tax year<span class="hint">Salary, profit, pension and so on, before tax</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="income" type="text" inputmode="decimal" value="35000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated Capital Gains Tax</h2>
+      <div class="result-main"><span id="out-tax">—</span> <small>for 2026 to 2027</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Gains you keep after tax</span><span id="out-keep">—</span></li>
+        <li><span>Tax as a share of your gains</span><span id="out-effective">—</span></li>
+        <li><span>Your taxable income</span><span id="out-taxable-income">—</span></li>
+        <li><span>Basic rate band left for gains</span><span id="out-band-left">—</span></li>
+        <li><span>Tax-free allowance used</span><span id="out-allowance">—</span></li>
+        <li><span>Gains to pay tax on</span><span id="out-taxable-gains">—</span></li>
+        <li><span>Taxed at 18%</span><span id="out-basic">—</span></li>
+        <li><span>Taxed at 24%</span><span id="out-higher">—</span></li>
+      </ul>
+      <p class="result-note">An estimate for individuals. You don't usually pay Capital Gains Tax when you sell your own home.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Capital Gains Tax rates for 2026 to 2027</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Gains</th><th class="num">Rate</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Gains">The first £3,000 (tax-free allowance)</td><td class="num" data-label="Rate">0%</td></tr>
+          <tr><td data-label="Gains">Gains that fit in your unused basic rate band</td><td class="num" data-label="Rate">18%</td></tr>
+          <tr><td data-label="Gains">Gains above the basic rate band</td><td class="num" data-label="Rate">24%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>From 6 April 2026, GOV.UK gives these rates for individuals, for property and other assets alike. The basic rate band is £37,700 of taxable income. Trustees and personal representatives pay 24%, and trusts get a £1,500 allowance instead of £3,000.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Add up your gains</strong> for the tax year (6 April 2026 to 5 April 2027). For each asset, a gain is the price you sold it for minus what you paid, minus costs such as fees.</li>
+      <li><strong>Enter any losses</strong> on other assets you can set against the gains.</li>
+      <li><strong>Enter your income</strong> for the year before tax. The calculator takes off your Personal Allowance to find your taxable income.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <p>This follows GOV.UK's steps:</p>
+    <div class="formula">Taxable income   = income − Personal Allowance (£12,570, less above £100,000)
+Gains to tax     = gains − losses − £3,000 allowance
+Band left        = £37,700 − taxable income (not below 0)
+Tax              = gains to tax up to the band left × 18%
+                 + the rest × 24%</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>GOV.UK's examples.</strong> Both have taxable income of £20,000 (income of £32,570 before the Personal Allowance), so £17,700 of the basic rate band is left.</p>
+    <div class="formula">Gains £12,600:  12,600 − 3,000 = 9,600, all at 18%          = £1,728
+Gains £52,600:  52,600 − 3,000 = 49,600
+                17,700 × 18% = 3,186   31,900 × 24% = 7,656 = £10,842</div>
+    <p><strong>Income of £35,000, gains of £20,000.</strong> Taxable income is £22,430, leaving £15,270 of the band. Gains to tax are £17,000: 15,270 × 18% = £2,748.60, plus 1,730 × 24% = £415.20, so <strong>£3,163.80</strong>.</p>
+    <p><strong>A higher rate taxpayer.</strong> On £60,000 income the basic rate band is already used, so £13,000 of gains are taxed as (13,000 − 3,000) × 24% = <strong>£2,400</strong>.</p>
+    <p><strong>Using losses.</strong> Income £30,000, gains £50,000 and losses £5,000: £42,000 to tax after the allowance. £20,270 at 18% plus £21,730 at 24% = <strong>£8,863.80</strong>.</p>
+
+    <h2>When you don't pay Capital Gains Tax on your home</h2>
+    <p>GOV.UK says you don't pay it when you sell your home if all of these apply: you have one home and have lived in it as your main home all the time you've owned it, you haven't let part of it out or used part of it only for business, the grounds and buildings are under 5,000 square metres in total, and you didn't buy it just to make a gain. Otherwise, part of the gain may be taxed.</p>
+
+    <h2>Reporting and paying</h2>
+    <ul>
+      <li><strong>UK residential property</strong> (for example a second home or buy-to-let): report and pay within <strong>60 days</strong> of completing the sale, using a Capital Gains Tax on UK property account.</li>
+      <li><strong>Non-UK residents</strong> must report all sales of UK property or land within 60 days, even if there's no tax to pay.</li>
+      <li><strong>Other assets</strong>, such as shares: GOV.UK explains how to <a href="https://www.gov.uk/report-and-pay-your-capital-gains-tax" rel="noopener">report and pay your Capital Gains Tax</a>.</li>
+    </ul>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Business Asset Disposal Relief.</strong> From 6 April 2026 its rate is 18% for qualifying gains. This calculator doesn't apply it.</li>
+      <li><strong>Reliefs that change your taxable income</strong>, and losses brought forward from earlier years.</li>
+      <li><strong>Scottish Income Tax.</strong> If you pay it, check GOV.UK for how your band is worked out.</li>
+      <li><strong>Working out each gain</strong>, such as shares bought at different times or part of a home that was let out.</li>
+      <li><strong>Trusts and estates</strong>, which have different rates and allowances.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the Capital Gains Tax allowance for 2026 to 2027?</summary>
+        <p>£3,000 for individuals and £1,500 for trusts. If your gains for the year are under the allowance, there's no Capital Gains Tax to pay.</p>
+      </details>
+      <details>
+        <summary>Is Capital Gains Tax on property higher than on shares?</summary>
+        <p>Not for 2026 to 2027. GOV.UK gives the same 18% and 24% rates for individuals' gains. The difference is how you report: UK residential property has a 60-day deadline.</p>
+      </details>
+      <details>
+        <summary>Does selling something count even if I give it away?</summary>
+        <p>Yes. GOV.UK says "disposing of" an asset includes selling it, giving it away as a gift, swapping it, or getting compensation for it.</p>
+      </details>
+      <details>
+        <summary>Which gains does the allowance go against?</summary>
+        <p>GOV.UK says you can use it against the gains that would be charged at the highest rates. With the same rates for all assets, this calculator takes it off your total gains.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026 to 2027):</strong> <a href="https://www.gov.uk/capital-gains-tax/rates" rel="noopener">GOV.UK: Capital Gains Tax rates</a>, <a href="https://www.gov.uk/capital-gains-tax/allowances" rel="noopener">GOV.UK: tax-free allowance</a>, <a href="https://www.gov.uk/tax-sell-home" rel="noopener">GOV.UK: tax when you sell your home</a>, <a href="https://www.gov.uk/report-and-pay-your-capital-gains-tax/if-you-sold-a-property-in-the-uk-on-or-after-6-april-2020" rel="noopener">GOV.UK: report and pay on UK property</a>, <a href="https://www.gov.uk/income-tax-rates" rel="noopener">GOV.UK: Income Tax rates and Personal Allowance</a>. Checked 20 October 2026.</p>
+  </div>

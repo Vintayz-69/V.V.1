@@ -1,0 +1,133 @@
+  <section class="calculator" aria-label="Stamp Duty calculator for England and Northern Ireland">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="price">Property price</label>
+        <div class="input-wrap"><span class="affix">£</span><input id="price" type="text" inputmode="decimal" value="295000" autocomplete="off"></div>
+        <span class="error-msg">Enter a price above 0.</span>
+      </div>
+
+      <fieldset class="choice-group span-2">
+        <legend>Which describes you?</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="buyer" id="buyer-home" value="home" checked><label for="buyer-home">Moving home<small>Or buying your only property</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="buyer" id="buyer-first" value="first"><label for="buyer-first">First-time buyer<small>Everyone buying is a first-time buyer</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="buyer" id="buyer-additional" value="additional"><label for="buyer-additional">Additional property<small>You'll own more than one home</small></label></div>
+        </div>
+      </fieldset>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="nonResident" type="checkbox"><span>I'm not a UK resident<span class="hint">In the UK for fewer than 183 days in the 12 months before buying. Adds 2%</span></span></label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated Stamp Duty</h2>
+      <div class="result-main"><span id="out-tax">—</span></div>
+      <ul class="result-list">
+        <li><span>Effective rate</span><span id="out-effective">—</span></li>
+        <li class="key"><span>Price plus Stamp Duty</span><span id="out-after">—</span></li>
+      </ul>
+      <p class="result-note" id="relief-note" hidden>First-time buyer relief only applies up to £500,000. Above that, first-time buyers pay the normal rates on the whole price.</p>
+      <p class="result-note" id="small-note" hidden>The extra 5% for additional properties only applies to purchases of £40,000 or more.</p>
+      <p class="result-note">For homes in England and Northern Ireland, completed on or after 1 April 2025. Scotland and Wales have their own taxes.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your Stamp Duty, band by band</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Part of the price</th><th class="num">Rate</th><th class="num">Tax</th></tr></thead>
+        <tbody id="bands-body"><tr><td colspan="3">Enter a price above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Stamp Duty rates</h2>
+    <p>Stamp Duty Land Tax (SDLT) is charged in bands, like Income Tax. Each rate applies only to the part of the price inside its band.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Part of the price</th><th class="num">Standard rate</th><th class="num">Additional property</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Part of the price">Up to £125,000</td><td class="num" data-label="Standard">0%</td><td class="num" data-label="Additional">5%</td></tr>
+          <tr><td data-label="Part of the price">£125,001 to £250,000</td><td class="num" data-label="Standard">2%</td><td class="num" data-label="Additional">7%</td></tr>
+          <tr><td data-label="Part of the price">£250,001 to £925,000</td><td class="num" data-label="Standard">5%</td><td class="num" data-label="Additional">10%</td></tr>
+          <tr><td data-label="Part of the price">£925,001 to £1.5 million</td><td class="num" data-label="Standard">10%</td><td class="num" data-label="Additional">15%</td></tr>
+          <tr><td data-label="Part of the price">Over £1.5 million</td><td class="num" data-label="Standard">12%</td><td class="num" data-label="Additional">17%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>First-time buyers</strong> pay nothing on the first £300,000 and 5% on the part from £300,001 to £500,000. Above £500,000 the relief can't be claimed, so the standard rates apply. <strong>Non-UK residents</strong> usually pay an extra 2% on every band, on top of any other rates.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the price</strong> you're paying for the property.</li>
+      <li><strong>Choose which describes you.</strong> If you'll own more than one residential property after buying, choose "Additional property".</li>
+      <li><strong>Tick the box if you're not a UK resident.</strong></li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">For each band: tax = part of the price in the band × rate
+Additional property (£40,000 or more): add 5% to every band
+Not a UK resident: add 2% to every band
+Stamp Duty = the bands added together</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>Moving home for £295,000</strong> (GOV.UK's own example):</p>
+    <div class="formula">0% on the first £125,000      = £0
+2% on the next £125,000       = £2,500
+5% on the final £45,000       = £2,250
+Total                         = £4,750</div>
+    <p><strong>First-time buyer at £500,000</strong> (GOV.UK's example): 0% on the first £300,000, then 5% on the other £200,000 = <strong>£10,000</strong>. At £500,001 the relief is lost and the standard rates give £15,000.05, so the price limit matters.</p>
+    <p><strong>An additional property for £300,000</strong> (GOV.UK's example): 5% on £125,000 (£6,250), 7% on £125,000 (£8,750) and 10% on £50,000 (£5,000) = <strong>£20,000</strong>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Price</th><th class="num">Moving home</th><th class="num">First-time buyer</th><th class="num">Additional property</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Price">£250,000</td><td class="num" data-label="Moving home">£2,500</td><td class="num" data-label="First-time buyer">£0</td><td class="num" data-label="Additional">£15,000</td></tr>
+          <tr><td data-label="Price">£300,000</td><td class="num" data-label="Moving home">£5,000</td><td class="num" data-label="First-time buyer">£0</td><td class="num" data-label="Additional">£20,000</td></tr>
+          <tr><td data-label="Price">£450,000</td><td class="num" data-label="Moving home">£12,500</td><td class="num" data-label="First-time buyer">£7,500</td><td class="num" data-label="Additional">£35,000</td></tr>
+          <tr><td data-label="Price">£600,000</td><td class="num" data-label="Moving home">£20,000</td><td class="num" data-label="First-time buyer">£20,000</td><td class="num" data-label="Additional">£50,000</td></tr>
+          <tr><td data-label="Price">£1,000,000</td><td class="num" data-label="Moving home">£43,750</td><td class="num" data-label="First-time buyer">£43,750</td><td class="num" data-label="Additional">£93,750</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Paying Stamp Duty</h2>
+    <p>GOV.UK says you must send an SDLT return to HMRC and pay the tax within 14 days of completion. If a solicitor, agent or conveyancer is handling your purchase, they usually file and pay on the day of completion.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Scotland and Wales.</strong> Scotland has Land and Buildings Transaction Tax and Wales has Land Transaction Tax, with different rates.</li>
+      <li><strong>Non-residential or mixed-use property</strong>, such as shops, offices or farmland.</li>
+      <li><strong>Special cases</strong>, such as shared ownership, buying several homes at once, new leases, companies buying homes, and non-UK residents buying for under £40,000. Use HMRC's own calculator or ask a conveyancer.</li>
+      <li><strong>Exceptions to the higher rates.</strong> GOV.UK's guidance on additional properties explains when they don't apply.</li>
+      <li><strong>Other buying costs</strong>, such as legal fees and surveys.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>When do first-time buyers pay Stamp Duty?</summary>
+        <p>Only on the part of the price over £300,000, at 5%, if the price is £500,000 or less. Above £500,000, first-time buyers pay the same as anyone moving home.</p>
+      </details>
+      <details>
+        <summary>Who counts as a first-time buyer?</summary>
+        <p>GOV.UK says you can claim the relief if the property will be your first home and you and anyone else you're buying with are first-time buyers.</p>
+      </details>
+      <details>
+        <summary>Do I pay the extra 5% on a buy-to-let or second home?</summary>
+        <p>Usually yes, if buying it means you'll own more than one residential property and it costs £40,000 or more. The 5% is added to every band.</p>
+      </details>
+      <details>
+        <summary>Is there Stamp Duty on a £125,000 house?</summary>
+        <p>Not for most buyers: the first £125,000 is taxed at 0%. For an additional property it's 5%, so £6,250.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/stamp-duty-land-tax/residential-property-rates" rel="noopener">GOV.UK: SDLT residential property rates</a>, <a href="https://www.gov.uk/guidance/stamp-duty-land-tax-buying-an-additional-residential-property" rel="noopener">GOV.UK: SDLT on additional residential property</a>, <a href="https://www.gov.uk/stamp-duty-land-tax" rel="noopener">GOV.UK: Stamp Duty Land Tax</a>. Checked 20 October 2026.</p>
+  </div>

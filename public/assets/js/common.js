@@ -158,7 +158,11 @@
     var baseUpdate = update;
     update = function () {
       baseUpdate();
-      if (bar) bar.value.textContent = mainResult.textContent.replace(/\s+/g, " ").trim();
+      if (!bar) return;
+      // Only the main figure (the first <span>), not the small words after it, so it fits on a phone.
+      var text = (mainResult.firstElementChild || mainResult).textContent.replace(/\s+/g, " ").trim();
+      bar.value.textContent = text;
+      bar.link.classList.toggle("result-bar-long", text.length > 16); // long values, such as dates, may wrap
     };
 
     form.addEventListener("input", update);
@@ -224,7 +228,7 @@
     }, { threshold: 0 });
     observer.observe(form);
     observer.observe(panel);
-    return { value: value };
+    return { link: link, value: value };
   }
 
   // Builds table rows from arrays of cells; the row matching `highlight` is marked "yours".

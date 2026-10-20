@@ -1,0 +1,173 @@
+  <section class="calculator" aria-label="Invoice due date calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="invDate">Invoice date</label>
+        <div class="inline-row">
+          <div class="input-wrap grow"><input id="invDate" type="date"></div>
+          <button type="button" class="btn btn-sm" id="inv-today">Today</button>
+        </div>
+        <span class="error-msg">Choose a date.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="days">Payment terms<span class="hint">Days to pay. Net 30 = 30. Enter 0 for "due on receipt"</span></label>
+        <div class="input-wrap"><span class="affix">Net</span><input id="days" type="text" inputmode="numeric" value="30" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter whole days from 0 to 365.</span>
+      </div>
+
+      <div class="span-2">
+        <span class="field-title" id="inv-quick-label">Quick picks</span>
+        <div class="quick-picks" role="group" aria-labelledby="inv-quick-label">
+          <button type="button" class="btn btn-sm" data-net="7">Net 7</button>
+          <button type="button" class="btn btn-sm" data-net="14">Net 14</button>
+          <button type="button" class="btn btn-sm" data-net="30">Net 30</button>
+          <button type="button" class="btn btn-sm" data-net="45">Net 45</button>
+          <button type="button" class="btn btn-sm" data-net="60">Net 60</button>
+          <button type="button" class="btn btn-sm" data-net="90">Net 90</button>
+        </div>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="eom" type="checkbox"><span>Count from the end of the month (EOM)<span class="hint">Tick for terms like "Net 30 EOM", where the days start after the invoice month ends</span></span></label>
+      </div>
+
+      <div class="field span-2">
+        <span class="field-title">Early payment discount (optional)</span>
+        <span class="hint">For terms like "2/10 net 30": 2% off if paid within 10 days. Leave empty if there isn't one.</span>
+      </div>
+
+      <div class="field">
+        <label for="discPct">Discount</label>
+        <div class="input-wrap"><input id="discPct" type="text" inputmode="decimal" autocomplete="off" placeholder="2"><span class="affix">%</span></div>
+        <span class="error-msg">Enter from 0.1% to 50%.</span>
+      </div>
+
+      <div class="field">
+        <label for="discDays">If paid within</label>
+        <div class="input-wrap"><input id="discDays" type="text" inputmode="numeric" autocomplete="off" placeholder="10"><span class="affix">days</span></div>
+        <span class="error-msg">Enter whole days, fewer than the payment terms.</span>
+      </div>
+
+      <div class="field">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="amount">Invoice amount<span class="hint">Only needed for the discount</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="amount" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0, or leave it empty.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Worked out in your browser. Nothing is sent anywhere.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Due date</h2>
+      <div class="result-main date-main"><span id="out-due">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Today</span><span id="out-status">—</span></li>
+        <li><span>Day of the week</span><span id="out-weekday">—</span></li>
+        <li><span>Terms</span><span id="out-terms">—</span></li>
+        <li><span>Days counted from</span><span id="out-start">—</span></li>
+        <li><span>Date (YYYY-MM-DD)</span><span><span id="out-iso">—</span> <button type="button" class="btn btn-sm ts-copy" id="inv-copy">Copy</button></span></li>
+      </ul>
+      <ul class="result-list" id="disc-results" hidden>
+        <li class="key"><span>Pay by this date for the discount</span><span id="out-disc-by">—</span></li>
+        <li><span>Amount to pay with the discount</span><span id="out-disc-pay">—</span></li>
+        <li><span>Discount saved</span><span id="out-disc-saving">—</span></li>
+        <li><span>Yearly cost of skipping the discount</span><span id="out-disc-cost">—</span></li>
+      </ul>
+      <p class="result-note" id="overdue-note" hidden>This invoice is overdue. See what you can add in interest with the <a class="link-light" href="{{root}}freelance/late-payment-interest-calculator/">late payment interest calculator</a>.</p>
+      <p class="result-note">Counts calendar days, including weekends and holidays. "Today" is the date on your device.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What payment terms mean</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Terms</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td>Due on receipt</td><td>Pay as soon as the invoice arrives.</td></tr>
+          <tr><td>Net 7, Net 14, Net 30</td><td>Pay within 7, 14 or 30 calendar days of the invoice date.</td></tr>
+          <tr><td>Net 30 EOM</td><td>Pay within 30 days after the end of the month the invoice was dated in.</td></tr>
+          <tr><td>2/10 net 30</td><td>Take 2% off if you pay within 10 days; otherwise pay the full amount within 30 days.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Write the exact due date on your invoice as well as the terms, such as "Due 19 November 2026 (Net 30)". A clear date leaves less room for argument than "Net 30" alone. Our free <a href="{{root}}freelance/invoice-generator/">invoice generator</a> has a box for it.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Pick the invoice date</strong>, or press "Today".</li>
+      <li><strong>Enter the payment terms</strong> in days, or press a quick pick such as "Net 30". Tick EOM if the terms say "end of month".</li>
+      <li><strong>Offering an early payment discount?</strong> Enter the discount and the days, plus the invoice amount, to see the discount deadline and what the client would pay.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Start date       = invoice date
+                   (or the last day of that month, for EOM)
+Due date         = start date + payment days
+Discount date    = start date + discount days
+Yearly cost of skipping the discount
+                 = discount ÷ (100% − discount) × 365 ÷ (payment days − discount days)</div>
+    <p>The yearly cost shows how good a deal the discount is for the client. Skipping a 2% discount to keep the money 20 days longer is like borrowing at about 37% a year, which is why some clients pay early when a discount is offered.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>Net 30.</strong> An invoice dated Tuesday 20 October 2026 on Net 30 terms is due on <strong>Thursday 19 November 2026</strong>: 11 days to the end of October, then 19 days of November.</p>
+    <p><strong>Net 30 EOM.</strong> The same invoice on Net 30 EOM terms starts counting on 31 October, so it's due on <strong>Monday 30 November 2026</strong>, 11 days later.</p>
+    <p><strong>2/10 net 30.</strong> On a $5,000 invoice dated 20 October 2026, the client can pay <strong>$4,900</strong> by 30 October (saving $100), or $5,000 by 19 November. Skipping the discount costs the client the equivalent of:</p>
+    <div class="formula">2 ÷ 98 × 365 ÷ (30 − 10)   = 37.2% a year</div>
+    <p><strong>A due date on a weekend.</strong> An invoice dated 20 October 2026 on Net 60 terms is due on <strong>Saturday 19 December 2026</strong>. The calculator tells you when a date falls on a weekend, so you can agree in advance whether the client pays on the Friday before or the Monday after.</p>
+    <p><strong>Short months.</strong> Net 30 from 31 January 2026 is <strong>2 March 2026</strong>, because February 2026 has 28 days. In a leap year, such as 2028, the same terms give 1 March.</p>
+
+    <h2>Payment terms in the UK</h2>
+    <p>GOV.UK says that if you agree a payment date, it must usually be within 60 days for business transactions and 30 days for public authorities. A longer period between businesses is allowed if it's fair to both. If you don't agree a date, the law says payment is late 30 days after the customer gets the invoice or you deliver the goods or service, whichever is later. Source: <a href="https://www.gov.uk/late-commercial-payments-interest-debt-recovery/payment-terms" rel="noopener">GOV.UK: late commercial payments, payment terms</a>.</p>
+    <p>Once a business invoice is late, you can usually claim statutory interest and fixed compensation. The <a href="{{root}}freelance/late-payment-interest-calculator/">late payment interest calculator</a> works out how much. In the US, Canada and Australia the rules are different and can depend on your state or province, so rely on the terms in your contract.</p>
+
+    <h2>Tips to get paid on time</h2>
+    <ul>
+      <li><strong>Agree the terms before you start the work</strong>, in your quote or contract, not only on the invoice.</li>
+      <li><strong>Send the invoice as soon as the work is done.</strong> The payment days only start once the invoice is dated.</li>
+      <li><strong>Put a reminder in your calendar</strong> a few days before the due date, and send a polite note on the day after it's missed.</li>
+      <li><strong>Count working days if you need to.</strong> If your contract says "10 working days", use the <a href="{{root}}freelance/business-days-calculator/">working days calculator</a>, which skips weekends and public holidays.</li>
+    </ul>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Public holidays.</strong> Payment terms in days usually mean calendar days, so holidays still count.</li>
+      <li><strong>Other ways of reading EOM.</strong> Some businesses use "EOM" to mean something slightly different. If the wording in your contract isn't clear, ask the client to confirm the date.</li>
+      <li><strong>Interest on late payment.</strong> Use the late payment interest calculator for that.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does Net 30 include weekends?</summary>
+        <p>Usually yes. Net 30 normally means 30 calendar days, so weekends and holidays count. If the terms say "30 working days" or "30 business days", count only working days instead.</p>
+      </details>
+      <details>
+        <summary>Does Net 30 start from the invoice date or when the client gets it?</summary>
+        <p>Usually from the invoice date, but your contract may say otherwise. In the UK, when no date was agreed, the 30 days run from when the customer gets the invoice or the work is delivered, whichever is later.</p>
+      </details>
+      <details>
+        <summary>What does 2/10 net 30 mean?</summary>
+        <p>A 2% discount if the invoice is paid within 10 days; otherwise the full amount is due within 30 days. Enter 2 and 10 in the discount boxes above to see both dates.</p>
+      </details>
+      <details>
+        <summary>How do I find a date 30 days from today for something else?</summary>
+        <p>Use the <a href="{{root}}time/add-days-to-date-calculator/">add or subtract days calculator</a>, which also handles weeks, months and years.</p>
+      </details>
+    </div>
+  </div>

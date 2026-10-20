@@ -1031,6 +1031,173 @@ function loadResume(country) {
     { rise: 25, breakEvenLoss: 20, hoursToMatch: 48, after: 6000, change: 0 });
 }
 
+// ---------------- Pro rata salary (worked by hand)
+{
+  const calc = load("pro-rata-salary");
+  // Priya: £30,000 for 37.5 hours, works 22.5: FTE 22.5 ÷ 37.5 = 0.6; 30,000 × 0.6 = 18,000;
+  // 18,000 ÷ 12 = 1,500; 18,000 ÷ 52 = 346.15; hourly 30,000 ÷ 1,950 = 15.38
+  expectAll("pro-rata three days", calc({ salary: 30000, ftHours: 37.5, hours: 22.5, weeks: 52 }),
+    { fte: 0.6, percent: 60, yearly: 18000, thisYear: 18000, monthly: 1500, weekly: 346.15, hourly: 15.38 });
+  // $52,000 for 40 hours, works 30: 0.75; 39,000; 3,250 a month; 750 a week; $25 an hour
+  expectAll("pro-rata 30 of 40 hours", calc({ salary: 52000, ftHours: 40, hours: 30, weeks: 52 }),
+    { fte: 0.75, yearly: 39000, monthly: 3250, weekly: 750, hourly: 25 });
+  // Sam: £36,000 full time, 26 weeks left: 36,000 × 26 ÷ 52 = 18,000, still 3,000 a month
+  expectAll("pro-rata part year", calc({ salary: 36000, ftHours: 37.5, hours: 37.5, weeks: 26 }),
+    { fte: 1, yearly: 36000, thisYear: 18000, monthly: 3000 });
+  // $45,000, 30 of 37.5 hours (0.8), 39 weeks: 36,000 a year; 36,000 × 39 ÷ 52 = 27,000
+  expectAll("pro-rata part time and part year", calc({ salary: 45000, ftHours: 37.5, hours: 30, weeks: 39 }),
+    { fte: 0.8, yearly: 36000, thisYear: 27000 });
+  // Day patterns table for £30,000 / 37.5 hours: each day is 7.5 hours
+  for (const [days, yearly, monthly] of [[4, 24000, 2000], [3, 18000, 1500], [2.5, 15000, 1250], [2, 12000, 1000], [1, 6000, 500]]) {
+    expectAll(`pro-rata ${days} days`, calc({ salary: 30000, ftHours: 37.5, hours: 37.5 * days / 5, weeks: 52 }), { yearly, monthly });
+  }
+}
+
+// ---------------- Invoice due date (worked by hand)
+{
+  const calc = load("invoice-due-date", ["js/date-common.js"]);
+  const day = (t) => { const [y, m, d] = t.split("-").map(Number); return { y, m, d }; };
+  const due = (date, days, opts = {}) => calc(Object.assign({ date: day(date), days, eom: false, today: day(date) }, opts));
+  // Net 30 from 20 Oct 2026: 11 days to 31 October + 19 = 19 November, a Thursday (20 October is a Tuesday)
+  expectAll("due net 30", due("2026-10-20", 30), { dueIso: "2026-11-19", weekday: "Thursday", daysLeft: 30 });
+  // Net 30 EOM: from 31 October + 30 = 30 November, a Monday
+  const eom = due("2026-10-20", 30, { eom: true });
+  expectAll("due net 30 EOM", eom, { dueIso: "2026-11-30", weekday: "Monday" });
+  check("due EOM starts on the 31st", eom.start.d, 31);
+  // 2/10 net 30 on $5,000: discount by 30 October, pay 4,900, save 100; 2 ÷ 98 × 365 ÷ 20 = 37.24%
+  expectAll("due 2/10 net 30", due("2026-10-20", 30, { amount: 5000, discPct: 2, discDays: 10 }),
+    { dueIso: "2026-11-19", discountByIso: "2026-10-30", discounted: 4900, saving: 100, annualCost: 37.24 });
+  // 1/10 net 60: 1 ÷ 99 × 365 ÷ 50 = 7.37%
+  check("due 1/10 net 60 cost", due("2026-11-05", 60, { discPct: 1, discDays: 10 }).annualCost, 7.37);
+  // Net 60 from 20 October lands on Saturday 19 December
+  expectAll("due net 60 weekend", due("2026-10-20", 60), { dueIso: "2026-12-19", weekday: "Saturday" });
+  // Short months: 31 Jan 2026 + 30 = 2 March (28-day February); in 2028 (leap year) = 1 March
+  check("due net 30 from 31 Jan 2026", due("2026-01-31", 30).dueIso, "2026-03-02");
+  check("due net 30 from 31 Jan 2028", due("2028-01-31", 30).dueIso, "2028-03-01");
+  // Overdue: due 2 March, today 10 March = 8 days overdue
+  check("due overdue days", due("2026-01-31", 30, { today: day("2026-03-10") }).daysLeft, -8);
+  // Due on receipt
+  expectAll("due on receipt", due("2026-12-24", 0, { today: day("2026-12-29") }), { dueIso: "2026-12-24", daysLeft: -5 });
+  // No discount entered: no discount results
+  check("due no discount", due("2026-10-20", 30).discountBy, undefined);
+}
+
+// ---------------- UK Statutory Sick Pay 2026 to 2027 (GOV.UK's worked examples + by hand)
+{
+  const calc = load("uk-ssp", ["data/statutory-pay-uk.js"]);
+  // GOV.UK manual method examples: £185 AWE (80% = 148, so £123.25); £145 AWE (80% = £116)
+  expectAll("ssp gov.uk £185, 5 days, 3 sick", calc({ awe: 185, qdays: 5, sick: 3 }), { weekly: 123.25, daily: 24.65, total: 73.95, flatRateApplies: true });
+  check("ssp gov.uk £185, 6 days, 4 sick", calc({ awe: 185, qdays: 6, sick: 4 }).total, 82.16);
+  expectAll("ssp gov.uk £145, 4 days, 2 sick", calc({ awe: 145, qdays: 4, sick: 2 }), { weekly: 116, daily: 29, total: 58, flatRateApplies: false });
+  check("ssp gov.uk £145, 5 days, 3 sick", calc({ awe: 145, qdays: 5, sick: 3 }).total, 69.6);
+  // Alex: £600, 5 days, 12 sick = 2 weeks × 123.25 + 2 × 24.65 = 246.50 + 49.30 = 295.80
+  expectAll("ssp Alex 12 days", calc({ awe: 600, qdays: 5, sick: 12 }), { fullWeeks: 2, leftover: 2, partWeek: 49.3, total: 295.8 });
+  // Jo: £120 × 80% = £96 a week, 3 days = £32 a day; 7 days = 2 weeks + 1 day = 224
+  expectAll("ssp Jo part time", calc({ awe: 120, qdays: 3, sick: 7 }), { weekly: 96, daily: 32, total: 224 });
+  // 28-week cap: 5-day week = 140 days; 150 days off = 140 paid (28 × 123.25 = 3,451), 10 unpaid
+  expectAll("ssp 28-week cap", calc({ awe: 600, qdays: 5, sick: 150 }), { paidDays: 140, unpaidDays: 10, total: 3451 });
+  // Page FAQ: below £154.06 a week, 80% is lower than £123.25
+  check("ssp £154.06 uses 80%", calc({ awe: 154.06, qdays: 5, sick: 5 }).flatRateApplies, false);
+  check("ssp £154.07 uses flat rate", calc({ awe: 154.07, qdays: 5, sick: 5 }).flatRateApplies, true);
+  // One-week table on the page (£600, 5 days)
+  for (const [d, t] of [[1, 24.65], [2, 49.3], [3, 73.95], [4, 98.6], [5, 123.25]]) check(`ssp table ${d} days`, calc({ awe: 600, qdays: 5, sick: d }).total, t);
+}
+
+// ---------------- UK Maternity and Paternity Pay 2026 to 2027 (by hand)
+{
+  const calc = load("uk-parental-pay", ["data/statutory-pay-uk.js"]);
+  // £500: 450 × 6 = 2,700; 194.32 × 33 = 6,412.56; total 9,112.56
+  expectAll("smp £500", calc({ type: "maternity", awe: 500 }), { higherWeekly: 450, higherTotal: 2700, lowerWeekly: 194.32, lowerTotal: 6412.56, total: 9112.56, eligibleEarnings: true });
+  // £180: 162 for all 39 weeks = 6,318
+  expectAll("smp £180", calc({ type: "maternity", awe: 180 }), { higherWeekly: 162, lowerWeekly: 162, total: 6318 });
+  // £120 is under the £129 Lower Earnings Limit; exactly £129 qualifies
+  check("smp £120 not eligible", calc({ type: "maternity", awe: 120 }).eligibleEarnings, false);
+  check("smp £129 eligible", calc({ type: "maternity", awe: 129 }).eligibleEarnings, true);
+  // About £215.91 a week is where 90% reaches £194.32
+  check("smp cap point", calc({ type: "maternity", awe: 215.91 }).lowerWeekly, 194.32);
+  // Paternity: £500 → 2 × 194.32 = 388.64; £200 → 90% = 180, × 2 = 360
+  expectAll("spp £500 two weeks", calc({ type: "paternity", awe: 500, weeks: 2 }), { weekly: 194.32, total: 388.64 });
+  expectAll("spp £200 two weeks", calc({ type: "paternity", awe: 200, weeks: 2 }), { weekly: 180, total: 360 });
+  check("spp £200 one week", calc({ type: "paternity", awe: 200, weeks: 1 }).total, 180);
+}
+
+// ---------------- Stamp Duty (England and NI), GOV.UK's examples + by hand
+{
+  const calc = load("uk-stamp-duty", ["data/property-tax-uk.js"]);
+  const sd = (price, buyer, nonResident = false) => calc({ price, buyer, nonResident }).tax;
+  check("sdlt gov.uk £295,000", sd(295000, "home"), 4750);
+  check("sdlt gov.uk first-time buyer £500,000", sd(500000, "first"), 10000);
+  check("sdlt gov.uk additional £300,000", sd(300000, "additional"), 20000);
+  // Relief lost above £500,000: standard rates 2,500 + 250,001 × 5% = 15,000.05
+  check("sdlt first-time buyer £500,001", sd(500001, "first"), 15000.05);
+  check("sdlt first-time buyer £500,001 relief lost", calc({ price: 500001, buyer: "first", nonResident: false }).reliefLost, true);
+  // Page table
+  for (const [price, home, first, add] of [[250000, 2500, 0, 15000], [300000, 5000, 0, 20000], [450000, 12500, 7500, 35000],
+    [600000, 20000, 20000, 50000], [1000000, 43750, 43750, 93750]]) {
+    check(`sdlt ${price} moving home`, sd(price, "home"), home);
+    check(`sdlt ${price} first-time buyer`, sd(price, "first"), first);
+    check(`sdlt ${price} additional`, sd(price, "additional"), add);
+  }
+  // FAQ: £125,000 = 0, or 5% = 6,250 for an additional property; under £40,000 no surcharge
+  check("sdlt £125,000 home", sd(125000, "home"), 0);
+  check("sdlt £125,000 additional", sd(125000, "additional"), 6250);
+  check("sdlt £35,000 additional, under £40,000", sd(35000, "additional"), 0);
+  // Non-resident +2% on every band: £300,000 = 2,500 + 5,000 + 50,000 × 7% (3,500) = 11,000
+  check("sdlt non-resident £300,000", sd(300000, "home", true), 11000);
+  check("sdlt non-resident additional £300,000", sd(300000, "additional", true), 26000);
+}
+
+// ---------------- UK Capital Gains Tax 2026 to 2027, GOV.UK's examples + by hand
+{
+  const calc = load("uk-cgt", ["data/tax-uk.js", "js/uk-tax.js", "data/property-tax-uk.js"]);
+  // GOV.UK: taxable income £20,000 (income £32,570), gains £12,600 → £1,728; gains £52,600 → £10,842
+  expectAll("cgt gov.uk example 1", calc({ income: 32570, gains: 12600 }), { taxableIncome: 20000, taxableGains: 9600, atBasic: 9600, atHigher: 0, tax: 1728 });
+  expectAll("cgt gov.uk example 2", calc({ income: 32570, gains: 52600 }), { taxableGains: 49600, bandLeft: 17700, atBasic: 17700, atHigher: 31900, tax: 10842 });
+  // £35,000 income, £20,000 gains: band left 15,270; 15,270 × 18% + 1,730 × 24% = 2,748.60 + 415.20
+  expectAll("cgt page example", calc({ income: 35000, gains: 20000 }), { taxableIncome: 22430, bandLeft: 15270, atBasic: 15270, atHigher: 1730, tax: 3163.8, keep: 16836.2 });
+  // Higher rate taxpayer: £60,000 income, £13,000 gains → 10,000 × 24% = 2,400
+  check("cgt higher rate", calc({ income: 60000, gains: 13000 }).tax, 2400);
+  // Losses: £30,000 income, £50,000 gains, £5,000 losses → 20,270 × 18% + 21,730 × 24% = 8,863.80
+  expectAll("cgt with losses", calc({ income: 30000, gains: 50000, losses: 5000 }), { netGains: 45000, taxableGains: 42000, tax: 8863.8 });
+  // Gains within the £3,000 allowance: no tax
+  check("cgt within allowance", calc({ income: 12570, gains: 3000 }).tax, 0);
+  // Over £100,000 the Personal Allowance tapers: £110,000 → allowance 7,570, taxable 102,430
+  check("cgt taper taxable income", calc({ income: 110000, gains: 23000 }).taxableIncome, 102430);
+}
+
+// ---------------- Simple interest (by hand)
+{
+  const calc = load("simple-interest");
+  // $10,000 at 5% for 3 years: 1,500; total 11,500; compound 10,000 × 1.05³ = 11,576.25
+  expectAll("simple 10k 5% 3y", calc({ principal: 10000, rate: 5, time: 3, unit: "years" }),
+    { interest: 1500, total: 11500, perYear: 500, perMonth: 41.67, compoundInterest: 1576.25, difference: 76.25 });
+  // £2,500 at 4% for 18 months = 1.5 years: 150
+  expectAll("simple 18 months", calc({ principal: 2500, rate: 4, time: 18, unit: "months" }), { interest: 150, total: 2650 });
+  // $1,000 at 6% for 90 days: 1,000 × 0.06 × 90 ÷ 365 = 14.79; under a year compounding adds nothing
+  expectAll("simple 90 days", calc({ principal: 1000, rate: 6, time: 90, unit: "days" }), { interest: 14.79, difference: 0 });
+  // 10 years: 15,000 vs 16,288.95; 20 years: 20,000 vs 26,532.98
+  expectAll("simple 10 years", calc({ principal: 10000, rate: 5, time: 10, unit: "years" }), { total: 15000, compoundInterest: 6288.95 });
+  expectAll("simple 20 years", calc({ principal: 10000, rate: 5, time: 20, unit: "years" }), { total: 20000, compoundInterest: 16532.98 });
+  // 12 months is exactly 1 year: simple and compound match
+  check("simple 12 months = 1 year", calc({ principal: 10000, rate: 5, time: 12, unit: "months" }).difference, 0);
+}
+
+// ---------------- Net worth (by hand)
+{
+  const calc = load("net-worth");
+  // Sam: 15,000 + 20,000 + 45,000 + 300,000 + 12,000 = 392,000; owes 220,000 + 8,000 + 2,500 + 15,000 = 245,500
+  const sam = calc({ cash: 15000, investments: 20000, retirement: 45000, home: 300000, vehicles: 12000,
+    mortgage: 220000, carLoans: 8000, cards: 2500, studentLoans: 15000 });
+  expectAll("net worth Sam", sam, { assets: 392000, debts: 245500, netWorth: 146500, debtRatio: 62.63, homeEquity: 80000, withoutHome: 66500 });
+  check("net worth Sam home share", sam.shares.find((s) => s.id === "home").share, 76.53);
+  // Alex: 9,000 − 34,000 = −25,000
+  check("net worth Alex negative", calc({ cash: 3000, vehicles: 6000, cards: 4000, studentLoans: 30000 }).netWorth, -25000);
+  // No debts: 40,000 and 0%
+  expectAll("net worth no debts", calc({ cash: 8000, investments: 12000, retirement: 20000 }), { netWorth: 40000, debtRatio: 0 });
+  // Empty boxes count as 0
+  check("net worth empty boxes", calc({ cash: null, mortgage: null }).netWorth, 0);
+}
+
 // ---------------- Freelance retainer
 {
   const calc = load("retainer");

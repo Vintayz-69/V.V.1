@@ -1,0 +1,122 @@
+  <section class="calculator" aria-label="UK maternity and paternity pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <fieldset class="choice-group span-2">
+        <legend>Which pay?</legend>
+        <div class="choices">
+          <div class="choice"><input class="visually-hidden" type="radio" name="pay-type" id="type-mat" value="maternity" checked><label for="type-mat">Maternity Pay<small>Up to 39 weeks</small></label></div>
+          <div class="choice"><input class="visually-hidden" type="radio" name="pay-type" id="type-pat" value="paternity"><label for="type-pat">Paternity Pay<small>Up to 2 weeks</small></label></div>
+        </div>
+      </fieldset>
+
+      <div class="field span-2">
+        <label for="awe">Average weekly earnings<span class="hint">Before tax. Monthly pay × 12 ÷ 52 gives a rough figure</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="awe" type="text" inputmode="decimal" value="500" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field span-2" id="weeks-field" hidden>
+        <label for="weeks">Weeks of Paternity Leave you'll take</label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="numeric" value="2" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter 1 or 2.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2 id="pay-heading">Estimated Statutory Maternity Pay</h2>
+      <div class="result-main"><span id="out-total">—</span> <small>before tax</small></div>
+      <ul class="result-list">
+        <li data-only="maternity"><span>Weeks 1 to 6, at <span id="out-higher-weekly">—</span> a week</span><span id="out-higher">—</span></li>
+        <li data-only="maternity"><span>Weeks 7 to 39, at <span id="out-lower-weekly">—</span> a week</span><span id="out-lower">—</span></li>
+        <li data-only="paternity" hidden><span>Each week</span><span id="out-pat-weekly">—</span></li>
+        <li class="key"><span>Earn enough to qualify?</span><span id="out-eligible">—</span></li>
+      </ul>
+      <p class="result-note" id="not-eligible-note" hidden>If you can't get Statutory Maternity Pay, you may be able to get <a class="link-light" href="https://www.gov.uk/maternity-allowance" rel="noopener">Maternity Allowance</a> instead.</p>
+      <p class="result-note">You need average earnings of at least £129 a week and 26 weeks with your employer, among other conditions. This is the legal minimum. Your employer may pay more. Tax and National Insurance are taken off.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Maternity and Paternity Pay rates for 2026 to 2027</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Pay</th><th>How much</th><th>How long</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Pay">Statutory Maternity Pay (SMP)</td><td data-label="How much">90% of your average weekly earnings for 6 weeks, then £194.32 a week or 90% of your earnings, whichever is lower</td><td data-label="How long">Up to 39 weeks</td></tr>
+          <tr><td data-label="Pay">Statutory Paternity Pay</td><td data-label="How much">£194.32 a week or 90% of your average weekly earnings, whichever is lower</td><td data-label="How long">Up to 2 weeks</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The first 6 weeks of Maternity Pay have no upper limit: they're 90% of whatever you earn. The cap of £194.32 a week only applies from week 7. Anyone earning more than about £215.91 a week (where 90% is £194.32) gets the flat rate from week 7.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose Maternity Pay or Paternity Pay.</strong></li>
+      <li><strong>Enter your average weekly earnings</strong> before tax. Your employer works out the exact figure from your pay over a set period before the birth.</li>
+      <li><strong>For Paternity Pay, enter the weeks</strong> of leave you'll take: 1 or 2.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Maternity Pay
+  Weeks 1 to 6     = 90% of average weekly earnings × 6
+  Weeks 7 to 39    = the lower of £194.32 or 90% of earnings × 33
+  Total            = weeks 1 to 6 + weeks 7 to 39
+
+Paternity Pay      = the lower of £194.32 or 90% of earnings × weeks (1 or 2)</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>Maternity Pay on £500 a week.</strong> 90% of £500 is £450.</p>
+    <div class="formula">Weeks 1 to 6      = 450 × 6           = £2,700.00
+Weeks 7 to 39     = 194.32 × 33       = £6,412.56
+Total             = 2,700 + 6,412.56  = £9,112.56</div>
+    <p><strong>Maternity Pay on £180 a week.</strong> 90% of £180 is £162, which is lower than £194.32, so it applies for all 39 weeks: 162 × 39 = <strong>£6,318.00</strong>.</p>
+    <p><strong>Paternity Pay.</strong> On £500 a week, two weeks at £194.32 is <strong>£388.64</strong>. On £200 a week, 90% is £180, so two weeks is <strong>£360.00</strong>.</p>
+    <p><strong>Earning under £129 a week.</strong> On £120 a week you don't earn enough for SMP. You may be able to get Maternity Allowance instead.</p>
+
+    <h2>Who can get Statutory Maternity Pay</h2>
+    <p>GOV.UK says you need to:</p>
+    <ul>
+      <li>earn an average of at least £129 a week</li>
+      <li>have worked for your employer for at least 26 weeks, continuing into the "qualifying week", which is the 15th week before the expected week of childbirth</li>
+      <li>give your employer the correct notice and proof you're pregnant</li>
+    </ul>
+    <p>The earliest you can start maternity leave is 11 weeks before the expected week of childbirth, unless the baby is born early.</p>
+    <p><strong>Maternity Allowance</strong> is for people who are employed but can't get SMP, are self-employed, have recently stopped working, or do unpaid work for their spouse's or civil partner's business. It can be paid for up to 39 weeks. See <a href="https://www.gov.uk/maternity-allowance" rel="noopener">GOV.UK: Maternity Allowance</a>.</p>
+
+    <h2>Who can get Statutory Paternity Pay</h2>
+    <p>You need to earn an average of at least £129 a week before tax, and have worked for your employer continuously for at least 26 weeks up to any day in the qualifying week (the 15th week before the baby is due). You can take up to 2 weeks' leave, together or as separate one-week blocks, and it must end within 52 weeks of the birth (or the due date, if the baby is early).</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Company maternity or paternity pay.</strong> Many employers pay more than the legal minimum. Check your contract or staff handbook.</li>
+      <li><strong>Tax and National Insurance</strong>, which are taken off like normal pay.</li>
+      <li><strong>Adoption Pay, Shared Parental Pay and Maternity Allowance amounts.</strong></li>
+      <li><strong>Rounding.</strong> Your employer's figures may differ by a few pence.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How much is Statutory Maternity Pay in 2026?</summary>
+        <p>For 2026 to 2027 it's 90% of your average weekly earnings for the first 6 weeks, then £194.32 a week or 90% of your earnings, whichever is lower, for the next 33 weeks.</p>
+      </details>
+      <details>
+        <summary>Is Maternity Pay taxed?</summary>
+        <p>Yes. Your employer takes off tax and National Insurance, as with your normal pay. This calculator shows the amounts before those deductions.</p>
+      </details>
+      <details>
+        <summary>Can I take Paternity Leave as two separate weeks?</summary>
+        <p>Yes. GOV.UK says you can take both weeks together or separately in one-week blocks, as long as the leave ends within 52 weeks of the birth.</p>
+      </details>
+      <details>
+        <summary>What's my take-home pay on maternity leave?</summary>
+        <p>Your take-home pay depends on your tax code and other income. For a rough idea, enter your yearly SMP into the <a href="{{root}}career/uk-take-home-pay-calculator/">UK take-home pay calculator</a>.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026 to 2027):</strong> <a href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" rel="noopener">GOV.UK: rates and thresholds for employers 2026 to 2027</a>, <a href="https://www.gov.uk/maternity-pay-leave/pay" rel="noopener">GOV.UK: Maternity Pay</a>, <a href="https://www.gov.uk/maternity-pay-leave/eligibility" rel="noopener">GOV.UK: Maternity Pay eligibility</a>, <a href="https://www.gov.uk/paternity-pay-leave/pay" rel="noopener">GOV.UK: Paternity Pay</a>, <a href="https://www.gov.uk/paternity-pay-leave/leave" rel="noopener">GOV.UK: Paternity Leave</a>, <a href="https://www.gov.uk/maternity-allowance" rel="noopener">GOV.UK: Maternity Allowance</a>. Checked 20 October 2026.</p>
+  </div>

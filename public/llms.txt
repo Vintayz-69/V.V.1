@@ -18,6 +18,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Freelance Tax Set-Aside Calculator](https://vintayz.com/freelance/tax-set-aside-calculator/): How much of each payment to save for tax in the US, UK, Canada or Australia.
 - [Hourly to Annual Income Calculator](https://vintayz.com/freelance/hourly-to-annual-income-calculator/): See what an hourly rate adds up to per day, week, month and year.
 - [Income Smoothing Calculator](https://vintayz.com/freelance/income-smoothing-calculator/): Turn irregular freelance income into a steady monthly salary with a safety buffer.
+- [Invoice Due Date Calculator](https://vintayz.com/freelance/invoice-due-date-calculator/): Find the due date for Net 30, Net 60 or EOM terms, the deadline for an early payment discount, and if an invoice is overdue.
 - [Late Payment Interest Calculator](https://vintayz.com/freelance/late-payment-interest-calculator/): Calculate interest and fixed compensation on an overdue invoice, including UK statutory interest.
 - [Project Pricing Calculator](https://vintayz.com/freelance/project-pricing-calculator/): Turn your hours, costs and a safety buffer into a fixed project quote and deposit.
 - [Retirement Savings Calculator](https://vintayz.com/freelance/retirement-savings-calculator/): See what your pension or retirement savings could grow to, and the income they might give you.
@@ -42,9 +43,12 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Job Offer Comparison Calculator](https://vintayz.com/career/job-offer-comparison-calculator/): Compare two job offers on salary, bonus, benefits, hours and commuting, and see which pays more per hour.
 - [Overtime Pay Calculator](https://vintayz.com/career/overtime-calculator/): Work out weekly pay with time-and-a-half and double-time hours.
 - [Pay Rise Calculator](https://vintayz.com/career/pay-rise-calculator/): See your raise as a percentage and in money, and whether it beats inflation.
+- [Pro Rata Salary Calculator](https://vintayz.com/career/pro-rata-salary-calculator/): Work out part-time pay from a full-time salary, and pay for part of a year if you start or leave mid-year.
 - [Salary to Hourly Calculator](https://vintayz.com/career/salary-to-hourly-calculator/): Convert an annual salary into equivalent hourly, daily, weekly, bi-weekly and overtime rates.
 - [UK Holiday Entitlement Calculator](https://vintayz.com/career/uk-holiday-entitlement-calculator/): Your minimum paid holiday in days or hours, including part-time and irregular hours.
+- [UK Maternity and Paternity Pay Calculator (2026 to 2027)](https://vintayz.com/career/uk-maternity-pay-calculator/): Work out Statutory Maternity Pay over 39 weeks, or Statutory Paternity Pay, for 2026 to 2027.
 - [UK Statutory Redundancy Pay Calculator](https://vintayz.com/career/uk-redundancy-pay-calculator/): Work out the legal minimum redundancy pay from your age, service and weekly pay.
+- [UK Statutory Sick Pay Calculator (2026 to 2027)](https://vintayz.com/career/uk-statutory-sick-pay-calculator/): Work out Statutory Sick Pay for 2026 to 2027: £123.25 a week or 80% of earnings, from the first day off sick.
 - [UK Take-Home Pay Calculator (2026/27)](https://vintayz.com/career/uk-take-home-pay-calculator/): Your salary after Income Tax, National Insurance, student loan and pension for 2026 to 2027.
 - [US Take-Home Pay Calculator (2026)](https://vintayz.com/career/us-take-home-pay-calculator/): Calculate your net W-2 paycheck after 2026 federal income tax, FICA (Social Security & Medicare), and state tax.
 
@@ -54,7 +58,9 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Compound Interest Calculator](https://vintayz.com/finance/compound-interest-calculator/): See how regular deposits and compound interest grow your investments over time, with a year-by-year schedule.
 - [Monthly Expenses Calculator](https://vintayz.com/finance/monthly-expenses-calculator/): Add up your monthly bills and spending, see your yearly total and what's left from your pay.
 - [Mortgage Payment Calculator](https://vintayz.com/finance/mortgage-calculator/): Calculate monthly principal, interest, taxes and insurance payments for fixed-rate home loans.
+- [Net Worth Calculator](https://vintayz.com/finance/net-worth-calculator/): Add up what you own and what you owe to see your net worth, with and without your home.
 - [Savings Goal Calculator](https://vintayz.com/finance/savings-goal-calculator/): Find how much to save each month to reach a goal by a set date, with interest added.
+- [Simple Interest Calculator](https://vintayz.com/finance/simple-interest-calculator/): Work out simple interest on any amount for years, months or days, and compare it with compound interest.
 
 ## Resume & CV Maker
 
@@ -81,10 +87,12 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 
 - [United Kingdom](https://vintayz.com/uk/): all united kingdom
 - [Business Mileage Allowance Calculator (55p rate)](https://vintayz.com/uk/business-mileage-allowance-calculator/): Claim mileage at HMRC's rates, including the new 55p car rate from April 2026.
+- [Capital Gains Tax Calculator (2026 to 2027)](https://vintayz.com/uk/capital-gains-tax-calculator/): Estimate UK Capital Gains Tax for 2026 to 2027: the £3,000 allowance, then 18% or 24% depending on your income.
 - [Dividend Tax Calculator (2026 to 2027)](https://vintayz.com/uk/dividend-tax-calculator/): Work out tax on your dividends for 2026 to 2027, with the dividend allowance and your other income.
 - [Payments on Account Calculator](https://vintayz.com/uk/payments-on-account-calculator/): See what Self Assessment payments are due in January and July, and plan for the first-year shock.
 - [Self-Employed Tax and NI Calculator (2026/27)](https://vintayz.com/uk/self-employed-tax-calculator/): Work out Income Tax and Class 4 National Insurance on your 2026 to 2027 profits, including Scotland.
 - [Sole Trader vs Limited Company Calculator (2026/27)](https://vintayz.com/uk/sole-trader-vs-limited-company-calculator/): Compare take-home pay as a sole trader and as a company director, with 2026 to 2027 dividend rates.
+- [Stamp Duty Calculator (England and Northern Ireland)](https://vintayz.com/uk/stamp-duty-calculator/): Work out Stamp Duty Land Tax on a home in England or Northern Ireland, for first-time buyers, movers and additional properties.
 - [VAT Calculator UK (20%)](https://vintayz.com/uk/vat-calculator/): Add 20% or 5% VAT to a price, or take the VAT out of a total, with the £90,000 registration rule.
 - [Working From Home Expenses Calculator](https://vintayz.com/uk/working-from-home-expenses-calculator/): Compare HMRC's flat rate with a share of your actual bills and claim the higher.
 

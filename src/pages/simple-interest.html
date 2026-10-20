@@ -1,0 +1,137 @@
+  <section class="calculator" aria-label="Simple interest calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="principal">Starting amount (principal)<span class="hint">The money saved, lent or borrowed</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="principal" type="text" inputmode="decimal" value="10000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="rate">Interest rate a year</label>
+        <div class="input-wrap"><input id="rate" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter from 0% to 100%.</span>
+      </div>
+
+      <div class="field">
+        <label for="time">Time</label>
+        <div class="input-wrap"><input id="time" type="text" inputmode="decimal" value="3" autocomplete="off"></div>
+        <span class="error-msg">Enter a time above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="unit">In</label>
+        <div class="select-wrap">
+          <select id="unit">
+            <option value="years">Years</option>
+            <option value="months">Months</option>
+            <option value="days">Days</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Simple interest</h2>
+      <div class="result-main"><span id="out-interest">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Total at the end</span><span id="out-total">—</span></li>
+        <li><span>Interest each year</span><span id="out-per-year">—</span></li>
+        <li><span>Interest each month</span><span id="out-per-month">—</span></li>
+        <li><span>Total with yearly compound interest</span><span id="out-compound">—</span></li>
+        <li><span>Extra from compounding</span><span id="out-difference">—</span></li>
+      </ul>
+      <p class="result-note">Days are counted on a 365-day year. Banks and lenders may count days differently.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Simple and compound interest, year by year</h2>
+    <p>Your total at the end of each year with simple interest, next to the same rate compounded once a year:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>End of</th><th class="num">Simple interest</th><th class="num">Compound (yearly)</th></tr></thead>
+        <tbody id="years-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>What simple interest is</h2>
+    <p>Simple interest is worked out on the starting amount only. Each year earns the same interest, so the total grows in a straight line. With compound interest, interest is added to the balance and then earns interest itself, so the total grows faster over time.</p>
+    <p>Simple interest is also how our <a href="{{root}}freelance/late-payment-interest-calculator/">late payment interest calculator</a> works: the invoice amount × the yearly rate ÷ 365, for each day the invoice is late.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the starting amount</strong> and choose the currency.</li>
+      <li><strong>Enter the yearly interest rate</strong> as a percentage, such as 5 for 5%.</li>
+      <li><strong>Enter the time</strong> and choose years, months or days.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Interest  = principal × rate × time in years
+Total     = principal + interest
+Months    = months ÷ 12 years
+Days      = days ÷ 365 years
+
+Yearly compound (for comparison)
+          = principal × (1 + rate) ^ whole years,
+            plus simple interest for any part year left over</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>$10,000 at 5% for 3 years.</strong></p>
+    <div class="formula">Interest  = 10,000 × 0.05 × 3      = $1,500.00
+Total     = 10,000 + 1,500         = $11,500.00
+Compound  = 10,000 × 1.05³         = $11,576.25 ($76.25 more)</div>
+    <p><strong>£2,500 at 4% for 18 months.</strong> 18 months is 1.5 years, so the interest is 2,500 × 0.04 × 1.5 = <strong>£150.00</strong>, and the total is £2,650.00.</p>
+    <p><strong>$1,000 at 6% for 90 days.</strong> 90 days is 90 ÷ 365 of a year: 1,000 × 0.06 × 90 ÷ 365 = <strong>$14.79</strong>.</p>
+    <p><strong>Over a long time the gap grows.</strong> $10,000 at 5% reaches $15,000.00 after 10 years with simple interest, but $16,288.95 with yearly compound interest. After 20 years it's $20,000.00 against $26,532.98.</p>
+
+    <h2>Working backwards</h2>
+    <p>The same formula can be turned round:</p>
+    <div class="formula">Rate       = interest ÷ (principal × years)
+Time       = interest ÷ (principal × rate)
+Principal  = interest ÷ (rate × years)</div>
+    <p>For example, if $10,000 earned $1,500 in 3 years, the rate was 1,500 ÷ (10,000 × 3) = 0.05, which is 5%.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Deposits or payments</strong> during the time. For regular saving, use the <a href="{{root}}finance/compound-interest-calculator/">compound interest calculator</a>.</li>
+      <li><strong>Tax</strong> on interest, and fees.</li>
+      <li><strong>Loan repayments.</strong> Most loans and mortgages charge interest on the balance left each month. The <a href="{{root}}finance/mortgage-calculator/">mortgage calculator</a> works that out.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the simple interest formula?</summary>
+        <p>Interest = principal × rate × time, with the rate as a decimal (5% = 0.05) and the time in years. The total is the principal plus the interest.</p>
+      </details>
+      <details>
+        <summary>Is simple interest better than compound interest?</summary>
+        <p>When you're saving, compound interest earns more at the same rate. When you're paying interest, simple interest costs less. Over one year with yearly compounding, the two are the same.</p>
+      </details>
+      <details>
+        <summary>How do I work out interest for a number of days?</summary>
+        <p>Divide the days by 365 to turn them into years, then use the formula. Choose "Days" above to do this for you.</p>
+      </details>
+      <details>
+        <summary>How is interest on a late invoice worked out?</summary>
+        <p>Our <a href="{{root}}freelance/late-payment-interest-calculator/">late payment interest calculator</a> works it out as simple interest for each day late, and fills in the UK statutory rate for business debts.</p>
+      </details>
+    </div>
+  </div>

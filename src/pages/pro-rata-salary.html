@@ -1,0 +1,137 @@
+  <section class="calculator" aria-label="Pro rata salary calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="salary">Full-time salary<span class="hint">The yearly salary for the job if worked full time</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="salary" type="text" inputmode="decimal" value="30000" autocomplete="off"></div>
+        <span class="error-msg">Enter a salary above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="ftHours">Full-time hours a week<span class="hint">Usually in the job advert or contract</span></label>
+        <div class="input-wrap"><input id="ftHours" type="text" inputmode="decimal" value="37.5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 1 and 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Your hours a week<span class="hint">Only the hours you're paid for</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="22.5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 0.5 and 100.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="weeks">Weeks you'll be paid for this year<span class="hint">52 for a full year. Fewer if you start or leave part way through</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="decimal" value="52" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter between 1 and 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your pro rata salary</h2>
+      <div class="result-main"><span id="out-yearly">—</span> <small>a year</small></div>
+      <ul class="result-list">
+        <li><span>Full-time equivalent (FTE)</span><span id="out-fte">—</span></li>
+        <li class="key"><span>Paid for the weeks you entered</span><span id="out-this-year">—</span></li>
+        <li><span>A month</span><span id="out-monthly">—</span></li>
+        <li><span>A week</span><span id="out-weekly">—</span></li>
+        <li><span>Hourly rate (same as full time)</span><span id="out-hourly">—</span></li>
+      </ul>
+      <p class="result-note">Before tax and other deductions. To see what you'd take home, use a take-home pay calculator for your country.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Pro rata pay for common part-time patterns</h2>
+    <p>Based on your full-time salary and hours above, with each day being a fifth of the full-time week:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Pattern</th><th class="num">Hours a week</th><th class="num">Pro rata salary</th><th class="num">A month</th></tr></thead>
+        <tbody id="pattern-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>What "pro rata" means</h2>
+    <p>Pro rata means "in proportion". A job advert that says "£30,000 pro rata" gives the salary for working full time. If you work fewer hours, you're paid the same share of that salary as the share of full-time hours you work. Your hourly rate stays the same; you're just paid for fewer hours.</p>
+    <p>That share is often called your <strong>full-time equivalent</strong>, or FTE. Three days of a five-day week is 0.6 FTE, so you get 60% of the full-time salary.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the full-time salary</strong> from the job advert or your contract.</li>
+      <li><strong>Enter the full-time hours</strong> for the job, such as 37.5 or 40 a week, and the hours you'll actually work.</li>
+      <li><strong>Starting or leaving part way through the year?</strong> Change the weeks to the number of weeks you'll be paid for. Otherwise leave it at 52.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">FTE                 = your hours ÷ full-time hours
+Pro rata salary     = full-time salary × FTE
+Paid for the weeks  = pro rata salary × weeks ÷ 52
+A month             = pro rata salary ÷ 12
+A week              = pro rata salary ÷ 52
+Hourly rate         = full-time salary ÷ (full-time hours × 52)</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>Three days a week.</strong> Priya is offered a job at £30,000 pro rata, where full time is 37.5 hours. Priya will work three days of 7.5 hours, so 22.5 hours a week.</p>
+    <div class="formula">FTE                 = 22.5 ÷ 37.5              = 0.6
+Pro rata salary     = 30,000 × 0.6             = £18,000 a year
+A month             = 18,000 ÷ 12              = £1,500
+A week              = 18,000 ÷ 52              = £346.15
+Hourly rate         = 30,000 ÷ (37.5 × 52)     = £15.38</div>
+    <p><strong>30 hours of a 40-hour week.</strong> A $52,000 full-time job worked for 30 hours a week is 0.75 FTE: <strong>$39,000</strong> a year, $3,250 a month and $750 a week. The hourly rate is $25 either way.</p>
+    <p><strong>Starting part way through the year.</strong> Sam starts a full-time job at £36,000 with 26 weeks of the year left. For those weeks Sam is paid 36,000 × 26 ÷ 52 = <strong>£18,000</strong>, still £3,000 a month.</p>
+    <p><strong>Part time and part year together.</strong> A $45,000 job, 30 hours of a 37.5-hour week (0.8 FTE), for 39 weeks: the pro rata salary is $36,000 a year, and for 39 weeks that's <strong>$27,000</strong>.</p>
+
+    <h2>Part-time workers' rights in the UK</h2>
+    <p>GOV.UK says part-time workers are protected from being treated less favourably than equivalent full-time workers, unless the employer can show an objective reason. Some benefits are applied pro rata. GOV.UK's own example: if full-time workers get a £1,000 Christmas bonus, someone working half the hours should get £500. Read more on <a href="https://www.gov.uk/part-time-worker-rights" rel="noopener">GOV.UK: part-time workers' rights</a>.</p>
+    <p>Paid holiday is worked out in proportion too. Our <a href="{{root}}career/uk-holiday-entitlement-calculator/">UK holiday entitlement calculator</a> works out the legal minimum for part-time hours. Rules in the US, Canada and Australia are different, so check your contract or your government's employment website.</p>
+
+    <h2>Things to check before you accept</h2>
+    <ul>
+      <li><strong>Which full-time hours the salary is based on.</strong> £30,000 for 35 hours and £30,000 for 40 hours give different hourly rates and different pro rata salaries.</li>
+      <li><strong>Paid or unpaid breaks.</strong> If lunch is unpaid, count only the hours you're paid for.</li>
+      <li><strong>How starters and leavers are paid.</strong> This calculator counts in weeks. Some employers count working days or calendar days instead, which can give a slightly different amount for the first or last month.</li>
+      <li><strong>Bonuses and benefits.</strong> Ask which ones are pro rata and which are the same for everyone.</li>
+    </ul>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Tax, pension and other deductions.</strong> All figures are gross pay.</li>
+      <li><strong>Overtime</strong> or extra hours above your usual week. The <a href="{{root}}career/overtime-calculator/">overtime calculator</a> covers those.</li>
+      <li><strong>Different pay rates on different days</strong>, such as weekend rates.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How do I work out a pro rata salary?</summary>
+        <p>Divide your weekly hours by the full-time weekly hours, then multiply the full-time salary by the result. 22.5 hours out of 37.5 is 0.6, so a £30,000 salary becomes £18,000.</p>
+      </details>
+      <details>
+        <summary>Is my hourly rate lower if I work part time?</summary>
+        <p>Not with pro rata pay. The hourly rate is the same as a full-time worker's; you're paid for fewer hours. In the first example above, both work at £15.38 an hour.</p>
+      </details>
+      <details>
+        <summary>I work days, not hours. What do I enter?</summary>
+        <p>Enter the hours of the days you work. If full time is five days of 7.5 hours (37.5) and you work four of them, enter 30. The table above shows the usual day patterns for your salary.</p>
+      </details>
+      <details>
+        <summary>What's my hourly rate from a full-time salary?</summary>
+        <p>Divide the salary by the full-time hours in a year (hours a week × 52). For more ways to split a salary, try the <a href="{{root}}career/salary-to-hourly-calculator/">salary to hourly calculator</a>.</p>
+      </details>
+    </div>
+  </div>

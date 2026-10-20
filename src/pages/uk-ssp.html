@@ -1,0 +1,125 @@
+  <section class="calculator" aria-label="UK Statutory Sick Pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="awe">Average weekly earnings<span class="hint">Before tax. Your employer uses your pay over 8 weeks; a payslip helps you estimate it</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="awe" type="text" inputmode="decimal" value="600" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="qdays">Days you normally work a week<span class="hint">These are your "qualifying days"</span></label>
+        <div class="input-wrap"><input id="qdays" type="text" inputmode="numeric" value="5" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter a whole number from 1 to 7.</span>
+      </div>
+
+      <div class="field">
+        <label for="sick">Working days off sick<span class="hint">Only count days you'd normally work</span></label>
+        <div class="input-wrap"><input id="sick" type="text" inputmode="numeric" value="3" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter a whole number from 1 to 1,000.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated Statutory Sick Pay</h2>
+      <div class="result-main"><span id="out-total">—</span> <small>before tax</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Your weekly SSP rate</span><span id="out-weekly">—</span></li>
+        <li><span>Which rate applies</span><span id="out-which">—</span></li>
+        <li><span>For each working day</span><span id="out-daily">—</span></li>
+        <li><span>Time off counted</span><span id="out-weeks">—</span></li>
+        <li><span>28-week limit</span><span id="out-cap">—</span></li>
+      </ul>
+      <p class="result-note">SSP is the lower of £123.25 a week or 80% of your average weekly earnings, for up to 28 weeks. It's the minimum. Your contract may give you more sick pay. Tax and National Insurance are taken off like normal pay.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>SSP for one week off, by days</h2>
+    <p>What you'd get for each number of working days off sick in one week, with your earnings and working days above:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Days off sick</th><th class="num">SSP</th></tr></thead>
+        <tbody id="days-body"><tr><td colspan="2">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How much is Statutory Sick Pay in 2026 to 2027?</h2>
+    <p>From 6 April 2026, SSP is <strong>£123.25 a week or 80% of your average weekly earnings, whichever is lower</strong>. It's paid for the days you normally work, for up to 28 weeks. Your employer pays it in the same way as your wages, for example weekly or monthly.</p>
+    <p>Two things changed on 6 April 2026. GOV.UK says the waiting days "no longer apply", so SSP is now paid from the first full day you're off sick. And SSP is now available to eligible employees whatever they earn. Instead, SSP for people on lower pay is limited to 80% of their earnings.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your average weekly earnings</strong> before tax. If you're paid monthly, multiply your monthly pay by 12 and divide by 52.</li>
+      <li><strong>Enter how many days you normally work</strong> in a week, such as 5 for Monday to Friday.</li>
+      <li><strong>Enter the working days you were off sick.</strong> Don't count weekends or other days you wouldn't have worked.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Weekly rate     = £123.25 or 80% of average weekly earnings, whichever is lower
+Daily rate      = weekly rate ÷ days you normally work a week
+SSP for a week  = daily rate × working days off sick that week
+Limit           = 28 weeks</div>
+    <p>This follows GOV.UK's manual method for employers. Amounts are rounded down to the penny, which matches GOV.UK's own examples.</p>
+
+    <h2>Worked examples</h2>
+    <p>These are GOV.UK's own examples for 2026 to 2027, and the calculator gives the same answers:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Average weekly earnings</th><th class="num">Days worked a week</th><th class="num">Days off sick</th><th class="num">SSP</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Earnings">£185 (80% is £148, so £123.25 applies)</td><td class="num" data-label="Days worked">5</td><td class="num" data-label="Days off">3</td><td class="num" data-label="SSP">£73.95</td></tr>
+          <tr><td data-label="Earnings">£185</td><td class="num" data-label="Days worked">6</td><td class="num" data-label="Days off">4</td><td class="num" data-label="SSP">£82.16</td></tr>
+          <tr><td data-label="Earnings">£145 (80% is £116, which is lower)</td><td class="num" data-label="Days worked">4</td><td class="num" data-label="Days off">2</td><td class="num" data-label="SSP">£58.00</td></tr>
+          <tr><td data-label="Earnings">£145</td><td class="num" data-label="Days worked">5</td><td class="num" data-label="Days off">3</td><td class="num" data-label="SSP">£69.60</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>A longer absence.</strong> Alex earns £600 a week, works Monday to Friday and is off sick for 12 working days. That's 2 full weeks at £123.25 plus 2 days at £24.65: 246.50 + 49.30 = <strong>£295.80</strong>.</p>
+    <p><strong>A part-time worker.</strong> Jo works 3 days a week and earns £120 a week. 80% of £120 is £96, which is lower than £123.25, so Jo's SSP is £96 a week, or £32 a day. Off for 7 working days, Jo gets 2 weeks and 1 day: <strong>£224</strong>.</p>
+
+    <h2>Who can get SSP</h2>
+    <p>GOV.UK says you must:</p>
+    <ul>
+      <li>be classed as an employee and have done some work for your employer</li>
+      <li>have been ill for at least one full working day</li>
+    </ul>
+    <p>You can't get SSP if you've already had the maximum 28 weeks, or if you're getting Statutory Maternity Pay. If you have more than one job, you may get SSP from each employer.</p>
+    <p><strong>Fit notes.</strong> You must give your employer a fit note if you're off for more than 7 days in a row, including days you don't work. It can come from a GP, hospital doctor, registered nurse, occupational therapist, pharmacist or physiotherapist.</p>
+    <p><strong>Linked spells.</strong> Spells of sickness that are 8 weeks or less apart can be "linked" and treated as one. You stop being eligible if a run of linked spells lasts more than 3 years.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Company sick pay.</strong> If your employer has its own sick pay scheme, you may get more. Check your contract.</li>
+      <li><strong>Tax and National Insurance</strong>, which are taken off SSP like normal pay.</li>
+      <li><strong>Linked spells and weeks already used.</strong> It treats the days you enter as one new spell. If you've had SSP in a linked spell, fewer of the 28 weeks are left.</li>
+      <li><strong>Spells that started before 6 April 2026</strong>, which can follow the old rules. GOV.UK has a guide for those.</li>
+      <li><strong>Changing work patterns.</strong> It assumes you work the same number of days every week.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is SSP paid from the first day off sick?</summary>
+        <p>Yes, from 6 April 2026. SSP is now paid from the first full day of sickness. The three waiting days that used to be unpaid no longer apply.</p>
+      </details>
+      <details>
+        <summary>Do I need to earn a minimum amount to get SSP?</summary>
+        <p>Not any more. From 6 April 2026, GOV.UK says SSP is available to all eligible employees regardless of their earnings. If you earn under £154.06 a week, 80% of your earnings is lower than £123.25, so you get 80% instead.</p>
+      </details>
+      <details>
+        <summary>Why is my SSP less than £123.25 a week?</summary>
+        <p>Either 80% of your average weekly earnings is lower than £123.25, or you were off for only some of your working days that week.</p>
+      </details>
+      <details>
+        <summary>Is SSP taxed?</summary>
+        <p>Yes. GOV.UK says tax and National Insurance are taken off SSP, and it's paid the same way as your normal wages. This calculator shows SSP before those deductions.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026 to 2027):</strong> <a href="https://www.gov.uk/statutory-sick-pay" rel="noopener">GOV.UK: Statutory Sick Pay</a>, <a href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" rel="noopener">GOV.UK: rates and thresholds for employers 2026 to 2027</a>, <a href="https://www.gov.uk/guidance/statutory-sick-pay-manually-calculate-your-employees-payments" rel="noopener">GOV.UK: work out SSP manually</a>, <a href="https://www.gov.uk/guidance/sickness-absences-that-start-before-and-end-on-or-after-6-april-2026" rel="noopener">GOV.UK: sickness absences around 6 April 2026</a>. Checked 20 October 2026.</p>
+  </div>

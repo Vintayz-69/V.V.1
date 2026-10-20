@@ -1,0 +1,189 @@
+  <section class="calculator" aria-label="Net worth calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <span class="field-title">What you own</span>
+        <span class="hint">What each thing is worth today. Leave a box empty if it doesn't apply.</span>
+      </div>
+
+      <div class="field">
+        <label for="cash">Cash and savings</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="cash" type="text" inputmode="decimal" value="15000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="investments">Investments<span class="hint">Shares, funds, ISAs and similar</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="investments" type="text" inputmode="decimal" value="20000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="retirement">Pensions and retirement accounts<span class="hint">Today's value, such as a 401(k), IRA, pension or super</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="retirement" type="text" inputmode="decimal" value="45000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="home">Your home<span class="hint">What it would sell for</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="home" type="text" inputmode="decimal" value="300000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="property">Other property<span class="hint">A rental or second home</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="property" type="text" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="vehicles">Vehicles<span class="hint">What they'd sell for now</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="vehicles" type="text" inputmode="decimal" value="12000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field span-2">
+        <label for="otherAssets">Other things you own<span class="hint">Business equipment, money owed to you, valuables</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="otherAssets" type="text" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+
+      <div class="field span-2">
+        <span class="field-title">What you owe</span>
+        <span class="hint">The amount still to pay today, not the original loan.</span>
+      </div>
+
+      <div class="field">
+        <label for="mortgage">Mortgage on your home</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="mortgage" type="text" inputmode="decimal" value="220000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="propertyLoans">Loans on other property</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="propertyLoans" type="text" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="carLoans">Car loans or finance</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="carLoans" type="text" inputmode="decimal" value="8000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="cards">Credit cards</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="cards" type="text" inputmode="decimal" value="2500" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="studentLoans">Student loans</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="studentLoans" type="text" inputmode="decimal" value="15000" autocomplete="off"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+      <div class="field">
+        <label for="otherDebts">Other debts<span class="hint">Personal loans, tax owed, money owed to family</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="otherDebts" type="text" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+        <span class="error-msg">Enter 0 or more, or leave it empty.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your net worth</h2>
+      <div class="result-main"><span id="out-net">—</span></div>
+      <ul class="result-list">
+        <li><span>What you own</span><span id="out-assets">—</span></li>
+        <li><span>What you owe</span><span id="out-debts">—</span></li>
+        <li><span>Debts as a share of what you own</span><span id="out-ratio">—</span></li>
+        <li><span>Equity in your home</span><span id="out-equity">—</span></li>
+        <li class="key"><span>Net worth not counting your home</span><span id="out-without-home">—</span></li>
+      </ul>
+      <p class="result-note">A snapshot for today. Values change, so it's worth checking again every few months.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What you own, by type</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th class="num">Value</th><th class="num">Share</th></tr></thead>
+        <tbody id="mix-body"><tr><td colspan="3">Enter what you own above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>What net worth means</h2>
+    <p>Your net worth is everything you own minus everything you owe. It's a single number that shows where you stand today. It can be negative, for example early in a career with a student loan and few savings. Which way it moves over time often tells you more than the number itself.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose your currency.</strong></li>
+      <li><strong>Fill in what you own</strong> at today's value. For a home or car, use a realistic selling price, not what you paid.</li>
+      <li><strong>Fill in what you owe</strong>, using the balance left to pay on each debt. Statements and banking apps show these.</li>
+      <li><strong>Leave any box empty</strong> that doesn't apply to you.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">What you own        = cash + investments + pensions + home + other property
+                      + vehicles + other things
+What you owe        = mortgage + other property loans + car loans + credit cards
+                      + student loans + other debts
+Net worth           = what you own − what you owe
+Debt share          = what you owe ÷ what you own × 100
+Home equity         = home value − mortgage
+Not counting home   = net worth − home equity</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>A homeowner.</strong> Sam has $15,000 in savings, $20,000 in investments, $45,000 in a retirement account, a $300,000 home and a $12,000 car. Sam owes $220,000 on the mortgage, $8,000 on the car, $2,500 on credit cards and $15,000 in student loans.</p>
+    <div class="formula">What you own        = 15,000 + 20,000 + 45,000 + 300,000 + 12,000 = $392,000
+What you owe        = 220,000 + 8,000 + 2,500 + 15,000           = $245,500
+Net worth           = 392,000 − 245,500                          = $146,500
+Debt share          = 245,500 ÷ 392,000                          = 62.6%
+Home equity         = 300,000 − 220,000                          = $80,000
+Not counting home   = 146,500 − 80,000                           = $66,500</div>
+    <p>The home is 76.5% of what Sam owns. Most of Sam's net worth can't be spent without selling or borrowing against the house, which is why the figure "not counting your home" is shown too.</p>
+    <p><strong>Just starting out.</strong> Alex has £3,000 in savings and a car worth £6,000, and owes £4,000 on a credit card and £30,000 in student loans. Net worth is 9,000 − 34,000 = <strong>−£25,000</strong>.</p>
+    <p><strong>No debts.</strong> £8,000 in savings, £12,000 in investments and £20,000 in a pension, with nothing owed: net worth <strong>£40,000</strong>, and a debt share of 0%.</p>
+
+    <h2>Tips for an accurate figure</h2>
+    <ul>
+      <li><strong>Be realistic about values.</strong> A car is worth what it would sell for today, which is often much less than the price paid.</li>
+      <li><strong>Count every debt</strong>, including buy now pay later, overdrafts and money owed to family.</li>
+      <li><strong>Pensions are long-term.</strong> You may also want to work out your net worth without pensions, as that money often can't be used until later in life.</li>
+      <li><strong>Track it over time.</strong> Write the number down every few months. Paying off debt and saving both raise it.</li>
+    </ul>
+    <p>Building savings? The <a href="{{root}}freelance/emergency-fund-calculator/">emergency fund calculator</a> and the <a href="{{root}}finance/savings-goal-calculator/">savings goal calculator</a> help you plan the next step.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Tax</strong> you'd pay if you sold investments or property, and selling costs.</li>
+      <li><strong>Future income</strong>, such as salary or a pension you haven't built up yet.</li>
+      <li><strong>Everyday belongings</strong>, unless you add them under "other things you own".</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How do I calculate my net worth?</summary>
+        <p>Add up the value of everything you own, add up everything you owe, and take the second from the first. The calculator above does the adding for you.</p>
+      </details>
+      <details>
+        <summary>Should I include my home?</summary>
+        <p>Net worth normally includes your home and its mortgage. Because you can't easily spend the value of your home, this calculator also shows your net worth without it.</p>
+      </details>
+      <details>
+        <summary>Is a negative net worth bad?</summary>
+        <p>It means you owe more than you own right now. This can happen when you have student loans or have just bought something on finance. The direction it moves over time tells you more.</p>
+      </details>
+      <details>
+        <summary>Does net worth include my pension?</summary>
+        <p>Usually yes, at today's value. You can also work it out without pensions, as that money often can't be used until later in life.</p>
+      </details>
+    </div>
+  </div>
