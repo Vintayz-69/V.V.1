@@ -3090,6 +3090,194 @@ def page_hero(page, up):
 </section>"""
 
 
+# "Next step" box shown right under each tool, so visitors on phones see where to go next
+# without scrolling past the whole article. Each entry: (tool key, why someone would go there).
+# Tools not listed here use their first two related tools with the tool's short description.
+NEXT_STEPS = {
+    # Freelance
+    "hourly-rate": [("quote-generator", "Turn your rate into a quote for a client"),
+                    ("project-pricing", "Pricing a fixed-fee job? Turn hours and your rate into a project price")],
+    "day-rate": [("quote-generator", "Put your day rate into a quote"),
+                 ("hourly-rate", "Compare it with the hourly rate you'd need")],
+    "project-pricing": [("quote-generator", "Send this price to your client as a quote"),
+                        ("effective-hourly-rate", "Project finished? Check what you really earned per hour")],
+    "hourly-to-annual": [("tax-set-aside", "See how much of this income to put aside for tax"),
+                         ("hourly-rate", "Work backwards from the income you want to the rate you need")],
+    "billable-hours": [("hourly-rate", "Use your billable hours to find the rate you need"),
+                       ("timesheet", "Add up this week's hours")],
+    "late-payment": [("invoice-due-date", "Check the date the invoice was due"),
+                     ("invoice-generator", "Make your next invoice with clear payment terms")],
+    "tax-set-aside": [("us-quarterly-tax", "In the US? Work out your quarterly estimated payments"),
+                      ("uk-payments-on-account", "In the UK? See your payments on account")],
+    "emergency-fund": [("monthly-expenses", "Not sure of your monthly costs? Add them up first"),
+                       ("savings-goal", "See how long it takes to build your fund")],
+    "retirement-savings": [("savings-goal", "Set a monthly savings target"),
+                           ("net-worth", "Check where you stand today")],
+    "income-smoothing": [("emergency-fund", "Work out a buffer for slow months"),
+                         ("tax-set-aside", "Put aside tax from each payment as it comes in")],
+    "retainer": [("quote-generator", "Put the retainer into a quote"),
+                 ("invoice-generator", "Bill the retainer each month")],
+    "effective-hourly-rate": [("rate-increase", "Rate too low? See what a price rise would do"),
+                              ("project-pricing", "Price your next project with a time buffer")],
+    "rate-increase": [("quote-generator", "Send your new prices in a quote"),
+                      ("effective-hourly-rate", "Check your real hourly rate on past projects")],
+    "invoice-due-date": [("invoice-generator", "Make the invoice with these payment terms"),
+                         ("late-payment", "Paid late in the UK? Work out statutory interest")],
+    "invoice-generator": [("invoice-due-date", "Check when this invoice is due"),
+                          ("late-payment", "Paid late in the UK? Work out statutory interest")],
+    "timesheet": [("invoice-generator", "Turn these hours into an invoice"),
+                  ("billable-hours", "See how many hours a year you can bill")],
+    "business-days": [("invoice-due-date", "Work out an invoice due date"),
+                      ("late-payment", "Paid late in the UK? Work out statutory interest")],
+    # Business
+    "profit-margin": [("break-even", "See how many sales cover your costs"),
+                      ("payment-fee", "Check how much card fees take from each sale")],
+    "break-even": [("profit-margin", "Check the margin on each sale"),
+                   ("roas-calculator", "Selling with ads? See the return you need")],
+    "payment-fee": [("invoice-generator", "Make an invoice for the amount you need"),
+                    ("profit-margin", "See what fees do to your margin")],
+    "quote-generator": [("invoice-generator", "Client said yes? Turn the work into an invoice"),
+                        ("invoice-due-date", "Agree payment terms and see the due date")],
+    "roas-calculator": [("customer-lifetime-value", "See what a customer is worth over time"),
+                        ("break-even", "See how many sales cover your costs")],
+    "customer-lifetime-value": [("roas-calculator", "See the ad return you need"),
+                                ("profit-margin", "Check the margin on each sale")],
+    "sales-tax": [("invoice-generator", "Add the tax to an invoice"),
+                  ("discount", "Work out a discount before tax")],
+    # Career
+    "salary-to-hourly": [("job-offer", "Comparing two offers? Put them side by side"),
+                         ("hourly-rate", "Going freelance? See the hourly rate you'd need to charge")],
+    "pro-rata-salary": [("uk-holiday", "Part-time in the UK? Work out your holiday entitlement"),
+                        ("salary-to-hourly", "See what the salary is per hour")],
+    "uk-ssp": [("uk-take-home", "Compare with your usual take-home pay"),
+               ("uk-holiday", "Work out your holiday entitlement")],
+    "uk-parental-pay": [("uk-take-home", "Compare with your usual take-home pay"),
+                        ("uk-holiday", "Work out your holiday entitlement")],
+    "pay-rise": [("uk-take-home", "In the UK? See what the rise means after tax"),
+                 ("us-salaried-pay", "In the US? See your take-home pay")],
+    "overtime": [("timesheet", "Add up the hours you worked this week"),
+                 ("salary-to-hourly", "Find your basic hourly rate")],
+    "uk-take-home": [("pay-rise", "See what a pay rise is worth"),
+                     ("uk-self-employed-tax", "Thinking of going self-employed? Compare the tax")],
+    "uk-holiday": [("pro-rata-salary", "Working part-time? Work out your pro rata salary"),
+                   ("uk-take-home", "See your take-home pay")],
+    "uk-redundancy": [("resume-uk", "Make a UK CV for your next job"),
+                      ("uk-take-home", "See take-home pay for a new salary")],
+    "us-salaried-pay": [("us-tax-bracket", "See which tax brackets your income falls in"),
+                        ("us-1099-vs-w2", "Offered contract work? Compare 1099 and W-2")],
+    "job-offer": [("us-salaried-pay", "In the US? Check take-home pay for each offer"),
+                  ("uk-take-home", "In the UK? Check take-home pay for each offer")],
+    "commission": [("salary-to-hourly", "See your total pay as an hourly rate"),
+                   ("pay-rise", "Compare it with a pay rise")],
+    # Personal finance
+    "compound-interest": [("savings-goal", "Set a monthly target for a goal"),
+                          ("simple-interest", "Compare it with simple interest")],
+    "mortgage": [("uk-stamp-duty", "Buying in England or Northern Ireland? Work out Stamp Duty"),
+                 ("monthly-expenses", "See how the payment fits your monthly budget")],
+    "simple-interest": [("compound-interest", "See how compound interest compares"),
+                        ("savings-goal", "Set a monthly target for a goal")],
+    "net-worth": [("emergency-fund", "Work out an emergency fund target"),
+                  ("savings-goal", "Set a monthly savings target")],
+    "savings-goal": [("compound-interest", "See how interest adds up over time"),
+                     ("monthly-expenses", "Find money to save in your monthly costs")],
+    "monthly-expenses": [("emergency-fund", "Turn your monthly costs into an emergency fund target"),
+                         ("savings-goal", "Set a monthly savings target")],
+    # United States
+    "us-self-employment-tax": [("us-quarterly-tax", "Split your tax into quarterly payments"),
+                               ("us-mileage", "Drive for work? Estimate your mileage deduction")],
+    "us-quarterly-tax": [("tax-set-aside", "Put aside tax from each client payment"),
+                         ("us-take-home", "See what you keep after tax")],
+    "us-1099-vs-w2": [("us-self-employment-tax", "See the self-employment tax on 1099 income"),
+                      ("hourly-rate", "Work out the rate to charge as a contractor")],
+    "us-take-home": [("us-quarterly-tax", "Split your tax into quarterly payments"),
+                     ("us-home-office", "Work from home? Estimate the home office deduction")],
+    "us-mileage": [("us-home-office", "Work from home? Estimate the home office deduction"),
+                   ("us-take-home", "See what you keep after tax")],
+    "us-home-office": [("us-mileage", "Drive for work? Estimate your mileage deduction"),
+                       ("us-take-home", "See what you keep after tax")],
+    "us-tax-bracket": [("us-salaried-pay", "Employed? See your take-home pay"),
+                       ("us-self-employment-tax", "Self-employed? Add self-employment tax")],
+    # United Kingdom
+    "uk-self-employed-tax": [("uk-payments-on-account", "See what you pay in January and July"),
+                             ("uk-sole-trader-vs-ltd", "Compare it with running a limited company")],
+    "uk-payments-on-account": [("tax-set-aside", "Put aside tax from each client payment"),
+                               ("uk-self-employed-tax", "Check the tax and NI on your profit")],
+    "uk-sole-trader-vs-ltd": [("uk-dividend-tax", "Paying yourself dividends? Estimate the tax"),
+                              ("uk-self-employed-tax", "See tax and NI as a sole trader")],
+    "uk-mileage": [("uk-work-from-home", "Work from home too? Work out the flat rate"),
+                   ("uk-self-employed-tax", "See the tax on your profit after expenses")],
+    "uk-work-from-home": [("uk-mileage", "Drive for work? Work out mileage allowance"),
+                          ("uk-self-employed-tax", "See the tax on your profit after expenses")],
+    "uk-vat": [("invoice-generator", "Add VAT to an invoice"),
+               ("quote-generator", "Add VAT to a quote")],
+    "uk-stamp-duty": [("mortgage", "Work out the monthly mortgage payment"),
+                      ("monthly-expenses", "See how the move fits your monthly budget")],
+    "uk-cgt": [("uk-dividend-tax", "Have dividends too? Estimate dividend tax"),
+               ("net-worth", "Add up what you own and owe")],
+    "uk-dividend-tax": [("uk-sole-trader-vs-ltd", "Run a limited company? Compare it with being a sole trader"),
+                        ("uk-cgt", "Sold shares or property? Estimate Capital Gains Tax")],
+    # Canada
+    "ca-self-employed-tax": [("ca-instalments", "See if you pay tax by instalments"),
+                             ("ca-gst-hst", "Charging GST/HST? Work out the amounts")],
+    "ca-instalments": [("tax-set-aside", "Put aside tax from each client payment"),
+                       ("ca-self-employed-tax", "Check the tax on your self-employed income")],
+    "ca-employee-vs-contractor": [("ca-self-employed-tax", "See the tax as a self-employed contractor"),
+                                  ("hourly-rate", "Work out the rate to charge as a contractor")],
+    "ca-gst-hst": [("invoice-generator", "Put GST/HST on an invoice"),
+                   ("ca-self-employed-tax", "Check the tax on your self-employed income")],
+    "ca-cpp-ei": [("ca-self-employed-tax", "See your full self-employed tax"),
+                  ("ca-employee-vs-contractor", "Compare a job with contract work")],
+    # Australia
+    "au-sole-trader-tax": [("au-gst", "Registered for GST? Work out the amounts"),
+                           ("au-voluntary-super", "See what extra super contributions do")],
+    "au-gst": [("invoice-generator", "Make a tax invoice with GST"),
+               ("au-sole-trader-tax", "Check the tax on your sole trader income")],
+    "au-employee-vs-contractor": [("au-sole-trader-tax", "See the tax as a sole trader"),
+                                  ("hourly-rate", "Work out the rate to charge as a contractor")],
+    "au-voluntary-super": [("au-sole-trader-tax", "Check the tax on your sole trader income"),
+                           ("retirement-savings", "See how your savings could grow")],
+    "au-take-home": [("au-employee-vs-contractor", "Offered contract work? Compare it with a job"),
+                     ("pay-rise", "See what a pay rise is worth")],
+    # Resume and letters
+    "resume-us": [("cover-letter", "Write a cover letter to go with it"),
+                  ("job-offer", "Got offers? Compare them side by side")],
+    "resume-uk": [("cover-letter", "Write a cover letter to go with it"),
+                  ("job-offer", "Got offers? Compare them side by side")],
+    "resume-ca": [("cover-letter", "Write a cover letter to go with it"),
+                  ("job-offer", "Got offers? Compare them side by side")],
+    "resume-au": [("cover-letter", "Write a cover letter to go with it"),
+                  ("job-offer", "Got offers? Compare them side by side")],
+    "cover-letter": [("resume-us", "Applying in the US? Make a resume"),
+                     ("resume-uk", "Applying in the UK? Make a CV")],
+    "resignation-letter": [("uk-holiday", "Leaving a UK job? Work out holiday for a part year"),
+                           ("job-offer", "Choosing your next job? Compare offers")],
+}
+
+
+def next_step(page, up):
+    key = page["tool"]
+    steps = NEXT_STEPS.get(key) or [(s, None) for s in page.get("related", [])[:2]]
+    items = []
+    for slug, why in steps:
+        if slug not in TOOLS or slug == key:
+            continue
+        t = TOOLS[slug]
+        name = t["card"][0].upper() + t["card"][1:]
+        title, sub = (why, name) if why else (name, t["short"])
+        items.append(f"""<li><a class="next-link" href="{up}{t['path']}">
+        <span class="card-icon">{icon(t['icon'])}</span>
+        <span class="next-text"><strong>{html.escape(title)}</strong><small>{html.escape(sub)}</small></span>
+        {icon('arrow')}</a></li>""")
+    if not items:
+        return ""
+    return f"""<aside class="next-step" aria-label="Next step">
+    <span class="kicker">Next step</span>
+    <ul>
+      {"".join(items)}
+    </ul>
+  </aside>"""
+
+
 def related(page, up):
     region = page.get("region")
     cards = "\n".join(tool_card(s, up, region) for s in page.get("related", []))
@@ -3161,6 +3349,7 @@ def main_content(page, up, body):
   </div>
 </div>"""
     # tool
+    body = body.replace("\n  </section>\n", "\n  </section>\n\n  " + next_step(page, up) + "\n", 1)
     if page["parent"] == "image":
         note = ("<strong>Keep your original:</strong> this tool makes a new copy of your picture on your own device. "
                 "We never see your pictures, so we can't recover them for you. Check the new picture before you delete "
