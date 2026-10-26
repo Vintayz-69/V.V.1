@@ -646,6 +646,7 @@ function loadResume(country) {
   const rr = load("uk-rent-a-room", ["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"]);
   const run = (receipts, expenses, other = 30000, shared = false, region = "ruk") => rr({ receipts, expenses, other, shared, region });
   // HS223 Chris: £10,600 receipts, £9,000 expenses: A £1,600, B £3,100; at 20%, £320 vs £620
+  check("RaR Chris receipts", 10400 + 200, 10600); // HS223: £10,400 rent plus £200 for heating and light
   expectAll("RaR Chris", run(10600, 9000), { profitA: 1600, profitB: 3100, taxA: 320, taxB: 620, tax: 320, best: "A", saving: 300 });
   // £600 a month: £7,200 under £7,500
   expectAll("RaR £600 a month", run(7200, 500), { underLimit: true, tax: 0, best: "exempt" });
