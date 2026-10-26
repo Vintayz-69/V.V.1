@@ -1,0 +1,164 @@
+  <section class="calculator" aria-label="Making Tax Digital for Income Tax checker">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="year">Which tax year's income are you checking?<span class="hint">HMRC looks at your Self Assessment return for this year</span></label>
+        <div class="select-wrap">
+          <select id="year"></select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="selfEmployed">Self-employed income, before expenses<span class="hint">Your turnover from all your sole trader businesses. Not your profit</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="selfEmployed" type="text" inputmode="decimal" value="45000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="months">Months you traded that year<span class="hint">12 for a full year. If you started part way, HMRC scales it up to a year</span></label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="numeric" value="12" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter a whole number from 1 to 12.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="property">Property income, before expenses<span class="hint">UK and overseas rent. Your share only if you own with someone. If you had rent for only part of the year, enter what a full year would be</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="property" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Do you need Making Tax Digital?</h2>
+      <div class="result-main"><span id="out-main">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Your qualifying income</span><span id="out-qualifying">—</span></li>
+        <li><span>Self-employed income counted</span><span id="out-annualised">—</span></li>
+        <li><span>Threshold for this year</span><span id="out-threshold">—</span></li>
+        <li><span>Compared with the threshold</span><span id="out-gap">—</span></li>
+      </ul>
+      <p class="result-note">A guide based on GOV.UK's rules, not a decision. HMRC writes to people who need to start. Some people are exempt (see below).</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>If your qualifying income stays at this level</h2>
+    <p>Each start date uses a different year's tax return. This shows which thresholds your qualifying income would pass if it were the same in each year:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tax return</th><th class="num">Threshold</th><th class="num">Must use it?</th></tr></thead>
+        <tbody id="years-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>What is Making Tax Digital for Income Tax?</h2>
+    <p>It's a new way for sole traders and landlords to deal with Income Tax. Instead of only filing one Self Assessment return a year, you keep your records in software that works with HMRC, send HMRC a short update every three months, and then file your tax return from the same software. It started on <strong>6 April 2026</strong> for people with qualifying income over £50,000, and is being extended to more people each year:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Qualifying income on your return for</th><th class="num">Is more than</th><th class="num">You must start from</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Qualifying income on your return for">2024 to 2025</td><td class="num" data-label="Is more than">£50,000</td><td class="num" data-label="You must start from">6 April 2026</td></tr>
+          <tr><td data-label="Qualifying income on your return for">2025 to 2026</td><td class="num" data-label="Is more than">£30,000</td><td class="num" data-label="You must start from">6 April 2027</td></tr>
+          <tr><td data-label="Qualifying income on your return for">2026 to 2027</td><td class="num" data-label="Is more than">£20,000</td><td class="num" data-label="You must start from">6 April 2028</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What counts as qualifying income</h2>
+    <p>The figure that matters is your <strong>income before expenses</strong> (your turnover), not your profit. GOV.UK says to add together all your:</p>
+    <ul>
+      <li>self-employed income, from every sole trader business you run</li>
+      <li>property income, from UK and overseas property (your share, if you own it with someone)</li>
+    </ul>
+    <p>It does <strong>not</strong> include:</p>
+    <ul>
+      <li>wages from a job taxed through PAYE</li>
+      <li>your share of profit as a partner in a partnership</li>
+      <li>dividends, including from your own limited company</li>
+      <li>the State Pension or private pensions</li>
+    </ul>
+    <p>So a limited company director who pays themselves a salary and dividends doesn't count that income here. A freelancer with a part-time job counts only their self-employed income.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>GOV.UK's example.</strong> £25,000 of rental income plus £27,000 of self-employed income is £52,000 of qualifying income. On a 2024 to 2025 return, that's over £50,000, so Making Tax Digital applies from <strong>6 April 2026</strong>.</p>
+    <p><strong>A freelancer who looks only at profit.</strong> Sam's turnover in 2025 to 2026 was £45,000 and their expenses were £20,000, so their profit was £25,000. The test uses the £45,000, which is over £30,000, so Sam must start from <strong>6 April 2027</strong>.</p>
+    <p><strong>Jointly owned property.</strong> Two siblings share £50,000 of rent equally, so each has £25,000 (GOV.UK's example). With no other income, that's £5,000 under £30,000 on a 2025 to 2026 return. If it's the same in 2026 to 2027, it's over £20,000, and they'd start from <strong>6 April 2028</strong>.</p>
+    <p><strong>Started part way through the year.</strong> Priya started freelancing and earned £18,000 in 6 months of 2025 to 2026. GOV.UK says HMRC doubles a 6-month first year, so their qualifying income is £36,000, over £30,000: they'd start from <strong>6 April 2027</strong>.</p>
+    <p><strong>Exactly on the line.</strong> Qualifying income of exactly £30,000 in 2025 to 2026 is not <em>more than</em> £30,000, so it doesn't bring you in from April 2027. It would still pass £20,000 if it's the same in 2026 to 2027.</p>
+    <p><strong>A small business plus a flat.</strong> £12,000 of self-employed income plus £9,000 of rent is £21,000. On a 2026 to 2027 return, that's over £20,000, so the start date is 6 April 2028.</p>
+
+    <h2>Turnover levels at a glance</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Qualifying income (same each year)</th><th class="num">From April 2026?</th><th class="num">From April 2027?</th><th class="num">From April 2028?</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Qualifying income">£15,000</td><td class="num" data-label="From April 2026?">No</td><td class="num" data-label="From April 2027?">No</td><td class="num" data-label="From April 2028?">No</td></tr>
+          <tr><td data-label="Qualifying income">£25,000</td><td class="num" data-label="From April 2026?">No</td><td class="num" data-label="From April 2027?">No</td><td class="num" data-label="From April 2028?">Yes</td></tr>
+          <tr><td data-label="Qualifying income">£40,000</td><td class="num" data-label="From April 2026?">No</td><td class="num" data-label="From April 2027?">Yes</td><td class="num" data-label="From April 2028?">Yes</td></tr>
+          <tr><td data-label="Qualifying income">£60,000</td><td class="num" data-label="From April 2026?">Yes</td><td class="num" data-label="From April 2027?">Yes</td><td class="num" data-label="From April 2028?">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Quarterly update deadlines</h2>
+    <p>With the standard periods, each update covers the tax year so far, starting 6 April. The deadlines are the same every year:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Update covers</th><th class="num">Send it by</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Update covers">6 April to 5 July</td><td class="num" data-label="Send it by">7 August</td></tr>
+          <tr><td data-label="Update covers">6 April to 5 October</td><td class="num" data-label="Send it by">7 November</td></tr>
+          <tr><td data-label="Update covers">6 April to 5 January</td><td class="num" data-label="Send it by">7 February</td></tr>
+          <tr><td data-label="Update covers">6 April to 5 April</td><td class="num" data-label="Send it by">7 May (the next tax year)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>You can choose calendar periods instead (1 April to 31 March) before sending your first update. The deadlines don't change. After the last update, you still file your tax return, using your software.</p>
+    <p><strong>Penalties:</strong> GOV.UK says HMRC won't give penalty points for late quarterly updates in the 2026 to 2027 tax year. After that, each missed deadline is a point, and reaching 4 points means a £200 penalty. Late tax returns get penalty points in every year.</p>
+
+    <h2>Who is exempt</h2>
+    <p>GOV.UK lists people who don't need to use it, without applying. Among them:</p>
+    <ul>
+      <li>people with qualifying income of £20,000 or less</li>
+      <li>people with no National Insurance number before the tax year starts</li>
+      <li>partnerships (for now), trusts, and personal representatives of someone who has died</li>
+      <li>some people for a limited time, depending on the forms in their 2024 to 2025 return</li>
+    </ul>
+    <p>You can also apply for an exemption if you're "digitally excluded", for example if your age, a health condition or a disability stops you using a computer, tablet or phone for your records, or you can't get internet access where you live or work. GOV.UK says not knowing accounting software, or the extra cost, isn't enough on its own. See <a href="https://www.gov.uk/guidance/find-out-if-you-can-get-an-exemption-from-making-tax-digital-for-income-tax" rel="noopener">GOV.UK's exemption guide</a> for the full list.</p>
+
+    <h2>What this checker doesn't cover</h2>
+    <ul>
+      <li><strong>Exemptions.</strong> It doesn't check whether you're exempt. Use the GOV.UK guide above.</li>
+      <li><strong>Special cases in the qualifying income rules</strong>, such as businesses that have stopped, accounting periods longer or shorter than 12 months, trusts, VAT on the cash basis, and people who weren't UK tax resident. GOV.UK covers each one.</li>
+      <li><strong>How much tax you'll pay.</strong> Making Tax Digital changes how you report, not how much tax you owe. Our <a href="{{root}}uk/self-employed-tax-calculator/">self-employed tax calculator</a> estimates that.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is the threshold based on profit or turnover?</summary>
+        <p>Turnover. GOV.UK says qualifying income is "the amount before expenses (also known as turnover)". A freelancer with £35,000 of sales and £10,000 of costs has £35,000 of qualifying income, not £25,000.</p>
+      </details>
+      <details>
+        <summary>I have a job and a side business. Does my salary count?</summary>
+        <p>No. PAYE wages aren't qualifying income. Only your self-employed and property income before expenses count.</p>
+      </details>
+      <details>
+        <summary>Does it apply to my limited company?</summary>
+        <p>No. It's for individuals' self-employed and property income. Dividends and salary from your own company don't count as qualifying income.</p>
+      </details>
+      <details>
+        <summary>Will HMRC tell me if I need to start?</summary>
+        <p>GOV.UK says HMRC will write to you to confirm it. You can also sign up yourself before your start date.</p>
+      </details>
+      <details>
+        <summary>Does it change how much tax I pay?</summary>
+        <p>No. It changes how you keep records and report to HMRC. Your Income Tax and National Insurance are worked out in the same way.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax" rel="noopener">GOV.UK: check if you're eligible</a>, <a href="https://www.gov.uk/guidance/work-out-your-qualifying-income-for-making-tax-digital-for-income-tax" rel="noopener">GOV.UK: work out your qualifying income</a>, <a href="https://www.gov.uk/guidance/find-out-if-you-can-get-an-exemption-from-making-tax-digital-for-income-tax" rel="noopener">GOV.UK: exemptions</a>, <a href="https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax/send-quarterly-updates" rel="noopener">GOV.UK: send quarterly updates</a>. Checked 27 October 2026.</p>
+  </div>

@@ -263,6 +263,13 @@ TOOLS = {
         short="Add 20% or 5% VAT to a price, or take the VAT out of a total, with the £90,000 registration rule.",
         icon="formula", group="uk-tax", parent="uk", keywords="value added tax add remove reverse inclusive exclusive",
     ),
+    "uk-mtd": dict(
+        path="uk/making-tax-digital-checker/",
+        name="Making Tax Digital for Income Tax Checker",
+        card="Making Tax Digital checker",
+        short="Check if and when you must use Making Tax Digital for Income Tax: £50,000, £30,000 or £20,000 of turnover.",
+        icon="calendar", group="uk-tax", parent="uk", keywords="mtd itsa making tax digital income tax self assessment quarterly updates sole trader landlord qualifying income 2026 2027 2028",
+    ),
     "uk-vat-flat-rate": dict(
         path="uk/vat-flat-rate-scheme-calculator/",
         name="VAT Flat Rate Scheme Calculator (UK)",
@@ -1322,7 +1329,7 @@ POPULAR_DAY = "2026-10-11"
 MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
 CONTENT_DAY = "2026-10-16"  # AdSense "low-value content" fixes: owner name, working email, fuller About and tool pages
 MONEY_DAY = "2026-10-17"  # 10 money pages deepened: more worked examples, official dates and rules, FAQs
-FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme calculator
+FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme calculator, Making Tax Digital checker
 NEW_TOOLS_DAY = "2026-10-20"  # 8 new tools: pro rata, invoice due date, SSP, maternity pay, stamp duty, CGT, simple interest, net worth
 ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
@@ -1490,6 +1497,13 @@ PAGES = [
          intro="Add VAT to a price, or work out how much VAT is inside a total, at the UK's 20% standard or 5% reduced rate.",
          chips=["{{flag:uk}} UK VAT rates"] + TOOL_CHIPS,
          related=["uk-vat-flat-rate", "quote-generator", "invoice-generator"]),
+    dict(tool="uk-mtd", src="uk-mtd.html", script="uk-mtd.js", libs=["data/mtd-uk.js"], updated=FRS_DAY,
+         title="Making Tax Digital for Income Tax Checker (2026, 2027, 2028) | Vintayz",
+         h1="Making Tax Digital for Income Tax Checker",
+         description="Check if you must use Making Tax Digital for Income Tax from April 2026, 2027 or 2028. Uses GOV.UK's qualifying income rules: turnover, not profit.",
+         intro="Find out if and when you'll need to use Making Tax Digital for Income Tax, using GOV.UK's rules on qualifying income.",
+         chips=["{{flag:uk}} UK, sole traders and landlords"] + TOOL_CHIPS,
+         related=["uk-self-employed-tax", "uk-payments-on-account", "uk-vat-flat-rate"]),
     dict(tool="uk-vat-flat-rate", src="uk-vat-flat-rate.html", script="uk-vat-flat-rate.js", libs=["data/tax-uk.js", "data/vat-flat-rate-uk.js"], updated=FRS_DAY,
          title="VAT Flat Rate Scheme Calculator UK (16.5% Test) | ToolNest by Vintayz",
          description="Work out the VAT you pay on the UK Flat Rate Scheme, with every HMRC business-type rate, the 16.5% limited cost test and the first-year 1% discount.",
@@ -3224,6 +3238,8 @@ NEXT_STEPS = {
                           ("uk-self-employed-tax", "See the tax on your profit after expenses")],
     "uk-vat": [("uk-vat-flat-rate", "On the Flat Rate Scheme? Work out what you pay HMRC"),
                ("invoice-generator", "Add VAT to an invoice")],
+    "uk-mtd": [("uk-self-employed-tax", "See the tax and NI on your profit"),
+               ("uk-payments-on-account", "Work out your January and July payments")],
     "uk-vat-flat-rate": [("invoice-generator", "Make a VAT invoice for your client"),
                          ("uk-self-employed-tax", "See the Income Tax and NI on your profit")],
     "uk-stamp-duty": [("mortgage", "Work out the monthly mortgage payment"),

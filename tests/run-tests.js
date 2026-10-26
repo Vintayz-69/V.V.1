@@ -641,6 +641,36 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- Making Tax Digital for Income Tax checker (GOV.UK examples + page examples)
+{
+  const mtd = load("uk-mtd", ["data/mtd-uk.js"]);
+  const run = (year, selfEmployed, property, months = 12) => mtd({ year, selfEmployed, months, property });
+  // GOV.UK: £25,000 rent + £27,000 self-employed = £52,000 on the 2024 to 2025 return: from 6 April 2026
+  expectAll("MTD gov.uk £52,000", run(0, 27000, 25000), { qualifying: 52000, threshold: 50000, required: true, start: "6 April 2026", gap: 2000 });
+  // Sam: £45,000 turnover (profit £25,000), 2025 to 2026: from 6 April 2027
+  expectAll("MTD Sam turnover", run(1, 45000, 0), { qualifying: 45000, required: true, start: "6 April 2027" });
+  check("MTD Sam profit alone would be under", run(1, 25000, 0).required, false);
+  // Joint property: £25,000 share; £5,000 under £30,000; over £20,000 in 2026 to 2027
+  expectAll("MTD joint property 2025-26", run(1, 0, 25000), { required: false, gap: -5000 });
+  expectAll("MTD joint property 2026-27", run(2, 0, 25000), { required: true, start: "6 April 2028" });
+  // Priya: £18,000 in 6 months doubled to £36,000
+  expectAll("MTD part year", run(1, 18000, 0, 6), { annualised: 36000, qualifying: 36000, required: true });
+  // Exactly £30,000 is not more than £30,000
+  check("MTD exactly £30,000", run(1, 30000, 0).required, false);
+  check("MTD exactly £30,000 passes £20,000", run(1, 30000, 0).rows[2].over, true);
+  // £12,000 + £9,000 = £21,000 on 2026 to 2027
+  expectAll("MTD £21,000", run(2, 12000, 9000), { qualifying: 21000, required: true, start: "6 April 2028" });
+  // FAQ: £35,000 of sales counts, not the £25,000 profit
+  check("MTD FAQ turnover", run(1, 35000, 0).qualifying, 35000);
+  // Turnover levels table
+  for (const [q, a, b, c] of [[15000, false, false, false], [25000, false, false, true], [40000, false, true, true], [60000, true, true, true]]) {
+    const r = run(0, q, 0);
+    check(`MTD table £${q} 2026`, r.rows[0].over, a);
+    check(`MTD table £${q} 2027`, r.rows[1].over, b);
+    check(`MTD table £${q} 2028`, r.rows[2].over, c);
+  }
+}
+
 // ---------------- UK VAT Flat Rate Scheme (GOV.UK example + page examples by hand)
 {
   const frs = load("uk-vat-flat-rate", ["data/tax-uk.js", "data/vat-flat-rate-uk.js"]);
