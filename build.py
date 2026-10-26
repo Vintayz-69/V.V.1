@@ -2410,6 +2410,9 @@ PAGES = [
     dict(path="about/", src="about.html", kind="legal", nav="about", updated=CONTENT_DAY,
          title="About ToolNest by Vintayz", h1="About ToolNest",
          description="ToolNest builds free, accurate calculators for freelancers and self-employed people in the US, UK, Canada and Australia."),
+    dict(path="sources/", src="sources.html", kind="legal", updated=FRS_DAY,
+         title="Our Sources: Official Figures and When We Checked Them | Vintayz", h1="Our Sources and Checks",
+         description="Every official tax figure ToolNest uses, the IRS, GOV.UK, CRA and ATO pages it comes from, the date it was last checked, and the tools that use it."),
     dict(path="contact/", src="contact.html", updated=CONTENT_DAY, kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
@@ -2752,6 +2755,57 @@ def all_tools_list(up):
     return "\n".join(out)
 
 
+# The official-figure files in public/assets/data/, in the order the Sources page lists them.
+DATA_FILES = [
+    ("tax-us.js", "United States: federal tax, Social Security, Medicare and mileage"),
+    ("tax-uk.js", "United Kingdom: Income Tax, National Insurance, dividends, VAT and student loans"),
+    ("vat-flat-rate-uk.js", "United Kingdom: VAT Flat Rate Scheme"),
+    ("mtd-uk.js", "United Kingdom: Making Tax Digital for Income Tax"),
+    ("statutory-pay-uk.js", "United Kingdom: Statutory Sick, Maternity and Paternity Pay"),
+    ("employment-uk.js", "United Kingdom: holiday entitlement and redundancy pay"),
+    ("property-tax-uk.js", "United Kingdom: Stamp Duty and Capital Gains Tax"),
+    ("rates-uk.js", "United Kingdom: late payment interest and Bank Rate"),
+    ("holidays.js", "UK bank holidays and US federal holidays"),
+    ("tax-ca.js", "Canada: federal tax, CPP, EI and GST/HST"),
+    ("tax-au.js", "Australia: income tax, Medicare levy, super and GST"),
+]
+
+
+def sources_list(up):
+    """For each official-figure file: when it was checked, the official pages it came from (read
+    from the file's own header) and the tools that use it. Built from the files themselves, so the
+    page can never fall behind them."""
+    out = []
+    listed = {f for f, _ in DATA_FILES}
+    on_disk = {f for f in os.listdir(os.path.join(OUT, "assets", "data")) if f.endswith(".js")}
+    if on_disk - listed:
+        raise SystemExit(f"Add these data files to DATA_FILES in build.py: {sorted(on_disk - listed)}")
+    for name, label in DATA_FILES:
+        with open(os.path.join(OUT, "assets", "data", name), encoding="utf-8") as f:
+            text = f.read()
+        header = text.split("*/", 1)[0]
+        checked = re.search(r'checked(?:UpTo)?:\s*"(\d{4}-\d{2}-\d{2})"', text).group(1)
+        urls = []
+        for u in re.findall(r"https?://[^\s)\"',]+", header):
+            u = u.rstrip(".;:")
+            if u not in urls:
+                urls.append(u)
+        links = "\n".join(f'        <li><a href="{html.escape(u, quote=True)}" rel="noopener">{html.escape(re.sub(r"^https?://(www\.)?", "", u))}</a></li>'
+                          for u in urls)
+        users = sorted({p["tool"] for p in PAGES if p.get("kind") == "tool" and f"data/{name}" in p.get("libs", [])},
+                       key=lambda k: TOOLS[k]["name"].lower())
+        tools = ", ".join(f'<a href="{up}{TOOLS[k]["path"]}">{html.escape(TOOLS[k]["name"])}</a>' for k in users)
+        out.append(f"""  <section class="source-group">
+    <h2>{html.escape(label)}</h2>
+    <p class="source-meta">Last checked <strong>{human_date(checked)}</strong> · <code>{name}</code></p>
+    <ul class="source-links">
+{links}
+    </ul>
+    <p class="source-tools"><strong>Used by:</strong> {tools or "—"}</p>
+  </section>""")
+    return "\n".join(out)
+
+
 def soon_card(name, short, icon_name):
     return f"""<li><div class="card soon">
   <div class="card-top"><span class="card-icon">{icon(icon_name)}</span><span class="badge muted">Coming soon</span></div>
@@ -2782,6 +2836,8 @@ def expand(text, up, page=None):
             return tool_card(arg, up, region)
         if key == "alltools":
             return all_tools_list(up)
+        if key == "sourcelist":
+            return sources_list(up)
         if key == "sections":
             return section_chips(up)
         if key == "popular":
@@ -3001,7 +3057,7 @@ def footer(up):
         ("United States", "us/"), ("United Kingdom", "uk/"), ("Canada", "ca/"), ("Australia", "au/")]
     # Every other section is one click away on the More free tools page.
     more = [("More free tools", "more-tools/"), ("All tools A–Z", "all-tools/"), ("Guides", "guides/")]
-    company = [("About", "about/"), ("Contact", "contact/"), ("Privacy Policy", "privacy-policy/"),
+    company = [("About", "about/"), ("Our sources", "sources/"), ("Contact", "contact/"), ("Privacy Policy", "privacy-policy/"),
                ("Terms of Use", "terms/"), ("Disclaimer", "disclaimer/")]
     countries += more
     groups = "\n".join([group("Freelance &amp; pricing", freelance), group("Pay &amp; money", pay),

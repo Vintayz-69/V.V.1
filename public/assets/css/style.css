@@ -7811,3 +7811,16 @@ button.sol-slot {
     grid-template-columns: 1fr;
   }
 }
+
+/* Sources page: one block per official-figure file */
+.source-group {
+  margin: 1.4em 0;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.source-group h2 { margin-top: 0; font-size: 1.1rem; }
+.source-meta { margin: 0.3em 0 0.6em; font-size: 0.9rem; }
+.source-links { margin: 0 0 0.6em; padding-left: 1.2em; font-size: 0.9rem; }
+.source-links a, .source-tools a { overflow-wrap: anywhere; }
+.source-tools { margin: 0; font-size: 0.9rem; }
