@@ -721,6 +721,24 @@ function loadResume(country) {
   check("QM credit max", run("ON", "ON", "services", 500000).firstCredit, 300);
 }
 
+// ---------------- S corporation vs sole proprietor, 2026 federal (page examples by hand)
+{
+  const sc = load("us-s-corp", ["data/tax-us.js", "js/us-tax.js"]);
+  const run = (profit, salary, costs, status = "single") => sc({ profit, salary, costs, status });
+  // $100,000 profit, $50,000 salary, $2,000 costs.
+  // Sole: SE 92,350 × 15.3% = 14,129.55; QBI 20% × 76,835.23 = 15,367.05; taxable 61,468.18 → 8,235
+  // S corp: payroll 7.65% × 2 × 50,000 = 7,650; K-1 = 100,000 − 2,000 − 50,000 − 3,825 = 44,175;
+  // QBI 8,835; taxable 69,240 → 9,944.80; keep 100,000 − 2,000 − 17,594.80 = 80,405.20
+  expectAll("S corp $100k", run(100000, 50000, 2000), { soleSE: 14129.55, soleQbi: 15367.05, soleIncomeTax: 8235, soleKeep: 77635.45,
+    payroll: 7650, k1: 44175, corpQbi: 8835, corpIncomeTax: 9944.8, corpKeep: 80405.2, difference: 2769.75, overQbiThreshold: false });
+  expectAll("S corp $50k", run(50000, 30000, 2000), { soleKeep: 40267.93, corpKeep: 40482.32, difference: 214.39 });
+  expectAll("S corp $40k", run(40000, 25000, 2000), { soleKeep: 32573.07, corpKeep: 32290.6, difference: -282.47 });
+  expectAll("S corp $150k", run(150000, 70000, 2500), { soleKeep: 112392.38, corpKeep: 117404.16, difference: 5011.78 });
+  expectAll("S corp salary too high", run(100000, 90000, 2000), { payroll: 13770, corpKeep: 73063.76, difference: -4571.69 });
+  // Above the QBI threshold the page warns
+  check("S corp QBI threshold warning", run(400000, 150000, 3000).overQbiThreshold, true);
+}
+
 // ---------------- "Will I get a 1099?" checker, payments made in 2026 (page examples by hand)
 {
   const chk = load("us-1099-checker", ["data/tax-us.js", "data/info-returns-us.js"]);
