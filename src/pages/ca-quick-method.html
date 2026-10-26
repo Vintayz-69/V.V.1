@@ -1,0 +1,134 @@
+  <section class="calculator" aria-label="GST/HST Quick Method calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="home">Province or territory of your business<span class="hint">Where your permanent establishment is</span></label>
+        <div class="select-wrap"><select id="home"></select></div>
+      </div>
+
+      <div class="field">
+        <label for="customers">Where you make most of your sales<span class="hint">This sets the GST/HST rate you charge</span></label>
+        <div class="select-wrap"><select id="customers"></select></div>
+      </div>
+
+      <div class="field span-2">
+        <label for="type">Type of business</label>
+        <div class="select-wrap">
+          <select id="type">
+            <option value="services">Services (most freelancers)</option>
+            <option value="goods">Reselling goods (goods bought for resale are at least 40% of your sales)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sales">Sales for the fiscal year, before GST/HST<span class="hint">What you invoiced, not counting the tax on top</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="sales" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="itcs">GST/HST you paid on expenses<span class="hint">The input tax credits you'd claim on the regular method. Leave out capital purchases</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="itcs" type="text" inputmode="decimal" value="1200" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated GST/HST to remit with the Quick Method</h2>
+      <div class="result-main"><span id="out-main">—</span> <small>for the year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Remittance rate</span><span id="out-rate">—</span></li>
+        <li><span>GST/HST you charged clients</span><span id="out-collected">—</span></li>
+        <li><span>Sales including GST/HST</span><span id="out-revenue">—</span></li>
+        <li><span>Credits taken off</span><span id="out-credit">—</span></li>
+        <li><span>GST/HST you keep</span><span id="out-kept">—</span></li>
+        <li><span>Regular method (charged minus ITCs)</span><span id="out-regular">—</span></li>
+        <li class="key"><span>Quick Method compared</span><span id="out-compare">—</span></li>
+      </ul>
+      <p class="result-note" id="out-limit" hidden>Your sales including GST/HST are over $400,000, so you can't use the Quick Method.</p>
+      <p class="result-note">An estimate for one fiscal year. You still charge your clients GST/HST at the normal rate. The Quick Method only changes how much of it you send to the CRA.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What is the Quick Method?</h2>
+    <p>On the regular method, you send the CRA the GST/HST you charged, minus the GST/HST you paid on your business expenses (your input tax credits, or ITCs). With the Quick Method, you don't add up ITCs on most expenses. Instead, you multiply your sales <strong>including GST/HST</strong> by a lower remittance rate set by the CRA, and keep the difference. You still charge clients the full GST/HST.</p>
+    <p>It's for small businesses. A service business with few taxable expenses may send less to the CRA, as the examples below show, and it's simpler to work out. Whether it suits you depends on your costs, so compare both methods above, and an accountant can help you decide.</p>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Sales including GST/HST = sales + GST/HST charged
+GST/HST to remit = sales including GST/HST × remittance rate
+                 − 1% of the first $30,000 of those sales (each fiscal year)
+
+The remittance rate depends on where your business is,
+the rate you charge, and whether you provide services or resell goods.</div>
+
+    <h2>Remittance rates for service businesses</h2>
+    <p>From the CRA's guide RC4058. Find the rate you charge (rows) and where your business is (columns):</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>You charge</th><th class="num">Business in a GST province or territory</th><th class="num">Business in Ontario (13%)</th><th class="num">Business in Nova Scotia (14%)</th><th class="num">Business in NB, NL or PEI (15%)</th></tr></thead>
+        <tbody>
+          <tr><td data-label="You charge">GST 5%</td><td class="num" data-label="GST province or territory">3.6%</td><td class="num" data-label="Ontario">1.8%</td><td class="num" data-label="Nova Scotia">1.6%</td><td class="num" data-label="NB, NL or PEI">1.4%</td></tr>
+          <tr><td data-label="You charge">HST 13%</td><td class="num" data-label="GST province or territory">10.5%</td><td class="num" data-label="Ontario">8.8%</td><td class="num" data-label="Nova Scotia">8.6%</td><td class="num" data-label="NB, NL or PEI">8.4%</td></tr>
+          <tr><td data-label="You charge">HST 14%</td><td class="num" data-label="GST province or territory">11.3%</td><td class="num" data-label="Ontario">9.6%</td><td class="num" data-label="Nova Scotia">9.4%</td><td class="num" data-label="NB, NL or PEI">9.2%</td></tr>
+          <tr><td data-label="You charge">HST 15%</td><td class="num" data-label="GST province or territory">12%</td><td class="num" data-label="Ontario">10.4%</td><td class="num" data-label="Nova Scotia">10.2%</td><td class="num" data-label="NB, NL or PEI">10%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Businesses that resell goods use lower rates, which the calculator includes. The CRA says to use those only when the goods you bought for resale, including GST/HST, were at least 40% of your taxable sales for the year.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>An Ontario freelancer.</strong> $60,000 of sales to Ontario clients, plus 13% HST of $7,800, is $67,800. At 8.8%, that's $5,966.40, minus the 1% credit on the first $30,000 ($300), so <strong>$5,666.40</strong> to remit. They keep $2,133.60 of the HST. On the regular method, with $1,200 of ITCs, they'd remit $6,600, so the Quick Method means <strong>$933.60 less</strong>.</p>
+    <p><strong>An Alberta designer.</strong> $40,000 of sales plus 5% GST is $42,000. At 3.6%, that's $1,512, minus $300: <strong>$1,212</strong>. They keep $788.</p>
+    <p><strong>An Ontario business selling to Alberta clients.</strong> Sales where 5% GST applies use the 1.8% rate. $50,000 plus $2,500 GST is $52,500, so $945 minus $300: <strong>$645</strong>.</p>
+    <p><strong>A Nova Scotia shop reselling goods.</strong> $100,000 of sales plus 14% HST is $114,000. The goods rate is 4.7%, so $5,358 minus $300: <strong>$5,058</strong>.</p>
+    <p><strong>Under $30,000.</strong> An Ontario freelancer with $20,000 of sales has $22,600 including HST, all of it inside the first $30,000. At 8.8%, that's $1,988.80, minus 1% of $22,600 ($226): $1,762.80.</p>
+
+    <h2>Who can use it</h2>
+    <ul>
+      <li>Your annual worldwide taxable sales, <strong>including GST/HST</strong> and those of your associates, must be <strong>$400,000 or less</strong>. The CRA leaves some things out of this total, such as sales of capital assets and financial services.</li>
+      <li>You usually need to have been in business for the 365 days before the reporting period. The CRA has a separate rule for new registrants.</li>
+      <li>You need a permanent establishment in Canada.</li>
+      <li><strong>Some businesses can't use it:</strong> legal, accounting and actuarial services, and businesses that provide bookkeeping, financial consulting, tax consulting or tax return preparation. Financial institutions, charities and some public bodies are also left out.</li>
+    </ul>
+
+    <h2>What you can still claim</h2>
+    <p>On the Quick Method you can't claim ITCs on most purchases, because the lower rate allows for them. The CRA says you can still claim ITCs on capital property, such as computers and vehicles, and on real property. So a new laptop's GST/HST can still be claimed back. That's why the calculator asks you to leave capital purchases out of the comparison.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Sales at more than one rate.</strong> If less than 90% of your sales are in either HST provinces or GST-only provinces, you may need more than one remittance rate. The calculator uses one rate for all your sales.</li>
+      <li><strong>Quebec Sales Tax (QST).</strong> Revenu Québec runs QST separately. The calculator covers the 5% GST only.</li>
+      <li><strong>Zero-rated and exempt sales</strong>, such as exports. The CRA guide explains how these are treated.</li>
+      <li><strong>Reporting periods shorter than a year.</strong> The 1% credit applies to the first $30,000 in each fiscal year, so on quarterly returns it's used up in the first quarters.</li>
+      <li><strong>Income tax.</strong> Our <a href="{{root}}ca/self-employed-tax-calculator/">self-employed tax calculator</a> estimates that.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do I still charge my clients 13% HST on the Quick Method?</summary>
+        <p>Yes. Your invoices show the normal GST/HST. The Quick Method only changes how you work out what to send to the CRA.</p>
+      </details>
+      <details>
+        <summary>What is the 1% credit?</summary>
+        <p>You take 1% off the first $30,000 of your eligible sales, including GST/HST, in each fiscal year. That's up to $300 a year. The CRA says it can't be carried forward if you don't reach $30,000.</p>
+      </details>
+      <details>
+        <summary>Can accountants and bookkeepers use the Quick Method?</summary>
+        <p>No. The CRA excludes legal, accounting and actuarial services, and bookkeeping, financial consulting, tax consulting and tax return preparation.</p>
+      </details>
+      <details>
+        <summary>Can I claim GST/HST on a new computer?</summary>
+        <p>Yes. Capital property such as computers and vehicles is one of the exceptions where you can still claim ITCs on the Quick Method.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/rc4058/quick-method-accounting-gst-hst.html" rel="noopener">CRA: Quick Method of Accounting for GST/HST (RC4058)</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html" rel="noopener">CRA: GST/HST rates by province</a>. Checked October 27, 2026.</p>
+  </div>

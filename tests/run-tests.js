@@ -641,6 +641,36 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- Canada GST/HST Quick Method (CRA RC4058 rates, page examples by hand)
+{
+  const qm = load("ca-quick-method", ["data/tax-ca.js", "data/quick-method-ca.js"]);
+  const run = (home, customers, type, sales, itcs = 0) => qm({ home, customers, type, sales, itcs });
+  // Ontario freelancer: 67,800 × 8.8% = 5,966.40 − 300 = 5,666.40; regular 7,800 − 1,200 = 6,600
+  expectAll("QM Ontario", run("ON", "ON", "services", 60000, 1200),
+    { collected: 7800, revenue: 67800, firstCredit: 300, quick: 5666.4, kept: 2133.6, regular: 6600, saving: 933.6, overLimit: false });
+  check("QM Ontario rate %", run("ON", "ON", "services", 60000).remitRate * 100, 8.8);
+  // Alberta designer: 42,000 × 3.6% = 1,512 − 300 = 1,212; keeps 788
+  expectAll("QM Alberta", run("AB", "AB", "services", 40000), { revenue: 42000, quick: 1212, kept: 788 });
+  // Ontario business, Alberta clients: 52,500 × 1.8% = 945 − 300 = 645
+  expectAll("QM ON to AB", run("ON", "AB", "services", 50000), { revenue: 52500, quick: 645 });
+  // Nova Scotia goods: 114,000 × 4.7% = 5,358 − 300 = 5,058
+  expectAll("QM NS goods", run("NS", "NS", "goods", 100000), { revenue: 114000, quick: 5058 });
+  // Under $30,000: 22,600 × 8.8% = 1,988.80 − 226 = 1,762.80
+  expectAll("QM under 30k", run("ON", "ON", "services", 20000), { revenue: 22600, firstCredit: 226, quick: 1762.8 });
+  // Goods sold at 5% by an Ontario business: 0% and a 2.8% credit (21,000 × 2.8% = 588)
+  expectAll("QM goods 0% credit", run("ON", "AB", "goods", 20000), { remitRate: 0, zeroCredit: 588, firstCredit: 210, quick: -798 });
+  // $400,000 limit includes GST/HST
+  check("QM over limit", run("ON", "ON", "services", 360000).overLimit, true);
+  check("QM under limit", run("AB", "AB", "services", 380000).overLimit, false);
+  // Rate table on the page (service businesses)
+  for (const [cust, home, pct] of [["AB", "AB", 3.6], ["AB", "ON", 1.8], ["AB", "NS", 1.6], ["AB", "NB", 1.4], ["ON", "AB", 10.5], ["ON", "ON", 8.8], ["ON", "NS", 8.6], ["ON", "PE", 8.4],
+    ["NS", "BC", 11.3], ["NS", "ON", 9.6], ["NS", "NS", 9.4], ["NS", "NL", 9.2], ["NB", "SK", 12], ["NB", "ON", 10.4], ["NB", "NS", 10.2], ["NB", "NB", 10]]) {
+    check(`QM table ${cust} sales, business in ${home}`, Math.round(run(home, cust, "services", 1000).remitRate * 1000) / 10, pct);
+  }
+  // FAQ: the 1% credit is at most $300
+  check("QM credit max", run("ON", "ON", "services", 500000).firstCredit, 300);
+}
+
 // ---------------- "Will I get a 1099?" checker, payments made in 2026 (page examples by hand)
 {
   const chk = load("us-1099-checker", ["data/tax-us.js", "data/info-returns-us.js"]);

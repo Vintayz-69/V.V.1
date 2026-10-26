@@ -106,6 +106,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [CPP and EI Calculator (2026)](https://vintayz.com/ca/cpp-ei-calculator/): Work out your 2026 CPP, CPP2 and EI deductions as an employee, per year and per pay, and what your employer adds.
 - [Employee vs Contractor Calculator (Canada)](https://vintayz.com/ca/employee-vs-contractor-calculator/): Find the contract rate that matches a salaried job once benefits and employer CPP are counted.
 - [GST/HST Calculator](https://vintayz.com/ca/gst-hst-calculator/): Add or remove GST, HST and provincial sales tax for any province or territory.
+- [GST/HST Quick Method Calculator (Canada)](https://vintayz.com/ca/gst-hst-quick-method-calculator/): Work out GST/HST to remit with the Quick Method in every province, and compare it with the regular method.
 - [Self-Employed Tax Calculator Canada (2026)](https://vintayz.com/ca/self-employed-tax-calculator/): Work out 2026 federal tax and both halves of CPP on your self-employment income.
 - [Tax Instalments Calculator (Canada 2026)](https://vintayz.com/ca/tax-instalments-calculator/): Check if you need quarterly instalments in 2026 and compare the current-year and prior-year options.
 
