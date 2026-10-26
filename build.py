@@ -263,6 +263,13 @@ TOOLS = {
         short="Add 20% or 5% VAT to a price, or take the VAT out of a total, with the £90,000 registration rule.",
         icon="formula", group="uk-tax", parent="uk", keywords="value added tax add remove reverse inclusive exclusive",
     ),
+    "uk-vat-flat-rate": dict(
+        path="uk/vat-flat-rate-scheme-calculator/",
+        name="VAT Flat Rate Scheme Calculator (UK)",
+        card="VAT Flat Rate Scheme calculator",
+        short="See the VAT you pay on the Flat Rate Scheme, check the 16.5% limited cost test, and compare with a normal VAT return.",
+        icon="formula", group="uk-tax", parent="uk", keywords="frs flat rate vat limited cost trader business 16.5% first year discount contractor",
+    ),
     "au-voluntary-super": dict(
         path="au/voluntary-super-contribution-calculator/",
         name="Voluntary Super Contribution Calculator (2026–27)",
@@ -1315,6 +1322,7 @@ POPULAR_DAY = "2026-10-11"
 MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
 CONTENT_DAY = "2026-10-16"  # AdSense "low-value content" fixes: owner name, working email, fuller About and tool pages
 MONEY_DAY = "2026-10-17"  # 10 money pages deepened: more worked examples, official dates and rules, FAQs
+FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme calculator
 NEW_TOOLS_DAY = "2026-10-20"  # 8 new tools: pro rata, invoice due date, SSP, maternity pay, stamp duty, CGT, simple interest, net worth
 ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
@@ -1481,7 +1489,13 @@ PAGES = [
          description="Add 20% or 5% VAT to a price, or work out the VAT in a VAT-inclusive total. Includes when you must register for VAT (£90,000).",
          intro="Add VAT to a price, or work out how much VAT is inside a total, at the UK's 20% standard or 5% reduced rate.",
          chips=["{{flag:uk}} UK VAT rates"] + TOOL_CHIPS,
-         related=["uk-self-employed-tax", "quote-generator", "invoice-generator"]),
+         related=["uk-vat-flat-rate", "quote-generator", "invoice-generator"]),
+    dict(tool="uk-vat-flat-rate", src="uk-vat-flat-rate.html", script="uk-vat-flat-rate.js", libs=["data/tax-uk.js", "data/vat-flat-rate-uk.js"], updated=FRS_DAY,
+         title="VAT Flat Rate Scheme Calculator UK (16.5% Test) | ToolNest by Vintayz",
+         description="Work out the VAT you pay on the UK Flat Rate Scheme, with every HMRC business-type rate, the 16.5% limited cost test and the first-year 1% discount.",
+         intro="Work out what you pay HMRC on the VAT Flat Rate Scheme, check whether the 16.5% limited cost rate applies, and compare it with a normal VAT return.",
+         chips=["{{flag:uk}} UK VAT Flat Rate Scheme"] + TOOL_CHIPS,
+         related=["uk-vat", "uk-self-employed-tax", "invoice-generator"]),
 
     dict(path="ca/", src="canada.html", kind="section", nav="ca", region="ca",
          title="Self-Employed Tax Calculators for Canada | ToolNest by Vintayz",
@@ -3208,8 +3222,10 @@ NEXT_STEPS = {
                    ("uk-self-employed-tax", "See the tax on your profit after expenses")],
     "uk-work-from-home": [("uk-mileage", "Drive for work? Work out mileage allowance"),
                           ("uk-self-employed-tax", "See the tax on your profit after expenses")],
-    "uk-vat": [("invoice-generator", "Add VAT to an invoice"),
-               ("quote-generator", "Add VAT to a quote")],
+    "uk-vat": [("uk-vat-flat-rate", "On the Flat Rate Scheme? Work out what you pay HMRC"),
+               ("invoice-generator", "Add VAT to an invoice")],
+    "uk-vat-flat-rate": [("invoice-generator", "Make a VAT invoice for your client"),
+                         ("uk-self-employed-tax", "See the Income Tax and NI on your profit")],
     "uk-stamp-duty": [("mortgage", "Work out the monthly mortgage payment"),
                       ("monthly-expenses", "See how the move fits your monthly budget")],
     "uk-cgt": [("uk-dividend-tax", "Have dividends too? Estimate dividend tax"),

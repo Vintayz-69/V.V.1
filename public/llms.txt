@@ -94,6 +94,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Sole Trader vs Limited Company Calculator (2026/27)](https://vintayz.com/uk/sole-trader-vs-limited-company-calculator/): Compare take-home pay as a sole trader and as a company director, with 2026 to 2027 dividend rates.
 - [Stamp Duty Calculator (England and Northern Ireland)](https://vintayz.com/uk/stamp-duty-calculator/): Work out Stamp Duty Land Tax on a home in England or Northern Ireland, for first-time buyers, movers and additional properties.
 - [VAT Calculator UK (20%)](https://vintayz.com/uk/vat-calculator/): Add 20% or 5% VAT to a price, or take the VAT out of a total, with the £90,000 registration rule.
+- [VAT Flat Rate Scheme Calculator (UK)](https://vintayz.com/uk/vat-flat-rate-scheme-calculator/): See the VAT you pay on the Flat Rate Scheme, check the 16.5% limited cost test, and compare with a normal VAT return.
 - [Working From Home Expenses Calculator](https://vintayz.com/uk/working-from-home-expenses-calculator/): Compare HMRC's flat rate with a share of your actual bills and claim the higher.
 
 ## Canada

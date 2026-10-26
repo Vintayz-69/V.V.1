@@ -641,6 +641,52 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- UK VAT Flat Rate Scheme (GOV.UK example + page examples by hand)
+{
+  const frs = load("uk-vat-flat-rate", ["data/tax-uk.js", "data/vat-flat-rate-uk.js"]);
+  // The rate as a percentage, because checks round to 2 decimal places (0.145 would read as 0.14)
+  const calc = (v) => { const r = frs(v); return { ...r, ratePct: r.flatRate * 100 }; };
+  const it = { sales: 15000, months: 3, sector: "computer-it", goods: 400, firstYear: false, costVat: 200 };
+  // GOV.UK: photographer bills £1,000 + VAT = £1,200; 11% = £132 (goods £300 passes the £250 quarter test)
+  expectAll("FRS gov.uk photographer", calc({ sales: 1000, months: 3, sector: "photography", goods: 300, firstYear: false, costVat: 0 }),
+    { turnover: 1200, ratePct: 11, flatVat: 132, limitedCost: false, goodsLimit: 250 });
+  // IT contractor: £18,000 × 14.5% = £2,610; keeps £390; normal return £2,800; £190 less
+  expectAll("FRS IT quarter", calc(it), { vatCharged: 3000, turnover: 18000, goodsLimit: 360, limitedCost: false, ratePct: 14.5, flatVat: 2610, kept: 390, standardVat: 2800, saving: 190 });
+  // £100 of goods is under £360: 16.5% = £2,970; keeps £30; £170 more
+  expectAll("FRS IT limited cost", calc({ ...it, goods: 100 }), { limitedCost: true, ratePct: 16.5, flatVat: 2970, kept: 30, saving: -170 });
+  // First year: 13.5% = £2,430, keeps £570, £370 less; limited cost in first year 15.5% = £2,790
+  expectAll("FRS IT first year", calc({ ...it, firstYear: true }), { ratePct: 13.5, flatVat: 2430, kept: 570, saving: 370 });
+  expectAll("FRS limited cost first year", calc({ ...it, goods: 100, firstYear: true }), { ratePct: 15.5, flatVat: 2790 });
+  // Management consultant, annual: £72,000 × 14% = £10,080; goods test £1,440
+  expectAll("FRS management annual", calc({ sales: 60000, months: 12, sector: "management", goods: 1500, firstYear: false, costVat: 0 }),
+    { turnover: 72000, goodsLimit: 1440, limitedCost: false, flatVat: 10080, kept: 1920 });
+  // Exactly at the limit passes the test (the rule is "less than")
+  check("FRS goods equal to limit", calc({ ...it, goods: 360 }).limitedCost, false);
+  // Monthly return: the matching part of £1,000 is £83.33
+  check("FRS monthly goods limit", calc({ ...it, sales: 2000, months: 1 }).goodsLimit, 83.33);
+  // Table: £10,000 a quarter, £12,000 turnover
+  for (const [sector, pay, keep] of [["accountancy", 1740, 260], ["advertising", 1320, 680], ["business-services", 1440, 560], ["computer-it", 1740, 260],
+    ["entertainment", 1500, 500], ["film", 1560, 440], ["management", 1680, 320], ["photography", 1320, 680], ["publishing", 1320, 680], ["secretarial", 1560, 440]]) {
+    expectAll(`FRS table ${sector}`, calc({ sales: 10000, months: 3, sector, goods: 250, firstYear: false, costVat: 0 }), { flatVat: pay, kept: keep });
+  }
+  expectAll("FRS table limited cost", calc({ sales: 10000, months: 3, sector: "photography", goods: 0, firstYear: false, costVat: 0 }), { flatVat: 1980, kept: 20 });
+  // FAQ: 12% of £12,000 = £1,440
+  check("FRS FAQ 12%", calc({ sales: 10000, months: 3, sector: "other", goods: 250, firstYear: false, costVat: 0 }).flatVat, 1440);
+  // Goods-needed table
+  for (const [sales, months, turnover, limit] of [[5000, 3, 6000, 250], [10000, 3, 12000, 250], [15000, 3, 18000, 360], [25000, 3, 30000, 600], [40000, 12, 48000, 1000], [60000, 12, 72000, 1440]]) {
+    expectAll(`FRS goods needed £${sales}`, calc({ ...it, sales, months }), { turnover, goodsLimit: limit });
+  }
+  // Scheme limits: £150,000 a year before VAT to join, £230,000 including VAT to leave
+  expectAll("FRS under limits", calc({ ...it, sales: 37500 }), { overJoinLimit: false, overLeaveLimit: false });
+  expectAll("FRS over join limit", calc({ ...it, sales: 40000 }), { overJoinLimit: true, overLeaveLimit: false });
+  expectAll("FRS over leave limit", calc({ ...it, sales: 48000 }), { overJoinLimit: true, overLeaveLimit: true });
+  // Every sector from GOV.UK's table is in the data file once, with a rate between 4% and 14.5%
+  const D = (() => { const vm = require("vm"); const ctx = { window: {} }; vm.runInNewContext(require("fs").readFileSync(require("path").join(__dirname, "../public/assets/data/vat-flat-rate-uk.js"), "utf8"), ctx); return ctx.window.ToolNestVatFlatRateUK; })();
+  check("FRS sector count", D.sectors.length, 54);
+  check("FRS sector keys unique", new Set(D.sectors.map(s => s[0])).size, 54);
+  check("FRS sector rates in range", D.sectors.every(s => s[2] >= 0.04 && s[2] <= 0.145), true);
+}
+
 // ---------------- UK take-home pay, PAYE 2026 to 2027 (page examples)
 {
   const calc = load("uk-take-home", UK_LIBS);

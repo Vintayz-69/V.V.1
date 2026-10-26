@@ -1,0 +1,202 @@
+  <section class="calculator" aria-label="VAT Flat Rate Scheme calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="sector">Your business type<span class="hint">HMRC's list. If you do more than one thing, choose the one that brings in most of your sales</span></label>
+        <div class="select-wrap">
+          <select id="sector"></select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="months">VAT return period</label>
+        <div class="select-wrap">
+          <select id="months">
+            <option value="3">A quarter (3 months)</option>
+            <option value="1">A month</option>
+            <option value="12">A year</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sales">Sales in the period, before VAT<span class="hint">What you invoiced, not counting the VAT on top</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="sales" type="text" inputmode="decimal" value="15000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="goods">Goods bought for the business in the period<span class="hint">Including VAT. Not services, food and drink, vehicle costs, fuel or equipment (see below)</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="goods" type="text" inputmode="decimal" value="400" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="costVat">VAT you paid on all business costs<span class="hint">Goods and services. Used only to compare with a normal VAT return</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="costVat" type="text" inputmode="decimal" value="200" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="firstYear" type="checkbox"><span>I'm in my first year of VAT registration<span class="hint">You get 1% off the flat rate until the day before your first VAT registration anniversary</span></span></label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated VAT to pay on the Flat Rate Scheme</h2>
+      <div class="result-main"><span id="out-main">—</span> <small>for the period</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Flat rate used</span><span id="out-rate">—</span></li>
+        <li><span>Sales including VAT (flat rate turnover)</span><span id="out-turnover">—</span></li>
+        <li><span>VAT you charged clients</span><span id="out-charged">—</span></li>
+        <li><span>VAT you keep</span><span id="out-kept">—</span></li>
+        <li><span>VAT on a normal VAT return</span><span id="out-standard">—</span></li>
+        <li class="key"><span>Flat Rate Scheme compared</span><span id="out-compare">—</span></li>
+        <li><span>Limited cost test (goods)</span><span id="out-goods">—</span></li>
+      </ul>
+      <p class="result-note" id="out-limits" hidden></p>
+      <p class="result-note">An estimate for one period. You still charge your clients 20% VAT as normal. The flat rate is only how you work out what you pay HMRC.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How the Flat Rate Scheme works</h2>
+    <p>On a normal VAT return, you pay HMRC the VAT you charged your clients, minus the VAT you paid on your business costs. On the Flat Rate Scheme you don't add up the VAT on your costs. Instead, you pay a fixed percentage of your sales <strong>including VAT</strong>. The percentage depends on your type of business, and you keep the difference.</p>
+    <p>You still put 20% VAT on your invoices. Your clients see no change. The scheme only changes the sum you do for your VAT return, and it can save you time on record keeping.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose your business type</strong> from HMRC's list. The rate is shown next to each one.</li>
+      <li><strong>Choose your VAT return period</strong> and enter your sales for that period before VAT.</li>
+      <li><strong>Enter what you spent on goods</strong> for the business in the same period, including VAT. This decides whether the 16.5% limited cost rate applies.</li>
+      <li><strong>Enter the VAT you paid on all your costs</strong> if you want to compare with a normal VAT return. Enter 0 if you don't know.</li>
+      <li><strong>Tick the box</strong> if you registered for VAT less than a year ago.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Flat rate turnover  = sales before VAT + 20% VAT
+VAT to pay HMRC     = flat rate turnover × your flat rate
+VAT you keep        = VAT you charged − VAT to pay HMRC
+
+Limited cost business: goods under 2% of flat rate turnover,
+  or under £1,000 a year (£250 a quarter, about £83.33 a month)  → 16.5%
+First year of VAT registration                                   → rate − 1%</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>GOV.UK's example.</strong> A photographer bills £1,000 plus £200 VAT, so £1,200 in total. Photography has a flat rate of 11%, so they pay 11% of £1,200, which is <strong>£132</strong>. (In the calculator, enter at least £250 of goods for a quarter, so the limited cost rate doesn't apply.)</p>
+    <p><strong>An IT contractor, one quarter.</strong> Sales of £15,000 plus £3,000 VAT make £18,000. They spent £400 on goods, which is more than 2% of £18,000 (£360) and more than £250, so they use the computer and IT consultancy rate of 14.5%:</p>
+    <div class="formula">£18,000 × 14.5%  = £2,610 to pay HMRC
+£3,000 − £2,610  = £390 kept
+Normal VAT return: £3,000 − £200 VAT on costs = £2,800
+Flat Rate Scheme: £190 less to pay</div>
+    <p><strong>The same contractor, but only £100 of goods.</strong> £100 is under £360, so they're a limited cost business and pay 16.5%: £18,000 × 16.5% = <strong>£2,970</strong>. They keep only £30 of the £3,000, and pay £170 more than on a normal VAT return.</p>
+    <p><strong>The same contractor in their first year</strong>, with £400 of goods: 14.5% − 1% = 13.5%, and £18,000 × 13.5% = <strong>£2,430</strong>. They keep £570. As a limited cost business in the first year, the rate would be 15.5%, which is £2,790.</p>
+    <p><strong>A management consultant on annual returns.</strong> Sales of £60,000 plus £12,000 VAT make £72,000. Goods of £1,500 pass the test (2% of £72,000 is £1,440, which is more than £1,000). At 14%, they pay £10,080 and keep £1,920.</p>
+
+    <h2>What you'd pay on £10,000 of sales a quarter</h2>
+    <p>£10,000 before VAT plus £2,000 VAT is £12,000 of flat rate turnover. For a business that passes the limited cost test and is past its first year:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Business type</th><th class="num">Flat rate</th><th class="num">VAT to pay</th><th class="num">VAT you keep</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Business type">Accountancy or book-keeping</td><td class="num" data-label="Flat rate">14.5%</td><td class="num" data-label="VAT to pay">£1,740</td><td class="num" data-label="VAT you keep">£260</td></tr>
+          <tr><td data-label="Business type">Advertising</td><td class="num" data-label="Flat rate">11%</td><td class="num" data-label="VAT to pay">£1,320</td><td class="num" data-label="VAT you keep">£680</td></tr>
+          <tr><td data-label="Business type">Business services not listed elsewhere</td><td class="num" data-label="Flat rate">12%</td><td class="num" data-label="VAT to pay">£1,440</td><td class="num" data-label="VAT you keep">£560</td></tr>
+          <tr><td data-label="Business type">Computer and IT consultancy or data processing</td><td class="num" data-label="Flat rate">14.5%</td><td class="num" data-label="VAT to pay">£1,740</td><td class="num" data-label="VAT you keep">£260</td></tr>
+          <tr><td data-label="Business type">Entertainment or journalism</td><td class="num" data-label="Flat rate">12.5%</td><td class="num" data-label="VAT to pay">£1,500</td><td class="num" data-label="VAT you keep">£500</td></tr>
+          <tr><td data-label="Business type">Film, radio, television or video production</td><td class="num" data-label="Flat rate">13%</td><td class="num" data-label="VAT to pay">£1,560</td><td class="num" data-label="VAT you keep">£440</td></tr>
+          <tr><td data-label="Business type">Management consultancy</td><td class="num" data-label="Flat rate">14%</td><td class="num" data-label="VAT to pay">£1,680</td><td class="num" data-label="VAT you keep">£320</td></tr>
+          <tr><td data-label="Business type">Photography</td><td class="num" data-label="Flat rate">11%</td><td class="num" data-label="VAT to pay">£1,320</td><td class="num" data-label="VAT you keep">£680</td></tr>
+          <tr><td data-label="Business type">Publishing</td><td class="num" data-label="Flat rate">11%</td><td class="num" data-label="VAT to pay">£1,320</td><td class="num" data-label="VAT you keep">£680</td></tr>
+          <tr><td data-label="Business type">Secretarial services</td><td class="num" data-label="Flat rate">13%</td><td class="num" data-label="VAT to pay">£1,560</td><td class="num" data-label="VAT you keep">£440</td></tr>
+          <tr><td data-label="Business type">Limited cost business (any type)</td><td class="num" data-label="Flat rate">16.5%</td><td class="num" data-label="VAT to pay">£1,980</td><td class="num" data-label="VAT you keep">£20</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>These amounts leave out the VAT you paid on your costs. Whether the scheme leaves you better off depends on how much VAT you'd reclaim on a normal return, so put your own costs into the calculator.</p>
+
+    <h2>The limited cost test</h2>
+    <p>Many freelancers who sell their time buy very few goods, so they often end up on the 16.5% limited cost rate. You're a limited cost business for a VAT period if the goods you bought for the business, including VAT, were:</p>
+    <ul>
+      <li>less than <strong>2% of your flat rate turnover</strong>, or</li>
+      <li>more than 2% but less than <strong>£1,000 a year</strong>. For shorter VAT returns, VAT Notice 733 uses the matching part of £1,000: £250 for a quarter.</li>
+    </ul>
+    <p>Only goods used just for your business count. VAT Notice 733 leaves out:</p>
+    <ul>
+      <li>all services, such as software subscriptions, phone contracts, accountants and rent</li>
+      <li>vehicle costs, including fuel (unless you're in the transport sector using your own or a leased vehicle)</li>
+      <li>food or drink for you or your staff</li>
+      <li>capital expenditure goods, such as a laptop or camera, whatever their price</li>
+      <li>goods you sell on, lease or hire out, unless that's your main business</li>
+      <li>goods you give away, such as gifts and promotional items</li>
+    </ul>
+    <p>You check the test again for each VAT return, so you can be on 16.5% in one period and on your business type's rate in the next.</p>
+
+    <h2>Goods you need to buy to avoid 16.5%</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Sales before VAT</th><th>Period</th><th class="num">Flat rate turnover</th><th class="num">Goods needed (including VAT)</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Sales before VAT">£5,000</td><td data-label="Period">Quarter</td><td class="num" data-label="Flat rate turnover">£6,000</td><td class="num" data-label="Goods needed (including VAT)">£250</td></tr>
+          <tr><td data-label="Sales before VAT">£10,000</td><td data-label="Period">Quarter</td><td class="num" data-label="Flat rate turnover">£12,000</td><td class="num" data-label="Goods needed (including VAT)">£250</td></tr>
+          <tr><td data-label="Sales before VAT">£15,000</td><td data-label="Period">Quarter</td><td class="num" data-label="Flat rate turnover">£18,000</td><td class="num" data-label="Goods needed (including VAT)">£360</td></tr>
+          <tr><td data-label="Sales before VAT">£25,000</td><td data-label="Period">Quarter</td><td class="num" data-label="Flat rate turnover">£30,000</td><td class="num" data-label="Goods needed (including VAT)">£600</td></tr>
+          <tr><td data-label="Sales before VAT">£40,000</td><td data-label="Period">Year</td><td class="num" data-label="Flat rate turnover">£48,000</td><td class="num" data-label="Goods needed (including VAT)">£1,000</td></tr>
+          <tr><td data-label="Sales before VAT">£60,000</td><td data-label="Period">Year</td><td class="num" data-label="Flat rate turnover">£72,000</td><td class="num" data-label="Goods needed (including VAT)">£1,440</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Remember that VAT Notice 733 only counts goods used just for your business, and leaves out the costs listed above.</p>
+
+    <h2>Who can join, and when you must leave</h2>
+    <ul>
+      <li>You can join if you're VAT-registered and expect your VAT taxable turnover in the next 12 months to be <strong>£150,000 or less</strong>, before VAT. You apply to HMRC.</li>
+      <li>You must leave if, on the anniversary of joining, your income for the past year including VAT was <strong>over £230,000</strong>, or if you expect it to go over £230,000 in the next 30 days alone.</li>
+      <li>You can't join if you left the scheme in the last 12 months, or if you use the Cash Accounting Scheme. GOV.UK lists the other cases.</li>
+      <li>If you leave, you must wait 12 months before you can join again.</li>
+    </ul>
+    <p>Whether the scheme suits your business depends on your costs and how your sales are made up. An accountant or tax adviser can help you decide. The calculator above lets you compare the two methods for one period.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Zero-rated, reduced-rate and exempt sales.</strong> It assumes all your sales carry 20% VAT. The flat rate also applies to zero-rated and exempt income, which can make the scheme cost more.</li>
+      <li><strong>Equipment of £2,000 or more.</strong> If you buy capital goods in a single purchase of £2,000 or more including VAT, you can reclaim that VAT outside the scheme. That isn't included here.</li>
+      <li><strong>The old catering, hotel and pub rates.</strong> It uses the rates from 1 April 2022.</li>
+      <li><strong>A rate change part-way through a period</strong>, such as your first VAT anniversary falling mid-quarter. GOV.UK says to work out each part of the period separately.</li>
+      <li><strong>Income Tax.</strong> Our <a href="{{root}}uk/self-employed-tax-calculator/">self-employed tax calculator</a> covers Income Tax and National Insurance.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do I still charge my clients 20% VAT on the Flat Rate Scheme?</summary>
+        <p>Yes. Your invoices show VAT at the normal rate. The flat rate only changes how much of it you pay to HMRC.</p>
+      </details>
+      <details>
+        <summary>Is the flat rate worked out on sales before or after VAT?</summary>
+        <p>After. You multiply the flat rate by your sales including VAT. On £10,000 plus £2,000 VAT, a 12% rate means £1,440 (12% of £12,000), not £1,200.</p>
+      </details>
+      <details>
+        <summary>What is the limited cost business rate?</summary>
+        <p>16.5%, whatever your business type. It applies when your spending on goods is less than 2% of your sales including VAT, or less than £1,000 a year (£250 a quarter). At 16.5% you keep very little of the 20% you charge: £20 on £10,000 of sales.</p>
+      </details>
+      <details>
+        <summary>Does the 1% first-year discount apply to the 16.5% rate?</summary>
+        <p>Yes. VAT Notice 733 gives an example of a limited cost business using 15.5% in its first year. The discount ends the day before the first anniversary of your VAT registration, not the date you joined the scheme.</p>
+      </details>
+      <details>
+        <summary>What if my business does more than one type of work?</summary>
+        <p>VAT Notice 733 says to use one rate only: the one for the activity that brings in most of your turnover. You don't split your sales between rates.</p>
+      </details>
+      <details>
+        <summary>Can I reclaim VAT on a new laptop?</summary>
+        <p>Only if it's a single purchase of £2,000 or more including VAT. Smaller purchases, and all services, are already allowed for in the flat rate, so you can't reclaim their VAT.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/vat-flat-rate-scheme/how-much-you-pay" rel="noopener">GOV.UK: VAT Flat Rate Scheme, how much you pay</a>, <a href="https://www.gov.uk/vat-flat-rate-scheme/who-can-join" rel="noopener">GOV.UK: who can join</a>, <a href="https://www.gov.uk/vat-flat-rate-scheme/leaving-the-scheme" rel="noopener">GOV.UK: leaving the scheme</a>, <a href="https://www.gov.uk/government/publications/vat-notice-733-flat-rate-scheme-for-small-businesses/vat-notice-733-flat-rate-scheme-for-small-businesses" rel="noopener">HMRC: VAT Notice 733</a>. Checked 27 October 2026.</p>
+  </div>
