@@ -51,6 +51,15 @@
     };
   }
 
+  // Federal income tax from AGI and qualified business income, with the standard deduction and the
+  // QBI deduction (below the threshold only).
+  function federalIncomeTax(agi, qbi, status) {
+    var beforeQbi = Math.max(0, agi - D.standardDeduction[status]);
+    var qbiApplies = beforeQbi <= D.qbi.threshold[status];
+    var qbiDeduction = qbiApplies ? D.qbi.rate * Math.min(Math.max(0, qbi), beforeQbi) : 0;
+    return { tax: incomeTax(beforeQbi - qbiDeduction, status), qbiDeduction: qbiDeduction, qbiApplies: qbiApplies, taxable: beforeQbi - qbiDeduction };
+  }
+
   // Full federal estimate for a self-employed person with no other income.
   function estimate(profit, status) {
     var se = selfEmploymentTax(profit, status, 0);
@@ -82,6 +91,7 @@
     incomeTax: incomeTax,
     marginalRate: marginalRate,
     selfEmploymentTax: selfEmploymentTax,
+    federalIncomeTax: federalIncomeTax,
     estimate: estimate,
     STATUS_LABELS: { single: "Single", mfj: "Married filing jointly", mfs: "Married filing separately", hoh: "Head of household" }
   };

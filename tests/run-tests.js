@@ -832,6 +832,21 @@ function loadResume(country) {
   check("ICS CRLF", ics.split("\r\n").length > 5, true);
 }
 
+// ---------------- Self-employed health insurance deduction, 2026 federal (Form 7206 method)
+{
+  const hi = load("us-health-insurance", ["data/tax-us.js", "js/us-tax.js"]);
+  const run = (monthly, months, employerMonths, profit, retirement = 0, status = "single") => hi({ monthly, months, employerMonths, profit, retirement, status });
+  // $70,000: half SE tax = 9,890.69 / 2 = 4,945.34; limit 65,054.66; tax 4,451.65 → 3,875.65
+  expectAll("SEHI single", run(500, 12, 0, 70000), { premiums: 6000, limit: 65054.66, deduction: 6000, taxWithout: 4451.65, taxWith: 3875.65, saving: 576 });
+  check("SEHI saving reasoning", 6000 * 0.8 * 0.12, 576);
+  expectAll("SEHI employer months", run(500, 12, 4, 70000), { eligibleMonths: 8, premiums: 4000, saving: 384 });
+  expectAll("SEHI couple", run(1200, 12, 0, 100000, 0, "mfj"), { deduction: 14400, saving: 1382.4 });
+  expectAll("SEHI low profit", run(600, 12, 0, 6000), { premiums: 7200, limit: 5576.11, deduction: 5576.11, limited: true, saving: 0 });
+  expectAll("SEHI small business", run(400, 12, 0, 30000), { deduction: 4800, saving: 384 });
+  // Retirement contributions lower the limit
+  check("SEHI retirement limit", run(500, 12, 0, 70000, 10000).limit, 55054.66);
+}
+
 // ---------------- S corporation vs sole proprietor, 2026 federal (page examples by hand)
 {
   const sc = load("us-s-corp", ["data/tax-us.js", "js/us-tax.js"]);

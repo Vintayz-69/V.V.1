@@ -19,15 +19,6 @@
     return { employer: half, employee: half + additional };
   }
 
-  // Federal income tax with the standard deduction and the QBI deduction (below the threshold only,
-  // as in js/us-tax.js). Wages are not qualified business income.
-  function federalIncomeTax(agi, qbi, status) {
-    var beforeQbi = Math.max(0, agi - D.standardDeduction[status]);
-    var qbiApplies = beforeQbi <= D.qbi.threshold[status];
-    var qbiDeduction = qbiApplies ? D.qbi.rate * Math.min(Math.max(0, qbi), beforeQbi) : 0;
-    return { tax: US.incomeTax(beforeQbi - qbiDeduction, status), qbiDeduction: qbiDeduction, qbiApplies: qbiApplies };
-  }
-
   // v: { profit: business profit before paying yourself, salary: your S corporation salary,
   //      costs: extra yearly costs of running an S corporation (payroll, accounting, state fees),
   //      status: filing status }
@@ -39,7 +30,7 @@
     // S corporation: payroll taxes on the salary; the rest passes through on the K-1.
     var pay = payrollTaxes(v.salary, v.status);
     var k1 = v.profit - v.costs - v.salary - pay.employer;
-    var fed = federalIncomeTax(v.salary + k1, k1, v.status);
+    var fed = US.federalIncomeTax(v.salary + k1, k1, v.status); // wages aren't qualified business income
     var corpTaxes = round2(pay.employer + pay.employee + fed.tax);
     var soleKeep = round2(v.profit - soleTotal);
     var corpKeep = round2(v.profit - v.costs - corpTaxes);

@@ -1,0 +1,120 @@
+  <section class="calculator" aria-label="Self-employed health insurance deduction calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="monthly">Health insurance premium a month<span class="hint">Medical, dental and vision for you, your spouse and dependents. Leave out long-term care insurance</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="monthly" type="text" inputmode="decimal" value="500" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="months">Months covered in 2026</label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="numeric" value="12" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter a whole number from 1 to 12.</span>
+      </div>
+
+      <div class="field">
+        <label for="employerMonths">Months you could join an employer's plan<span class="hint">Months you or your spouse were eligible for an employer-subsidized plan, even if you didn't join</span></label>
+        <div class="input-wrap"><input id="employerMonths" type="text" inputmode="numeric" value="0" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter whole months, no more than the months covered.</span>
+      </div>
+
+      <div class="field">
+        <label for="profit">Net profit from your business<span class="hint">Schedule C, line 31, for 2026</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="profit" type="text" inputmode="decimal" value="70000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="retirement">SEP, SIMPLE or other plan contributions<span class="hint">For this business. Enter 0 if none</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="retirement" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Self-employed health insurance deduction</h2>
+      <div class="result-main"><span id="out-main">—</span> <small>deduction for 2026</small></div>
+      <ul class="result-list">
+        <li><span>Premiums that count</span><span id="out-premiums">—</span></li>
+        <li><span>Limit from your profit</span><span id="out-limit">—</span></li>
+        <li class="key"><span>Federal income tax saved</span><span id="out-saving">—</span></li>
+        <li><span>Federal income tax before and after</span><span id="out-tax">—</span></li>
+      </ul>
+      <p class="result-note" id="out-qbi-note" hidden>Your taxable income is over the QBI threshold, where the real rules are more complex than this estimate.</p>
+      <p class="result-note">An estimate of federal income tax only, with the standard deduction and no other income. The deduction doesn't reduce self-employment tax.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What is the self-employed health insurance deduction?</h2>
+    <p>If you're self-employed with a net profit, you can usually deduct the health insurance premiums you pay for yourself, your spouse and your dependents. The IRS says it covers medical, dental and vision insurance and qualified long-term care insurance, and Medicare premiums you pay voluntarily. You work it out on <strong>Form 7206</strong> and claim it on Schedule 1 (Form 1040), line 17. It reduces your income for federal income tax, even if you don't itemize.</p>
+
+    <h2>The two limits</h2>
+    <ul>
+      <li><strong>No employer plan.</strong> You can't deduct premiums for any month you were eligible to join a health plan subsidized by your employer or your spouse's employer, even if you didn't join. Eligibility for any part of a month counts.</li>
+      <li><strong>Not more than your business earnings.</strong> Form 7206 limits the deduction to your net profit, minus the deductible part of your self-employment tax, minus SEP, SIMPLE and qualified plan contributions for the same business.</li>
+    </ul>
+    <p>The IRS also says you can't subtract this deduction when working out your self-employment tax. It saves income tax, not Social Security and Medicare tax.</p>
+    <p>These rules come from the 2025 Form 7206 and its instructions, the latest the IRS has published. The tax figures are for 2026.</p>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Premiums that count = premium a month × (months covered − months you could join an employer plan)
+Limit               = net profit − ½ of self-employment tax − retirement plan contributions
+Deduction           = the smaller of the two
+
+Tax saved = federal income tax without the deduction − with it
+(The deduction also lowers your qualified business income, so your
+ 20% QBI deduction gets a little smaller.)</div>
+
+    <h2>Worked examples</h2>
+    <p>2026 federal figures, standard deduction and no other income.</p>
+    <p><strong>A single freelancer.</strong> $70,000 of profit and a $500-a-month plan all year: $6,000 of premiums, well under the $65,054.66 limit. The deduction is <strong>$6,000</strong>. Federal income tax falls from $4,451.65 to $3,875.65, a saving of <strong>$576</strong>. That's $6,000 × 12%, less the 20% of it that would otherwise have been covered by the QBI deduction.</p>
+    <p><strong>Four months with an employer plan available.</strong> Same freelancer, but their spouse's employer offered a subsidized plan for 4 months. Only 8 months count: $4,000, saving $384.</p>
+    <p><strong>A married couple.</strong> $100,000 of profit, filing jointly, $1,200 a month for the family: a $14,400 deduction, saving $1,382.40.</p>
+    <p><strong>Low profit.</strong> $6,000 of profit and $7,200 of premiums. The limit is $5,576.11 (profit minus half of the self-employment tax), so the deduction is capped there. At this income there's no federal income tax to save anyway, because of the standard deduction.</p>
+    <p><strong>A smaller business.</strong> $30,000 of profit and $400 a month: a $4,800 deduction, saving $384.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Long-term care insurance</strong>, which has yearly limits by age on Form 7206.</li>
+      <li><strong>Marketplace plans and the premium tax credit.</strong> The IRS has separate guidance for these.</li>
+      <li><strong>S corporation shareholders and partners</strong>, who follow different steps on Form 7206.</li>
+      <li><strong>More than one business</strong>, state income tax, other income and itemized deductions.</li>
+      <li><strong>Income over the QBI threshold</strong>, where the QBI rules are more complex.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does the health insurance deduction reduce self-employment tax?</summary>
+        <p>No. The IRS says you can't subtract it when working out your net earnings for self-employment tax. It reduces income tax only.</p>
+      </details>
+      <details>
+        <summary>My spouse's employer offers insurance but I bought my own. Can I deduct it?</summary>
+        <p>Not for the months you were eligible to join your spouse's employer's subsidized plan, even if you chose not to.</p>
+      </details>
+      <details>
+        <summary>Do I need to itemize?</summary>
+        <p>No. It goes on Schedule 1 (Form 1040), line 17, as an adjustment to income. Don't count the same premiums again as a medical expense on Schedule A.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.irs.gov/forms-pubs/about-form-7206" rel="noopener">IRS: about Form 7206</a>, <a href="https://www.irs.gov/instructions/i7206" rel="noopener">IRS: Instructions for Form 7206</a>, <a href="https://www.irs.gov/pub/irs-pdf/f7206.pdf" rel="noopener">IRS: Form 7206</a>, <a href="https://www.irs.gov/instructions/i8995" rel="noopener">IRS: Instructions for Form 8995 (QBI)</a>. Checked October 27, 2026.</p>
+  </div>

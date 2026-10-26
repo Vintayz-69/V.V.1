@@ -82,6 +82,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Home Office Deduction Calculator](https://vintayz.com/us/home-office-deduction-calculator/): Compare the simplified and regular home office methods and see which gives more.
 - [Quarterly Estimated Tax Calculator (2026)](https://vintayz.com/us/quarterly-estimated-tax-calculator/): See what to pay the IRS each quarter in 2026, including the safe harbor that avoids penalties.
 - [S Corp vs Sole Proprietor Tax Calculator (2026)](https://vintayz.com/us/s-corp-tax-savings-calculator/): Compare what you keep as a sole proprietor or single-member LLC with an S corporation, including payroll taxes, costs and the smaller QBI deduction.
+- [Self-Employed Health Insurance Deduction Calculator (2026)](https://vintayz.com/us/self-employed-health-insurance-deduction-calculator/): Work out the self-employed health insurance deduction (Form 7206) and how much federal income tax it saves.
 - [Self-Employment Tax Calculator (2026)](https://vintayz.com/us/self-employment-tax-calculator/): Work out 2026 Social Security and Medicare tax on your freelance profit, and the half you can deduct.
 - [Will I Get a 1099? Checker (2026)](https://vintayz.com/us/1099-threshold-checker/): See which 1099-NEC and 1099-K forms to expect for 2026 ($2,000; $20,000 and 200 payments) and how much income has no form.
 
