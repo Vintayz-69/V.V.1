@@ -3145,6 +3145,19 @@ def tool_bars(section, up):
     </nav>"""
 
 
+def page_locale(page):
+    """The page's language and Open Graph locale: a country's own English for pages about that
+    country (by path, such as uk/, or by a tool key such as uk-ssp), plain "en" otherwise."""
+    if page.get("og_locale"):
+        return page["og_locale"].replace("_", "-"), page["og_locale"]
+    key = page.get("tool") or ""
+    for code in ("us", "uk", "ca", "au"):
+        if page["path"].startswith(code + "/") or key.startswith(code + "-"):
+            info = REGIONS[code]
+            return info["lang"], info["og_locale"]
+    return "en", "en_US"
+
+
 def data_checked(page):
     """Date the official figures used by a tool were last checked, read from its data file in
     public/assets/data/ (the `checked` or `checkedUpTo` field). None for tools with no official figures."""
@@ -3587,10 +3600,10 @@ def render(page):
     if page["kind"] == "guide" and not GUIDES_REVIEWED:
         verify += '<meta name="robots" content="noindex">\n'
 
-    og_loc = page.get("og_locale", "en_US")
+    lang, og_loc = page_locale(page)
 
     return f"""<!doctype html>
-<html lang="en">
+<html lang="{lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
