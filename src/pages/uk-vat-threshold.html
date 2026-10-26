@@ -1,0 +1,119 @@
+  <section class="calculator" aria-label="VAT threshold tracker">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="startMonth">First month in your list</label>
+        <div class="select-wrap">
+          <select id="startMonth">
+            <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+            <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+            <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+            <option value="9">October</option><option value="10" selected>November</option><option value="11">December</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="startYear">Year</label>
+        <div class="select-wrap">
+          <select id="startYear">
+            <option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
+            <option value="2026">2026</option><option value="2027">2027</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="sales">Your taxable sales for each month, oldest first<span class="hint">One month per line, before VAT. Up to 36 months. You can type "Nov 6000" and only the number is used</span></label>
+        <textarea id="sales" class="text-tool-input" rows="12" spellcheck="false" autocomplete="off">6000
+6500
+7000
+7000
+7500
+8000
+8000
+8500
+9000
+9500
+10000
+11000</textarea>
+        <span class="error-msg">Put one amount on each line, for 1 to 36 months.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>When you go over the VAT threshold</h2>
+      <div class="result-main"><span id="out-main">—</span> <small id="out-main-note"></small></div>
+      <ul class="result-list">
+        <li class="key"><span>Register by</span><span id="out-deadline">—</span></li>
+        <li><span>VAT-registered from</span><span id="out-effective">—</span></li>
+        <li><span>Latest rolling 12-month total</span><span id="out-latest">—</span></li>
+        <li><span>Room before you go over next month</span><span id="out-headroom">—</span></li>
+      </ul>
+      <p class="result-note">A guide based on GOV.UK's rules. If you started trading less than 12 months ago, the months before count as nothing.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your rolling 12-month totals</h2>
+    <p>Each month's total adds up that month and the 11 before it. Newest first:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Month</th><th class="num">Sales</th><th class="num">Last 12 months</th></tr></thead>
+        <tbody id="months-body"><tr><td colspan="3">Enter your monthly sales above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>The £90,000 test is a rolling 12 months</h2>
+    <p>GOV.UK says you must register for VAT if your total taxable turnover for the <strong>last 12 months</strong> goes over <strong>£90,000</strong>. It's not the tax year or your accounting year. At the end of every month, add up that month and the 11 before it. The first time that total goes over £90,000, the clock starts.</p>
+    <ul>
+      <li><strong>Register within 30 days of the end of the month</strong> you went over.</li>
+      <li><strong>You're VAT-registered from the first day of the second month</strong> after you went over. From then on, you charge VAT on your sales.</li>
+    </ul>
+    <p>GOV.UK's example: your turnover first goes over the threshold on 15 July, so you must register by 30 August, and your effective date of registration is 1 September.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>A freelancer whose income is growing (the example above).</strong> Sales of £6,000 in November 2025, rising to £11,000 in October 2026. The 12 months to September 2026 only cover 11 months of trading (£87,000). Adding October's £11,000 makes £98,000, so they went over in <strong>October 2026</strong>. They must register by <strong>30 November 2026</strong>, and they're VAT-registered from <strong>1 December 2026</strong>.</p>
+    <p><strong>Steady income under the line.</strong> £7,000 every month is £84,000 over 12 months: not over. Next month, there's £13,000 of room (£90,000 minus the last 11 months' £77,000).</p>
+    <p><strong>Exactly £90,000.</strong> £7,500 a month for 12 months is exactly £90,000. That isn't <em>over</em> £90,000, so you don't have to register yet. One more pound in the rolling total would take you over.</p>
+    <p><strong>One big month.</strong> £7,000 a month for 11 months, then £25,000 in July 2026, makes £102,000. Over in July 2026: register by 30 August 2026, registered from 1 September 2026 (the same dates as GOV.UK's example).</p>
+
+    <h2>The other test: the next 30 days</h2>
+    <p>You must also register if you expect your taxable turnover to go over £90,000 in the <strong>next 30 days alone</strong>, for example because of one large contract. Then you register by the end of that 30-day period, and your effective date is the date you realised. GOV.UK's example: on 1 May you agree a £100,000 contract paid at the end of May, so you must apply by 30 May, and you're registered from 1 May. This tracker only checks the rolling 12 months.</p>
+
+    <h2>What counts as taxable turnover</h2>
+    <p>Taxable turnover is the total of everything you sell that isn't exempt from VAT, before costs. Zero-rated sales count towards it. Exempt sales (such as most insurance and some education and health services) don't. If you go over only for a short time, GOV.UK says you can apply for a registration exception, and HMRC decides.</p>
+
+    <h2>Once you're registered</h2>
+    <p>You add VAT to your prices and send VAT returns. Some small businesses use the Flat Rate Scheme instead of normal VAT returns. Our <a href="{{root}}uk/vat-flat-rate-scheme-calculator/">VAT Flat Rate Scheme calculator</a> compares the two, including the 16.5% rate that applies if you buy very few goods. To add VAT to a price, use the <a href="{{root}}uk/vat-calculator/">VAT calculator</a>.</p>
+
+    <h2>What this tracker doesn't cover</h2>
+    <ul>
+      <li><strong>The next-30-days test</strong>, above.</li>
+      <li><strong>Which of your sales are taxable, zero-rated or exempt.</strong> Enter taxable sales only.</li>
+      <li><strong>Exceptions and exemptions</strong>, which you apply to HMRC for.</li>
+      <li><strong>Businesses not established in the UK</strong>, which have different rules.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is the VAT threshold based on the tax year?</summary>
+        <p>No. It's any 12 months in a row, checked at the end of each month. You can go over in any month of the year.</p>
+      </details>
+      <details>
+        <summary>I went over in October. When do I start charging VAT?</summary>
+        <p>From the first day of the second month after you went over: 1 December. You must register by 30 November.</p>
+      </details>
+      <details>
+        <summary>Is the £90,000 before or after costs?</summary>
+        <p>Before. It's your sales (taxable turnover), not your profit.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/vat-registration/when-to-register" rel="noopener">GOV.UK: VAT registration, when to register</a>, <a href="https://www.gov.uk/vat-registration" rel="noopener">GOV.UK: VAT registration</a>. Checked 27 October 2026.</p>
+  </div>

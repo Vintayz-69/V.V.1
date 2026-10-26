@@ -881,6 +881,33 @@ function loadResume(country) {
   }
 }
 
+// ---------------- UK VAT threshold tracker (GOV.UK's July example + page examples)
+{
+  const vt = load("uk-vat-threshold", ["data/tax-uk.js", "data/vat-registration-uk.js"]);
+  // Growing freelancer: Nov 2025 £6,000 … Oct 2026 £11,000 = £98,000; 11 months to Sep = £87,000
+  const grow = vt({ startYear: 2025, startMonth: 10, sales: [6000, 6500, 7000, 7000, 7500, 8000, 8000, 8500, 9000, 9500, 10000, 11000] });
+  check("VAT tracker to Sep", grow.rows[10].rolling, 87000);
+  expectAll("VAT tracker growing", grow, { over: true, overYear: 2026, overMonth: 9, registerBy: "2026-11-30", effective: "2026-12-01" });
+  check("VAT tracker growing total", grow.rows[11].rolling, 98000);
+  // GOV.UK: over in July → register by 30 August, effective 1 September
+  const july = vt({ startYear: 2025, startMonth: 7, sales: [...Array(11).fill(7000), 25000] });
+  expectAll("VAT tracker July", july, { overMonth: 6, registerBy: "2026-08-30", effective: "2026-09-01" });
+  check("VAT tracker July total", july.rows[11].rolling, 102000);
+  // £7,000 a month: £84,000, £13,000 of room next month (90,000 − 77,000)
+  const steady = vt({ startYear: 2025, startMonth: 10, sales: Array(14).fill(7000) });
+  expectAll("VAT tracker steady", steady, { over: false, headroom: 13000 });
+  check("VAT tracker steady total", steady.rows[13].rolling, 84000);
+  // Exactly £90,000 isn't over
+  expectAll("VAT tracker exactly 90k", vt({ startYear: 2026, startMonth: 0, sales: Array(12).fill(7500) }), { over: false });
+  // Month ends: February and December
+  expectAll("VAT tracker February", vt({ startYear: 2026, startMonth: 1, sales: [95000] }), { registerBy: "2026-03-30", effective: "2026-04-01" });
+  expectAll("VAT tracker December", vt({ startYear: 2026, startMonth: 11, sales: [95000] }), { registerBy: "2027-01-30", effective: "2027-02-01" });
+  // Older months drop out of the rolling total
+  check("VAT tracker rolls", vt({ startYear: 2025, startMonth: 0, sales: [50000, ...Array(12).fill(3000)] }).rows[12].rolling, 36000);
+  check("VAT tracker parse", vt.parseAmounts("Nov £6,000\n6500\n").length, 2);
+  check("VAT tracker parse bad", vt.parseAmounts("Nov"), null);
+}
+
 // ---------------- UK VAT Flat Rate Scheme (GOV.UK example + page examples by hand)
 {
   const frs = load("uk-vat-flat-rate", ["data/tax-uk.js", "data/vat-flat-rate-uk.js"]);
