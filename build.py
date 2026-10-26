@@ -2832,6 +2832,13 @@ DATA_FILES = [
 ]
 
 
+def recent_tools(count):
+    """The most recently added or updated tools, newest first (site order within a day)."""
+    tools = [p for p in PAGES if p.get("kind") == "tool" and p.get("updated")]
+    tools.sort(key=lambda p: p["updated"], reverse=True)  # stable, so same-day tools keep site order
+    return [p["tool"] for p in tools[:count]]
+
+
 def sources_list(up):
     """For each official-figure file: when it was checked, the official pages it came from (read
     from the file's own header) and the tools that use it. Built from the files themselves, so the
@@ -2899,6 +2906,8 @@ def expand(text, up, page=None):
             return all_tools_list(up)
         if key == "sourcelist":
             return sources_list(up)
+        if key == "recent":
+            return "\n".join(tool_card(s, up, region) for s in recent_tools(int(arg)))
         if key == "sections":
             return section_chips(up)
         if key == "popular":
