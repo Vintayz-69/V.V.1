@@ -91,6 +91,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [United Kingdom](https://vintayz.com/uk/): all united kingdom
 - [Business Mileage Allowance Calculator (55p rate)](https://vintayz.com/uk/business-mileage-allowance-calculator/): Claim mileage at HMRC's rates, including the new 55p car rate from April 2026.
 - [Capital Gains Tax Calculator (2026 to 2027)](https://vintayz.com/uk/capital-gains-tax-calculator/): Estimate UK Capital Gains Tax for 2026 to 2027: the £3,000 allowance, then 18% or 24% depending on your income.
+- [Director's Salary Calculator (UK 2026/27)](https://vintayz.com/uk/director-salary-calculator/): Compare a £0, £5,000 or £12,570 director's salary (or your own) with dividends, and see which leaves the most take-home.
 - [Dividend Tax Calculator (2026 to 2027)](https://vintayz.com/uk/dividend-tax-calculator/): Work out tax on your dividends for 2026 to 2027, with the dividend allowance and your other income.
 - [High Income Child Benefit Charge Calculator (2026/27)](https://vintayz.com/uk/child-benefit-tax-charge-calculator/): Work out the High Income Child Benefit Charge for 2026 to 2027: 1% for every £200 of income over £60,000.
 - [Making Tax Digital for Income Tax Checker](https://vintayz.com/uk/making-tax-digital-checker/): Check if and when you must use Making Tax Digital for Income Tax: £50,000, £30,000 or £20,000 of turnover.

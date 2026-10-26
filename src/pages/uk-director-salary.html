@@ -1,0 +1,109 @@
+  <section class="calculator" aria-label="Director's salary calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="profit">Company profit before your salary<span class="hint">For 2026 to 2027, after business costs</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="profit" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="custom">Another salary to compare (optional)<span class="hint">Leave blank to compare £0, £5,000 and £12,570</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="custom" type="text" inputmode="decimal" value="" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more, or leave it blank.</span>
+      </div>
+
+      <div class="field">
+        <label for="costs">Extra company running costs<span class="hint">Such as accountancy. Enter 0 if they're already taken off the profit</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="costs" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="region">Where you live</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="employmentAllowance" type="checkbox"><span>The company can claim Employment Allowance<span class="hint">Not if you're a director and the only employee paid above £5,000 a year</span></span></label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Director's salary for 2026 to 2027</h2>
+      <div class="result-main"><span id="out-main">—</span> <small id="out-main-note"></small></div>
+      <ul class="result-list">
+        <li class="key"><span>Your take-home with it</span><span id="out-take">—</span></li>
+        <li><span>More than the lowest option</span><span id="out-gap">—</span></li>
+      </ul>
+      <p class="result-note">An estimate. Assumes one director, a salary plus dividends of all the profit left after Corporation Tax, and no other income. It's a comparison, not advice.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Each salary compared</h2>
+    <p>With all the profit left after Corporation Tax paid out as dividends:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Salary</th><th class="num">National Insurance</th><th class="num">Corporation Tax</th><th class="num">Dividends</th><th class="num">Your Income Tax</th><th class="num">Take-home</th></tr></thead>
+        <tbody id="salary-body"><tr><td colspan="6">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Why the salary level matters</h2>
+    <p>As a company director you can pay yourself a salary, dividends, or both. A salary costs the company National Insurance but reduces its Corporation Tax. Dividends don't attract National Insurance, but they're paid out of profit after Corporation Tax. Three salary levels come up most often for 2026 to 2027:</p>
+    <ul>
+      <li><strong>£5,000:</strong> the employer National Insurance threshold. Below it, the company pays no employer NI.</li>
+      <li><strong>£12,570:</strong> the Personal Allowance and the employee NI threshold. Up to here, you pay no Income Tax or employee NI on the salary, but the company pays 15% employer NI on the part above £5,000.</li>
+      <li><strong>£0:</strong> all dividends.</li>
+    </ul>
+    <p>Which leaves more depends on the company's Corporation Tax rate. Between £50,000 and £250,000 of profit, marginal relief makes each extra pound of profit cost more than 19%, so a salary that reduces profit saves more Corporation Tax.</p>
+
+    <h2>The Employment Allowance</h2>
+    <p>The Employment Allowance lets eligible employers reduce their employer National Insurance by up to <strong>£10,500</strong> in 2026 to 2027. GOV.UK says a company can't claim it if a director is the only employee paid above the secondary threshold (£5,000 a year). So a one-person company usually can't, but a company that also employs someone else above that level may. Tick the box if yours can.</p>
+
+    <h2>Worked examples</h2>
+    <p>For 2026 to 2027, England, Wales or Northern Ireland, no Employment Allowance, all remaining profit paid as dividends.</p>
+    <p><strong>£60,000 of profit.</strong> With a £12,570 salary, the company pays £1,135.50 of employer NI, its profit falls to £46,294.50 and its Corporation Tax is £8,795.96 at 19%. You take home <strong>£46,091.20</strong>. With a £5,000 salary, the company's £55,000 of profit falls in the marginal relief band, Corporation Tax is £10,825, and you take home £45,293.71. With no salary: £44,111.15.</p>
+    <p><strong>£60,000 with the Employment Allowance.</strong> The £1,135.50 of employer NI is covered, so a £12,570 salary leaves £46,732.51.</p>
+    <p><strong>£30,000 of profit.</strong> £12,570 leaves £24,403.45, £5,000 leaves £23,940.65 and £0 leaves £23,092.78.</p>
+    <p><strong>£100,000 of profit.</strong> £12,570 leaves £65,209.62, £5,000 leaves £64,456.96 and £0 leaves £63,605.65.</p>
+    <p><strong>A salary in between.</strong> At £60,000 of profit, a £9,000 salary leaves £45,846.17.</p>
+    <p>In these examples, £12,570 leaves the most. Your own figures may differ, for example if you have other income or a student loan.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Other income</strong>, such as a job, rent or savings interest, which changes your tax bands.</li>
+      <li><strong>Student loans and pension contributions.</strong></li>
+      <li><strong>Keeping profit in the company</strong> instead of paying it all out as dividends.</li>
+      <li><strong>More than one director or shareholder</strong>, and associated companies, which change the Corporation Tax limits.</li>
+      <li><strong>Your National Insurance record and State Pension.</strong> Check your record on GOV.UK.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is £12,570 or £5,000 the better director's salary for 2026 to 2027?</summary>
+        <p>In this calculator's examples, £12,570 leaves more take-home, even without the Employment Allowance, because the salary reduces Corporation Tax by more than the employer National Insurance it costs. Try your own profit above, and an accountant can confirm what suits you.</p>
+      </details>
+      <details>
+        <summary>Do I pay National Insurance on a £12,570 salary?</summary>
+        <p>You don't pay employee NI up to £12,570. The company pays 15% employer NI on the part above £5,000 (£1,135.50), unless it can claim the Employment Allowance.</p>
+      </details>
+      <details>
+        <summary>Can a one-person company claim the Employment Allowance?</summary>
+        <p>Usually not. GOV.UK says you can't claim it if a director is the only employee paid above the secondary threshold.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" rel="noopener">GOV.UK: rates and thresholds for employers 2026 to 2027</a>, <a href="https://www.gov.uk/claim-employment-allowance/eligibility" rel="noopener">GOV.UK: Employment Allowance eligibility</a>, <a href="https://www.gov.uk/government/publications/rates-and-allowances-corporation-tax/rates-and-allowances-corporation-tax" rel="noopener">GOV.UK: Corporation Tax rates</a>, <a href="https://www.gov.uk/tax-on-dividends" rel="noopener">GOV.UK: tax on dividends</a>. Checked 27 October 2026.</p>
+  </div>

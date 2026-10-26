@@ -5,34 +5,9 @@
   var T = window.ToolNest;
   var UK = window.ToolNestUK;
 
-  function limitedCompany(v) {
-    var employerNI = UK.employerNI(v.salary); // no Employment Allowance when the director is the only employee
-    var employeeNI = UK.employeeNI(v.salary);
-    var companyProfit = Math.max(0, v.profit - v.salary - employerNI - v.companyCosts);
-    var corpTax = UK.corporationTax(companyProfit);
-    var dividends = companyProfit - corpTax;
-    var pa = UK.personalAllowance(v.salary + dividends);
-    var salaryTaxable = Math.max(0, v.salary - pa);
-    var paLeft = Math.max(0, pa - v.salary);
-    var salaryTax = UK.incomeTax(salaryTaxable, v.region);
-    var divTax = UK.dividendTax(Math.max(0, dividends - paLeft), salaryTaxable);
-    var takeHome = v.salary - employeeNI - salaryTax + dividends - divTax;
-    return {
-      employerNI: employerNI,
-      employeeNI: employeeNI,
-      companyProfit: companyProfit,
-      corporationTax: corpTax,
-      dividends: dividends,
-      salaryTax: salaryTax,
-      dividendTax: divTax,
-      totalTax: employerNI + employeeNI + corpTax + salaryTax + divTax,
-      takeHome: takeHome
-    };
-  }
-
   function calculate(v) {
     var sole = UK.soleTrader(v.profit, v.region);
-    var ltd = limitedCompany(v);
+    var ltd = UK.limitedCompany(v); // no Employment Allowance when the director is the only employee
     return { sole: sole, ltd: ltd, difference: ltd.takeHome - sole.takeHome };
   }
 

@@ -641,6 +641,29 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- Director's salary comparison 2026 to 2027 (page examples, shared UK engine)
+{
+  const ds = load("uk-director-salary", UK_LIBS);
+  const run = (profit, ea = false, custom = null, region = "ruk") => ds({ profit, region, employmentAllowance: ea, custom, costs: 0 });
+  const take = (r, s) => r.rows.find(x => x.salary === s).takeHome;
+  // £60,000: £12,570 salary → employer NI 1,135.50, CT 19% on 46,294.50 = 8,795.96, take-home 46,091.20
+  const r60 = run(60000);
+  expectAll("Dir £12,570 at £60k", r60.rows.find(x => x.salary === 12570), { employerNI: 1135.5, corporationTax: 8795.96, takeHome: 46091.2 });
+  // £5,000: CT 25% × 55,000 − 3/200 × 195,000 = 10,825
+  expectAll("Dir £5,000 at £60k", r60.rows.find(x => x.salary === 5000), { employerNI: 0, corporationTax: 10825, takeHome: 45293.71 });
+  check("Dir £0 at £60k", take(r60, 0), 44111.15);
+  check("Dir best at £60k", r60.best.salary, 12570);
+  check("Dir EA at £60k", take(run(60000, true), 12570), 46732.51);
+  const r30 = run(30000);
+  for (const [s, t] of [[12570, 24403.45], [5000, 23940.65], [0, 23092.78]]) check(`Dir £${s} at £30k`, take(r30, s), t);
+  const r100 = run(100000);
+  for (const [s, t] of [[12570, 65209.62], [5000, 64456.96], [0, 63605.65]]) check(`Dir £${s} at £100k`, take(r100, s), t);
+  check("Dir custom £9,000", take(run(60000, false, 9000), 9000), 45846.17);
+  check("Dir profit £46,294.50", 60000 - 12570 - 1135.5, 46294.5);
+  // A salary bigger than the profit isn't compared
+  check("Dir small profit options", run(4000).rows.length, 1);
+}
+
 // ---------------- Student loan repayments for the self-employed 2026 to 2027 (GOV.UK examples + page)
 {
   const sl = load("uk-student-loan-se", ["data/tax-uk.js"]);

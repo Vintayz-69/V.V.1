@@ -96,6 +96,34 @@
     };
   }
 
+  // A one-director company that pays a salary and pays out the rest of its profit as dividends.
+  // v: { profit, salary, companyCosts, region, employmentAllowance: the company can claim it }
+  function limitedCompany(v) {
+    var erNI = employerNI(v.salary);
+    if (v.employmentAllowance) erNI = Math.max(0, erNI - D.class1.employmentAllowance);
+    var eeNI = employeeNI(v.salary);
+    var companyProfit = Math.max(0, v.profit - v.salary - erNI - (v.companyCosts || 0));
+    var corpTax = corporationTax(companyProfit);
+    var dividends = companyProfit - corpTax;
+    var pa = personalAllowance(v.salary + dividends);
+    var salaryTaxable = Math.max(0, v.salary - pa);
+    var paLeft = Math.max(0, pa - v.salary);
+    var salaryTax = incomeTax(salaryTaxable, v.region);
+    var divTax = dividendTax(Math.max(0, dividends - paLeft), salaryTaxable);
+    var takeHome = v.salary - eeNI - salaryTax + dividends - divTax;
+    return {
+      employerNI: erNI,
+      employeeNI: eeNI,
+      companyProfit: companyProfit,
+      corporationTax: corpTax,
+      dividends: dividends,
+      salaryTax: salaryTax,
+      dividendTax: divTax,
+      totalTax: erNI + eeNI + corpTax + salaryTax + divTax,
+      takeHome: takeHome
+    };
+  }
+
   window.ToolNestUK = {
     data: D,
     personalAllowance: personalAllowance,
@@ -106,6 +134,7 @@
     employerNI: employerNI,
     corporationTax: corporationTax,
     dividendTax: dividendTax,
-    soleTrader: soleTrader
+    soleTrader: soleTrader,
+    limitedCompany: limitedCompany
   };
 })();
