@@ -691,6 +691,26 @@ function loadResume(country) {
   }
 }
 
+// ---------------- Canada business-use-of-home expenses (CRA examples)
+{
+  const ho = load("ca-home-office");
+  const base = { mixed: false, hours: 8, days: 5, carried: 0, income: 50000 };
+  // CRA Form T2125 example: 18 of 180 m², $13,300 (1,200 + 1,000 + 650 + 350 + 8,000 + 1,800 + 300) → 1,330; + 150 → 1,480
+  check("CA home T2125 expenses add up", 1200 + 1000 + 650 + 350 + 8000 + 1800 + 300, 13300);
+  check("CA home T2125 personal part", 162 / 180 * 13300, 11970);
+  expectAll("CA home T2125", ho({ ...base, space: 18, home: 180, expenses: 13300, carried: 150, income: 7100 }),
+    { businessPart: 1330, available: 1480, claim: 1480, carryForward: 0 });
+  // CRA area example: 20 ÷ 120 × $6,000 = $1,000
+  check("CA home area only", ho({ ...base, space: 20, home: 120, expenses: 6000 }).claim, 1000);
+  // CRA hours example: 10 ÷ 24 × 35 ÷ 100 × $5,800 = $845.83, × 5 ÷ 7 = $604.16
+  check("CA home hours 5 days", ho({ ...base, space: 35, home: 100, mixed: true, hours: 10, days: 5, expenses: 5800 }).claim, 604.16);
+  check("CA home hours 7 days", ho({ ...base, space: 35, home: 100, mixed: true, hours: 10, days: 7, expenses: 5800 }).claim, 845.83);
+  // Income limit: $1,000 of income → claim $1,000, carry forward $480
+  expectAll("CA home income limit", ho({ ...base, space: 18, home: 180, expenses: 13300, carried: 150, income: 1000 }), { claim: 1000, carryForward: 480, limited: true });
+  // A loss before the claim: nothing claimed, all carried forward
+  expectAll("CA home loss", ho({ ...base, space: 10, home: 100, expenses: 24000, income: -500 }), { claim: 0, carryForward: 2400 });
+}
+
 // ---------------- Canada GST/HST Quick Method (CRA RC4058 rates, page examples by hand)
 {
   const qm = load("ca-quick-method", ["data/tax-ca.js", "data/quick-method-ca.js"]);

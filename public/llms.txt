@@ -107,6 +107,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 ## Canada
 
 - [Canada](https://vintayz.com/ca/): all canada
+- [Business-Use-of-Home Expenses Calculator (Canada)](https://vintayz.com/ca/home-office-expenses-calculator/): Work out the business-use-of-home expenses a self-employed Canadian can claim on Form T2125, with the CRA's area and hours method.
 - [CPP and EI Calculator (2026)](https://vintayz.com/ca/cpp-ei-calculator/): Work out your 2026 CPP, CPP2 and EI deductions as an employee, per year and per pay, and what your employer adds.
 - [Employee vs Contractor Calculator (Canada)](https://vintayz.com/ca/employee-vs-contractor-calculator/): Find the contract rate that matches a salaried job once benefits and employer CPP are counted.
 - [GST/HST Calculator](https://vintayz.com/ca/gst-hst-calculator/): Add or remove GST, HST and provincial sales tax for any province or territory.

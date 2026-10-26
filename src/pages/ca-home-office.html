@@ -1,0 +1,130 @@
+  <section class="calculator" aria-label="Business-use-of-home expenses calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="space">Area of your workspace<span class="hint">Square metres or square feet, the same unit for both</span></label>
+        <div class="input-wrap"><input id="space" type="text" inputmode="decimal" value="18" autocomplete="off"></div>
+        <span class="error-msg">Enter an area above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="home">Total area of your home</label>
+        <div class="input-wrap"><input id="home" type="text" inputmode="decimal" value="180" autocomplete="off"></div>
+        <span class="error-msg">Enter an area above 0.</span>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="mixed" type="checkbox"><span>I also use this space for personal things<span class="hint">Such as a spare room or the dining table. CRA then counts the hours and days you use it for business</span></span></label>
+      </div>
+
+      <div class="field mixed-only" hidden>
+        <label for="hours">Business hours a day</label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="8" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0.5 to 24.</span>
+      </div>
+
+      <div class="field mixed-only" hidden>
+        <label for="days">Business days a week</label>
+        <div class="input-wrap"><input id="days" type="text" inputmode="numeric" value="5" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter a whole number from 1 to 7.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="expenses">Yearly home expenses<span class="hint">Add up heat, electricity, water, home insurance, maintenance, and rent, or mortgage interest and property taxes if you own</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="expenses" type="text" inputmode="decimal" value="13300" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="carried">Carried forward from last year<span class="hint">Business-use-of-home expenses you couldn't claim last year. Often 0</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="carried" type="text" inputmode="decimal" value="150" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="income">Net business income before this claim<span class="hint">From Form T2125, before business-use-of-home expenses</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="income" type="text" inputmode="decimal" value="7100" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Business-use-of-home expenses you can claim</h2>
+      <div class="result-main"><span id="out-main">—</span> <small>this year</small></div>
+      <ul class="result-list">
+        <li><span>Workspace</span><span id="out-share">—</span></li>
+        <li><span>Business part of this year's expenses</span><span id="out-part">—</span></li>
+        <li><span>Plus last year's carry-forward</span><span id="out-available">—</span></li>
+        <li class="key"><span>To carry forward to next year</span><span id="out-carry">—</span></li>
+      </ul>
+      <p class="result-note">An estimate for Form T2125, Part 7. The claim can't be more than your net business income before it, and it can't create or increase a loss. Anything left over carries forward.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Can you claim business-use-of-home expenses?</h2>
+    <p>The CRA says self-employed people can claim part of their home costs if the workspace is either:</p>
+    <ul>
+      <li>your <strong>principal place of business</strong>, or</li>
+      <li>used <strong>only</strong> to earn your business income, and used regularly and continuously to meet clients, customers or patients.</li>
+    </ul>
+    <p>This page is for the self-employed (Form T2125). Employees who work from home claim under different rules.</p>
+
+    <h2>How the CRA works it out</h2>
+    <div class="formula">Business part = workspace area ÷ home area × yearly home expenses
+
+If you also use the space personally:
+Business part = business hours a day ÷ 24 × workspace area ÷ home area × expenses
+                × business days a week ÷ 7
+
+Claim this year = the lesser of (business part + amount carried forward)
+                  and net business income before this claim
+Carry forward  = whatever is left</div>
+
+    <h2>Worked examples from the CRA</h2>
+    <p><strong>Form T2125 example.</strong> A workspace of 18 m² in a 180 m² home (10%). Home expenses are $13,300: heat $1,200, electricity $1,000, insurance $650, maintenance $350, mortgage interest $8,000, property taxes $1,800 and water $300. The business part is <strong>$1,330</strong>. With $150 carried forward from last year, $1,480 is available, and net income of $7,100 is enough to claim all <strong>$1,480</strong>.</p>
+    <p><strong>A space used only for business.</strong> 20 m² of a 120 m² home, with $6,000 of household expenses: 20 ÷ 120 × $6,000 = <strong>$1,000</strong>.</p>
+    <p><strong>A space also used personally.</strong> 35 m² of a 100 m² home, used for business 10 hours a day, with $5,800 of expenses: 10 ÷ 24 × 35 ÷ 100 × $5,800 = $845.83. The business runs 5 days a week, so $845.83 × 5 ÷ 7 = <strong>$604.16</strong>. If it ran all 7 days, the claim would be the full $845.83.</p>
+    <p><strong>When income is too low.</strong> The first example again, but with only $1,000 of net business income. The claim is limited to <strong>$1,000</strong>, and the other $480 carries forward to next year.</p>
+
+    <h2>What you can include</h2>
+    <ul>
+      <li><strong>Everyone:</strong> part of heating, electricity, home insurance, water, and maintenance such as cleaning materials.</li>
+      <li><strong>If you rent:</strong> part of your rent.</li>
+      <li><strong>If you own:</strong> part of your mortgage interest and property taxes.</li>
+    </ul>
+    <p>Don't count the same expense twice: the CRA says amounts you claim here can't also be claimed elsewhere on Form T2125.</p>
+
+    <h2>A warning about capital cost allowance</h2>
+    <p>You can also claim capital cost allowance (CCA) on the business part of a home you own. The CRA warns that if you do, the capital gain and recapture rules will apply to that part when you sell the home. This calculator doesn't include CCA. An accountant can help you decide whether to claim it.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Capital cost allowance</strong>, as above.</li>
+      <li><strong>Employees working from home</strong>, who claim work-space-in-the-home expenses on line 22900 under different rules.</li>
+      <li><strong>Using the space for only part of the year</strong>, which reduces the claim further.</li>
+      <li><strong>Quebec provincial tax</strong>, handled by Revenu Québec.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can business-use-of-home expenses create a loss?</summary>
+        <p>No. The CRA says the claim can't be more than your net business income before you deduct it. The rest carries forward to the next year.</p>
+      </details>
+      <details>
+        <summary>How do I work out the business part of my home?</summary>
+        <p>The CRA says to use a reasonable basis, such as the area of the workspace divided by the total area of your home.</p>
+      </details>
+      <details>
+        <summary>I work at my kitchen table. Can I claim?</summary>
+        <p>If the space is your principal place of business, you can claim for the hours and days you use it for business. Tick "I also use this space for personal things" above.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/sole-proprietorships-partnerships/report-business-income-expenses/completing-form-t2125/business-use-home-expenses.html" rel="noopener">CRA: business-use-of-home expenses</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/sole-proprietorships-partnerships/report-business-income-expenses/completing-form-t2125/calculating-business-use-home-expenses.html" rel="noopener">CRA: calculating business-use-of-home expenses (Form T2125 example)</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/daycare-your-home/deducting-your-business-expenses/business-use-home-expenses.html" rel="noopener">CRA: business-use-of-home examples (area and hours)</a>. Checked October 27, 2026.</p>
+  </div>
