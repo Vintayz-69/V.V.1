@@ -3762,7 +3762,19 @@ def write(rel, text):
         f.write(text)
 
 
+def check_hub_lists():
+    """The UK page lists its tax tools by hand in groups ({{tool:...}}), so a new uk-tax tool could
+    be missed. Stop the build if one is."""
+    with open(os.path.join(SRC, "uk.html"), encoding="utf-8") as f:
+        listed = set(re.findall(r"\{\{tool:([\w-]+)\}\}", f.read()))
+    live = {p["tool"] for p in PAGES if p.get("kind") == "tool"}
+    missing = sorted(k for k, t in TOOLS.items() if t["group"] == "uk-tax" and k in live and k not in listed)
+    if missing:
+        raise SystemExit(f"Add these UK tax tools to src/pages/uk.html: {missing}")
+
+
 def main():
+    check_hub_lists()
     for page in PAGES:
         write(page["path"] + "index.html", render(page))
 
