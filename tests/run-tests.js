@@ -1497,6 +1497,13 @@ function loadResume(country) {
 
 // ---------------- UK Maternity and Paternity Pay 2026 to 2027 (by hand)
 {
+  // Maternity Allowance section on the page, from the data file
+  const SP = (() => { const ctx = { window: {} }; vm.runInNewContext(fs.readFileSync(path.join(JS, "data/statutory-pay-uk.js"), "utf8"), ctx); return ctx.window.ToolNestStatutoryPayUK.maternityAllowance; })();
+  const C2 = (() => { const ctx = { window: {} }; vm.runInNewContext(fs.readFileSync(path.join(JS, "data/tax-uk.js"), "utf8"), ctx); return ctx.window.ToolNestTaxUK.class2.weeklyRate; })();
+  check("MA full rate total", Math.round(SP.maxWeekly * SP.weeks * 100) / 100, 7578.48);
+  check("MA low rate total", SP.lowWeekly * SP.weeks, 1053);
+  check("MA spouse total", SP.lowWeekly * SP.spouseWeeks, 378);
+  check("MA 13 weeks of Class 2", Math.round(C2 * SP.class2WeeksNeeded * 100) / 100, 47.45);
   const calc = load("uk-parental-pay", ["data/statutory-pay-uk.js"]);
   // £500: 450 × 6 = 2,700; 194.32 × 33 = 6,412.56; total 9,112.56
   expectAll("smp £500", calc({ type: "maternity", awe: 500 }), { higherWeekly: 450, higherTotal: 2700, lowerWeekly: 194.32, lowerTotal: 6412.56, total: 9112.56, eligibleEarnings: true });

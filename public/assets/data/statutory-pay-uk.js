@@ -17,6 +17,12 @@
  *   £129 a week earnings and 26 weeks' employment needed: https://www.gov.uk/paternity-pay-leave/leave
  *                                                         https://www.gov.uk/paternity-pay-leave/eligibility
  *
+ *   Maternity Allowance (checked 2026-10-27): up to 39 weeks; self-employed between £27 and £194.32 a
+ *   week depending on Class 2 NI in the 66 weeks before the baby is due; £27 a week with none; £27 a
+ *   week for up to 14 weeks for unpaid work in a spouse's or civil partner's business; fewer than 13
+ *   weeks of Class 2: HMRC says how many more are needed (Class 2 £3.65 a week, from tax-uk.js):
+ *     https://www.gov.uk/maternity-allowance/what-youll-get
+ *
  * TO UPDATE: these rates usually change every April. Check the GOV.UK pages, change the figures,
  * `taxYear` and `checked`, then run `node tests/run-tests.js` and fix the worked examples.
  */
@@ -38,5 +44,15 @@ window.ToolNestStatutoryPayUK = {
     maternityWeeks: 39,
     maternityHigherWeeks: 6, // first weeks paid at 90% of earnings with no cap
     paternityWeeks: 2
+  },
+
+  // Maternity Allowance (self-employed and others who can't get SMP)
+  maternityAllowance: {
+    maxWeekly: 194.32,
+    lowWeekly: 27,         // self-employed with no Class 2 contributions; unpaid work for a spouse's business
+    weeks: 39,
+    spouseWeeks: 14,
+    class2WeeksNeeded: 13, // in the 66 weeks before the baby is due
+    lookbackWeeks: 66
   }
 };
