@@ -93,6 +93,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [High Income Child Benefit Charge Calculator (2026/27)](https://vintayz.com/uk/child-benefit-tax-charge-calculator/): Work out the High Income Child Benefit Charge for 2026 to 2027: 1% for every £200 of income over £60,000.
 - [Making Tax Digital for Income Tax Checker](https://vintayz.com/uk/making-tax-digital-checker/): Check if and when you must use Making Tax Digital for Income Tax: £50,000, £30,000 or £20,000 of turnover.
 - [Payments on Account Calculator](https://vintayz.com/uk/payments-on-account-calculator/): See what Self Assessment payments are due in January and July, and plan for the first-year shock.
+- [Rent a Room Relief Calculator (UK)](https://vintayz.com/uk/rent-a-room-calculator/): Lodger income? See if it's under the £7,500 tax-free limit, and which method leaves less tax if it's over.
 - [Self-Employed Tax and NI Calculator (2026/27)](https://vintayz.com/uk/self-employed-tax-calculator/): Work out Income Tax and Class 4 National Insurance on your 2026 to 2027 profits, including Scotland.
 - [Sole Trader vs Limited Company Calculator (2026/27)](https://vintayz.com/uk/sole-trader-vs-limited-company-calculator/): Compare take-home pay as a sole trader and as a company director, with 2026 to 2027 dividend rates.
 - [Stamp Duty Calculator (England and Northern Ireland)](https://vintayz.com/uk/stamp-duty-calculator/): Work out Stamp Duty Land Tax on a home in England or Northern Ireland, for first-time buyers, movers and additional properties.

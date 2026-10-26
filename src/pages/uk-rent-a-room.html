@@ -1,0 +1,121 @@
+  <section class="calculator" aria-label="Rent a Room relief calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="receipts">What your lodger paid you in the tax year<span class="hint">Rent plus anything they paid for meals, cleaning, laundry or bills</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="receipts" type="text" inputmode="decimal" value="9600" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Your costs of letting the room<span class="hint">Such as the share of bills, insurance and repairs for the let</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="expenses" type="text" inputmode="decimal" value="1000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="other">Your other taxable income<span class="hint">Such as your salary before tax. Enter 0 if you have none</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="other" type="text" inputmode="decimal" value="30000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="region">Where you live</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2 check-field">
+        <label class="check"><input id="shared" type="checkbox"><span>Someone else also gets income from letting rooms in this home<span class="hint">Such as a partner or joint owner. Your limit is then halved. Enter only your share above</span></span></label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Tax on your lodger income</h2>
+      <div class="result-main"><span id="out-main">—</span> <small id="out-note">estimated extra Income Tax</small></div>
+      <ul class="result-list">
+        <li><span>Your tax-free limit</span><span id="out-limit">—</span></li>
+        <li><span>Method A: profit after costs</span><span id="out-a">—</span></li>
+        <li><span>Method B: receipts over the limit</span><span id="out-b">—</span></li>
+        <li class="key"><span>Less tax with</span><span id="out-best">—</span></li>
+      </ul>
+      <p class="result-note">An estimate of the Income Tax on your letting income for 2026 to 2027, on top of your other income. Over the limit, you choose the method on your tax return.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What is the Rent a Room Scheme?</h2>
+    <p>The Rent a Room Scheme lets you earn up to <strong>£7,500 a year tax-free</strong> from letting furnished accommodation in your <strong>only or main home</strong>, such as taking in a lodger. GOV.UK says the exemption is automatic if you earn less than the limit. The limit is halved to <strong>£3,750</strong> if someone else also gets income from letting accommodation in the same property.</p>
+    <p>The limit is on your <strong>receipts</strong>, not your profit. HMRC's helpsheet says receipts include rent and anything your lodger pays you for meals, goods and services such as cleaning or laundry.</p>
+
+    <h2>If you earn more than the limit</h2>
+    <p>You must send a tax return, and you choose one of two ways to work out your taxable income:</p>
+    <ul>
+      <li><strong>Method A (the normal way):</strong> your receipts minus your expenses. No Rent a Room relief.</li>
+      <li><strong>Method B (Rent a Room relief):</strong> your receipts minus £7,500 (or £3,750). You can't take off any expenses.</li>
+    </ul>
+    <p>The method that gives the lower taxable income leaves less tax. As a rule, Method B wins unless your costs are more than £7,500 (or £3,750).</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter everything your lodger paid you</strong> in the tax year, including for meals or cleaning.</li>
+      <li><strong>Enter your costs of letting</strong>, used only for Method A.</li>
+      <li><strong>Enter your other taxable income</strong> so the letting income is taxed at the right rate.</li>
+      <li><strong>Tick the box</strong> if someone else also gets letting income from your home, and enter only your share.</li>
+    </ol>
+
+    <h2>Worked examples</h2>
+    <p>Using 2026 to 2027 Income Tax rates for England, Wales and Northern Ireland, with a £30,000 salary unless stated.</p>
+    <p><strong>HMRC's example (Chris).</strong> Receipts of £10,600 (£10,400 rent plus £200 for heating and light) and £9,000 of expenses. Method A taxes £1,600; Method B taxes £3,100. Method A is lower: at 20%, £320 of tax instead of £620.</p>
+    <p><strong>A lodger at £600 a month.</strong> £7,200 a year is under £7,500, so it's tax-free automatically and there's nothing to work out.</p>
+    <p><strong>A lodger at £800 a month.</strong> £9,600 a year with £1,000 of costs. Method A taxes £8,600 (£1,720). Method B taxes £9,600 minus £7,500, so £2,100 (£420). Method B leaves <strong>£1,300 less tax</strong>.</p>
+    <p><strong>Sharing the income.</strong> A couple share £9,600 equally, so each has £4,800 and a £3,750 limit. For one of them, with £500 of costs: Method A taxes £4,300 (£860); Method B taxes £1,050 (£210).</p>
+    <p><strong>A higher-rate taxpayer.</strong> A £60,000 salary, £12,000 of receipts and £1,500 of costs. Method A taxes £10,500 at 40% (£4,200). Method B taxes £4,500 (£1,800).</p>
+    <p><strong>In Scotland.</strong> The £800-a-month example with a £30,000 salary falls in the 21% intermediate band: Method B's £2,100 means £441 of tax.</p>
+
+    <h2>Who can use it</h2>
+    <ul>
+      <li>You let <strong>furnished</strong> accommodation in your <strong>only or main home</strong>. You can let as much of your home as you want.</li>
+      <li>GOV.UK says you can opt in at any time if you're a resident landlord, whether or not you own your home, or if you run a bed and breakfast or guest house.</li>
+      <li>You can't use it for homes converted into separate flats, or for accommodation that isn't part of your main home when it's let.</li>
+    </ul>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>National Insurance.</strong> It works out Income Tax only.</li>
+      <li><strong>Losses and capital allowances.</strong> If Method A gives a loss, it shows no tax, and doesn't work out what you can do with the loss.</li>
+      <li><strong>Other property income</strong>, such as a buy-to-let flat, or the separate £1,000 property allowance.</li>
+      <li><strong>Lettings that start or stop during the year.</strong> HMRC's helpsheet HS223 covers these and other special cases.</li>
+      <li><strong>Your lodger's rights, deposits and agreements.</strong> GOV.UK's guide to <a href="https://www.gov.uk/rent-room-in-your-home" rel="noopener">renting a room in your home</a> explains these.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do I need to tell HMRC about my lodger?</summary>
+        <p>Not for tax, if your receipts are under the limit: GOV.UK says the exemption is automatic. If you earn more than the limit, you must send a tax return.</p>
+      </details>
+      <details>
+        <summary>Does the £7,500 include money for bills and meals?</summary>
+        <p>Yes. HMRC's helpsheet counts payments for meals, goods and services such as cleaning or laundry as receipts, along with the rent.</p>
+      </details>
+      <details>
+        <summary>My partner and I both rent out the room. Do we get £7,500 each?</summary>
+        <p>No. If someone else also gets income from letting accommodation in the same property, each person's limit is £3,750.</p>
+      </details>
+      <details>
+        <summary>Can I claim my costs and the Rent a Room relief?</summary>
+        <p>No. With Method B you can't deduct any expenses or capital allowances. Choose whichever method leaves the lower taxable income.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/rent-room-in-your-home/the-rent-a-room-scheme" rel="noopener">GOV.UK: the Rent a Room Scheme</a>, <a href="https://www.gov.uk/government/publications/rent-a-room-for-traders-hs223-self-assessment-helpsheet/hs223-rent-a-room-scheme-2026" rel="noopener">HMRC helpsheet HS223: Rent a Room Scheme</a>, <a href="https://www.gov.uk/income-tax-rates" rel="noopener">GOV.UK: Income Tax rates</a>. Checked 27 October 2026.</p>
+  </div>

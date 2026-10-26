@@ -8,6 +8,14 @@
  * 5 October after the tax year, and either deduct the allowance or your expenses, not both.
  * Can't be used with trade or property income from your employer (or your spouse's or civil
  * partner's), or from a company or partnership you or someone connected to you owns or controls.
+ * Rent a Room Scheme (checked 2026-10-27): £7,500 a year tax-free, £3,750 if someone else also gets
+ * income from letting accommodation in the same property; furnished accommodation in your only or main
+ * home; receipts include payments for meals, goods and services such as cleaning or laundry; over the
+ * limit, choose Method A (receipts minus expenses and capital allowances) or Method B (receipts minus
+ * the limit, no expenses). HS223 Rent a Room Scheme (2026), updated 6 April 2026, with its "Chris"
+ * example (£10,600 receipts, £9,000 expenses: A £1,600, B £3,100):
+ *   https://www.gov.uk/government/publications/rent-a-room-for-traders-hs223-self-assessment-helpsheet/hs223-rent-a-room-scheme-2026
+ *   https://www.gov.uk/rent-room-in-your-home/the-rent-a-room-scheme
  * Income tax and National Insurance figures come from tax-uk.js.
  *
  * TO UPDATE: check the GOV.UK page before 6 April each year, change the figures and `checked`,
@@ -16,5 +24,7 @@
 window.ToolNestAllowancesUK = {
   checked: "2026-10-27",
   trading: 1000,
-  property: 1000
+  property: 1000,
+  rentARoom: 7500,
+  rentARoomShared: 3750
 };

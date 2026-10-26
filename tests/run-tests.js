@@ -641,6 +641,27 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- Rent a Room relief, 2026 to 2027 (HMRC HS223 Chris example + page examples)
+{
+  const rr = load("uk-rent-a-room", ["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"]);
+  const run = (receipts, expenses, other = 30000, shared = false, region = "ruk") => rr({ receipts, expenses, other, shared, region });
+  // HS223 Chris: £10,600 receipts, £9,000 expenses: A £1,600, B £3,100; at 20%, £320 vs £620
+  expectAll("RaR Chris", run(10600, 9000), { profitA: 1600, profitB: 3100, taxA: 320, taxB: 620, tax: 320, best: "A", saving: 300 });
+  // £600 a month: £7,200 under £7,500
+  expectAll("RaR £600 a month", run(7200, 500), { underLimit: true, tax: 0, best: "exempt" });
+  // £800 a month: A 8,600 (1,720) vs B 2,100 (420); B by £1,300
+  expectAll("RaR £800 a month", run(9600, 1000), { profitA: 8600, taxA: 1720, profitB: 2100, taxB: 420, best: "B", saving: 1300 });
+  // Shared: £4,800 share, £3,750 limit, £500 costs: A 4,300 (860), B 1,050 (210)
+  expectAll("RaR shared", run(4800, 500, 30000, true), { limit: 3750, profitA: 4300, taxA: 860, profitB: 1050, taxB: 210 });
+  // Higher rate: £60,000 salary, £12,000 receipts, £1,500 costs: 10,500 → 4,200; 4,500 → 1,800
+  expectAll("RaR higher rate", run(12000, 1500, 60000), { taxA: 4200, taxB: 1800 });
+  // Scotland intermediate 21%: 2,100 → 441
+  check("RaR Scotland", run(9600, 1000, 30000, false, "scotland").taxB, 441);
+  // Method B wins when costs are under the limit, A when over
+  check("RaR costs over limit", run(12000, 8000).best, "A");
+  check("RaR costs under limit", run(12000, 7000).best, "B");
+}
+
 // ---------------- High Income Child Benefit Charge 2026 to 2027 (GOV.UK's Clara + page examples)
 {
   const hc = load("uk-hicbc", ["data/child-benefit-uk.js"]);
