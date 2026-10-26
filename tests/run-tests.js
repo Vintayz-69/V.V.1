@@ -641,6 +641,36 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- "Will I get a 1099?" checker, payments made in 2026 (page examples by hand)
+{
+  const chk = load("us-1099-checker", ["data/tax-us.js", "data/info-returns-us.js"]);
+  const parse = chk.parseAmounts;
+  const run = (clients, appTotal = 0, appCount = 0, cardTotal = 0, expenses = 0) => chk({ clients, appTotal, appCount, cardTotal, expenses });
+  // Four clients + $3,000 in 40 app payments, $2,000 expenses
+  expectAll("1099 four clients", run([5000, 2500, 1800, 900], 3000, 40, 0, 2000),
+    { necCount: 2, necTotal: 7500, underThreshold: 2700, appForm: false, forms: 2, income: 13200, onForms: 7500, notOnForms: 5700, profit: 11200, netEarnings: 10343.2, seTaxApplies: true });
+  // Marketplace: $25,000 in 150 orders: no 1099-K; 250 orders: 1099-K
+  expectAll("1099-K under count", run([], 25000, 150), { appForm: false, forms: 0, income: 25000, notOnForms: 25000 });
+  expectAll("1099-K over both", run([], 25000, 250), { appForm: true, forms: 1, notOnForms: 0 });
+  // Both must be MORE than the limits
+  check("1099-K exactly $20,000", run([], 20000, 300).appForm, false);
+  check("1099-K exactly 200", run([], 30000, 200).appForm, false);
+  // Exactly $2,000 gets a 1099-NEC; $1,999.99 doesn't
+  check("1099-NEC exactly $2,000", run([2000]).necCount, 1);
+  check("1099-NEC $1,999.99", run([1999.99]).necCount, 0);
+  // Card processor: a form whatever the amount
+  expectAll("1099-K card $4,000", run([], 0, 0, 4000), { cardForm: true, forms: 1, onForms: 4000, notOnForms: 0 });
+  // $350: 350 × 92.35% = 323.23, no SE tax; $434: 400.80, SE tax applies
+  expectAll("SE $350", run([350]), { netEarnings: 323.23, seTaxApplies: false });
+  expectAll("SE $434", run([434]), { netEarnings: 400.8, seTaxApplies: true });
+  // Parsing: names, $ signs and commas are ignored; blank lines skipped; a line with no number fails
+  const p1 = parse("Acme 2500\n$1,800.50\n\n  900  ");
+  check("1099 parse count", p1.length, 3);
+  check("1099 parse values", p1[0] + p1[1] + p1[2], 5200.5);
+  check("1099 parse bad line", parse("Acme"), null);
+  check("1099 parse empty", parse("").length, 0);
+}
+
 // ---------------- UK trading allowance vs expenses, 2026 to 2027 (page examples by hand)
 {
   const ta = load("uk-trading-allowance", ["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"]);

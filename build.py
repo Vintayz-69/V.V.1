@@ -144,6 +144,13 @@ TOOLS = {
         short="See what to pay the IRS each quarter in 2026, including the safe harbor that avoids penalties.",
         icon="calendar", group="us-tax", parent="us",
     ),
+    "us-1099-checker": dict(
+        path="us/1099-threshold-checker/",
+        name="Will I Get a 1099? Checker (2026)",
+        card="1099 threshold checker",
+        short="See which 1099-NEC and 1099-K forms to expect for 2026 ($2,000; $20,000 and 200 payments) and how much income has no form.",
+        icon="receipt", group="us-tax", parent="us", keywords="1099 nec 1099-k threshold 2000 20000 200 transactions payment apps freelancer report income without 1099",
+    ),
     "us-1099-vs-w2": dict(
         path="us/1099-vs-w2-calculator/",
         name="1099 vs W-2 Calculator",
@@ -1336,7 +1343,7 @@ POPULAR_DAY = "2026-10-11"
 MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
 CONTENT_DAY = "2026-10-16"  # AdSense "low-value content" fixes: owner name, working email, fuller About and tool pages
 MONEY_DAY = "2026-10-17"  # 10 money pages deepened: more worked examples, official dates and rules, FAQs
-FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme calculator, Making Tax Digital checker, trading allowance calculator
+FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme, Making Tax Digital, trading allowance, 1099 threshold checker
 NEW_TOOLS_DAY = "2026-10-20"  # 8 new tools: pro rata, invoice due date, SSP, maternity pay, stamp duty, CGT, simple interest, net worth
 ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
@@ -1504,6 +1511,14 @@ PAGES = [
          intro="Add VAT to a price, or work out how much VAT is inside a total, at the UK's 20% standard or 5% reduced rate.",
          chips=["{{flag:uk}} UK VAT rates"] + TOOL_CHIPS,
          related=["uk-vat-flat-rate", "quote-generator", "invoice-generator"]),
+    dict(tool="us-1099-checker", src="us-1099-checker.html", script="us-1099-checker.js",
+         libs=["data/tax-us.js", "data/info-returns-us.js"], updated=FRS_DAY,
+         title="Will I Get a 1099? 2026 Threshold Checker ($2,000 NEC) | Vintayz",
+         h1="Will I Get a 1099? Checker for 2026",
+         description="See which 1099-NEC and 1099-K forms to expect for 2026: $2,000 per client, $20,000 and 200 payments for apps. Plus how much income you must report with no form.",
+         intro="List what your clients paid you in 2026 to see which 1099 forms to expect, and how much of your income you still need to report without one.",
+         chips=["{{flag:us}} US, payments made in 2026"] + TOOL_CHIPS,
+         related=["us-self-employment-tax", "us-quarterly-tax", "invoice-generator"]),
     dict(tool="uk-trading-allowance", src="uk-trading-allowance.html", script="uk-trading-allowance.js",
          libs=["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"], updated=FRS_DAY,
          title="Trading Allowance Calculator UK 2026/27 (£1,000) | ToolNest by Vintayz",
@@ -2772,6 +2787,7 @@ def all_tools_list(up):
 # The official-figure files in public/assets/data/, in the order the Sources page lists them.
 DATA_FILES = [
     ("tax-us.js", "United States: federal tax, Social Security, Medicare and mileage"),
+    ("info-returns-us.js", "United States: Form 1099-NEC and 1099-K thresholds"),
     ("tax-uk.js", "United Kingdom: Income Tax, National Insurance, dividends, VAT and student loans"),
     ("vat-flat-rate-uk.js", "United Kingdom: VAT Flat Rate Scheme"),
     ("mtd-uk.js", "United Kingdom: Making Tax Digital for Income Tax"),
@@ -3309,6 +3325,8 @@ NEXT_STEPS = {
                           ("uk-self-employed-tax", "See the tax on your profit after expenses")],
     "uk-vat": [("uk-vat-flat-rate", "On the Flat Rate Scheme? Work out what you pay HMRC"),
                ("invoice-generator", "Add VAT to an invoice")],
+    "us-1099-checker": [("us-self-employment-tax", "Work out your self-employment tax"),
+                        ("us-quarterly-tax", "Plan your quarterly estimated tax payments")],
     "uk-trading-allowance": [("uk-self-employed-tax", "Earning more? See tax and NI on a full self-employed profit"),
                              ("uk-mtd", "Check if Making Tax Digital applies to you")],
     "uk-mtd": [("uk-self-employed-tax", "See the tax and NI on your profit"),

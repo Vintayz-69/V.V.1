@@ -1,0 +1,130 @@
+  <section class="calculator" aria-label="Will I get a 1099 checker">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="clients">What each client paid you directly in 2026<span class="hint">One client per line: bank transfer, check or cash. Leave out payments by card or through payment apps (they go below)</span></label>
+        <textarea id="clients" class="text-tool-input" rows="5" spellcheck="false" autocomplete="off">5000
+2500
+1800
+900</textarea>
+        <span class="error-msg">Put one amount on each line, such as 2500.</span>
+      </div>
+
+      <div class="field">
+        <label for="appTotal">Paid to you through payment apps or online marketplaces<span class="hint">Total for 2026 from apps and marketplaces that handle the payment for you</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="appTotal" type="text" inputmode="decimal" value="3000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="appCount">Number of those payments<span class="hint">How many separate sales or payments made up that total</span></label>
+        <div class="input-wrap"><input id="appCount" type="text" inputmode="numeric" value="40" autocomplete="off"><span class="affix">payments</span></div>
+        <span class="error-msg">Enter a whole number of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="cardTotal">Card payments through a card processor<span class="hint">If you take credit or debit cards yourself. Enter 0 if you don't</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="cardTotal" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Business expenses for the year<span class="hint">Used only to check the $400 self-employment tax rule</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="expenses" type="text" inputmode="decimal" value="2000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your 1099s for 2026</h2>
+      <div class="result-main"><span id="out-main">—</span> <small id="out-main-note">Forms 1099 likely</small></div>
+      <ul class="result-list">
+        <li><span>1099-NEC from clients ($2,000 or more)</span><span id="out-nec">—</span></li>
+        <li><span>From clients under $2,000 (no form)</span><span id="out-under">—</span></li>
+        <li><span>Form 1099-K</span><span id="out-k">—</span></li>
+        <li class="key"><span>Total income to report</span><span id="out-income">—</span></li>
+        <li><span>Income with no 1099 (still report it)</span><span id="out-unreported">—</span></li>
+        <li><span>Self-employment tax ($400 rule)</span><span id="out-se">—</span></li>
+      </ul>
+      <p class="result-note">A guide to which forms you're likely to get, based on IRS rules for payments made in 2026. You must report all your income, whether or not you get a form. Some payers send forms for smaller amounts.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>The 1099 thresholds for 2026</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Form</th><th>Who sends it</th><th>When you get one for 2026</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Form">1099-NEC</td><td data-label="Who sends it">A business client that paid you directly for your work</td><td data-label="When you get one for 2026">It paid you <strong>$2,000 or more</strong> in the year</td></tr>
+          <tr><td data-label="Form">1099-K</td><td data-label="Who sends it">A payment app or online marketplace</td><td data-label="When you get one for 2026">You received <strong>more than $20,000</strong> through it in <strong>more than 200</strong> payments (both must be true)</td></tr>
+          <tr><td data-label="Form">1099-K</td><td data-label="Who sends it">A card processor (credit and debit card payments)</td><td data-label="When you get one for 2026">Whatever the amount or number of payments</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The IRS instructions say the 1099-NEC threshold was <strong>increased to $2,000</strong> for tax years beginning after 2025, and may be adjusted for inflation from 2027. The IRS says the 1099-K threshold for payment apps and marketplaces went back to $20,000 and 200 transactions (IRS fact sheet FS-2026-07). Payments made by card or through a payment app go on a 1099-K, not a 1099-NEC, so you don't get two forms for the same money.</p>
+    <p>For payments made in 2026, clients must send you your 1099-NEC by January 31, 2027. That's a Sunday, so under the IRS weekend rule the deadline moves to <strong>February 1, 2027</strong>.</p>
+
+    <h2>The most important rule: report all your income</h2>
+    <p>The IRS says you must report all your income on your tax return, whether or not you get a Form 1099. The thresholds only decide which payers have to send a form. A client who paid you $1,800 doesn't send a 1099-NEC, but the $1,800 is still income. Keep your own records of every payment, such as invoices and bank statements, and add up your income from those, not from the forms.</p>
+
+    <h2>How to use this checker</h2>
+    <ol class="steps">
+      <li><strong>List what each client paid you directly</strong> in 2026, one per line. You can type a name first, such as "Acme 2500", and only the number is used.</li>
+      <li><strong>Add payment app and marketplace income</strong>, and roughly how many separate payments it came in.</li>
+      <li><strong>Add card payments</strong> you took through your own card processor, if any.</li>
+      <li><strong>Add your business expenses</strong> to check whether you owe self-employment tax.</li>
+    </ol>
+
+    <h2>Worked examples</h2>
+    <p><strong>A freelancer with four clients.</strong> Clients paid $5,000, $2,500, $1,800 and $900 directly, plus $3,000 through a payment app in 40 payments. Two clients paid $2,000 or more, so expect <strong>two 1099-NECs</strong> totaling $7,500. The app total is under $20,000, so no 1099-K is required. Total income is $13,200, and <strong>$5,700 of it comes with no form</strong> but must still be reported. With $2,000 of expenses, profit is $11,200 and net earnings are $10,343.20, so self-employment tax applies.</p>
+    <p><strong>An online seller under the transaction count.</strong> $25,000 of sales through a marketplace in 150 orders. That's over $20,000 but not over 200 transactions, so a 1099-K isn't required. All $25,000 is still income. With 250 orders, a 1099-K would be required.</p>
+    <p><strong>Exactly $2,000.</strong> A client who paid you exactly $2,000 should send a 1099-NEC, because the rule is $2,000 <em>or more</em>.</p>
+    <p><strong>Card payments.</strong> A tutor takes $4,000 in card payments through a card processor. The processor sends a 1099-K for any amount, so expect one form for the $4,000.</p>
+    <p><strong>A very small side gig.</strong> One client paid $350 and there were no expenses. Net earnings are $350 × 92.35% = $323.23, under $400, so there's no self-employment tax. At $434 of profit, net earnings are $400.80 and it would apply.</p>
+
+    <h2>Self-employment tax and the $400 rule</h2>
+    <p>The IRS says you must pay self-employment tax and file Schedule SE if your net earnings from self-employment are <strong>$400 or more</strong>. Net earnings are 92.35% of your net profit (income minus business expenses). So the line is about $433 of profit. This is separate from whether you get any 1099s. To see how much self-employment tax you'd pay, use our <a href="{{root}}us/self-employment-tax-calculator/">self-employment tax calculator</a>.</p>
+
+    <h2>What to do if a 1099 is wrong or missing</h2>
+    <ul>
+      <li><strong>Missing form:</strong> report the income anyway, using your own records.</li>
+      <li><strong>Wrong amount:</strong> ask the payer for a corrected form, and report what you actually received.</li>
+      <li><strong>The same money on two forms:</strong> card and app payments belong on a 1099-K, not a 1099-NEC. Count the money once in your income, and keep records showing why.</li>
+    </ul>
+
+    <h2>What this checker doesn't cover</h2>
+    <ul>
+      <li><strong>Payments to corporations.</strong> If your business is a corporation, or an LLC taxed as one, clients generally don't send you a 1099-NEC.</li>
+      <li><strong>Other kinds of 1099</strong>, such as 1099-MISC for rent or royalties, 1099-INT for interest, or forms for backup withholding.</li>
+      <li><strong>State taxes.</strong> It covers federal IRS forms only.</li>
+      <li><strong>Whether you must file a tax return for other reasons.</strong> The $400 rule is only about self-employment tax.</li>
+      <li><strong>Years other than 2026.</strong> The 1099-NEC figure may change for 2027.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do I have to report income if I didn't get a 1099?</summary>
+        <p>Yes. The IRS says you must report all income, whether or not you get a Form 1099-K or another information return. The same applies to a missing 1099-NEC.</p>
+      </details>
+      <details>
+        <summary>What is the 1099-NEC threshold for 2026?</summary>
+        <p>$2,000 or more paid to you by one client in the year. The IRS says it may be adjusted for inflation from 2027.</p>
+      </details>
+      <details>
+        <summary>Will a payment app send me a 1099-K?</summary>
+        <p>It must if you received more than $20,000 through it in more than 200 payments in the year. The IRS notes that some apps send forms for less.</p>
+      </details>
+      <details>
+        <summary>When should I get my 1099s for 2026?</summary>
+        <p>The deadline to send them is January 31, 2027, which moves to February 1, 2027 because January 31 is a Sunday.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.irs.gov/instructions/i1099mec" rel="noopener">IRS: Instructions for Forms 1099-MISC and 1099-NEC</a>, <a href="https://www.irs.gov/businesses/understanding-your-form-1099-k" rel="noopener">IRS: understanding your Form 1099-K</a>, <a href="https://www.irs.gov/newsroom/the-working-families-tax-cuts-what-gig-economy-workers-should-know" rel="noopener">IRS: what gig economy workers should know (FS-2026-07)</a>, <a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" rel="noopener">IRS: self-employment tax</a>. Checked October 27, 2026.</p>
+  </div>
