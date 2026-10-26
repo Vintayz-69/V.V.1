@@ -721,6 +721,33 @@ function loadResume(country) {
   check("QM credit max", run("ON", "ON", "services", 500000).firstCredit, 300);
 }
 
+// ---------------- UK tax deadlines calendar (data/deadlines-uk.js)
+{
+  const dl = load("uk-tax-deadlines", ["data/deadlines-uk.js"]);
+  const all = { poa: true, mtd: true, newReturn: true };
+  // On 27 October 2026: the next date is the 31 October paper deadline, 4 days away
+  const fromToday = dl({ today: "2026-10-27", ...all });
+  expectAll("Deadlines first", fromToday[0], { date: "2026-10-31", daysLeft: 4 });
+  check("Deadlines all count", fromToday.length, 17);
+  // Filters: without MTD, POA or first return, only the "all" dates
+  check("Deadlines basic count", dl({ today: "2026-10-27", poa: false, mtd: false, newReturn: false }).length, 8);
+  // 31 January 2027 is 96 days after 27 October 2026; the day itself counts as 0
+  check("Deadlines 31 Jan 2027", dl({ today: "2026-10-27", poa: false, mtd: false, newReturn: false }).find(e => e.date === "2027-01-31").daysLeft, 96);
+  check("Deadlines same day", dl({ today: "2027-01-31", poa: false, mtd: false, newReturn: false })[0].daysLeft, 0);
+  check("Deadlines past ones dropped", dl({ today: "2027-02-01", ...all })[0].date, "2027-02-07");
+  check("Deadlines after the list", dl({ today: "2028-02-01", ...all }).length, 0);
+  // Dates are in order, and every event has a known "who"
+  const W = (() => { const vm = require("vm"); const ctx = { window: {} }; vm.runInNewContext(fs.readFileSync(path.join(JS, "data/deadlines-uk.js"), "utf8"), ctx); return ctx.window.ToolNestDeadlinesUK; })();
+  check("Deadlines sorted", W.events.every((e, i) => i === 0 || W.events[i - 1].date <= e.date), true);
+  check("Deadlines who values", W.events.every(e => ["all", "poa", "mtd", "new"].includes(e.who)), true);
+  check("Deadlines last is to", W.events[W.events.length - 1].date, W.to);
+  // Calendar file: one all-day event per date, CRLF line endings, commas escaped
+  const ics = dl.toIcs([{ date: "2027-01-31", title: "Pay, file", detail: "Due" }], "20261027T000000Z");
+  check("ICS has event", ics.includes("BEGIN:VEVENT") && ics.includes("DTSTART;VALUE=DATE:20270131") && ics.includes("DTEND;VALUE=DATE:20270201"), true);
+  check("ICS escapes commas", ics.includes("SUMMARY:Pay\\, file"), true);
+  check("ICS CRLF", ics.split("\r\n").length > 5, true);
+}
+
 // ---------------- S corporation vs sole proprietor, 2026 federal (page examples by hand)
 {
   const sc = load("us-s-corp", ["data/tax-us.js", "js/us-tax.js"]);

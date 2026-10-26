@@ -7824,3 +7824,21 @@ button.sol-slot {
 .source-links { margin: 0 0 0.6em; padding-left: 1.2em; font-size: 0.9rem; }
 .source-links a, .source-tools a { overflow-wrap: anywhere; }
 .source-tools { margin: 0; font-size: 0.9rem; }
+
+/* UK tax deadlines: filters and the list of upcoming dates */
+.deadline-filters { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 10px; }
+.deadline-filters legend { font-weight: 600; margin-bottom: 6px; padding: 0; }
+.deadline-list { list-style: none; margin: 0 0 1em; padding: 0; }
+.deadline {
+  display: grid;
+  grid-template-columns: minmax(0, 11em) minmax(0, 1fr);
+  gap: 4px 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.deadline-when, .deadline-what { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.deadline-when span, .deadline-what span { font-size: 0.88rem; color: var(--muted); }
+.deadline-soon .deadline-when span { color: var(--red-600); font-weight: 600; }
+@media (max-width: 560px) {
+  .deadline { grid-template-columns: minmax(0, 1fr); }
+}

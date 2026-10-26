@@ -1,0 +1,86 @@
+  <section class="calculator" aria-label="UK tax deadlines">
+    <form class="calc-form" id="deadline-form" novalidate>
+      <fieldset class="field span-2 deadline-filters">
+        <legend>Show the dates that apply to you</legend>
+        <label class="check"><input id="poa" type="checkbox" checked><span>I make payments on account<span class="hint">Usually if your last tax bill was £1,000 or more</span></span></label>
+        <label class="check"><input id="mtd" type="checkbox"><span>I use Making Tax Digital for Income Tax<span class="hint">Quarterly updates. <a href="{{root}}uk/making-tax-digital-checker/">Check if it applies to you</a></span></span></label>
+        <label class="check"><input id="newReturn" type="checkbox"><span>2026 to 2027 is my first tax return<span class="hint">Or I didn't need to send one for 2025 to 2026</span></span></label>
+      </fieldset>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="download-ics">{{icon:calendar}} Add these dates to my calendar</button>
+        <span class="privacy-note">{{icon:lock}} The calendar file is made on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your upcoming UK tax dates</h2>
+      <div class="result-main"><span id="deadline-count">—</span> <small>from today</small></div>
+      <ol class="deadline-list" id="deadline-list"><li class="deadline">Loading the dates…</li></ol>
+      <p class="result-note">Online deadlines are 11:59pm on the day. The calendar file works with Google Calendar, Apple Calendar and Outlook: open it, or import it.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>The main Self Assessment dates</h2>
+    <p>For the 2026 to 2027 tax year (6 April 2026 to 5 April 2027), GOV.UK's deadlines are:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Deadline</th><th>What's due</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Deadline">5 October 2027</td><td data-label="What's due">Register for Self Assessment, if it's your first tax return or you didn't need to send one for 2025 to 2026</td></tr>
+          <tr><td data-label="Deadline">31 October 2027</td><td data-label="What's due">Paper tax return</td></tr>
+          <tr><td data-label="Deadline">30 December 2027</td><td data-label="What's due">Online return, if you want the tax collected through your tax code (you must already pay tax through PAYE and owe less than £3,000)</td></tr>
+          <tr><td data-label="Deadline">31 January 2028</td><td data-label="What's due">Online tax return, and pay the tax you owe (plus your first payment on account for 2027 to 2028, if you make them)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>For the 2025 to 2026 tax year, each date is one year earlier: the online return and payment are due by <strong>31 January 2027</strong>.</p>
+
+    <h2>Payments on account</h2>
+    <p>If you make payments on account, you pay towards next year's tax in two halves, by <strong>31 January</strong> and <strong>31 July</strong>. Each one is usually half of your last tax bill. Our <a href="{{root}}uk/payments-on-account-calculator/">payments on account calculator</a> works out the amounts, including what you'll pay in January.</p>
+
+    <h2>Making Tax Digital quarterly updates</h2>
+    <p>If you use Making Tax Digital for Income Tax, you send an update after each quarter, and the deadlines are the same every year:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Update covers</th><th>Send it by</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Update covers">6 April to 5 July</td><td data-label="Send it by">7 August</td></tr>
+          <tr><td data-label="Update covers">6 April to 5 October</td><td data-label="Send it by">7 November</td></tr>
+          <tr><td data-label="Update covers">6 April to 5 January</td><td data-label="Send it by">7 February</td></tr>
+          <tr><td data-label="Update covers">6 April to 5 April</td><td data-label="Send it by">7 May</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Making Tax Digital started on 6 April 2026 for qualifying income over £50,000, and starts on 6 April 2027 for qualifying income over £30,000. GOV.UK says HMRC won't give penalty points for late quarterly updates in the 2026 to 2027 tax year.</p>
+
+    <h2>How the calendar file works</h2>
+    <p>The button makes a small calendar file (.ics) with one all-day event for each date in your list. It's made in your browser and saved straight to your device. We don't send it anywhere, and we can't see which dates you chose. Open the file to add the dates to your calendar, or import it in Google Calendar's settings.</p>
+
+    <h2>What this page doesn't cover</h2>
+    <ul>
+      <li><strong>VAT return deadlines</strong>, which depend on your VAT periods.</li>
+      <li><strong>Company deadlines</strong>, such as Corporation Tax and Companies House filings.</li>
+      <li><strong>Partnerships, trustees and non-resident companies</strong>, which can have different deadlines.</li>
+      <li><strong>A late registration letter.</strong> If you register after 5 October, HMRC gives you a deadline 3 months from its letter or email, but you still need to pay by 31 January.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>When is the Self Assessment deadline for 2025 to 2026?</summary>
+        <p>31 January 2027 for online returns and paying what you owe. The paper return deadline was 31 October 2026.</p>
+      </details>
+      <details>
+        <summary>What happens if I miss the 31 January deadline?</summary>
+        <p>GOV.UK says there's an initial £100 penalty, and more the later it is. Our <a href="{{root}}uk/self-employed-tax-calculator/">self-employed tax page</a> explains the penalties.</p>
+      </details>
+      <details>
+        <summary>Do I get a reminder?</summary>
+        <p>We don't send reminders or collect email addresses. Add the dates to your own calendar with the button above, and set reminders there.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/self-assessment-tax-returns/deadlines" rel="noopener">GOV.UK: Self Assessment deadlines</a>, <a href="https://www.gov.uk/understand-self-assessment-bill/payments-on-account" rel="noopener">GOV.UK: payments on account</a>, <a href="https://www.gov.uk/pay-self-assessment-tax-bill/through-your-tax-code" rel="noopener">GOV.UK: pay through your tax code</a>, <a href="https://www.gov.uk/guidance/use-making-tax-digital-for-income-tax/send-quarterly-updates" rel="noopener">GOV.UK: Making Tax Digital quarterly updates</a>. Checked 27 October 2026.</p>
+  </div>
