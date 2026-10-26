@@ -1,0 +1,100 @@
+  <section class="calculator" aria-label="Tax on savings interest calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="other">Your other taxable income for the year<span class="hint">Wages, self-employed profit, pension or rent. Not savings interest or dividends</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="other" type="text" inputmode="decimal" value="30000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="interest">Savings interest for the year<span class="hint">From bank and building society accounts, not ISAs. Your half of a joint account</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="interest" type="text" inputmode="decimal" value="1300" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated tax on your savings interest</h2>
+      <div class="result-main"><span id="out-main">—</span> <small>for 2026 to 2027</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Interest that's tax-free</span><span id="out-free">—</span></li>
+        <li><span>Covered by your Personal Allowance</span><span id="out-pa">—</span></li>
+        <li><span>Starting rate for savings (0%)</span><span id="out-sr">—</span></li>
+        <li><span>Personal Savings Allowance</span><span id="out-psa">—</span></li>
+        <li><span>Interest taxed</span><span id="out-taxed">—</span></li>
+        <li><span>Interest you keep after tax</span><span id="out-keep">—</span></li>
+      </ul>
+      <p class="result-note">An estimate for England, Wales and Northern Ireland. After the tax year, your bank tells HMRC how much interest you earned, and HMRC collects any tax due.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Tax at different amounts of interest</h2>
+    <p>With your other income above:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Interest</th><th class="num">Tax</th><th class="num">You keep</th></tr></thead>
+        <tbody id="interest-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How much savings interest is tax-free?</h2>
+    <p>GOV.UK describes three ways interest can be tax-free, used in this order:</p>
+    <ol class="steps">
+      <li><strong>Your Personal Allowance.</strong> The first £12,570 of your income is tax-free. It's used on your wages, pension or other income first, and any left over covers interest.</li>
+      <li><strong>The starting rate for savings.</strong> Up to <strong>£5,000</strong> of interest is tax-free, but every £1 of other income above your Personal Allowance reduces it by £1. If your other income is £17,570 or more, you don't get it.</li>
+      <li><strong>The Personal Savings Allowance.</strong> <strong>£1,000</strong> of interest if you're a basic rate taxpayer, <strong>£500</strong> if you're a higher rate taxpayer and <strong>nothing</strong> at the additional rate. GOV.UK says to work out your band by adding your interest to your other income.</li>
+    </ol>
+    <p>Interest above all of these is taxed at your normal Income Tax rate: 20%, 40% or 45%. Interest from ISAs usually isn't taxed at all.</p>
+
+    <h2>Worked examples</h2>
+    <p>For 2026 to 2027 in England, Wales and Northern Ireland.</p>
+    <p><strong>GOV.UK's starting rate example.</strong> Wages of £16,000 and £200 of interest. The Personal Allowance covers the first £12,570 of wages. The other £3,430 reduces the starting rate from £5,000 to £1,570, so the £200 of interest isn't taxed.</p>
+    <p><strong>GOV.UK's Personal Savings Allowance example.</strong> A basic rate taxpayer (here earning £30,000) with £1,300 of interest. The first £1,000 is tax-free and the other £300 is taxed at 20%: <strong>£60</strong>.</p>
+    <p><strong>A higher rate taxpayer.</strong> £60,000 of income and £1,300 of interest. The allowance is £500, so £800 is taxed at 40%: <strong>£320</strong>.</p>
+    <p><strong>A freelancer with a tax pot.</strong> £45,000 of profit and £6,000 of interest. Together that's into the higher rate band, so the allowance is £500. Of the other £5,500, £4,770 is still in the basic rate band (20%, £954) and £730 is in the higher rate band (40%, £292): <strong>£1,246</strong> in all.</p>
+    <p><strong>Low other income.</strong> £10,000 of wages and £4,000 of interest. The unused £2,570 of Personal Allowance covers part of the interest, and the starting rate covers the rest: <strong>no tax</strong>.</p>
+    <p><strong>No other income.</strong> £20,000 of interest only. £12,570 is covered by the Personal Allowance, £5,000 by the starting rate and £1,000 by the Personal Savings Allowance. The other £1,430 is taxed at 20%: £286.</p>
+    <p><strong>The additional rate.</strong> £130,000 of income and £1,000 of interest. There's no Personal Savings Allowance and the Personal Allowance has gone, so it's all taxed at 45%: £450.</p>
+
+    <h2>How you pay tax on savings interest</h2>
+    <p>GOV.UK says your bank or building society tells HMRC how much interest you earned after the tax year ends. Then:</p>
+    <ul>
+      <li><strong>Interest of £10,000 or less, and you're employed or get a pension:</strong> HMRC usually collects the tax through your tax code. Tax on 2025 to 2026 interest, for example, is usually collected in 2027 to 2028.</li>
+      <li><strong>You already fill in a Self Assessment return:</strong> report the interest on it.</li>
+      <li><strong>No tax code that can be changed:</strong> HMRC may send a Simple Assessment letter.</li>
+      <li><strong>Interest over £10,000:</strong> you must report it on a Self Assessment tax return.</li>
+    </ul>
+    <p>For a joint account, HMRC splits the interest equally between the account holders, so enter your half above.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Scotland.</strong> GOV.UK says Scottish taxpayers pay the same tax as the rest of the UK on savings interest, but their other income uses Scottish rates. This calculator doesn't show how the two fit together.</li>
+      <li><strong>Dividends</strong>, which have their own allowance and rates. See our <a href="{{root}}uk/dividend-tax-calculator/">dividend tax calculator</a>.</li>
+      <li><strong>Pension contributions and Gift Aid</strong>, which can change your tax band.</li>
+      <li><strong>ISAs and other tax-free accounts.</strong> Leave their interest out.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How much interest can I earn before paying tax?</summary>
+        <p>It depends on your other income. A basic rate taxpayer earning over £17,570 can usually earn £1,000 of interest tax-free; a higher rate taxpayer, £500. With low other income, it can be much more, because of the starting rate for savings.</p>
+      </details>
+      <details>
+        <summary>How does HMRC know about my interest?</summary>
+        <p>GOV.UK says your bank or building society tells HMRC how much interest you earned after the tax year ends. HMRC then collects any tax, usually through your tax code or your Self Assessment return.</p>
+      </details>
+      <details>
+        <summary>I'm self-employed and save my tax money in a savings account. Is the interest taxed?</summary>
+        <p>Yes, like any other savings interest, if it's more than your tax-free allowances. Add it to your self-employed profit above to see. Our <a href="{{root}}freelance/tax-set-aside-calculator/">tax set-aside calculator</a> helps you work out how much to put aside.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/apply-tax-free-interest-on-savings/how-much-is-tax-free" rel="noopener">GOV.UK: how much savings interest is tax-free</a>, <a href="https://www.gov.uk/apply-tax-free-interest-on-savings" rel="noopener">GOV.UK: tax on savings interest</a>, <a href="https://www.gov.uk/income-tax-rates" rel="noopener">GOV.UK: Income Tax rates</a>. Checked 27 October 2026.</p>
+  </div>

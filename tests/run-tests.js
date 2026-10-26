@@ -641,6 +641,27 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- Tax on savings interest 2026 to 2027 (GOV.UK examples + page examples)
+{
+  const sv = load("uk-savings-tax", ["data/tax-uk.js", "data/savings-uk.js", "js/uk-tax.js"]);
+  const run = (other, interest) => sv({ other, interest });
+  // GOV.UK: wages £16,000, interest £200 → starting rate £1,570 (5,000 − 3,430), no tax
+  expectAll("Savings gov.uk starting rate", run(16000, 200), { startingRate: 1570, tax: 0 });
+  // GOV.UK: basic rate taxpayer, £1,300 → £300 at 20% = £60
+  expectAll("Savings gov.uk PSA", run(30000, 1300), { band: "basic", psa: 1000, taxed: 300, tax: 60, keep: 1240 });
+  expectAll("Savings higher rate", run(60000, 1300), { psa: 500, taxed: 800, tax: 320 });
+  // £45,000 + £6,000: £4,770 at 20% (£954) + £730 at 40% (£292) = £1,246
+  check("Savings tax pot basic part", (37700 - (45000 - 12570) - 500) * 0.2, 954);
+  check("Savings tax pot higher part", (5500 - 4770) * 0.4, 292);
+  expectAll("Savings tax pot", run(45000, 6000), { band: "higher", psa: 500, taxed: 5500, tax: 1246 });
+  expectAll("Savings low other income", run(10000, 4000), { coveredByPa: 2570, atStartingRate: 1430, tax: 0 });
+  expectAll("Savings interest only", run(0, 20000), { coveredByPa: 12570, atStartingRate: 5000, inPsa: 1000, taxed: 1430, tax: 286 });
+  expectAll("Savings additional rate", run(130000, 1000), { personalAllowance: 0, psa: 0, tax: 450 });
+  // No starting rate from £17,570 of other income
+  check("Savings £17,570", run(17570, 100).startingRate, 0);
+  check("Savings £17,569", run(17569, 100).startingRate, 1);
+}
+
 // ---------------- Marriage Allowance 2026 to 2027 (page examples by hand)
 {
   const ma = load("uk-marriage-allowance", ["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"]);
