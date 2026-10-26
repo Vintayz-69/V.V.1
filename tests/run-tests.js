@@ -641,6 +641,30 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- High Income Child Benefit Charge 2026 to 2027 (GOV.UK's Clara + page examples)
+{
+  const hc = load("uk-hicbc", ["data/child-benefit-uk.js"]);
+  const run = (income, children, weeks = 52, pension = 0, giftAid = 0) => hc({ income, pension, giftAid, children, weeks });
+  // GOV.UK Clara: 70,000 − 4,750 (paid gross) = 65,250; − 1,250 Gift Aid = 64,000; 20% of £2,337.40
+  expectAll("HICBC Clara", run(65250, 2, 52, 0, 1000), { ani: 64000, percent: 20, benefit: 2337.4, charge: 467.48, kept: 1869.92 });
+  expectAll("HICBC £70k two", run(70000, 2), { percent: 50, charge: 1168.7 });
+  expectAll("HICBC £70k one", run(70000, 1), { benefit: 1406.6, charge: 703.3 });
+  // £4,000 relief-at-source pension → £5,000 off → 65,000 → 25%
+  expectAll("HICBC pension", run(70000, 2, 52, 4000), { ani: 65000, percent: 25, charge: 584.35 });
+  expectAll("HICBC £85k three", run(85000, 3), { benefit: 3268.2, percent: 100, charge: 3268.2, kept: 0, allRepaid: true });
+  expectAll("HICBC 26 weeks", run(70000, 1, 26), { benefit: 703.3, charge: 351.65 });
+  expectAll("HICBC £60k", run(60000, 2), { percent: 0, charge: 0, overThreshold: false });
+  // Whole £200 steps: £61,300 is 6 steps
+  check("HICBC part step", run(61300, 1).percent, 6);
+  check("HICBC £80,000 all", run(80000, 1).percent, 100);
+  // Rates table: 52 weeks
+  for (const [k, b] of [[1, 1406.6], [2, 2337.4], [3, 3268.2]]) check(`HICBC benefit ${k} children`, run(50000, k).benefit, b);
+  // Taper table with two children: every £2,000 is 10 steps
+  for (const [ani, pct, charge] of [[62000, 10, 233.74], [66000, 30, 701.22], [74000, 70, 1636.18], [78000, 90, 2103.66]]) {
+    expectAll(`HICBC table £${ani}`, run(ani, 2), { percent: pct, charge });
+  }
+}
+
 // ---------------- Canada GST/HST Quick Method (CRA RC4058 rates, page examples by hand)
 {
   const qm = load("ca-quick-method", ["data/tax-ca.js", "data/quick-method-ca.js"]);

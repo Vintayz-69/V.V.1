@@ -1,0 +1,131 @@
+  <section class="calculator" aria-label="High Income Child Benefit Charge calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="income">Your taxable income for the year<span class="hint">Salary, self-employed profit, savings interest, dividends and rent, after any pension paid through your employer before tax</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="income" type="text" inputmode="decimal" value="70000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="pension">Personal pension contributions you paid<span class="hint">To a scheme that adds basic-rate tax relief for you (relief at source). The amount you paid</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="pension" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="giftAid">Gift Aid donations you made<span class="hint">The amount you paid</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="giftAid" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="children">Children you get Child Benefit for</label>
+        <div class="input-wrap"><input id="children" type="text" inputmode="numeric" value="2" autocomplete="off"><span class="affix">children</span></div>
+        <span class="error-msg">Enter a whole number from 1 to 20.</span>
+      </div>
+
+      <div class="field">
+        <label for="weeks">Weeks of Child Benefit in the tax year<span class="hint">52 for a full year. Fewer if it started or stopped during the year</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="numeric" value="52" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a whole number from 1 to 53.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated High Income Child Benefit Charge</h2>
+      <div class="result-main"><span id="out-main">—</span> <small>for 2026 to 2027</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Your adjusted net income</span><span id="out-ani">—</span></li>
+        <li><span>Share of Child Benefit to pay back</span><span id="out-percent">—</span></li>
+        <li><span>Child Benefit for the year</span><span id="out-benefit">—</span></li>
+        <li><span>Child Benefit you keep after the charge</span><span id="out-kept">—</span></li>
+      </ul>
+      <p class="result-note">An estimate. The charge is paid by whichever partner has the higher adjusted net income, if it's over £60,000. If you're a couple, use the figures for the partner with the higher income.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>The charge at each income, with your children and weeks</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Adjusted net income</th><th class="num">Paid back</th><th class="num">Charge</th></tr></thead>
+        <tbody id="steps-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How the High Income Child Benefit Charge works</h2>
+    <p>If you or your partner get Child Benefit and either of you has <strong>adjusted net income over £60,000</strong>, the one with the higher income pays a tax charge. GOV.UK says you pay back <strong>1% of your Child Benefit for every £200</strong> over £60,000, so at <strong>£80,000</strong> or more you pay back all of it. Below £60,000, there's no charge.</p>
+    <p>It's based on each partner's own income, not the household's. Two partners each earning £55,000 pay no charge; one earning £70,000 with a partner earning nothing pays it.</p>
+
+    <h2>Child Benefit rates for 2026 to 2027</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Child</th><th class="num">Per week</th><th class="num">For 52 weeks</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Child">Eldest or only child</td><td class="num" data-label="Per week">£27.05</td><td class="num" data-label="For 52 weeks">£1,406.60</td></tr>
+          <tr><td data-label="Child">Each other child</td><td class="num" data-label="Per week">£17.90</td><td class="num" data-label="For 52 weeks">£930.80</td></tr>
+          <tr><td data-label="Child">Two children in all</td><td class="num" data-label="Per week">£44.95</td><td class="num" data-label="For 52 weeks">£2,337.40</td></tr>
+          <tr><td data-label="Child">Three children in all</td><td class="num" data-label="Per week">£62.85</td><td class="num" data-label="For 52 weeks">£3,268.20</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What adjusted net income is</h2>
+    <p>Adjusted net income is your total taxable income (salary, profit from self-employment, savings interest, dividends, rent and so on) with some things taken off. GOV.UK's guide says to:</p>
+    <ul>
+      <li>take off pension contributions paid before tax, such as through your employer's payroll</li>
+      <li>take off <strong>£1.25 for every £1</strong> you paid into a personal pension that adds basic-rate tax relief for you</li>
+      <li>take off <strong>£1.25 for every £1</strong> of Gift Aid donations</li>
+      <li>take off trading losses you're claiming relief for</li>
+    </ul>
+
+    <h2>Worked examples</h2>
+    <p>All use 2026 to 2027 Child Benefit for 52 weeks.</p>
+    <p><strong>GOV.UK's example (Clara).</strong> Taxable income of £70,000, less £4,750 of pension contributions paid before tax, is £65,250. Taking off £1,250 for £1,000 of Gift Aid leaves adjusted net income of <strong>£64,000</strong>. That's £4,000 over £60,000, or 20 steps of £200, so 20% of Child Benefit is paid back. With two children (£2,337.40), the charge is <strong>£467.48</strong>.</p>
+    <p><strong>£70,000 with two children.</strong> £10,000 over is 50 steps, so half of £2,337.40: <strong>£1,168.70</strong>.</p>
+    <p><strong>£70,000 with one child.</strong> Half of £1,406.60: <strong>£703.30</strong>.</p>
+    <p><strong>A personal pension contribution.</strong> The same £70,000 earner with two children pays £4,000 into a personal pension with relief at source. Their adjusted net income falls by £5,000 to £65,000, so the charge is 25%: £584.35 instead of £1,168.70.</p>
+    <p><strong>Over £80,000.</strong> £85,000 with three children: all £3,268.20 is paid back.</p>
+    <p><strong>Child Benefit for part of the year.</strong> A baby born half-way through the year, with 26 weeks of Child Benefit for one child (£703.30) and £70,000 of income: half is paid back, £351.65.</p>
+
+    <h2>Paying the charge, or opting out</h2>
+    <ul>
+      <li><strong>Through PAYE or Self Assessment.</strong> GOV.UK says you can pay it through your tax code or on a Self Assessment tax return. If you already send a tax return, you pay it there. Self-employed people usually do.</li>
+      <li><strong>Opting out.</strong> You can choose to stop getting Child Benefit payments and not pay the charge. GOV.UK says you still get National Insurance credits, which count towards your State Pension.</li>
+    </ul>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Part-steps of £200.</strong> It counts whole £200 steps (for example, £61,300 counts as 6 steps, 6%). We couldn't confirm on an official page how a part-step is treated, so for an exact figure use <a href="https://www.gov.uk/child-benefit-tax-calculator" rel="noopener">HMRC's own calculator</a>.</li>
+      <li><strong>Changes during the year</strong>, such as a new partner, or children joining or leaving your claim part-way through.</li>
+      <li><strong>Working out your taxable income.</strong> Our <a href="{{root}}uk/take-home-pay-calculator/">take-home pay</a> and <a href="{{root}}uk/self-employed-tax-calculator/">self-employed tax</a> calculators can help.</li>
+      <li><strong>Tax years before 2026 to 2027.</strong> Child Benefit rates and, before 2024 to 2025, the thresholds were different.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is the £60,000 based on household income?</summary>
+        <p>No. It's based on each person's own adjusted net income. The partner with the higher income pays the charge, if their income is over £60,000.</p>
+      </details>
+      <details>
+        <summary>At what income do I pay back all my Child Benefit?</summary>
+        <p>At £80,000 of adjusted net income or more. Between £60,000 and £80,000 you pay back part of it.</p>
+      </details>
+      <details>
+        <summary>Do pension contributions reduce the charge?</summary>
+        <p>They reduce your adjusted net income, which the charge is based on. GOV.UK's guide shows how. Whether paying more into a pension suits you is a wider decision; a financial adviser or accountant can help.</p>
+      </details>
+      <details>
+        <summary>Should we still claim Child Benefit if the charge takes all of it?</summary>
+        <p>GOV.UK says that if you choose not to get the payments, you should still make a claim to get the other advantages. These include National Insurance credits, which count towards your State Pension; you get them automatically if your child is under 12.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/child-benefit-tax-charge" rel="noopener">GOV.UK: High Income Child Benefit Charge</a>, <a href="https://www.gov.uk/government/publications/rates-and-allowances-tax-credits-child-benefit-and-guardians-allowance/tax-credits-child-benefit-and-guardians-allowance" rel="noopener">HMRC: Child Benefit rates</a>, <a href="https://www.gov.uk/guidance/adjusted-net-income" rel="noopener">GOV.UK: adjusted net income</a>, <a href="https://www.gov.uk/hmrc-internal-manuals/paye-manual/paye14015" rel="noopener">HMRC PAYE manual: HICBC</a>. Checked 27 October 2026.</p>
+  </div>
