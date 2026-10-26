@@ -1,0 +1,106 @@
+  <section class="calculator" aria-label="GST/HST small supplier tracker">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="startQuarter">First quarter in your list</label>
+        <div class="select-wrap">
+          <select id="startQuarter">
+            <option value="0">January to March</option>
+            <option value="1">April to June</option>
+            <option value="2">July to September</option>
+            <option value="3" selected>October to December</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="startYear">Year</label>
+        <div class="select-wrap">
+          <select id="startYear">
+            <option value="2023">2023</option><option value="2024">2024</option><option value="2025" selected>2025</option>
+            <option value="2026">2026</option><option value="2027">2027</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="sales">Your taxable sales for each calendar quarter, oldest first<span class="hint">One quarter per line, before expenses. Up to 24 quarters</span></label>
+        <textarea id="sales" class="text-tool-input" rows="6" spellcheck="false" autocomplete="off">6000
+7000
+8000
+9000
+10000</textarea>
+        <span class="error-msg">Put one amount on each line, for 1 to 24 quarters.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Small supplier status</h2>
+      <div class="result-main"><span id="out-main">—</span> <small id="out-main-note"></small></div>
+      <ul class="result-list">
+        <li><span>What happened</span><span id="out-when">—</span></li>
+        <li class="key"><span>Start charging GST/HST</span><span id="out-charge">—</span></li>
+        <li><span>Register</span><span id="out-register">—</span></li>
+      </ul>
+      <p class="result-note">A guide based on the CRA's rules for most businesses. Charities and public service bodies use different thresholds.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your quarters and rolling totals</h2>
+    <p>Newest first. The last column adds up that quarter and the three before it:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Quarter</th><th class="num">Sales</th><th class="num">Last four quarters</th></tr></thead>
+        <tbody id="quarters-body"><tr><td colspan="3">Enter your quarterly sales above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>The $30,000 small supplier test</h2>
+    <p>Most businesses don't have to register for GST/HST while they're a <strong>small supplier</strong>. The CRA says you stop being one if your revenue from worldwide taxable supplies (before expenses) is more than <strong>$30,000</strong> in either:</p>
+    <ul>
+      <li><strong>a single calendar quarter</strong>: you stop on the sale that takes you over $30,000, and you must charge GST/HST on that sale, or</li>
+      <li><strong>the last four (or fewer) calendar quarters together</strong>: you stop at the <strong>end of the month after</strong> the quarter you went over, and start charging from your first sale after that.</li>
+    </ul>
+    <p>Either way, you have to register within <strong>29 days</strong> of your effective date of registration. Calendar quarters start in January, April, July and October. Include your associates' sales, but leave out financial services, sales of capital property and goodwill from selling a business.</p>
+
+    <h2>The CRA's examples</h2>
+    <p><strong>Still a small supplier.</strong> Quarterly sales of $2,000, $10,000, $12,000 and $5,000 add up to $29,000 over four quarters, which isn't over $30,000.</p>
+    <p><strong>Over in one quarter.</strong> $2,000, $10,000, then $38,000 in July to September 2020. The business stopped being a small supplier on the day it went over $30,000 in that quarter, and had to charge GST/HST on the sale that took it over.</p>
+    <p><strong>Over in two quarters.</strong> A store opened in November 2019 and made $25,000 in October to December 2019 and $25,000 in January to March 2020: $50,000. It stopped being a small supplier on <strong>April 30, 2020</strong>, and its first sale after that was May 1, 2020.</p>
+    <p><strong>Over four quarters.</strong> $2,000, $10,000, $12,000 and $8,000 from April 2019 to March 2020: $32,000. It also stopped on <strong>April 30, 2020</strong>.</p>
+    <p><strong>The example above.</strong> $6,000 to $10,000 a quarter from October 2025. The four quarters to September 2026 make exactly $30,000, which isn't over. The four quarters to December 2026 make $34,000, so the business stops being a small supplier on <strong>January 31, 2027</strong>.</p>
+
+    <h2>Once you're registered</h2>
+    <p>You charge GST/HST on your sales and file returns. Some small businesses use the Quick Method to work out what they send to the CRA: our <a href="{{root}}ca/gst-hst-quick-method-calculator/">Quick Method calculator</a> compares it with the regular method. To add GST/HST to a price, use the <a href="{{root}}ca/gst-hst-calculator/">GST/HST calculator</a>.</p>
+
+    <h2>What this tracker doesn't cover</h2>
+    <ul>
+      <li><strong>The exact day you go over in a single quarter.</strong> It tells you the quarter; you'll know from your own sales which sale it was.</li>
+      <li><strong>Charities and public service bodies</strong>, which use different tests.</li>
+      <li><strong>Registering voluntarily</strong> before you have to.</li>
+      <li><strong>Quebec Sales Tax (QST)</strong>, which Revenu Québec handles separately.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is the $30,000 threshold per year?</summary>
+        <p>Not exactly. It's checked for each calendar quarter, and for the last four calendar quarters together. You can go over in any quarter.</p>
+      </details>
+      <details>
+        <summary>Is it based on profit or sales?</summary>
+        <p>Sales. The CRA says to include all revenue from taxable supplies before expenses.</p>
+      </details>
+      <details>
+        <summary>How long do I have to register?</summary>
+        <p>The CRA says within 29 days of your effective date of registration.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/when-register-charge.html" rel="noopener">CRA: when to register for and start charging the GST/HST</a>. Checked October 27, 2026.</p>
+  </div>

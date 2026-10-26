@@ -778,6 +778,24 @@ function loadResume(country) {
   }
 }
 
+// ---------------- Canada GST/HST small supplier tracker (CRA's four examples)
+{
+  const gt = load("ca-gst-threshold", ["data/tax-ca.js", "data/gst-registration-ca.js"]);
+  check("GST CRA ex1 small", gt({ startYear: 2020, startQuarter: 0, sales: [2000, 10000, 12000, 5000] }).event, null);
+  check("GST CRA ex1 total", gt({ startYear: 2020, startQuarter: 0, sales: [2000, 10000, 12000, 5000] }).rows[3].rolling, 29000);
+  expectAll("GST CRA ex2 single", gt({ startYear: 2020, startQuarter: 0, sales: [2000, 10000, 38000] }).event, { test: "single", quarterLabel: "July to September 2020" });
+  expectAll("GST CRA ex3 two quarters", gt({ startYear: 2019, startQuarter: 3, sales: [25000, 25000] }).event, { test: "four", stopsOn: "2020-04-30" });
+  expectAll("GST CRA ex4 four quarters", gt({ startYear: 2019, startQuarter: 1, sales: [2000, 10000, 12000, 8000] }).event, { test: "four", stopsOn: "2020-04-30" });
+  // Page example: exactly $30,000 to September 2026 isn't over; $34,000 to December → January 31, 2027
+  const ex = gt({ startYear: 2025, startQuarter: 3, sales: [6000, 7000, 8000, 9000, 10000] });
+  check("GST example exactly 30k", ex.rows[3].rolling, 30000);
+  check("GST example 34k", ex.rows[4].rolling, 34000);
+  check("GST example stops", ex.event.stopsOn, "2027-01-31");
+  // Old quarters drop out of the four-quarter total
+  check("GST rolls", gt({ startYear: 2025, startQuarter: 0, sales: [29000, 100, 100, 100, 100] }).rows[4].rolling, 400);
+  check("GST parse", gt.parseAmounts("Q1 $6,000\n7000").length, 2);
+}
+
 // ---------------- Canada business-use-of-home expenses (CRA examples)
 {
   const ho = load("ca-home-office");
