@@ -1,0 +1,100 @@
+  <section class="calculator" aria-label="Student loan repayment calculator for the self-employed">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="profit">Self-employed profit for the tax year<span class="hint">After business expenses, before tax</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="profit" type="text" inputmode="decimal" value="32000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="salary">Pay from a job, if you have one<span class="hint">Before tax. Enter 0 if you're only self-employed</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="salary" type="text" inputmode="decimal" value="10000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <fieldset class="field span-2 deadline-filters">
+        <legend>Your student loan plans</legend>
+        <label class="check"><input id="plan1" type="checkbox" checked><span>Plan 1</span></label>
+        <label class="check"><input id="plan2" type="checkbox"><span>Plan 2</span></label>
+        <label class="check"><input id="plan4" type="checkbox"><span>Plan 4 (Scotland)</span></label>
+        <label class="check"><input id="plan5" type="checkbox"><span>Plan 5</span></label>
+        <label class="check"><input id="postgraduate" type="checkbox"><span>Postgraduate Loan</span></label>
+      </fieldset>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated student loan repayment for the year</h2>
+      <div class="result-main"><span id="out-main">—</span> <small>for 2026 to 2027</small></div>
+      <ul class="result-list">
+        <li><span>Income it's based on</span><span id="out-income">—</span></li>
+        <li><span>Plan 1, 2, 4 or 5 (9%)</span><span id="out-plans">—</span></li>
+        <li><span>Postgraduate Loan (6%)</span><span id="out-pg">—</span></li>
+        <li><span>Already taken from your pay (estimate)</span><span id="out-payroll">—</span></li>
+        <li class="key"><span>Left to pay through Self Assessment</span><span id="out-sa">—</span></li>
+      </ul>
+      <p class="result-note">An estimate. HMRC works out the real amount from your Self Assessment tax return, and takes off what your employer has already deducted.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How self-employed people repay a student loan</h2>
+    <p>Employees repay through their pay each month. If you're self-employed, GOV.UK says HMRC works out how much you repay each year from your <strong>Self Assessment tax return</strong>. It's based on your income for the whole year. If you also have a job, your combined income counts, and anything already taken from your pay is taken off the yearly amount.</p>
+
+    <h2>Thresholds for 2026 to 2027</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Plan</th><th class="num">Yearly threshold</th><th class="num">You repay</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Plan">Plan 1</td><td class="num" data-label="Yearly threshold">£26,900</td><td class="num" data-label="You repay">9% of income over it</td></tr>
+          <tr><td data-label="Plan">Plan 2</td><td class="num" data-label="Yearly threshold">£29,385</td><td class="num" data-label="You repay">9% of income over it</td></tr>
+          <tr><td data-label="Plan">Plan 4 (Scotland)</td><td class="num" data-label="Yearly threshold">£33,795</td><td class="num" data-label="You repay">9% of income over it</td></tr>
+          <tr><td data-label="Plan">Plan 5</td><td class="num" data-label="Yearly threshold">£25,000</td><td class="num" data-label="You repay">9% of income over it</td></tr>
+          <tr><td data-label="Plan">Postgraduate Loan</td><td class="num" data-label="Yearly threshold">£21,000</td><td class="num" data-label="You repay">6% of income over it</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>If you have more than one of Plans 1, 2, 4 and 5, GOV.UK says you repay 9% of your income over the <strong>lowest</strong> of their thresholds, as one repayment. A Postgraduate Loan is repaid at the same time, at 6% over £21,000, on top.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>GOV.UK's example.</strong> Plan 1, £32,000 of self-employed income plus £10,000 from a job: £42,000 in all. 9% of £15,100 (£42,000 minus £26,900) is <strong>£1,359</strong> for the year. The £10,000 job is under the threshold, so nothing has been taken from pay, and all of it is paid through Self Assessment.</p>
+    <p><strong>Plan 2, self-employed only.</strong> £45,000 of profit: 9% of £15,615 is <strong>£1,405.35</strong>.</p>
+    <p><strong>A job plus a side business.</strong> Plan 2, £35,000 from a job and £10,000 of profit. The yearly repayment on £45,000 is £1,405.35. About £505.35 has been taken from pay (9% of the £5,615 over the threshold), so about <strong>£900</strong> is left for Self Assessment.</p>
+    <p><strong>Plan 5.</strong> £30,000 of profit: 9% of £5,000 is £450.</p>
+    <p><strong>Plan 2 and a Postgraduate Loan.</strong> £40,000 of profit: 9% of £10,615 (£955.35) plus 6% of £19,000 (£1,140) is <strong>£2,095.35</strong>.</p>
+    <p><strong>Plan 1 and Plan 2.</strong> £38,400 of income: 9% over the lower Plan 1 threshold, so 9% of £11,500 is £1,035 a year. That's the £86 a month in GOV.UK's example.</p>
+    <p><strong>Under the threshold.</strong> Plan 2 and £20,000 of profit: nothing to repay this year.</p>
+
+    <h2>Plan it into your tax savings</h2>
+    <p>Because the repayment is worked out from your tax return after the year ends, it's worth putting money aside for it during the year, as well as for Income Tax and National Insurance. Our <a href="{{root}}uk/self-employed-tax-calculator/">self-employed tax calculator</a> works out the tax and NI on the same profit.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Other income</strong>, such as savings interest, dividends or rent. GOV.UK explains when these count.</li>
+      <li><strong>How a repayment is split between plans</strong>, and the monthly caps on the plan with the lowest threshold.</li>
+      <li><strong>Repayments that changed during the year</strong>, for example from a job that started or ended part-way through. The "already taken from your pay" figure is a yearly estimate.</li>
+      <li><strong>Living abroad.</strong> GOV.UK has separate guidance.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do self-employed people pay student loan repayments monthly?</summary>
+        <p>No. GOV.UK says HMRC works out the amount once a year from your Self Assessment tax return.</p>
+      </details>
+      <details>
+        <summary>Is it based on profit or turnover?</summary>
+        <p>Your income for the year: for self-employment that's your taxable profit, not your sales.</p>
+      </details>
+      <details>
+        <summary>I have a job and a side business. Will I repay twice?</summary>
+        <p>No. Your combined income is used, and what your employer has already taken off your pay is deducted from the yearly amount.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/repaying-your-student-loan/what-you-pay" rel="noopener">GOV.UK: repaying your student loan, what you pay</a>, <a href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" rel="noopener">GOV.UK: rates and thresholds for employers 2026 to 2027</a>. Checked 27 October 2026.</p>
+  </div>

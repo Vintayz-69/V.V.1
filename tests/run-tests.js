@@ -641,6 +641,25 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- Student loan repayments for the self-employed 2026 to 2027 (GOV.UK examples + page)
+{
+  const sl = load("uk-student-loan-se", ["data/tax-uk.js"]);
+  const run = (profit, salary, plans, postgraduate = false) => sl({ profit, salary, plans, postgraduate });
+  // GOV.UK: Plan 1, £32,000 self-employed + £10,000 employed = £42,000 → £1,359
+  expectAll("SL gov.uk self-employed", run(32000, 10000, ["plan1"]), { income: 42000, total: 1359, viaPayroll: 0, viaSelfAssessment: 1359 });
+  // GOV.UK: Plan 1 and Plan 2, £38,400 → 9% over £26,900 = £1,035 a year (£86 a month)
+  expectAll("SL gov.uk two plans", run(38400, 0, ["plan1", "plan2"]), { total: 1035 });
+  check("SL two plans monthly", Math.floor(1035 / 12), 86);
+  expectAll("SL plan 2", run(45000, 0, ["plan2"]), { total: 1405.35 });
+  expectAll("SL job and side business", run(10000, 35000, ["plan2"]), { total: 1405.35, viaPayroll: 505.35, viaSelfAssessment: 900 });
+  check("SL plan 5", run(30000, 0, ["plan5"]).total, 450);
+  expectAll("SL plan 2 + postgraduate", run(40000, 0, ["plan2"], true), { main: 955.35, postgraduate: 1140, total: 2095.35 });
+  check("SL under threshold", run(20000, 0, ["plan2"]).total, 0);
+  check("SL plan 4", run(36000, 0, ["plan4"]).total, 198.45);
+  // Page steps: income over each threshold
+  for (const [inc, thr, over] of [[42000, 26900, 15100], [45000, 29385, 15615], [35000, 29385, 5615], [40000, 29385, 10615]]) check(`SL over £${thr}`, inc - thr, over);
+}
+
 // ---------------- Tax on savings interest 2026 to 2027 (GOV.UK examples + page examples)
 {
   const sv = load("uk-savings-tax", ["data/tax-uk.js", "data/savings-uk.js", "js/uk-tax.js"]);
