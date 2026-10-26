@@ -659,6 +659,10 @@ function loadResume(country) {
   check("HICBC £80,000 all", run(80000, 1).percent, 100);
   // Rates table: 52 weeks
   for (const [k, b] of [[1, 1406.6], [2, 2337.4], [3, 3268.2]]) check(`HICBC benefit ${k} children`, run(50000, k).benefit, b);
+  // Rates table: weekly totals, and each other child for 52 weeks
+  check("HICBC two children weekly", run(50000, 2, 1).benefit, 44.95);
+  check("HICBC three children weekly", run(50000, 3, 1).benefit, 62.85);
+  check("HICBC other child 52 weeks", run(50000, 2).benefit - run(50000, 1).benefit, 930.8);
   // Taper table with two children: every £2,000 is 10 steps
   for (const [ani, pct, charge] of [[62000, 10, 233.74], [66000, 30, 701.22], [74000, 70, 1636.18], [78000, 90, 2103.66]]) {
     expectAll(`HICBC table £${ani}`, run(ani, 2), { percent: pct, charge });
@@ -717,6 +721,9 @@ function loadResume(country) {
   // $350: 350 × 92.35% = 323.23, no SE tax; $434: 400.80, SE tax applies
   expectAll("SE $350", run([350]), { netEarnings: 323.23, seTaxApplies: false });
   expectAll("SE $434", run([434]), { netEarnings: 400.8, seTaxApplies: true });
+  // Page: "the line is about $433 of profit" ($400 ÷ 92.35% = $433.13)
+  check("SE line about $433", Math.round(400 / 0.9235), 433);
+  check("SE $433 is under", run([433]).seTaxApplies, false);
   // Parsing: names, $ signs and commas are ignored; blank lines skipped; a line with no number fails
   const p1 = parse("Acme 2500\n$1,800.50\n\n  900  ");
   check("1099 parse count", p1.length, 3);
