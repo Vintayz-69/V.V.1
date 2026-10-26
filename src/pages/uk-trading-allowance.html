@@ -1,0 +1,142 @@
+  <section class="calculator" aria-label="UK trading allowance calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="income">Side income for the year, before expenses<span class="hint">Everything your side business or freelance work brought in (gross)</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="income" type="text" inputmode="decimal" value="3000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Your allowable expenses<span class="hint">Business costs you could claim, such as materials, fees and equipment</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="expenses" type="text" inputmode="decimal" value="400" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="other">Other taxable income for the year<span class="hint">Such as your salary before tax. Enter 0 if you have none</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="other" type="text" inputmode="decimal" value="30000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="region">Where you live</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Trading allowance or expenses?</h2>
+      <div class="result-main"><span id="out-main">—</span> <small id="out-main-note"></small></div>
+      <ul class="result-list">
+        <li><span>Taxable profit using the allowance</span><span id="out-pa">—</span></li>
+        <li><span>Taxable profit using your expenses</span><span id="out-pe">—</span></li>
+        <li><span>Extra tax and NI with the allowance</span><span id="out-ta">—</span></li>
+        <li><span>Extra tax and NI with your expenses</span><span id="out-te">—</span></li>
+        <li><span>Do you need to tell HMRC?</span><span id="out-hmrc">—</span></li>
+      </ul>
+      <p class="result-note">An estimate of the Income Tax and Class 4 National Insurance on your side income for 2026 to 2027, added on top of your other income. You can use the allowance or your expenses, not both.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Tax with different expenses</h2>
+    <p>The tax on your side income if you claim each amount of expenses instead of the allowance, with your income above:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Expenses</th><th class="num">Tax and NI with expenses</th><th class="num">Less tax with</th></tr></thead>
+        <tbody id="exp-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>What is the trading allowance?</h2>
+    <p>The trading allowance lets you earn up to <strong>£1,000 a year</strong> from self-employment, casual jobs (such as babysitting or gardening) or hiring out your own equipment without paying tax on it. GOV.UK calls it a tax exemption. It's on your <strong>gross</strong> income: the total before any expenses.</p>
+    <ul>
+      <li><strong>£1,000 or less</strong> of gross trading income in a tax year: you usually don't need to tell HMRC or pay tax on it.</li>
+      <li><strong>More than £1,000</strong>: you must register for Self Assessment by 5 October after the tax year ends. On your return you can either take £1,000 off your income (the allowance) or take off your actual expenses. You can't do both.</li>
+    </ul>
+    <p>There's a separate £1,000 property allowance for rental income. If you have both kinds of income, you get £1,000 for each.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your side income</strong> for the tax year, before taking off any costs.</li>
+      <li><strong>Enter the expenses you could claim</strong> if you didn't use the allowance.</li>
+      <li><strong>Enter your other taxable income</strong>, such as a salary, so the side income is taxed at the right rate.</li>
+      <li><strong>Choose where you live</strong>, because Scotland has its own Income Tax rates.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Profit with the allowance  = income − £1,000 (or − income, if under £1,000)
+Profit with your expenses  = income − expenses
+
+Extra tax = Income Tax on (other income + profit) − Income Tax on other income alone
+          + Class 4 National Insurance on the profit
+
+The lower profit leaves less tax. As a rule, the allowance wins when your
+expenses are under £1,000, and your expenses win when they're over £1,000.</div>
+
+    <h2>Worked examples</h2>
+    <p>All use 2026 to 2027 rates for England, Wales and Northern Ireland.</p>
+    <p><strong>A small side business with few costs.</strong> Jamie earns a £30,000 salary and makes £3,000 selling crafts, with £400 of costs. With the allowance, the taxable profit is £2,000, and at 20% that's <strong>£400</strong> of tax. With expenses, it's £2,600 and £520. The allowance leaves <strong>£120 less tax</strong>.</p>
+    <p><strong>Higher costs.</strong> Same salary and income, but £1,800 of costs. Expenses leave £1,200 of profit and £240 of tax. The allowance leaves £2,000 and £400. Here expenses leave <strong>£160 less tax</strong>.</p>
+    <p><strong>Under £1,000.</strong> £800 of side income with £100 of costs. The allowance covers all of it, so there's no tax to pay and usually no need to tell HMRC. Claiming the £100 of costs instead would leave £700 of profit and £140 of tax.</p>
+    <p><strong>A higher-rate taxpayer.</strong> A £60,000 salary, £5,000 of side income and £500 of costs. Each pound of profit is taxed at 40%. The allowance leaves £4,000 and £1,600 of tax; expenses leave £4,500 and £1,800. The allowance leaves £200 less.</p>
+    <p><strong>No other income.</strong> £10,000 of income and £2,000 of costs, with no salary. Either way the profit (£9,000 or £8,000) is under the £12,570 Personal Allowance, so there's no tax either way. You'd still need to register for Self Assessment, because your gross income is over £1,000.</p>
+    <p><strong>Full-time self-employed.</strong> £20,000 of income, £500 of costs and no other income. The allowance leaves £19,000 of profit: £1,286 of Income Tax and £385.80 of Class 4 NI, £1,671.80 in total. Expenses leave £19,500 and £1,801.80. The allowance leaves £130 less.</p>
+
+    <h2>When you can't use the allowance</h2>
+    <p>GOV.UK says you can't use the trading or property allowance in a tax year if you have any trade or property income from:</p>
+    <ul>
+      <li>your employer, or your spouse's or civil partner's employer</li>
+      <li>a company that you, or someone connected to you, owns or controls</li>
+      <li>a partnership where you, or someone connected to you, is a partner</li>
+    </ul>
+    <p>The trading allowance doesn't apply to your share of income from a partnership.</p>
+
+    <h2>When claiming expenses can matter more</h2>
+    <ul>
+      <li><strong>If you made a loss.</strong> If your costs were more than your income, using your expenses shows a loss, which you may be able to use against other income. With the allowance, your profit is simply zero. This calculator shows a loss as no tax, and doesn't work out loss relief.</li>
+      <li><strong>If your costs are over £1,000.</strong> Your actual expenses will usually leave a lower profit than the allowance.</li>
+    </ul>
+    <p>Keep records of your income and costs either way. You need the income figure to know whether you're over £1,000, and HMRC can ask to see your records.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Other income types</strong>, such as dividends, savings interest or rental income. It treats your other income as salary or similar.</li>
+      <li><strong>Pension contributions, student loans and Marriage Allowance.</strong></li>
+      <li><strong>Loss relief</strong>, as above.</li>
+      <li><strong>Benefits and tax credits</strong>, which can count your income differently. GOV.UK has a section on this.</li>
+      <li><strong>National Insurance on your salary.</strong> That doesn't change with your side income, so it isn't shown.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is the £1,000 trading allowance based on income or profit?</summary>
+        <p>Income. GOV.UK says gross income is the total you'd put on your tax return before any allowances or expenses are taken off. £1,200 of sales with £300 of costs is £1,200 of income, which is over £1,000.</p>
+      </details>
+      <details>
+        <summary>Can I claim the trading allowance and my expenses?</summary>
+        <p>No. You choose one. GOV.UK says you can't deduct any other expenses or allowances if you claim the allowances.</p>
+      </details>
+      <details>
+        <summary>I earned £1,500. Is only £500 taxed?</summary>
+        <p>If you use the allowance, yes: £1,500 minus £1,000 leaves £500 of taxable profit. You'll need to register for Self Assessment and put it on your tax return.</p>
+      </details>
+      <details>
+        <summary>I have a side business and rent out a room. Do I get £2,000?</summary>
+        <p>You get £1,000 for trading income and a separate £1,000 for property income. Renting a room in your own home may come under the separate Rent a Room Scheme instead; GOV.UK explains both.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income" rel="noopener">GOV.UK: tax-free allowances on property and trading income</a>, <a href="https://www.gov.uk/income-tax-rates" rel="noopener">GOV.UK: Income Tax rates</a>, <a href="https://www.gov.uk/self-employed-national-insurance-rates" rel="noopener">GOV.UK: self-employed National Insurance</a>. Checked 27 October 2026.</p>
+  </div>

@@ -641,6 +641,38 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- UK trading allowance vs expenses, 2026 to 2027 (page examples by hand)
+{
+  const ta = load("uk-trading-allowance", ["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"]);
+  const run = (income, expenses, other, region = "ruk") => ta({ income, expenses, other, region });
+  // Jamie: £3,000, £400 costs, £30,000 salary: 2,000 × 20% = 400 vs 2,600 × 20% = 520
+  expectAll("TA Jamie", run(3000, 400, 30000), { profitAllowance: 2000, profitExpenses: 2600, taxAllowance: 400, taxExpenses: 520, best: "allowance", saving: 120, underLimit: false });
+  // £1,800 of costs: 1,200 × 20% = 240, expenses £160 less
+  expectAll("TA higher costs", run(3000, 1800, 30000), { profitExpenses: 1200, taxExpenses: 240, best: "expenses", saving: 160 });
+  // Under £1,000: allowance covers it all; expenses would leave £700 and £140
+  expectAll("TA under £1,000", run(800, 100, 30000), { allowance: 800, profitAllowance: 0, taxAllowance: 0, profitExpenses: 700, taxExpenses: 140, underLimit: true, best: "allowance" });
+  // Higher rate: 4,000 × 40% = 1,600 vs 4,500 × 40% = 1,800
+  expectAll("TA higher rate", run(5000, 500, 60000), { taxAllowance: 1600, taxExpenses: 1800, saving: 200 });
+  // No other income: both profits under the Personal Allowance
+  expectAll("TA no other income", run(10000, 2000, 0), { profitAllowance: 9000, profitExpenses: 8000, taxAllowance: 0, taxExpenses: 0, best: "same", underLimit: false });
+  // Full-time: 19,000 → IT 1,286 + Class 4 385.80; 19,500 → 1,801.80
+  expectAll("TA full time", run(20000, 500, 0), { taxAllowance: 1671.8, taxExpenses: 1801.8, saving: 130 });
+  // Exactly £1,000 of costs: same either way
+  expectAll("TA £1,000 costs", run(3000, 1000, 30000), { best: "same", saving: 0 });
+  // A loss with expenses: no tax shown
+  expectAll("TA loss", run(3000, 4000, 30000), { profitExpenses: -1000, taxExpenses: 0, loss: true, best: "expenses" });
+  // Scotland intermediate rate 21%: 2,000 × 21% = 420, 2,600 × 21% = 546
+  expectAll("TA Scotland", run(3000, 400, 30000, "scotland"), { taxAllowance: 420, taxExpenses: 546 });
+  // FAQs: £1,200 of sales is over £1,000; £1,500 leaves £500
+  check("TA FAQ £1,200 income", run(1200, 300, 30000).underLimit, false);
+  check("TA FAQ £1,500", run(1500, 0, 30000).profitAllowance, 500);
+  check("TA exactly £1,000", run(1000, 0, 30000).underLimit, true);
+  // Table on the page with the default example (£3,000 income, £30,000 salary)
+  for (const [e, tax, best] of [[0, 600, "allowance"], [250, 550, "allowance"], [500, 500, "allowance"], [1000, 400, "same"], [1500, 300, "expenses"], [2000, 200, "expenses"]]) {
+    expectAll(`TA table £${e}`, run(3000, e, 30000), { taxExpenses: tax, best });
+  }
+}
+
 // ---------------- Making Tax Digital for Income Tax checker (GOV.UK examples + page examples)
 {
   const mtd = load("uk-mtd", ["data/mtd-uk.js"]);

@@ -263,6 +263,13 @@ TOOLS = {
         short="Add 20% or 5% VAT to a price, or take the VAT out of a total, with the £90,000 registration rule.",
         icon="formula", group="uk-tax", parent="uk", keywords="value added tax add remove reverse inclusive exclusive",
     ),
+    "uk-trading-allowance": dict(
+        path="uk/trading-allowance-calculator/",
+        name="Trading Allowance Calculator (UK)",
+        card="Trading allowance calculator",
+        short="Side income? See whether the £1,000 trading allowance or your actual expenses leaves less tax, and if you need to tell HMRC.",
+        icon="scales", group="uk-tax", parent="uk", keywords="trading allowance £1000 side hustle side business self assessment expenses hmrc tell register",
+    ),
     "uk-mtd": dict(
         path="uk/making-tax-digital-checker/",
         name="Making Tax Digital for Income Tax Checker",
@@ -1329,7 +1336,7 @@ POPULAR_DAY = "2026-10-11"
 MORE_DAY = "2026-10-13"  # 8 more tools, header search and homepage tool finder  # QR code, password, timer, random number, discount, colour and Base64 tools
 CONTENT_DAY = "2026-10-16"  # AdSense "low-value content" fixes: owner name, working email, fuller About and tool pages
 MONEY_DAY = "2026-10-17"  # 10 money pages deepened: more worked examples, official dates and rules, FAQs
-FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme calculator, Making Tax Digital checker
+FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme calculator, Making Tax Digital checker, trading allowance calculator
 NEW_TOOLS_DAY = "2026-10-20"  # 8 new tools: pro rata, invoice due date, SSP, maternity pay, stamp duty, CGT, simple interest, net worth
 ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
@@ -1497,6 +1504,13 @@ PAGES = [
          intro="Add VAT to a price, or work out how much VAT is inside a total, at the UK's 20% standard or 5% reduced rate.",
          chips=["{{flag:uk}} UK VAT rates"] + TOOL_CHIPS,
          related=["uk-vat-flat-rate", "quote-generator", "invoice-generator"]),
+    dict(tool="uk-trading-allowance", src="uk-trading-allowance.html", script="uk-trading-allowance.js",
+         libs=["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"], updated=FRS_DAY,
+         title="Trading Allowance Calculator UK 2026/27 (£1,000) | ToolNest by Vintayz",
+         description="Compare the £1,000 trading allowance with your actual expenses and see which leaves less tax on your side income in 2026 to 2027, and whether you must tell HMRC.",
+         intro="Earn money on the side? See whether the £1,000 trading allowance or your actual expenses leaves less tax, and whether you need to tell HMRC.",
+         chips=["{{flag:uk}} UK, tax year 2026 to 2027"] + TOOL_CHIPS,
+         related=["uk-self-employed-tax", "uk-mtd", "uk-take-home"]),
     dict(tool="uk-mtd", src="uk-mtd.html", script="uk-mtd.js", libs=["data/mtd-uk.js"], updated=FRS_DAY,
          title="Making Tax Digital for Income Tax Checker (2026, 2027, 2028) | Vintayz",
          h1="Making Tax Digital for Income Tax Checker",
@@ -2761,6 +2775,7 @@ DATA_FILES = [
     ("tax-uk.js", "United Kingdom: Income Tax, National Insurance, dividends, VAT and student loans"),
     ("vat-flat-rate-uk.js", "United Kingdom: VAT Flat Rate Scheme"),
     ("mtd-uk.js", "United Kingdom: Making Tax Digital for Income Tax"),
+    ("allowances-uk.js", "United Kingdom: trading and property allowances"),
     ("statutory-pay-uk.js", "United Kingdom: Statutory Sick, Maternity and Paternity Pay"),
     ("employment-uk.js", "United Kingdom: holiday entitlement and redundancy pay"),
     ("property-tax-uk.js", "United Kingdom: Stamp Duty and Capital Gains Tax"),
@@ -3294,6 +3309,8 @@ NEXT_STEPS = {
                           ("uk-self-employed-tax", "See the tax on your profit after expenses")],
     "uk-vat": [("uk-vat-flat-rate", "On the Flat Rate Scheme? Work out what you pay HMRC"),
                ("invoice-generator", "Add VAT to an invoice")],
+    "uk-trading-allowance": [("uk-self-employed-tax", "Earning more? See tax and NI on a full self-employed profit"),
+                             ("uk-mtd", "Check if Making Tax Digital applies to you")],
     "uk-mtd": [("uk-self-employed-tax", "See the tax and NI on your profit"),
                ("uk-payments-on-account", "Work out your January and July payments")],
     "uk-vat-flat-rate": [("invoice-generator", "Make a VAT invoice for your client"),
