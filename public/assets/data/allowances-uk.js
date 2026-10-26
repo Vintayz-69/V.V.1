@@ -16,6 +16,12 @@
  * example (£10,600 receipts, £9,000 expenses: A £1,600, B £3,100):
  *   https://www.gov.uk/government/publications/rent-a-room-for-traders-hs223-self-assessment-helpsheet/hs223-rent-a-room-scheme-2026
  *   https://www.gov.uk/rent-room-in-your-home/the-rent-a-room-scheme
+ * Marriage Allowance (checked 2026-10-27): transfer £1,260 of your Personal Allowance to your husband,
+ * wife or civil partner, which reduces their tax by up to £252 in the tax year; you must not pay Income
+ * Tax (income below your Personal Allowance, usually £12,570); your partner must pay basic rate (income
+ * between £12,571 and £50,270, or £12,571 and £43,662 in Scotland); claims can be backdated to
+ * 6 April 2022:
+ *   https://www.gov.uk/marriage-allowance
  * Income tax and National Insurance figures come from tax-uk.js.
  *
  * TO UPDATE: check the GOV.UK page before 6 April each year, change the figures and `checked`,
@@ -26,5 +32,8 @@ window.ToolNestAllowancesUK = {
   trading: 1000,
   property: 1000,
   rentARoom: 7500,
-  rentARoomShared: 3750
+  rentARoomShared: 3750,
+  marriageAllowance: 1260,      // Personal Allowance transferred
+  marriageAllowanceSaving: 252, // the most it reduces the partner's tax by
+  marriageAllowanceBackdateFrom: "2022-04-06"
 };

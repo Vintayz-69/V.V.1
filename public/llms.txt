@@ -93,6 +93,7 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Dividend Tax Calculator (2026 to 2027)](https://vintayz.com/uk/dividend-tax-calculator/): Work out tax on your dividends for 2026 to 2027, with the dividend allowance and your other income.
 - [High Income Child Benefit Charge Calculator (2026/27)](https://vintayz.com/uk/child-benefit-tax-charge-calculator/): Work out the High Income Child Benefit Charge for 2026 to 2027: 1% for every £200 of income over £60,000.
 - [Making Tax Digital for Income Tax Checker](https://vintayz.com/uk/making-tax-digital-checker/): Check if and when you must use Making Tax Digital for Income Tax: £50,000, £30,000 or £20,000 of turnover.
+- [Marriage Allowance Calculator (UK 2026/27)](https://vintayz.com/uk/marriage-allowance-calculator/): Check if you can transfer £1,260 of Personal Allowance to your partner, and what you really save as a couple.
 - [Payments on Account Calculator](https://vintayz.com/uk/payments-on-account-calculator/): See what Self Assessment payments are due in January and July, and plan for the first-year shock.
 - [Rent a Room Relief Calculator (UK)](https://vintayz.com/uk/rent-a-room-calculator/): Lodger income? See if it's under the £7,500 tax-free limit, and which method leaves less tax if it's over.
 - [Self-Employed Tax and NI Calculator (2026/27)](https://vintayz.com/uk/self-employed-tax-calculator/): Work out Income Tax and Class 4 National Insurance on your 2026 to 2027 profits, including Scotland.

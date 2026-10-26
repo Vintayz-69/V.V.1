@@ -641,6 +641,30 @@ function loadResume(country) {
   expectAll("UK VAT zero rate", calc({ mode: "add", amount: 80, rate: "zero" }), { vat: 0, after: 80 });
 }
 
+// ---------------- Marriage Allowance 2026 to 2027 (page examples by hand)
+{
+  const ma = load("uk-marriage-allowance", ["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"]);
+  const run = (lower, higher, region = "ruk") => ma({ lower, higher, region });
+  // GOV.UK limits: £50,270, and £43,662 in Scotland
+  check("MA limit rUK", run(8000, 35000).limit, 50270);
+  check("MA limit Scotland", run(8000, 35000, "scotland").limit, 43662);
+  expectAll("MA typical", run(8000, 35000), { eligible: true, partnerSaving: 252, extraTax: 0, net: 252 });
+  // £12,000: 20% of (12,000 − 11,310 = 690) = 138; net 114
+  check("MA allowance after transfer", 12570 - 1260, 11310);
+  expectAll("MA near allowance", run(12000, 35000), { extraTax: 138, net: 114 });
+  expectAll("MA at £12,570", run(12570, 35000), { extraTax: 252, net: 0 });
+  // £13,000 partner pays 20% of 430 = 86
+  expectAll("MA small tax", run(5000, 13000), { partnerSaving: 86, net: 86 });
+  expectAll("MA higher rate", run(8000, 55000), { eligible: false, higherEligible: false });
+  check("MA Scotland £40k", run(8000, 40000, "scotland").eligible, true);
+  check("MA Scotland £45k", run(8000, 45000, "scotland").eligible, false);
+  // Scotland starter rate 19% on 690 = 131.10; net 120.90
+  expectAll("MA Scotland near allowance", run(12000, 35000, "scotland"), { extraTax: 131.1, net: 120.9 });
+  check("MA lower over allowance", run(14000, 35000).lowerEligible, false);
+  check("MA at £50,270", run(8000, 50270).eligible, true);
+  check("MA at £50,271", run(8000, 50271).eligible, false);
+}
+
 // ---------------- Rent a Room relief, 2026 to 2027 (HMRC HS223 Chris example + page examples)
 {
   const rr = load("uk-rent-a-room", ["data/tax-uk.js", "data/allowances-uk.js", "js/uk-tax.js"]);

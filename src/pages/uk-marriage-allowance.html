@@ -1,0 +1,100 @@
+  <section class="calculator" aria-label="Marriage Allowance calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="lower">Income of the partner who earns less<span class="hint">For 2026 to 2027, before tax. Include all taxable income</span></label>
+        <div class="input-wrap"><span class="affix">£</span><input id="lower" type="text" inputmode="decimal" value="8000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="higher">Income of the partner who earns more</label>
+        <div class="input-wrap"><span class="affix">£</span><input id="higher" type="text" inputmode="decimal" value="35000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="region">Where you live</label>
+        <div class="select-wrap">
+          <select id="region">
+            <option value="ruk">England, Wales or Northern Ireland</option>
+            <option value="scotland">Scotland</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Marriage Allowance for 2026 to 2027</h2>
+      <div class="result-main"><span id="out-main">—</span> <small id="out-main-note"></small></div>
+      <ul class="result-list">
+        <li><span>Tax saved by the partner who earns more</span><span id="out-partner">—</span></li>
+        <li><span>Extra tax for the partner who earns less</span><span id="out-extra">—</span></li>
+        <li><span>Lower earner can transfer?</span><span id="out-you">—</span></li>
+        <li><span>Higher earner can receive?</span><span id="out-them">—</span></li>
+      </ul>
+      <p class="result-note">An estimate. You must be married or in a civil partnership. The partner who earns less applies, on GOV.UK.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What is Marriage Allowance?</h2>
+    <p>GOV.UK says Marriage Allowance lets you transfer <strong>£1,260</strong> of your Personal Allowance to your husband, wife or civil partner. This reduces their tax by <strong>up to £252</strong> in the tax year.</p>
+    <p>You can claim if all of these are true:</p>
+    <ul>
+      <li>You're married or in a civil partnership. Living together isn't enough.</li>
+      <li>You don't pay Income Tax, or your income is below your Personal Allowance (usually £12,570).</li>
+      <li>Your partner pays Income Tax at the basic rate: usually income between <strong>£12,571 and £50,270</strong>, or <strong>£12,571 and £43,662</strong> in Scotland.</li>
+    </ul>
+    <p>GOV.UK says you can backdate a claim to <strong>6 April 2022</strong> (the 2022 to 2023 tax year).</p>
+
+    <h2>The catch: it can cost the lower earner some tax</h2>
+    <p>When you transfer £1,260, your own Personal Allowance falls to £11,310 for the year. If your income is under £11,310, that makes no difference. If it's between £11,310 and £12,570, you'll pay some tax on the part over £11,310, so the couple saves less than £252. At £12,570, the two cancel out. This calculator works it out.</p>
+
+    <h2>Worked examples</h2>
+    <p>For 2026 to 2027, England, Wales and Northern Ireland unless stated.</p>
+    <p><strong>A typical claim.</strong> One partner earns £8,000 and the other £35,000. The higher earner's tax falls by <strong>£252</strong>. The lower earner is still under £11,310, so pays nothing extra: the couple saves <strong>£252</strong>.</p>
+    <p><strong>Lower earner near the allowance.</strong> £12,000 and £35,000. The lower earner now pays 20% on £690 (£12,000 minus £11,310), which is £138. The couple saves £252 minus £138 = <strong>£114</strong>.</p>
+    <p><strong>Lower earner at £12,570.</strong> The extra tax is £252, the same as the saving, so there's no gain.</p>
+    <p><strong>Higher earner paying little tax.</strong> £5,000 and £13,000. The higher earner only pays £86 of tax (20% of £430), so that's the most it can reduce: the couple saves <strong>£86</strong>.</p>
+    <p><strong>A higher-rate taxpayer.</strong> £8,000 and £55,000. The partner earning £55,000 pays the higher rate, so you can't claim.</p>
+    <p><strong>In Scotland.</strong> £8,000 and £40,000 can claim (under £43,662); £8,000 and £45,000 can't. With £12,000 and £35,000, the lower earner pays the 19% starter rate on £690 (£131.10), so the couple saves £120.90.</p>
+
+    <h2>How to claim</h2>
+    <p>The partner who earns less applies on GOV.UK. If it's accepted, the change to Personal Allowances is backdated to the start of the tax year (6 April). GOV.UK says you must cancel it if you're no longer eligible, for example because your income changes; it then runs until the end of that tax year (5 April). See <a href="https://www.gov.uk/marriage-allowance/how-to-apply" rel="noopener">GOV.UK: how to apply</a>.</p>
+    <p>If either of you was born before 6 April 1935, GOV.UK says you might benefit more from Married Couple's Allowance instead. You can't get both.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>Backdated years.</strong> It works out 2026 to 2027 only.</li>
+      <li><strong>Savings and dividend income</strong>, which are taxed under their own rules.</li>
+      <li><strong>Married Couple's Allowance</strong>, for people born before 6 April 1935.</li>
+      <li><strong>Income over £100,000</strong>, where the Personal Allowance starts to fall (neither partner could claim anyway).</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How much is Marriage Allowance worth in 2026 to 2027?</summary>
+        <p>Up to £252 off the higher earner's tax for the year, from a £1,260 transfer of Personal Allowance.</p>
+      </details>
+      <details>
+        <summary>Can we claim if my partner is a higher-rate taxpayer?</summary>
+        <p>No. The partner receiving it must pay tax at the basic rate (in Scotland, the starter, basic or intermediate rate): income up to £50,270, or £43,662 in Scotland.</p>
+      </details>
+      <details>
+        <summary>Can we claim if we live together but aren't married?</summary>
+        <p>No. GOV.UK says you must be married or in a civil partnership.</p>
+      </details>
+      <details>
+        <summary>Which of us applies?</summary>
+        <p>The partner who earns less, because they're the one transferring part of their Personal Allowance.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.gov.uk/marriage-allowance" rel="noopener">GOV.UK: Marriage Allowance</a>, <a href="https://www.gov.uk/marriage-allowance/how-to-apply" rel="noopener">GOV.UK: how to apply</a>, <a href="https://www.gov.uk/income-tax-rates" rel="noopener">GOV.UK: Income Tax rates</a>. Checked 27 October 2026.</p>
+  </div>
