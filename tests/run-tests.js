@@ -580,6 +580,23 @@ function loadResume(country) {
     { annualHours: 1875, hourly: 48, daily: 360, weekly: 1800, biweekly: 3600, monthly: 7500, overtime: 72 });
   expectAll("salary-to-hourly part time", calc({ salary: 40000, hours: 20, days: 4, weeks: 52 }),
     { annualHours: 1040, hourly: 38.46, daily: 192.31, weekly: 769.23, biweekly: 1538.46, monthly: 3333.33, overtime: 57.69 });
+  // "Common salaries" table on the page: [salary, per hour at 40 hrs, per hour at 37.5 hrs, per month]
+  [[25000, 12.02, 12.82, 2083.33], [30000, 14.42, 15.38, 2500], [35000, 16.83, 17.95, 2916.67],
+   [40000, 19.23, 20.51, 3333.33], [45000, 21.63, 23.08, 3750], [50000, 24.04, 25.64, 4166.67],
+   [55000, 26.44, 28.21, 4583.33], [60000, 28.85, 30.77, 5000], [65000, 31.25, 33.33, 5416.67],
+   [70000, 33.65, 35.9, 5833.33], [75000, 36.06, 38.46, 6250], [80000, 38.46, 41.03, 6666.67],
+   [90000, 43.27, 46.15, 7500], [100000, 48.08, 51.28, 8333.33], [120000, 57.69, 61.54, 10000],
+   [150000, 72.12, 76.92, 12500], [200000, 96.15, 102.56, 16666.67]].forEach(([salary, h40, h375, month]) => {
+    expectAll(`salary-to-hourly table ${salary} at 40`, calc({ salary, hours: 40, days: 5, weeks: 52 }), { annualHours: 2080, hourly: h40, monthly: month });
+    expectAll(`salary-to-hourly table ${salary} at 37.5`, calc({ salary, hours: 37.5, days: 5, weeks: 52 }), { annualHours: 1950, hourly: h375 });
+  });
+  // Monthly, bi-weekly and weekly examples: 4,000 x 12 = 48,000; 2,000 x 26 = 52,000
+  expectAll("salary-to-hourly monthly 4000", calc({ salary: 48000, hours: 40, days: 5, weeks: 52 }), { hourly: 23.08 });
+  expectAll("salary-to-hourly bi-weekly 2000", calc({ salary: 52000, hours: 40, days: 5, weeks: 52 }), { hourly: 25, weekly: 1000 });
+  // Time and a half table: overtime = 1.5 x the hourly rate (salary = rate x 2,080 gives that hourly rate)
+  [[10, 15], [15, 22.5], [16, 24], [18, 27], [18.5, 27.75], [20, 30], [25, 37.5], [30, 45]].forEach(([rate, ot]) => {
+    expectAll(`salary-to-hourly time and a half ${rate}`, calc({ salary: rate * 2080, hours: 40, days: 5, weeks: 52 }), { hourly: rate, overtime: ot });
+  });
 }
 
 // ---------------- Word Counter & Readability Analyzer (Stage 5 Education)
@@ -3231,6 +3248,26 @@ async function resumePdfTests() {
   check("working days 2026 England", B.countBetween("2026-01-01", "2026-12-31", "england-and-wales", true).days, 253);
   check("working days 2026 US", B.countBetween("2026-01-01", "2026-12-31", "us", true).days, 250);
   check("weekdays 2026", B.countBetween("2026-01-01", "2026-12-31", "none", true).days, 261);
+
+  // 2027 table, year totals and the "5 or 10 business days" examples (2026-11-02)
+  const eng27 = [20, 20, 21, 22, 19, 22, 22, 21, 22, 21, 22, 21];
+  const us27 = [19, 19, 23, 22, 20, 21, 21, 22, 21, 20, 20, 22];
+  for (let m = 1; m <= 12; m++) {
+    const mm = String(m).padStart(2, "0");
+    check(`working days 2027-${mm} England`, B.countBetween(`2027-${mm}-01`, `2027-${mm}-${last[m - 1]}`, "england-and-wales", true).days, eng27[m - 1]);
+    check(`working days 2027-${mm} US`, B.countBetween(`2027-${mm}-01`, `2027-${mm}-${last[m - 1]}`, "us", true).days, us27[m - 1]);
+  }
+  check("working days 2027 England", B.countBetween("2027-01-01", "2027-12-31", "england-and-wales", true).days, 253);
+  check("working days 2027 US", B.countBetween("2027-01-01", "2027-12-31", "us", true).days, 250);
+  check("weekdays 2027", B.countBetween("2027-01-01", "2027-12-31", "none", true).days, 261);
+  check("working days 2026 Scotland", B.countBetween("2026-01-01", "2026-12-31", "scotland", true).days, 251);
+  check("working days 2027 Scotland", B.countBetween("2027-01-01", "2027-12-31", "scotland", true).days, 252);
+  check("working days 2026 NI", B.countBetween("2026-01-01", "2026-12-31", "northern-ireland", true).days, 251);
+  check("working days 2027 NI", B.countBetween("2027-01-01", "2027-12-31", "northern-ireland", true).days, 251);
+  check("5 working days after 2 Nov 2026", B.addDays("2026-11-02", 5, "england-and-wales").date, "2026-11-09");
+  check("10 working days after 2 Nov 2026", B.addDays("2026-11-02", 10, "england-and-wales").date, "2026-11-16");
+  check("5 working days after 23 Dec 2026 England", B.addDays("2026-12-23", 5, "england-and-wales").date, "2027-01-04");
+  check("5 working days after 23 Dec 2026 US", B.addDays("2026-12-23", 5, "us").date, "2026-12-31");
 }
 
 // ---------------- Off-topic page deepening, batch 3a (2026-10-17)

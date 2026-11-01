@@ -3329,6 +3329,14 @@ main .section[hidden],
   }
 }
 
+/* Number tables marked .tight use less cell padding on phones, so four columns fit at 390px. */
+@media (max-width: 600px) {
+  table.tight th,
+  table.tight td {
+    padding: 10px 8px;
+  }
+}
+
 /* Wide tables marked .stack turn into labelled blocks on phones. */
 @media (max-width: 600px) {
   table.stack thead {
