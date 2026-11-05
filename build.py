@@ -1438,6 +1438,7 @@ FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme, Making Tax Digital, trading allo
 NEW_TOOLS_DAY = "2026-10-20"  # 8 new tools: pro rata, invoice due date, SSP, maternity pay, stamp duty, CGT, simple interest, net worth
 ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
 SEARCH_DAY = "2026-11-02"  # pages closest to page 1 in Search Console: tables and answers for the searches people made
+SHARE_DAY = "2026-11-05"  # "Copy link to these numbers" on calculators; privacy policy updated
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
 IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
 TIME_LIBS = ["js/date-common.js"]
@@ -2628,7 +2629,7 @@ PAGES = [
     dict(path="contact/", src="contact.html", updated=CONTENT_DAY, kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
-    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=CONTENT_DAY,
+    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=SHARE_DAY,
          title="Privacy Policy | ToolNest by Vintayz", h1="Privacy Policy",
          description="How ToolNest handles personal information, cookies and analytics, and your privacy rights in the UK, the US and India."),
     dict(path="terms/", src="terms.html", kind="legal", updated=CONTENT_DAY,
@@ -3302,7 +3303,7 @@ def footer(up):
 {groups}
     </div>
     <div class="footer-bottom">
-      <p>© <span id="year">{TODAY[:4]}</span> {OWNER}. ToolNest is part of {OWNER}. All rights reserved.</p>
+      <p>© <span id="footer-year">{TODAY[:4]}</span> {OWNER}. ToolNest is part of {OWNER}. All rights reserved.</p>
       <p>Estimates only. Not tax, legal or financial advice.</p>
     </div>
   </div>
@@ -3825,6 +3826,7 @@ def render(page):
         verify += '<meta name="robots" content="noindex">\n'
 
     lang, og_loc = page_locale(page)
+    og_url, og_alt = og_card(page)
 
     return f"""<!doctype html>
 <html lang="{lang}">
@@ -3841,10 +3843,10 @@ def render(page):
 <meta property="og:description" content="{page['description']}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:locale" content="{og_loc}">
-<meta property="og:image" content="{DOMAIN}/assets/og-image.png">
+<meta property="og:image" content="{og_url}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="ToolNest by Vintayz: free calculators and tools for freelancers">
+<meta property="og:image:alt" content="{og_alt}">
 <meta name="twitter:card" content="summary_large_image">
 {verify}<link rel="icon" href="{up}favicon.svg" type="image/svg+xml">
 <link rel="preload" href="{up}assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -3920,6 +3922,21 @@ def llms_txt():
     return "\n".join(lines)
 
 
+OG_DESIGN = "1"  # must match DESIGN in og-images.js
+
+
+def og_card(page):
+    """The page's own social share picture (made by og-images.js), or the general one if it hasn't
+    been made yet or the title has changed since. Returns (url, alt text)."""
+    title = page.get("h1", page["title"])
+    slug = page["path"].strip("/").replace("/", "-")
+    code = hashlib.sha1(f"{OG_DESIGN}|{title}".encode("utf-8")).hexdigest()[:8]
+    name = f"{slug}-{code}.png"
+    if slug and os.path.exists(os.path.join(OUT, "assets", "og", name)):
+        return f"{DOMAIN}/assets/og/{name}", html.escape(html.unescape(title), quote=True)
+    return f"{DOMAIN}/assets/og-image.png", "ToolNest by Vintayz: free calculators and tools for freelancers"
+
+
 def write(rel, text):
     path = os.path.join(OUT, *rel.split("/"))
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -3948,11 +3965,23 @@ def check_meta_lengths():
         raise SystemExit("Shorten these in build.py:\n  " + "\n  ".join(too_long))
 
 
+def check_unique_ids(page, html_text):
+    """Two elements with the same id break scripts: in October the footer's id="year" took the place
+    of the year drop-down on the mileage and Making Tax Digital tools, and they stopped working.
+    Stop the build if a page repeats an id."""
+    ids = re.findall(r'\sid="([^"]+)"', re.sub(r"<script.*?</script>", "", html_text, flags=re.S))
+    repeated = sorted({i for i in ids if ids.count(i) > 1})
+    if repeated:
+        raise SystemExit(f"{page['path']}: these ids are used more than once: {repeated}")
+
+
 def main():
     check_hub_lists()
     check_meta_lengths()
     for page in PAGES:
-        write(page["path"] + "index.html", render(page))
+        html_text = render(page)
+        check_unique_ids(page, html_text)
+        write(page["path"] + "index.html", html_text)
 
     urls = "\n".join(
         f"  <url>\n    <loc>{DOMAIN}/{p['path']}</loc>\n    <lastmod>{p['updated']}</lastmod>\n  </url>"

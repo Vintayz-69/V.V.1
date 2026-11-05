@@ -133,7 +133,8 @@ toolnest/
 **To change the site:**
 1. Edit the page in `src/pages/`, a tool script in `public/assets/js/tools/`, or the layout in `build.py`.
 2. Run `python build.py` to regenerate every page, the sitemap and robots.txt.
-3. Run `node tests/run-tests.js`. All tests must pass before publishing.
+3. If you added a page or changed a page title, run `node og-images.js` and then `python build.py` again. It makes the page's social share picture in `public/assets/og/` (needs Playwright; without it, the page uses the general picture).
+4. Run `node tests/run-tests.js`. All tests must pass before publishing.
 
 **To add a new tool:** add it to `TOOLS` and `PAGES` in `build.py`, create `src/pages/<name>.html` and `public/assets/js/tools/<name>.js`, add 3+ test examples to `tests/run-tests.js`, then build and test.
 
@@ -282,6 +283,8 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 2. **Bing (also feeds ChatGPT search and DuckDuckGo):** set up Bing Webmaster Tools by importing from Search Console (still to do). After each deploy, run `python indexnow.py 2026-10-11` (the date of your oldest change) to tell Bing and other IndexNow search engines about new and changed pages straight away. It sends only page addresses.
 3. **AI search:** `public/llms.txt` lists every section and tool in plain text. `build.py` makes it, so it stays up to date.
 
+**Growing the site:** see [GROWTH.md](GROWTH.md) for why traffic is slow, the 8-week plan and what to measure every Monday.
+
 ## 11. Monetization Plan
 
 | When | What |
@@ -355,3 +358,4 @@ AI assistants get the rules automatically: Claude Code reads [CLAUDE.md](CLAUDE.
 | 2026-10-16 | Thin pages made deeper (plain words, tested examples, "what this doesn't cover"): JSON formatter, colour contrast checker, URL encoder, hash generator, final grade, Australia GST, Canada GST/HST and US take-home pay. Unsourced claims removed from the contrast page (legal claims, "eye strain") and the US take-home page (list of states with no income tax). Canada GST/HST small supplier threshold ($30,000) checked on canada.ca and moved into `tax-ca.js`. **2 new freelancer tools:** Effective Hourly Rate Calculator and Freelance Rate Increase Calculator (`/freelance/`), pure maths, no official figures, each with 3 hand-worked tests. 2,085 checks. |
 | 2026-10-20 | 2 new tools chosen for search demand and fit with the money focus: **Pro Rata Salary Calculator** (`/career/`: part-time and part-year pay, FTE, day-pattern table) and **Invoice Due Date Calculator** (`/freelance/`: Net 7 to 90, EOM, 2/10 net 30 discount with its yearly cost, days left or overdue, links to the late payment interest calculator). Both linked from related tools (salary to hourly, UK holiday, late payment, invoice generator). Phone result bar now wraps long dates. 3,055 checks passing; both pages checked in Chrome at 390px and 1280px, light and dark, under the real security headers. |
 | 2026-10-20 | 6 more tools: **UK Statutory Sick Pay** and **UK Maternity and Paternity Pay** (`/career/`), **Stamp Duty (England and NI)** and **Capital Gains Tax 2026 to 2027** (`/uk/`), **Simple Interest** and **Net Worth** (`/finance/`). New data files `statutory-pay-uk.js` and `property-tax-uk.js`; every GOV.UK worked example matches in the tests. Linked from related tools (UK holiday, redundancy, dividend tax, mortgage, compound interest, emergency fund). The phone result bar now shows only the main figure (6 pages overflowed before; scanned all 71 bars at 320px and 390px). 3,172 checks passing; all new pages checked in Chrome at 390px and 1280px, light and dark, under the real security headers. |
+| 2026-11-05 | Growth review (see GROWTH.md): the site's code is healthy (all 183 pages load, under 1 second on phones, no layout shift, no script errors), but it is 38 days old, no other website mentions or links to it yet, and it grew to 183 pages very fast. **Fixed:** the UK and US mileage calculators had not updated since 30 September, and the Making Tax Digital checker's year list was empty, because the footer's `id="year"` matched their year drop-down; the footer now uses `footer-year` and the build stops if a page repeats an id. **New:** "Copy link to these numbers" on 83 calculators (numbers after `#`, never sent to a server; privacy policy updated), a social share picture for every page (`og-images.js`), and five tools' notes now read their figures from the data files. 3,828 checks passing; all 186 pages checked in Chrome at 390px with no script errors. |

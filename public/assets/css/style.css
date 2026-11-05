@@ -1218,6 +1218,30 @@ a.country .status {
   color: var(--green-600);
 }
 
+/* "Copy link to these numbers" message (common.js) */
+.share-status {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.share-status:empty {
+  display: none;
+}
+
+.share-url {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
 /* Results panel (light blue) */
 .calc-results {
   position: relative;
