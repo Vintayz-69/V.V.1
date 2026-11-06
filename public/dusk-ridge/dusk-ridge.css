@@ -107,3 +107,23 @@ footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 22px 0 40
 }
 .mt0 { margin-top: 0; }
 .mb0 { margin-bottom: 0; }
+
+/* Delete-your-data page. Dark text on gold so it is easy to read
+   (white on gold is below the 4.5:1 contrast guideline). */
+ol { padding-left: 22px; }
+.summary p { margin: 0; }
+.step {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 18px 20px; margin: 14px 0;
+}
+.step h3 { margin: 0 0 6px; font-size: 18px; display: flex; gap: 10px; align-items: center; }
+.num {
+  width: 28px; height: 28px; border-radius: 50%; flex: none;
+  background: var(--gold); color: #1f1a14; display: grid; place-items: center;
+  font: 700 15px Inter, sans-serif;
+}
+.step ol, .step ul { margin: 6px 0 0; }
+.btn {
+  display: inline-block; margin-top: 10px; padding: 10px 18px; border-radius: 10px;
+  background: var(--gold); color: #1f1a14; text-decoration: none; font-weight: 600;
+}
