@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join a Friend · Dusk Ridge</title>
+<meta name="description" content="Open a friend's Dusk Ridge room with its room code.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#faf7f2; --card:#fff; --ink:#1f1a14; --muted:#6b6257; --line:#e7dfd3; --gold:#b7791f; --gold-soft:#fbf1df; --link:#9a5b12; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg:#15120f; --card:#1e1a16; --ink:#eee7dc; --muted:#a89e90; --line:#342d26; --gold:#e3a94a; --gold-soft:#2a2117; --link:#f0bd6a; }
+  }
+  :root[data-theme="dark"] { --bg:#15120f; --card:#1e1a16; --ink:#eee7dc; --muted:#a89e90; --line:#342d26; --gold:#e3a94a; --gold-soft:#2a2117; --link:#f0bd6a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 Inter, system-ui, sans-serif; }
+  .wrap { max-width:520px; margin:0 auto; padding:48px 16px; text-align:center; }
+  img.icon { width:96px; height:96px; border-radius:22px; }
+  h1 { font:700 30px/1.2 Cinzel, Georgia, serif; margin:18px 0 6px; }
+  p { color:var(--muted); margin:6px 0; }
+  .code { display:inline-block; margin:22px 0; padding:14px 26px; border-radius:14px; background:var(--gold-soft); border:1px solid var(--line);
+          font:700 44px/1 Cinzel, Georgia, serif; letter-spacing:.18em; color:var(--gold); }
+  a.btn { display:block; margin:12px 0; padding:16px; border-radius:12px; background:var(--gold); color:#fff; font-weight:700; text-decoration:none; font-size:18px; }
+  a.alt { display:block; margin:10px 0; color:var(--link); }
+  .note { font-size:14px; margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="icon" src="../icon.png" alt="">
+  <h1>Join my Dusk Ridge room</h1>
+  <p>Room code</p>
+  <div class="code" id="code">----</div>
+  <a class="btn" id="open" href="#">Open in Dusk Ridge</a>
+  <a class="alt" href="https://play.google.com/store/apps/details?id=com.vintayz.duskridge">Don't have the game? Get it on Google Play</a>
+  <p class="note">Stand close to your friend with Bluetooth and Location on.<br>No luck? Open Dusk Ridge &gt; Friends &gt; Join friends and type the code.</p>
+</div>
+<script>
+  (function () {
+    var m = /[?&]c=([A-Za-z0-9]{4})/.exec(location.search);
+    var code = m ? m[1].toUpperCase() : "";
+    var store = "https://play.google.com/store/apps/details?id=com.vintayz.duskridge";
+    if (code) document.getElementById("code").textContent = code;
+    var app = "intent://join/" + code + "#Intent;scheme=duskridge;package=com.vintayz.duskridge;S.browser_fallback_url=" + encodeURIComponent(store) + ";end";
+    var link = document.getElementById("open");
+    link.href = code ? app : store;
+    if (code && /Android/i.test(navigator.userAgent)) setTimeout(function () { location.href = app; }, 400);
+  })();
+</script>
+</body>
+</html>
