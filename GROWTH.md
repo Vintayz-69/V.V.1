@@ -49,6 +49,8 @@ The website itself is in good shape. The problem is that **the rest of the inter
 
 ## 3. Your plan for the next 8 weeks
 
+Ready-made posts, emails and listings for the steps below are in [OUTREACH.md](OUTREACH.md).
+
 ### This week (about 1 hour, once)
 
 - [ ] **Publish today's changes** (merge this branch so Cloudflare deploys it).
