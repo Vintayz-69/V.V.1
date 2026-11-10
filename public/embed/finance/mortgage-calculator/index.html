@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mortgage Payment Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/finance/mortgage-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Mortgage payment calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="homePrice">Home Purchase Price<span class="hint">Agreed property price</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="homePrice" type="text" inputmode="decimal" value="400000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="downPayment">Down Payment (Deposit)<span class="hint">Cash upfront</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="downPayment" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="rate">Fixed Annual Interest Rate<span class="hint">Annual percentage</span></label>
+        <div class="input-wrap"><input id="rate" type="text" inputmode="decimal" value="6.5" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter an interest rate between 0% and 50%.</span>
+      </div>
+
+      <div class="field">
+        <label for="termYears">Loan Term<span class="hint">Duration of mortgage</span></label>
+        <div class="select-wrap">
+          <select id="termYears">
+            <option value="30" selected>30 years (Standard)</option>
+            <option value="25">25 years</option>
+            <option value="20">20 years</option>
+            <option value="15">15 years</option>
+            <option value="10">10 years</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="propertyTax">Annual Property Taxes<span class="hint">Optional local tax / rates</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="propertyTax" type="text" inputmode="decimal" value="4000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="homeInsurance">Annual Home Insurance<span class="hint">Optional buildings insurance</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="homeInsurance" type="text" inputmode="decimal" value="1200" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 100% private. No data leaves your device.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated monthly payment</h2>
+      <div class="result-main"><span id="out-total-monthly">—</span> <small>per month</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Principal &amp; interest</span><span id="out-monthly-pi">—</span></li>
+        <li><span>Monthly property taxes</span><span id="out-monthly-tax">—</span></li>
+        <li><span>Monthly home insurance</span><span id="out-monthly-insurance">—</span></li>
+        <li class="key"><span>Loan principal borrowed</span><span id="out-loan-amount">—</span></li>
+        <li><span>Down payment equity</span><span id="out-down-pct">—</span></li>
+        <li class="key"><span>First payment: principal</span><span id="out-first-principal">—</span></li>
+        <li><span>First payment: interest</span><span id="out-first-interest">—</span></li>
+        <li><span>Principal paid in year 1</span><span id="out-year1-principal">—</span></li>
+        <li class="key"><span>Total interest paid over term</span><span id="out-total-interest">—</span></li>
+        <li><span>Total payment (Principal + Interest)</span><span id="out-total-cost">—</span></li>
+      </ul>
+      <p class="result-note">Pure mathematical calculation based on a fixed amortization schedule. We do not recommend lenders, compare credit products, or receive commissions.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How mortgage amortization is calculated</h2>
+    <p>Monthly repayments on a fixed-rate mortgage are calculated using the standard mathematical loan amortization formula:</p>
+    <div class="formula">Monthly Payment (M) = L × [ r(1 + r)^n ] ÷ [ (1 + r)^n - 1 ]
+
+Where:
+  L = Loan Amount (Home Purchase Price minus Down Payment)
+  r = Monthly Interest Rate (Annual Rate ÷ 100 ÷ 12)
+  n = Total Number of Monthly Payments (Loan Term in Years × 12)</div>
+
+    <h2>Principal and interest, year by year</h2>
+    <p>How much of your payments goes to the loan itself (principal) and how much to interest each year, using your numbers above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Year</th><th class="num">Principal paid</th><th class="num">Interest paid</th><th class="num">Principal paid so far</th><th class="num">Balance left</th></tr></thead>
+        <tbody id="schedule-body"><tr><td colspan="5">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to calculate principal paid on a mortgage</h2>
+    <p>Each monthly payment is split in two. First the lender takes the interest due on what you still owe. Whatever is left of the payment goes to the principal and reduces the balance. Next month the interest is a little smaller, so a little more goes to principal.</p>
+    <div class="formula">Interest this month   = balance owed × yearly rate ÷ 12
+Principal this month  = monthly payment − interest this month
+New balance           = balance owed − principal this month
+Principal paid so far = amount borrowed − balance owed now</div>
+    <p>Repeat the three steps for each month. The table above does this for every month of the loan and adds up each year. Amounts are rounded to the cent each month, as lenders do.</p>
+
+    <h2>Worked example</h2>
+    <p>A home costs $400,000 with an $80,000 down payment, so the loan is $320,000. The rate is 6.5% fixed for 30 years (360 payments).</p>
+    <div class="formula">Monthly rate r         = 6.5 ÷ 100 ÷ 12           = 0.0054167
+Monthly payment        = 320,000 × [r(1 + r)^360] ÷ [(1 + r)^360 − 1] = $2,022.62
+
+First payment:
+  Interest             = 320,000 × 0.065 ÷ 12      = $1,733.33
+  Principal            = 2,022.62 − 1,733.33       = $289.29
+  New balance          = 320,000 − 289.29          = $319,710.71
+
+Year 1 (12 payments):  principal $3,576.76, interest $20,694.68
+After 5 years:         balance $299,554.97
+Principal paid so far  = 320,000 − 299,554.97      = $20,445.03</div>
+    <p>In the first year only about <strong>$3,577</strong> of the <strong>$24,271</strong> paid goes to the loan itself; the rest is interest. After 5 years, about <strong>$20,445</strong> of the principal has been paid off. Over the full 30 years the interest adds up to <strong>$408,140.64</strong>.</p>
+
+    <h2>Understanding your monthly housing costs</h2>
+    <p>In addition to repaying the borrowed principal and mortgage interest, homeownership entails recurring escrow costs:</p>
+    <ul>
+      <li><strong>Principal:</strong> The portion of each payment that directly repays your loan balance and builds equity in the property.</li>
+      <li><strong>Interest:</strong> The fee charged by the lender for borrowing capital. In the early years of a 30-year mortgage, the vast majority of each payment goes toward interest.</li>
+      <li><strong>Property Taxes &amp; Insurance:</strong> Local municipal or council taxes and buildings insurance are typically bundled into monthly housing escrow.</li>
+    </ul>
+    <p>To see how the payment fits with your other bills, add it to the <a href="../../../finance/monthly-expenses-calculator/">monthly expenses calculator</a>. Buying in England or Northern Ireland? The <a href="../../../uk/stamp-duty-calculator/">Stamp Duty calculator</a> shows the tax due when you buy.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why is a 15-year mortgage significantly cheaper overall than a 30-year?</summary>
+        <p>A 15-year loan requires higher monthly repayments, but because the principal balance is paid down twice as quickly, you pay much less interest in total over the life of the loan.</p>
+      </details>
+      <details>
+        <summary>Why does so little of my payment go to principal at first?</summary>
+        <p>Interest is worked out on the balance you still owe. At the start the balance is at its highest, so the interest takes most of the payment. As the balance falls, the interest falls too and more of the same payment goes to principal.</p>
+      </details>
+      <details>
+        <summary>Will my lender's figures match exactly?</summary>
+        <p>They should be close, but they may differ by a few cents or more. Lenders can work out interest daily instead of monthly, round differently, or add fees. Your mortgage statement shows the exact split for each payment.</p>
+      </details>
+      <details>
+        <summary>What is a standard down payment?</summary>
+        <p>A 20% down payment is standard to avoid private mortgage insurance (PMI in the US), although many first-time homebuyer schemes allow deposits between 5% and 10%.</p>
+      </details>
+      <details>
+        <summary>Is this financial or lending advice?</summary>
+        <p>No. ToolNest provides pure mathematical calculations for budgeting and illustrative planning purposes only. We do not act as a credit broker, mortgage lender, or financial adviser.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/finance/mortgage-calculator/" rel="noopener">Mortgage Payment Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/mortgage.js?v=329761cf"></script>
+</body>
+</html>

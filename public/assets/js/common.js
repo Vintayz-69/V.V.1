@@ -224,7 +224,10 @@
     }
 
     button.addEventListener("click", function () {
-      var url = location.origin + location.pathname + "#" + encodeShare(sharePairs(fields));
+      // Inside a calculator shown on another website (/embed/), link to the full page on our site.
+      var canonical = document.body.classList.contains("embed") && document.querySelector('link[rel="canonical"]');
+      var page = canonical ? canonical.href : location.origin + location.pathname;
+      var url = page + "#" + encodeShare(sharePairs(fields));
       var sent = "Anyone who opens the link sees these numbers. They're in the link itself, not saved by us.";
       if (phone) {
         navigator.share({ title: document.title, url: url }).then(function () {
@@ -634,6 +637,45 @@
     }
   }
 
+  // "Add this calculator to your website": copies the embed code (build.py embed_box).
+  function initEmbedCopy() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy-embed]"), function (button) {
+      var box = button.closest(".embed-box");
+      var code = box.querySelector(".embed-code");
+      var status = box.querySelector(".embed-status");
+      button.addEventListener("click", function () {
+        copyText(code.value).then(function () {
+          status.textContent = "Code copied. Paste it into your page's HTML.";
+        }, function () {
+          code.focus();
+          code.select();
+          status.textContent = "Press Ctrl+C (or Cmd+C) to copy the selected code.";
+        });
+      });
+    });
+  }
+
+  // Inside a calculator shown on another website: tell that page how tall the calculator is, so
+  // its optional resize line (build.py EMBED_RESIZE) can fit the frame. Only a number is sent.
+  function initEmbedResize() {
+    if (!document.body || !document.body.classList.contains("embed") || window.parent === window) return;
+    var last = 0;
+    var frame = 0;
+    function send() {
+      frame = 0;
+      var height = Math.ceil(document.body.getBoundingClientRect().height) + 2;
+      if (height === last) return;
+      last = height;
+      window.parent.postMessage({ toolnestHeight: height }, "*");
+    }
+    function queue() {
+      if (!frame) frame = requestAnimationFrame(send);
+    }
+    if ("ResizeObserver" in window) new ResizeObserver(queue).observe(document.body);
+    window.addEventListener("load", queue);
+    queue();
+  }
+
   function onReady() {
     initThemeSwitch();
     var yearEl = document.getElementById("footer-year");
@@ -641,6 +683,8 @@
     initNavMenus();
     initReveal();
     initTilt();
+    initEmbedCopy();
+    initEmbedResize();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", onReady);

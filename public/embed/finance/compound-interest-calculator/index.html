@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compound Interest Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/finance/compound-interest-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Compound interest calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="principal">Initial Deposit<span class="hint">Starting balance</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="principal" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an initial deposit of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="monthlyDeposit">Regular Monthly Contribution<span class="hint">Added every month</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="monthlyDeposit" type="text" inputmode="decimal" value="200" autocomplete="off"></div>
+        <span class="error-msg">Enter monthly deposit of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="rate">Estimated Annual Interest Rate<span class="hint">Annual return (%)</span></label>
+        <div class="input-wrap"><input id="rate" type="text" inputmode="decimal" value="7" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter an interest rate between 0% and 100%.</span>
+      </div>
+
+      <div class="field">
+        <label for="years">Investment Time Horizon<span class="hint">Length in years</span></label>
+        <div class="input-wrap"><input id="years" type="text" inputmode="numeric" value="10" autocomplete="off"><span class="affix">yrs</span></div>
+        <span class="error-msg">Enter between 1 and 60 years.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="frequency">Compounding Frequency</label>
+        <div class="select-wrap">
+          <select id="frequency">
+            <option value="12" selected>Monthly (12 times / year - standard)</option>
+            <option value="1">Annually (Once / year)</option>
+            <option value="4">Quarterly (4 times / year)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 100% private. Runs in your browser.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Projected future value</h2>
+      <div class="result-main"><span id="out-future-value">—</span> <small>ending balance</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Total principal contributed</span><span id="out-total-invested">—</span></li>
+        <li class="key"><span>Total compound interest earned</span><span id="out-total-interest">—</span></li>
+        <li><span>Interest share of total</span><span id="out-interest-ratio">—</span></li>
+      </ul>
+      <p class="result-note">An estimate that assumes the same rate every year. Real savings rates change, and investments can fall in value.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Year-by-year growth schedule</h2>
+    <p>Here is how your balance compounds over time, showing total contributions compared to accumulated interest:</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th class="num">Total Invested</th>
+            <th class="num">Interest Earned</th>
+            <th class="num">Ending Balance</th>
+          </tr>
+        </thead>
+        <tbody id="growth-table-body">
+          <tr><td colspan="4">Enter your details above to see the breakdown.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How compound interest works</h2>
+    <p>With compound interest, the interest you earn is added to your balance. Next time, interest is worked out on that bigger balance, so you earn interest on your interest. In the first few years the difference is small. Over 10 or 20 years it becomes a large part of the total, which is why starting early matters more than the exact amount you start with.</p>
+    <div class="formula">Future Value of Principal:  FV_p = P × (1 + r / n)^(n × t)
+Future Value of Deposits:   FV_d = PMT × [ (1 + r / n)^(n × t) - 1 ] ÷ (r / n)
+Total Portfolio Balance:    Total = FV_p + FV_d
+
+Where:
+  P   = Initial principal deposit
+  PMT = Monthly deposit amount (added at the end of each month)
+  r   = Annual interest rate (decimal)
+  n   = Compounding periods per year (12 for monthly)
+  t   = Time in years</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>Saving every month.</strong> Sam starts with $5,000 and adds $200 at the end of every month for 5 years. The account pays 6% a year, compounded monthly.</p>
+    <div class="formula">Money put in    = 5,000 + 200 × 60 months  = $17,000.00
+Ending balance  = $20,698.26
+Interest earned = 20,698.26 − 17,000       = $3,698.26</div>
+    <p><strong>Leaving a lump sum alone.</strong> $10,000 left for 10 years at 7% a year, compounded monthly, with nothing added, grows to <strong>$20,096.61</strong>. The money roughly doubles, and more than half of the final balance is interest.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Changing rates.</strong> It uses the same rate for every year. Savings rates go up and down, and investment returns aren't fixed at all: they can be negative in some years.</li>
+      <li><strong>Inflation.</strong> The ending balance is in future money. Prices will probably be higher by then, so it will buy less than the same amount buys today.</li>
+      <li><strong>Tax and fees.</strong> Interest and investment growth may be taxed, and accounts or funds may charge fees. Both lower the real result.</li>
+    </ul>
+    <p>Use the result to compare options and see the effect of saving more or for longer, not as a promise of what you'll have.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the difference between simple and compound interest?</summary>
+        <p>Simple interest is only paid on the money you put in. Compound interest is also paid on the interest you've already earned, so the balance grows faster each year. You can compare the two with the <a href="../../../finance/simple-interest-calculator/">simple interest calculator</a>.</p>
+      </details>
+      <details>
+        <summary>What rate should I enter?</summary>
+        <p>For a savings account, use the rate your bank shows. Banks in the UK usually quote it as AER and banks in the US as APY. Both are yearly rates that already include the effect of compounding, so choose "Annually" in the compounding box to avoid counting it twice. Investments don't have a set rate, so try a few different rates to see a range of results rather than relying on one number.</p>
+      </details>
+      <details>
+        <summary>How does compounding frequency change the result?</summary>
+        <p>The more often interest is added, the sooner it starts earning interest itself, so monthly compounding gives a slightly higher result than yearly compounding at the same rate. The difference is usually small compared with the effect of the rate and the number of years.</p>
+      </details>
+      <details>
+        <summary>Is there a quick way to estimate how long money takes to double?</summary>
+        <p>Yes, the "rule of 72": divide 72 by the yearly rate. At 7% that's about 10 years, which matches the lump sum example above. It's a rough guide that works best for rates between about 4% and 12%.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/finance/compound-interest-calculator/" rel="noopener">Compound Interest Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/compound-interest.js?v=88f8d2ae"></script>
+</body>
+</html>

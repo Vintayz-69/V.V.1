@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en-US" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>US Take-Home Pay Calculator (2026) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/career/us-take-home-pay-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="US Salaried Take-Home Pay Calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="salary">Annual Gross Salary<span class="hint">W-2 base pay before taxes</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="salary" type="text" inputmode="decimal" value="75000" autocomplete="off"></div>
+        <span class="error-msg">Enter an annual salary of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Federal Filing Status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single" selected>Single ($16,100 standard deduction)</option>
+            <option value="mfj">Married Filing Jointly ($32,200 standard deduction)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="stateRate">Estimated State Tax Rate<span class="hint">0% for TX, FL, WA, TN, NV</span></label>
+        <div class="input-wrap"><input id="stateRate" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 15%.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="preTax">Annual Pre-Tax Deductions<span class="hint">Traditional 401(k), 403(b), health insurance, HSA</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="preTax" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 100% private. Your salary data never leaves your device.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your estimated take-home pay</h2>
+      <div class="result-main"><span id="out-net-monthly">—</span> <small>net per month</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Bi-weekly paycheck (26/yr)</span><span id="out-net-biweekly">—</span></li>
+        <li class="key"><span>Annual take-home pay</span><span id="out-net-annual">—</span></li>
+        <li><span>Weekly paycheck (52/yr)</span><span id="out-net-weekly">—</span></li>
+        <li class="key"><span>Federal Income Tax</span><span id="out-fed-tax">—</span></li>
+        <li><span>FICA (Social Security &amp; Medicare)</span><span id="out-fica-tax">—</span></li>
+        <li><span>State Income Tax</span><span id="out-state-tax">—</span></li>
+        <li><span>Total effective tax rate</span><span id="out-effective-rate">—</span></li>
+      </ul>
+      <p class="result-note">Based on official IRS 2026 federal income tax brackets, standard deduction, and statutory FICA payroll rates.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>2026 US Federal Income Tax Brackets (Single Filers)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Taxable Income Bracket</th><th class="num">Marginal Rate</th><th>Tax Owed on Bracket</th></tr></thead>
+        <tbody>
+          <tr><td>$0 to $12,400</td><td class="num">10%</td><td>10% of amount</td></tr>
+          <tr><td>$12,400 to $50,400</td><td class="num">12%</td><td>$1,240 + 12% of excess over $12,400</td></tr>
+          <tr><td>$50,400 to $105,700</td><td class="num">22%</td><td>$5,800 + 22% of excess over $50,400</td></tr>
+          <tr><td>$105,700 to $201,775</td><td class="num">24%</td><td>$17,966 + 24% of excess over $105,700</td></tr>
+          <tr><td>$201,775 to $256,225</td><td class="num">32%</td><td>$41,024 + 32% of excess over $201,775</td></tr>
+          <tr><td>$256,225 to $640,600</td><td class="num">35%</td><td>$58,448 + 35% of excess over $256,225</td></tr>
+          <tr><td>Over $640,600</td><td class="num">37%</td><td>$192,979 + 37% of excess over $640,600</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The table shows the brackets for single filers. Married couples filing jointly, married people filing separately and heads of household have different brackets, which the calculator uses when you choose them.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your yearly salary</strong> before tax, as shown in your offer letter or contract.</li>
+      <li><strong>Choose your filing status.</strong> It sets your brackets and standard deduction.</li>
+      <li><strong>Add pre-tax contributions</strong>, such as a traditional 401(k), for the year.</li>
+      <li><strong>Enter a state income tax rate</strong> if your state has one, or leave it at 0.</li>
+    </ol>
+
+    <h2>How Social Security and Medicare (FICA) are taken</h2>
+    <ul>
+      <li><strong>Social Security:</strong> 6.2% of your wages up to the 2026 wage base of $184,500. Wages above that aren't taxed for Social Security.</li>
+      <li><strong>Medicare:</strong> 1.45% of all your wages, with no limit. An extra 0.9% Additional Medicare Tax applies to wages over $200,000 if you're single, or $250,000 for married couples filing jointly.</li>
+    </ul>
+    <p>Your employer pays a matching 6.2% and 1.45% on top of your salary. That isn't taken from your pay, so it isn't shown here.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>A $75,000 salary.</strong> Taylor is single, takes the standard deduction of $16,100, has no 401(k) and lives in a state with no income tax.</p>
+    <div class="formula">Taxable income     = 75,000 − 16,100           = $58,900
+Federal income tax = 1,240 + 4,560 + 1,870     = $7,670
+FICA               = 75,000 × 7.65%            = $5,737.50
+Take-home pay      = 75,000 − 7,670 − 5,737.50 = $61,592.50 a year
+                   = $5,132.71 a month, or $2,368.94 every two weeks</div>
+    <p><strong>A $120,000 salary with a 401(k) and state tax.</strong> Jordan is single, puts $5,000 into a traditional 401(k) and enters a 5% state rate.</p>
+    <div class="formula">Taxable income     = 120,000 − 5,000 − 16,100  = $98,900
+Federal income tax                             = $16,470
+FICA               = 120,000 × 7.65%           = $9,180
+State tax          = (120,000 − 5,000) × 5%    = $5,750
+Take-home pay      = $83,600 a year, or $6,966.67 a month</div>
+    <p>Jordan's 401(k) lowers federal and state income tax, but not FICA, which is still worked out on the full $120,000. The $83,600 is pay after tax and after the $5,000 that went into the 401(k).</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li><strong>State and local tax in detail.</strong> The calculator applies the single state rate you enter to your salary after pre-tax contributions. Many states have brackets and their own deductions, and some cities and counties have income tax too.</li>
+      <li><strong>Tax credits</strong>, such as the Child Tax Credit, and itemized deductions.</li>
+      <li><strong>Other deductions from your pay</strong>, such as health insurance, an HSA or union dues.</li>
+      <li><strong>Other income</strong>, bonuses taxed differently, or a second job.</li>
+      <li><strong>Self-employment.</strong> If you freelance, use our <a href="../../../us/freelancer-take-home-pay-calculator/">freelancer take-home pay calculator</a>, which adds self-employment tax.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How do 401(k) contributions reduce my taxes?</summary>
+        <p>Contributions to a traditional 401(k) or 403(b) come out of your pay before federal income tax, so they lower your taxable income. They don't lower Social Security and Medicare (FICA), which are still taken from your full salary.</p>
+      </details>
+      <details>
+        <summary>What state tax rate should I enter?</summary>
+        <p>Check your state's own tax agency. If your state has brackets, a single rate is only a rough estimate: use a rate a little below your top bracket. If your state doesn't tax wages, enter 0.</p>
+      </details>
+      <details>
+        <summary>Why is my paycheck different from this estimate?</summary>
+        <p>Your employer works out withholding from the W-4 form you filled in and takes out other deductions such as health insurance. Withholding is also an estimate: the final figure is settled when you file your tax return.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" rel="noopener">IRS: tax inflation adjustments for tax year 2026</a>, <a href="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf" rel="noopener">IRS Rev. Proc. 2025-32</a>, <a href="https://www.irs.gov/taxtopics/tc751" rel="noopener">IRS Topic 751: Social Security and Medicare withholding</a>. Figures checked 28 September 2026.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/career/us-take-home-pay-calculator/" rel="noopener">US Take-Home Pay Calculator (2026)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-us.js?v=732f3b07"></script>
+<script src="../../../assets/js/tools/us-take-home-pay.js?v=9c5c1131"></script>
+</body>
+</html>

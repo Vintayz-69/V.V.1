@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profit Margin & Markup Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/business/profit-margin-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Profit margin and markup calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="cost">Cost of Goods / Service<span class="hint">What you pay to make or deliver it</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="cost" type="text" inputmode="decimal" value="60" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="revenue">Selling Price / Revenue<span class="hint">What the customer pays</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="revenue" type="text" inputmode="decimal" value="100" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="expenses">Additional Operating Expenses<span class="hint">Optional overhead, marketing or shipping</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="expenses" type="text" inputmode="decimal" value="15" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your profit margin</h2>
+      <div class="result-main"><span id="out-gross-margin">—</span> <small>gross margin</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Gross profit</span><span id="out-gross-profit">—</span></li>
+        <li><span>Markup percentage</span><span id="out-markup">—</span></li>
+        <li class="key"><span>Net profit</span><span id="out-net-profit">—</span></li>
+        <li><span>Net profit margin</span><span id="out-net-margin">—</span></li>
+      </ul>
+      <p class="result-note">Gross margin measures what you keep from sales after direct costs. Net margin shows what is left after overhead expenses.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Pricing targets for this product</h2>
+    <p>The price you would need to charge for different gross margins, using the cost you entered above:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Target Margin</th><th class="num">Required Selling Price</th><th class="num">Gross Profit</th></tr></thead>
+        <tbody id="margin-table-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Margin vs. markup: what is the difference?</h2>
+    <p>Margin and markup use the same profit but divide it by different numbers, and mixing them up is one of the most common ways to underprice:</p>
+    <ul>
+      <li><strong>Profit margin</strong> is profit as a share of the <em>selling price</em>. A 40% margin means 40 cents of every dollar you take is profit.</li>
+      <li><strong>Markup</strong> is profit as a share of the <em>cost</em>. To get a 40% margin on an item that costs $60, you need a <strong>66.7% markup</strong> ($60 × 1.667 = $100).</li>
+    </ul>
+    <p>If you add 40% to a $60 cost, you charge $84 and your margin is only about 28.6%, not 40%.</p>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Gross Profit       = Selling Price − Cost of Goods
+Gross Margin %     = (Gross Profit ÷ Selling Price) × 100
+Markup %           = (Gross Profit ÷ Cost of Goods) × 100
+Net Profit         = Gross Profit − Operating Expenses
+Net Margin %       = (Net Profit ÷ Selling Price) × 100</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>A handmade candle.</strong> The materials cost $60 and the candle sells for $100. Packaging and platform fees are another $15.</p>
+    <div class="formula">Gross profit  = 100 − 60          = $40.00
+Gross margin  = 40 ÷ 100          = 40.0%
+Markup        = 40 ÷ 60           = 66.7%
+Net profit    = 40 − 15           = $25.00
+Net margin    = 25 ÷ 100          = 25.0%</div>
+    <p><strong>A shop item.</strong> It costs $200 to buy in, sells for $350, and has $50 of other costs.</p>
+    <div class="formula">Gross profit  = 350 − 200         = $150.00
+Gross margin  = 150 ÷ 350         = 42.86%
+Markup        = 150 ÷ 200         = 75.0%
+Net profit    = 150 − 50          = $100.00
+Net margin    = 100 ÷ 350         = 28.57%</div>
+
+    <h2>Margins when you sell a service</h2>
+    <p>Freelancers and consultants often have almost no "cost of goods", so their gross margin can look close to 100%. That number is misleading if your own time isn't counted. To get a useful margin for a service:</p>
+    <ul>
+      <li>Put any costs that come with the job in <strong>cost</strong>: subcontractors, stock photos, materials, travel, platform fees.</li>
+      <li>Put your share of overheads in <strong>operating expenses</strong>: software, insurance, equipment and accounting.</li>
+      <li>Decide whether to count your own pay as a cost. If you don't, the "profit" is really your wages before tax, not money left over for the business.</li>
+    </ul>
+    <p>To set a rate that covers all of this, start with our <a href="../../../freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a> or the <a href="../../../freelance/project-pricing-calculator/">project pricing calculator</a>.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a healthy gross profit margin for a small business?</summary>
+        <p>It depends a lot on the industry. Businesses that sell physical products have material, stock and shipping costs, so their gross margins are usually lower than service or digital businesses, where each extra sale costs very little. Compare yourself with businesses like yours, and with your own past results, rather than with one general number.</p>
+      </details>
+      <details>
+        <summary>How do I price a product if I know my target margin?</summary>
+        <p>Use the formula: <code>Price = Cost ÷ (1 − (Target Margin ÷ 100))</code>. For example, if an item costs $40 and you want a 50% margin: $40 ÷ (1 − 0.50) = $80.</p>
+      </details>
+      <details>
+        <summary>Why is markup always higher than profit margin?</summary>
+        <p>Both use the same profit, but markup divides it by your cost, which is the smaller number, and margin divides it by the selling price, which is the larger one.</p>
+      </details>
+      <details>
+        <summary>Is profit margin before or after tax?</summary>
+        <p>The margins here are before income tax. If you charge sales tax, VAT or GST, leave it out of the selling price, because that money belongs to the tax authority, not to you.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/business/profit-margin-calculator/" rel="noopener">Profit Margin & Markup Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/profit-margin.js?v=b3c8dc03"></script>
+</body>
+</html>

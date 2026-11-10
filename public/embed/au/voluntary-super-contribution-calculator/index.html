@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en-AU" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voluntary Super Contribution Calculator (2026–27) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/au/voluntary-super-contribution-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Voluntary super contribution calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="income">Taxable income for 2026–27<span class="hint">Before the extra contribution</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="income" type="text" inputmode="decimal" value="90000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="employer">Employer super this year<span class="hint">Enter 0 if you're a sole trader</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="employer" type="text" inputmode="decimal" value="10800" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="extra">Extra concessional contribution<span class="hint">Salary sacrifice or personal deductible</span></label>
+        <div class="input-wrap"><span class="affix">A$</span><input id="extra" type="text" inputmode="decimal" value="10000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your tax saving</h2>
+      <div class="result-main"><span id="out-benefit">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Personal tax saved</span><span id="out-saved">—</span></li>
+        <li><span>Tax paid in super (15%)</span><span id="out-ctax">—</span></li>
+        <li><span>Change to your take-home pay</span><span id="out-take">—</span></li>
+        <li><span>Concessional cap ($32,500)</span><span id="out-cap">—</span></li>
+      </ul>
+      <p class="result-note">Money in super is usually locked away until you reach preservation age and retire. Only contribute what you won't need before then.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your taxable income</strong> for 2026–27, before the extra contribution.</li>
+      <li><strong>Enter your employer's super</strong> for the year (12% of ordinary earnings), or 0 if you're self-employed.</li>
+      <li><strong>Enter the extra amount</strong> you'd salary sacrifice or claim as a personal deduction.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Personal tax saved = tax and Medicare on your income
+                   − tax and Medicare on (income − contribution)
+Tax in super       = contribution × 15%
+                     (+ 15% Division 293 tax if income + contributions > $250,000)
+Your saving        = personal tax saved − tax in super
+Cap check          = employer super + extra contribution ≤ $32,500</div>
+
+    <h2>Worked example</h2>
+    <p>Aisha earns $90,000 and her employer pays $10,800 in super. She salary sacrifices an extra $10,000.</p>
+    <div class="formula">Tax on $90,000     = 17,520 + 1,800 Medicare  = 19,320
+Tax on $80,000     = 14,520 + 1,600 Medicare  = 16,120
+Personal tax saved = 19,320 − 16,120          = 3,200
+Tax in super       = 10,000 × 15%             = 1,500
+Her saving         = 3,200 − 1,500            = $1,700
+Cap used           = 10,800 + 10,000          = 20,800 of $32,500</div>
+    <p>Aisha saves <strong>$1,700</strong> in tax, and $8,500 goes into her super. Her take-home pay falls by $6,800, not the full $10,000.</p>
+
+    <h2>The same $10,000 at different incomes</h2>
+    <p>Each person's employer pays 12% super on their income, and each adds an extra $10,000 for 2026–27. The saving depends on the tax rate the $10,000 would otherwise have been taxed at.</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Taxable income</th><th class="num">Personal tax saved</th><th class="num">Tax in super</th><th class="num">Net saving</th><th class="num">Take-home falls by</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Taxable income">$60,000</td><td class="num" data-label="Personal tax saved">$3,350</td><td class="num" data-label="Tax in super">$1,500</td><td class="num" data-label="Net saving">$1,850</td><td class="num" data-label="Take-home falls by">$6,650</td></tr>
+          <tr><td data-label="Taxable income">$90,000</td><td class="num" data-label="Personal tax saved">$3,200</td><td class="num" data-label="Tax in super">$1,500</td><td class="num" data-label="Net saving">$1,700</td><td class="num" data-label="Take-home falls by">$6,800</td></tr>
+          <tr><td data-label="Taxable income">$150,000</td><td class="num" data-label="Personal tax saved">$3,900</td><td class="num" data-label="Tax in super">$1,500</td><td class="num" data-label="Net saving">$2,400</td><td class="num" data-label="Take-home falls by">$6,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>At $200,000 the same plan would break the $32,500 cap: the employer's $24,000 plus $10,000 is $34,000. The calculator warns you when that happens.</p>
+    <p>Remember that money in super is generally locked away until you meet a condition of release, such as reaching preservation age and retiring (see the ATO's <a href="https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/withdrawing-and-using-your-super/super-withdrawal-options" rel="noopener">when you can withdraw your super</a>). A tax saving today means less money you can spend now.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Carry-forward of unused concessional caps from earlier years (if your super balance is under $500,000).</li>
+      <li>Non-concessional (after-tax) contributions and government co-contributions.</li>
+      <li>Low income earners, who may get the low income super tax offset instead.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What's the concessional contributions cap for 2026–27?</summary>
+        <p>$32,500, up from $30,000. It includes your employer's super, salary sacrifice and personal contributions you claim a deduction for.</p>
+      </details>
+      <details>
+        <summary>Can sole traders claim a deduction for super?</summary>
+        <p>Yes. You can make a personal contribution and claim a tax deduction, as long as you give your fund a notice of intent and get their acknowledgement before lodging your return.</p>
+      </details>
+      <details>
+        <summary>What happens if I go over the cap?</summary>
+        <p>The excess is added to your taxable income and taxed at your marginal rate, with a tax offset for the 15% already paid by the fund.</p>
+      </details>
+      <details>
+        <summary>Why does my take-home pay fall by less than I put in?</summary>
+        <p>Because the contribution comes out of your pay before income tax. In Aisha's example, $10,000 goes in, but her take-home falls by only $6,800, because she no longer pays $3,200 of tax and Medicare levy on that money.</p>
+      </details>
+      <details>
+        <summary>I'm self-employed. How do I see my overall tax?</summary>
+        <p>Our <a href="../../../au/sole-trader-tax-calculator/">sole trader tax calculator</a> works out income tax and the Medicare levy on your profit. Enter your profit less any super you plan to claim to see the difference.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026–27):</strong> <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/contributions-caps" rel="noopener">ATO contributions caps</a>, <a href="https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/division-293-tax" rel="noopener">Division 293 tax</a>, <a href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents" rel="noopener">resident tax rates</a>.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/au/voluntary-super-contribution-calculator/" rel="noopener">Voluntary Super Contribution Calculator (2026–27)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-au.js?v=6dd3eb0d"></script>
+<script src="../../../assets/js/au-tax.js?v=4267ad6f"></script>
+<script src="../../../assets/js/tools/au-voluntary-super.js?v=7dc3a9fd"></script>
+</body>
+</html>

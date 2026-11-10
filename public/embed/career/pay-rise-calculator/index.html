@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pay Rise Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/career/pay-rise-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Pay rise calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="mode">What do you know?</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="amount">My old and new pay</option>
+            <option value="percent">My old pay and the % raise</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="current">Current yearly pay<span class="hint">Before tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="current" type="text" inputmode="decimal" value="50000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="newPay">New yearly pay<span class="hint">Before tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="newPay" type="text" inputmode="decimal" value="53000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="percent">Pay rise<span class="hint">Use a minus sign for a pay cut</span></label>
+        <div class="input-wrap"><input id="percent" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from −100 to 1,000.</span>
+      </div>
+
+      <div class="field">
+        <label for="inflation">Inflation rate<span class="hint">Optional. How much prices rose over the year</span></label>
+        <div class="input-wrap"><input id="inflation" type="text" inputmode="decimal" value="3" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from −50 to 100, or leave it empty.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your pay rise</h2>
+      <div class="result-main"><span id="out-percent">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Extra a year</span><span id="out-increase">—</span></li>
+        <li><span>New yearly pay</span><span id="out-new">—</span></li>
+        <li class="key"><span>Extra a month</span><span id="out-monthly">—</span></li>
+        <li><span>Extra a week</span><span id="out-weekly">—</span></li>
+        <li class="key"><span>Real rise after inflation</span><span id="out-real">—</span></li>
+        <li><span>Pay needed to keep up with prices</span><span id="out-keepup">—</span></li>
+      </ul>
+      <p class="result-note" id="real-note"></p>
+      <p class="result-note">All figures are before tax. Your take-home pay rises by less, because part of the rise goes in tax.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose what you know:</strong> your old and new pay, or your old pay and the percentage you've been offered.</li>
+      <li><strong>Enter your pay before tax</strong>, as a yearly figure. For a monthly salary, multiply by 12. For an hourly wage, use our <a href="../../../freelance/hourly-to-annual-income-calculator/">hourly to annual calculator</a> first.</li>
+      <li><strong>Add inflation</strong> if you want to know whether the raise keeps up with rising prices. Use the latest yearly inflation figure for your country, such as CPI.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Pay rise %        = (new pay − old pay) ÷ old pay × 100
+New pay           = old pay × (1 + rise % ÷ 100)
+Extra a month     = (new pay − old pay) ÷ 12
+Real rise %       = (1 + rise %) ÷ (1 + inflation %) − 1
+Pay to keep up    = old pay × (1 + inflation %)</div>
+    <p>The real rise divides rather than subtracts: a 5% raise with 3% inflation is a real rise of 1.94%, not 2%.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$50,000 → $53,000       rise 6.00%;  $3,000 a year;  $250 a month
+  with 3% inflation      real rise 2.91%;  $1,500 more than keeping up ($51,500)
+£40,000 + 4.5%          new pay £41,800;  £1,800 a year;  £150 a month
+5% raise, 3% inflation  real rise 1.94%
+2% raise, 4% inflation  real rise −1.92%  (a real-terms pay cut)</div>
+
+    <h2>What different raises are worth on $50,000</h2>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Raise</th><th class="num">New pay</th><th class="num">Extra a year</th><th class="num">Extra a month</th><th class="num">Extra a week</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Raise">2%</td><td class="num" data-label="New pay">$51,000</td><td class="num" data-label="Extra a year">$1,000</td><td class="num" data-label="Extra a month">$83.33</td><td class="num" data-label="Extra a week">$19.23</td></tr>
+          <tr><td data-label="Raise">3%</td><td class="num" data-label="New pay">$51,500</td><td class="num" data-label="Extra a year">$1,500</td><td class="num" data-label="Extra a month">$125.00</td><td class="num" data-label="Extra a week">$28.85</td></tr>
+          <tr><td data-label="Raise">5%</td><td class="num" data-label="New pay">$52,500</td><td class="num" data-label="Extra a year">$2,500</td><td class="num" data-label="Extra a month">$208.33</td><td class="num" data-label="Extra a week">$48.08</td></tr>
+          <tr><td data-label="Raise">10%</td><td class="num" data-label="New pay">$55,000</td><td class="num" data-label="Extra a year">$5,000</td><td class="num" data-label="Extra a month">$416.67</td><td class="num" data-label="Extra a week">$96.15</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>All before tax. The same percentages work for any currency: 5% of £30,000 is £1,500 a year.</p>
+
+    <h2>Small raises add up over time</h2>
+    <p>Each raise is a percentage of your pay after the last one, so they build on each other. Five raises of 3% in a row take $50,000 to $57,963.70, which is 15.9% more, not 15%. The same works the other way: a year without a raise also lowers every future raise.</p>
+
+    <h2>Percent or percentage points?</h2>
+    <p>If inflation is 4% and your raise is 2%, your raise is 2 percentage points below inflation. That's not the same as "2% below". The real-terms change is worked out by dividing, which this calculator does for you: −1.92%.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a real-terms pay cut?</summary>
+        <p>If prices rise faster than your pay, your pay buys less than it did, even though the number went up. A 2% raise in a year when prices rose 4% is a real-terms cut of about 1.9%.</p>
+      </details>
+      <details>
+        <summary>How much of my raise will I take home?</summary>
+        <p>Less than the full amount, because the extra pay is taxed at your top rate. In the UK, our <a href="../../../career/uk-take-home-pay-calculator/">take-home pay calculator</a> shows your pay after tax: try your old and new salaries to see the difference.</p>
+      </details>
+      <details>
+        <summary>Is a percentage or a flat raise better?</summary>
+        <p>It depends on your pay. A flat $2,000 raise is 5% on $40,000 but only 2.5% on $80,000. Compare both ways with this calculator before you negotiate.</p>
+      </details>
+      <details>
+        <summary>Where do I find the inflation figure?</summary>
+        <p>Each country's statistics office publishes it: the Bureau of Labor Statistics (CPI) in the US, the Office for National Statistics in the UK, Statistics Canada and the Australian Bureau of Statistics. Use the latest yearly figure.</p>
+      </details>
+      <details>
+        <summary>I'm a freelancer. How do I raise my rates?</summary>
+        <p>The maths is the same, but you set the new rate yourself. Our <a href="../../../freelance/rate-increase-calculator/">rate increase calculator</a> shows what a new rate is worth over a year, and how much work you could lose and still earn the same.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/career/pay-rise-calculator/" rel="noopener">Pay Rise Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/pay-rise.js?v=b404f332"></script>
+</body>
+</html>

@@ -7874,3 +7874,94 @@ button.sol-slot {
 @media (max-width: 560px) {
   .deadline { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ---------- Embedded calculators (/embed/*, made by build.py render_embed) ---------- */
+/* The whole tool page is in the HTML so its script works; only the calculator is shown. */
+body.embed {
+  display: block;
+  min-height: 0;
+  background: var(--bg);
+  padding: 8px;
+}
+
+.embed-main > :not(.calculator) {
+  display: none !important;
+}
+
+.embed-main > .calculator {
+  margin: 0;
+  box-shadow: none;
+}
+
+body.embed .result-bar,
+body.embed .btn-print {
+  display: none !important;
+}
+
+.embed-foot {
+  margin: 10px 4px 2px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.embed-foot p {
+  margin: 0;
+}
+
+.embed-foot a {
+  color: inherit;
+}
+
+/* "Add this calculator to your website" box on calculator pages */
+.embed-box {
+  margin: 28px 0;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.embed-box summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.embed-box summary .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.embed-code {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px 12px;
+  font: 0.8rem/1.5 var(--mono);
+  color: var(--text);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.embed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.embed-status {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+@media print {
+  .embed-box {
+    display: none !important;
+  }
+}

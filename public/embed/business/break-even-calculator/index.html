@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Break-Even Analysis Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/business/break-even-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Break-even analysis calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fixed">Total Fixed Costs<span class="hint">Rent, insurance, salaries, software</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="fixed" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="price">Unit Selling Price<span class="hint">Price charged per unit or service</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="price" type="text" inputmode="decimal" value="50" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount greater than 0.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="variable">Variable Cost Per Unit<span class="hint">Direct materials, manufacturing, shipping</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="variable" type="text" inputmode="decimal" value="20" autocomplete="off"></div>
+        <span class="error-msg">Variable cost must be less than selling price.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your break-even point</h2>
+      <div class="result-main"><span id="out-units">—</span> <small>to break even</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Break-even revenue</span><span id="out-revenue">—</span></li>
+        <li><span>Contribution margin per unit</span><span id="out-cm">—</span></li>
+        <li><span>Contribution margin ratio</span><span id="out-ratio">—</span></li>
+      </ul>
+      <p class="result-note">At this sales volume, your revenue exactly covers both your fixed and variable costs, so you make no profit and no loss.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Profit and loss at different sales volumes</h2>
+    <p>Each extra sale after break-even adds its full contribution margin to your profit. The table shows this around your break-even point:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Units Sold</th><th class="num">Total Revenue</th><th class="num">Total Costs</th><th class="num">Net Profit / Loss</th></tr></thead>
+        <tbody id="breakeven-table-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Add up your fixed costs</strong> for a period, such as a month. These are costs you pay even if you sell nothing: rent, insurance, software subscriptions, website hosting, and any regular pay you take for yourself.</li>
+      <li><strong>Enter your price per unit.</strong> A unit is whatever you sell: a product, a project, a session or an hour of work.</li>
+      <li><strong>Enter your variable cost per unit.</strong> These costs only happen when you make a sale: materials, packaging, postage, card fees and platform fees.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Contribution Margin (CM)        = Unit Selling Price − Unit Variable Cost
+Contribution Margin Ratio      = (Contribution Margin ÷ Unit Selling Price) × 100
+Break-Even Volume (Units)      = Total Fixed Costs ÷ Contribution Margin
+Break-Even Revenue             = Break-Even Volume × Unit Selling Price</div>
+    <p>The contribution margin is the part of each sale that is left to pay your fixed costs. Once those are paid, it becomes profit.</p>
+
+    <h2>Worked examples</h2>
+    <p><strong>A small coffee roaster.</strong> Fixed costs are $5,000 a month. Each bag sells for $50 and costs $20 to make and send.</p>
+    <div class="formula">Contribution margin  = 50 − 20          = $30 a bag (60%)
+Break-even volume    = 5,000 ÷ 30        = 166.67 bags
+Break-even revenue   = 5,000 ÷ 0.60      = $8,333.33</div>
+    <p>You can't sell two-thirds of a bag, so the roaster needs to sell <strong>167 bags</strong> a month to cover its costs. Each bag after that adds $30 of profit.</p>
+    <p><strong>A freelancer selling a digital product.</strong> A developer sells a software licence for $100. Payment fees and support cost about $40 per sale, and fixed costs are $12,000 a year.</p>
+    <div class="formula">Contribution margin  = 100 − 40         = $60 a sale (60%)
+Break-even volume    = 12,000 ÷ 60       = 200 licences a year
+Break-even revenue   = 200 × 100         = $20,000</div>
+
+    <h2>Using break-even if you sell your time</h2>
+    <p>If you're a freelancer, a "unit" can be a billable hour or a typical project. Put your monthly business costs in fixed costs, your rate as the price, and any cost that comes with each job (such as platform fees) as the variable cost. The result is how many hours or projects you need each month before you make anything at all.</p>
+    <p>Remember that you can't bill every hour you work. If the break-even number is close to the most hours you could realistically bill, your rate is probably too low. Our <a href="../../../freelance/billable-hours-calculator/">billable hours calculator</a> shows how many hours you can really bill, and the <a href="../../../freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a> works out a rate that covers your costs, tax and time off.</p>
+
+    <h2>What break-even doesn't tell you</h2>
+    <ul>
+      <li><strong>Whether you can sell that much.</strong> The number is a target, not a forecast. Compare it with what you've actually sold before.</li>
+      <li><strong>Cash timing.</strong> You can be above break-even and still run short of cash if customers pay late. Our <a href="../../../freelance/late-payment-interest-calculator/">late payment calculator</a> helps when invoices are overdue.</li>
+      <li><strong>Tax.</strong> The profit shown is before tax.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is the difference between fixed and variable costs?</summary>
+        <p>Fixed costs stay the same whether you sell nothing or a thousand units, such as rent, insurance and software. Variable costs go up with each sale, such as materials, packaging, postage and payment fees.</p>
+      </details>
+      <details>
+        <summary>What happens if my variable cost is higher than my price?</summary>
+        <p>You lose money on every sale, so selling more makes the loss bigger. You can never break even unless you raise the price or lower the cost of each unit.</p>
+      </details>
+      <details>
+        <summary>How can I lower my break-even point?</summary>
+        <p>There are three ways: cut fixed costs, lower the cost of each unit, or raise your price. A higher price usually has the biggest effect, because all of the increase goes into the contribution margin.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/business/break-even-calculator/" rel="noopener">Break-Even Analysis Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/break-even.js?v=41925fe7"></script>
+</body>
+</html>

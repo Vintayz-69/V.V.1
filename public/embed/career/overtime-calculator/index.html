@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overtime Pay Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/career/overtime-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Overtime pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rate">Your normal hourly rate</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="20" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="regular">Normal hours this week</label>
+        <div class="input-wrap"><input id="regular" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0 to 168.</span>
+      </div>
+
+      <div class="field">
+        <label for="overtime">Overtime hours<span class="hint">Paid at the overtime rate</span></label>
+        <div class="input-wrap"><input id="overtime" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0 to 168.</span>
+      </div>
+
+      <div class="field">
+        <label for="overtimeRate">Overtime rate<span class="hint">1.5 means time and a half</span></label>
+        <div class="input-wrap"><input id="overtimeRate" type="text" inputmode="decimal" value="1.5" autocomplete="off"><span class="affix">× pay</span></div>
+        <span class="error-msg">Enter a number from 1 to 5.</span>
+      </div>
+
+      <div class="field">
+        <label for="double">Double-time hours<span class="hint">Optional, paid at 2 × your rate</span></label>
+        <div class="input-wrap"><input id="double" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter hours from 0 to 168.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="weeks">Weeks like this<span class="hint">Use 1 for one week, or more to see a total</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="numeric" value="1" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter weeks from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your pay this week</h2>
+      <div class="result-main"><span id="out-weekly">—</span></div>
+      <ul class="result-list">
+        <li><span>Normal pay</span><span id="out-regular">—</span></li>
+        <li><span>Overtime rate</span><span id="out-ot-rate">—</span></li>
+        <li class="key"><span>Overtime pay</span><span id="out-ot">—</span></li>
+        <li><span>Double-time pay</span><span id="out-double">—</span></li>
+        <li class="key"><span>Extra from overtime</span><span id="out-extra">—</span></li>
+        <li><span>Hours worked</span><span id="out-hours">—</span></li>
+        <li><span>Average per hour</span><span id="out-average">—</span></li>
+        <li><span id="out-yearly-label">Total for 1 week</span><span id="out-yearly">—</span></li>
+      </ul>
+      <p class="result-note">Before tax. Your contract or employer sets which hours count as overtime and the rate.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How it's calculated</h2>
+    <div class="formula">Normal pay       = hourly rate × normal hours
+Overtime pay     = hourly rate × overtime rate × overtime hours
+Double-time pay  = hourly rate × 2 × double-time hours
+Weekly pay       = normal pay + overtime pay + double-time pay
+Average per hour = weekly pay ÷ all hours worked</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$20 an hour, 40 hours + 5 at time and a half:
+  800.00 + 20 × 1.5 × 5 = 800.00 + 150.00          = $950.00  (average $21.11 an hour)
+
+£15 an hour, 37.5 hours + 4 at 1.5× + 2 at double time:
+  562.50 + 90.00 + 60.00                            = £712.50
+
+A$32 an hour, 38 hours + 6 at time and a quarter:
+  1,216.00 + 32 × 1.25 × 6 = 1,216.00 + 240.00     = A$1,456.00</div>
+
+    <h2>Overtime rates at a glance</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Normal rate</th><th class="num">Time and a quarter (1.25×)</th><th class="num">Time and a half (1.5×)</th><th class="num">Double time (2×)</th></tr></thead>
+        <tbody>
+          <tr><td>15.00</td><td class="num">18.75</td><td class="num">22.50</td><td class="num">30.00</td></tr>
+          <tr><td>18.00</td><td class="num">22.50</td><td class="num">27.00</td><td class="num">36.00</td></tr>
+          <tr><td>20.00</td><td class="num">25.00</td><td class="num">30.00</td><td class="num">40.00</td></tr>
+          <tr><td>25.00</td><td class="num">31.25</td><td class="num">37.50</td><td class="num">50.00</td></tr>
+          <tr><td>30.00</td><td class="num">37.50</td><td class="num">45.00</td><td class="num">60.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Per hour, in any currency. The calculator works out any other multiplier, such as 1.75×.</p>
+
+    <h2>What regular overtime adds up to over a year</h2>
+    <p>Set "weeks" to the number of weeks you expect to work overtime. In the first example above, 5 hours a week at time and a half is $150 extra a week. Over 48 working weeks that's <strong>$7,200</strong> before tax, and total pay of $45,600.</p>
+    <p>Extra pay is taxed at your top rate, so you keep less than the full amount. Our take-home pay calculators for the <a href="../../../career/us-take-home-pay-calculator/">US</a> and <a href="../../../career/uk-take-home-pay-calculator/">UK</a> show what's left: try your pay with and without the overtime.</p>
+
+    <h2>Check your average hourly pay</h2>
+    <p>The "average per hour" figure is useful when overtime is paid at your normal rate, or not paid at all. Divide your pay by every hour you worked. If someone is paid £450 for a 37.5-hour week but regularly works 47.5 hours, their real average is 450 ÷ 47.5 = £9.47 an hour. In the UK, this average is what's compared with the National Minimum Wage, so check it against the <a href="https://www.gov.uk/national-minimum-wage-rates" rel="noopener">current rates on GOV.UK</a>.</p>
+
+    <h2>When overtime has to be paid</h2>
+    <ul>
+      <li><strong>United States:</strong> under the federal Fair Labor Standards Act, non-exempt employees must get at least time and a half for hours over 40 in a workweek. Federal law doesn't require overtime for weekends, holidays or days over 8 hours, though some states do.</li>
+      <li><strong>United Kingdom:</strong> employers don't have to pay extra for overtime, but your average pay for all the hours you work mustn't fall below the National Minimum Wage. Your contract sets any overtime rate.</li>
+      <li><strong>Canada and Australia:</strong> overtime rules are set by each province, or by awards and agreements. Check your employment standards office or Fair Work.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is time and a half?</summary>
+        <p>Your normal hourly rate plus half of it again: 1.5 times your rate. At $20 an hour, time and a half is $30 an hour.</p>
+      </details>
+      <details>
+        <summary>I'm on a salary. How do I find my hourly rate?</summary>
+        <p>Use our <a href="../../../career/salary-to-hourly-calculator/">salary to hourly calculator</a>, then enter that rate here. Many salaried jobs don't pay overtime, so check your contract.</p>
+      </details>
+      <details>
+        <summary>How do I track the hours I've worked?</summary>
+        <p>Our <a href="../../../freelance/timesheet-calculator/">timesheet calculator</a> adds up start and finish times, takes off breaks and can split hours over a weekly limit into overtime.</p>
+      </details>
+      <details>
+        <summary>What is double time?</summary>
+        <p>Twice your normal hourly rate. At £15 an hour, double time is £30 an hour. Some contracts pay it for Sundays, public holidays or very long days; your contract or agreement says when.</p>
+      </details>
+      <details>
+        <summary>How do I work out overtime for a fortnight or a month?</summary>
+        <p>Enter one week's hours and set "weeks" to 2 for a fortnight. For a month, use the actual number of weeks, or work out each week separately, because overtime limits usually apply week by week.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.dol.gov/agencies/whd/overtime" rel="noopener">US Department of Labor: overtime pay</a>; <a href="https://www.gov.uk/overtime-your-rights" rel="noopener">GOV.UK: overtime, your rights</a>. Checked 30 September 2026.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/career/overtime-calculator/" rel="noopener">Overtime Pay Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/overtime.js?v=ed738480"></script>
+</body>
+</html>

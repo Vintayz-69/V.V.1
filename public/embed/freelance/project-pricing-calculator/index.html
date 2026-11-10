@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Pricing Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/freelance/project-pricing-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Project pricing calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="hours">Estimated hours<span class="hint">Your best estimate for the whole project</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 0.5 to 10,000.</span>
+      </div>
+
+      <div class="field">
+        <label for="rate">Your hourly rate<span class="hint">Not sure? Use our hourly rate calculator</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="75" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="costs">Project costs<span class="hint">Stock images, software, subcontractors</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="costs" type="text" inputmode="decimal" value="200" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="buffer">Safety buffer<span class="hint">Extra for revisions and surprises</span></label>
+        <div class="input-wrap"><input id="buffer" type="text" inputmode="decimal" value="15" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from 0 to 100.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="deposit">Upfront deposit<span class="hint">Share of the price paid before you start</span></label>
+        <div class="input-wrap"><input id="deposit" type="text" inputmode="decimal" value="50" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage from 0 to 100.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your project price</h2>
+      <div class="result-main"><span id="out-price">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Deposit to invoice now</span><span id="out-deposit">—</span></li>
+        <li><span>Balance on completion</span><span id="out-balance">—</span></li>
+        <li><span>Labour (hours × rate)</span><span id="out-labour">—</span></li>
+        <li><span>Project costs</span><span id="out-costs">—</span></li>
+        <li><span>Safety buffer</span><span id="out-buffer">—</span></li>
+        <li><span>Effective hourly rate if on time</span><span id="out-effective">—</span></li>
+      </ul>
+      <p class="result-note">Prices exclude sales tax, GST or VAT. Add these on top if you're registered to charge them.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>What happens if the project runs over</h2>
+    <p>With a fixed price, you're paid the same however long the work takes. If it runs over, your real hourly rate falls. This table uses your numbers above. The effective rate is what you earn per hour after project costs.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Project takes</th><th class="num">Actual hours</th><th class="num">Effective hourly rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Estimate the hours.</strong> Break the project into tasks and add them up. Include calls, emails and revisions.</li>
+      <li><strong>Enter your hourly rate.</strong> If you don't have one yet, work it out with our <a href="../../../freelance/freelance-hourly-rate-calculator/">hourly rate calculator</a>.</li>
+      <li><strong>Add project costs</strong> you'll pay for, such as fonts, stock photos, software or subcontractors.</li>
+      <li><strong>Choose a buffer and deposit.</strong> 10–20% buffer and a 25–50% deposit are common.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Labour          = estimated hours × hourly rate
+Subtotal        = labour + project costs
+Safety buffer   = subtotal × buffer %
+Project price   = subtotal + safety buffer
+Deposit         = project price × deposit %
+Effective rate  = (project price − project costs) ÷ hours worked</div>
+
+    <h2>Worked example</h2>
+    <p>Sam is a web developer quoting for a small website. They estimate 40 hours at $75 an hour, with $200 of costs for a premium theme and plugins. They add a 15% buffer and ask for 50% upfront.</p>
+    <div class="formula">Labour          = 40 × 75              = 3,000
+Subtotal        = 3,000 + 200          = 3,200
+Safety buffer   = 3,200 × 0.15         = 480
+Project price   = 3,200 + 480          = $3,680
+Deposit         = 3,680 × 0.50         = $1,840
+Effective rate  = (3,680 − 200) ÷ 40   = $87.00/hour</div>
+    <p>Sam should quote <strong>$3,680</strong> and invoice <strong>$1,840</strong> before starting. If the project takes 50 hours instead of 40, Sam still earns $69.60 an hour, which is less than the target rate but well above zero. That's what the buffer is for.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> write down what the price includes, such as the number of revision rounds. Anything outside that list becomes a new quote, so extra work doesn't eat into your buffer.</p>
+    </div>
+
+    <h2>Sam's project at different buffers</h2>
+    <p>40 hours at $75 plus $200 of costs:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Safety buffer</th><th class="num">Project price</th><th class="num">Deposit (50%)</th><th class="num">Effective rate if it takes 40 hours</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Safety buffer">0%</td><td class="num" data-label="Project price">$3,200</td><td class="num" data-label="Deposit (50%)">$1,600</td><td class="num" data-label="Effective rate if it takes 40 hours">$75.00</td></tr>
+          <tr><td data-label="Safety buffer">10%</td><td class="num" data-label="Project price">$3,520</td><td class="num" data-label="Deposit (50%)">$1,760</td><td class="num" data-label="Effective rate if it takes 40 hours">$83.00</td></tr>
+          <tr><td data-label="Safety buffer">15%</td><td class="num" data-label="Project price">$3,680</td><td class="num" data-label="Deposit (50%)">$1,840</td><td class="num" data-label="Effective rate if it takes 40 hours">$87.00</td></tr>
+          <tr><td data-label="Safety buffer">20%</td><td class="num" data-label="Project price">$3,840</td><td class="num" data-label="Deposit (50%)">$1,920</td><td class="num" data-label="Effective rate if it takes 40 hours">$91.00</td></tr>
+          <tr><td data-label="Safety buffer">30%</td><td class="num" data-label="Project price">$4,160</td><td class="num" data-label="Deposit (50%)">$2,080</td><td class="num" data-label="Effective rate if it takes 40 hours">$99.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>With no buffer, Sam earns exactly $75 an hour only if the estimate is perfect. Each extra 10% of buffer adds $8 an hour of protection on this project.</p>
+
+    <h2>Before you send the price</h2>
+    <ul>
+      <li>List what's included and what isn't, such as the number of revision rounds.</li>
+      <li>Say how long the price is valid, and what happens if the brief changes.</li>
+      <li>Set out the deposit and when the balance is due.</li>
+    </ul>
+    <p>Our free <a href="../../../business/quote-generator/">quote generator</a> turns this into a PDF quote.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How big should my safety buffer be?</summary>
+        <p>There's no fixed rule. Look back at past projects: if they usually ran 10% over your estimate, a buffer of at least that size covers it. For new kinds of work or unclear briefs, a bigger buffer gives you more protection. The table above shows what each level adds.</p>
+      </details>
+      <details>
+        <summary>Why ask for a deposit?</summary>
+        <p>A deposit shows the client is committed, covers your costs early and reduces the risk of doing work that never gets paid. Many freelancers ask for 25–50% before starting.</p>
+      </details>
+      <details>
+        <summary>Should I show clients my hourly rate?</summary>
+        <p>You don't have to. Many freelancers quote only the project price. Clients then focus on the result rather than the hours, and you keep the benefit if you work efficiently.</p>
+      </details>
+      <details>
+        <summary>What if a client pays late?</summary>
+        <p>Put your payment terms and any late-payment interest in your contract or invoice. In the UK, businesses can usually claim statutory interest on late invoices from other businesses. Our <a href="../../../freelance/late-payment-interest-calculator/">late payment interest calculator</a> works it out.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/freelance/project-pricing-calculator/" rel="noopener">Project Pricing Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/project-pricing.js?v=69a6bce3"></script>
+</body>
+</html>

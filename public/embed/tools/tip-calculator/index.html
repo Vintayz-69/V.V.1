@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tip & Bill Split Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/tools/tip-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Tip and bill split calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="bill">Bill Amount (Pre-Tip)<span class="hint">Food and drinks total</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="bill" type="text" inputmode="decimal" value="85.00" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="tipPct">Tip Percentage</label>
+        <div class="inline-row tip-presets">
+          <button type="button" class="btn btn-sm tip-preset" data-tip="10">10%</button>
+          <button type="button" class="btn btn-sm tip-preset" data-tip="15">15%</button>
+          <button type="button" class="btn btn-sm tip-preset active" data-tip="18">18%</button>
+          <button type="button" class="btn btn-sm tip-preset" data-tip="20">20%</button>
+          <button type="button" class="btn btn-sm tip-preset" data-tip="25">25%</button>
+        </div>
+        <div class="input-wrap"><input id="tipPct" type="text" inputmode="decimal" value="18" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a percentage between 0% and 100%.</span>
+      </div>
+
+      <div class="field">
+        <label for="split">Split Between (People)<span class="hint">Number of diners</span></label>
+        <div class="input-wrap"><input id="split" type="text" inputmode="numeric" value="2" autocomplete="off"><span class="affix">people</span></div>
+        <span class="error-msg">Enter between 1 and 100.</span>
+      </div>
+
+      <div class="field field-end">
+        <label class="check-label">
+          <input type="checkbox" id="roundUp">
+          <span>Round total up to next whole dollar</span>
+        </label>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> 100% private. Runs in your browser.</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Amount per person</h2>
+      <div class="result-main"><span id="out-per-person">—</span> <small>each to pay</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Total tip amount</span><span id="out-tip-total">—</span></li>
+        <li class="key"><span>Total bill with tip</span><span id="out-bill-total">—</span></li>
+        <li><span>Tip per person</span><span id="out-per-person-tip">—</span></li>
+        <li><span>Effective tip percentage</span><span id="out-effective-pct">—</span></li>
+      </ul>
+      <p class="result-note">Splits the bill and the tip evenly between everyone.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How the bill split is calculated</h2>
+    <div class="formula">Tip Amount   = Bill × (Tip % ÷ 100)
+Total Bill   = Bill + Tip Amount
+Each Person  = Total Bill ÷ Number of People</div>
+    <p>If you tick "round up", the total is rounded up to the next whole amount, and the extra goes to the tip. The calculator then shows the tip percentage you're really leaving.</p>
+
+    <h2>Worked examples</h2>
+    <div class="formula">$100.00 bill, 20% tip, 2 people
+  tip 100 × 0.20 = $20.00;  total $120.00;  $60.00 each ($10.00 tip each)
+
+$85.50 bill, 18% tip, 3 people
+  tip 85.50 × 0.18 = $15.39;  total $100.89;  $33.63 each
+
+$42.30 bill, 15% tip, 1 person, rounded up
+  tip would be $6.35 → total rounded up to $49.00
+  tip becomes $6.70, which is 15.8% of the bill</div>
+    <p>When the total doesn't divide evenly, each share is rounded to the nearest cent, so the shares can add up to a cent or two more or less than the bill.</p>
+
+    <h2>Before you tip: check the bill</h2>
+    <ul>
+      <li><strong>Is a service charge already added?</strong> Some restaurants add one automatically, especially for large groups. It's often shown near the bottom of the bill. If it's there, the tip may already be included, so you don't have to add another one unless you want to.</li>
+      <li><strong>Is the tip on the total before or after tax?</strong> Card machines sometimes suggest tips worked out on the total including sales tax. If you'd rather tip on the food and drinks only, enter the amount before tax here.</li>
+      <li><strong>What's normal locally?</strong> Tipping customs differ between countries, and even between types of venue in the same city. We don't list "standard" percentages, because there's no official figure and customs change. If you're not sure, ask the staff or a local.</li>
+    </ul>
+
+    <h2>Tips at a glance</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bill</th><th class="num">15%</th><th class="num">18%</th><th class="num">20%</th></tr></thead>
+        <tbody>
+          <tr><td>$20</td><td class="num">$3.00</td><td class="num">$3.60</td><td class="num">$4.00</td></tr>
+          <tr><td>$50</td><td class="num">$7.50</td><td class="num">$9.00</td><td class="num">$10.00</td></tr>
+          <tr><td>$100</td><td class="num">$15.00</td><td class="num">$18.00</td><td class="num">$20.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Works the same in any currency. A quick check: 10% is the bill with the decimal point moved one place left, and 20% is double that.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Should I tip on the pre-tax or post-tax total?</summary>
+        <p>It's your choice. Tipping on the amount before tax gives a slightly smaller tip, because tax isn't part of the service. Enter whichever amount you want the percentage worked out on.</p>
+      </details>
+      <details>
+        <summary>What if a service charge is already included?</summary>
+        <p>Then the bill already includes a tip. Set the tip to 0% here to split the bill as it is, or add a small extra percentage if you want to leave more.</p>
+      </details>
+      <details>
+        <summary>How do I split a bill when people ordered different amounts?</summary>
+        <p>This calculator splits the bill evenly. If orders were very different, work out each person's food and drink total first, then run the calculator once for each person with "split between" set to 1, so everyone tips on what they ordered.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/tools/tip-calculator/" rel="noopener">Tip & Bill Split Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/tip.js?v=a8e2fc5f"></script>
+</body>
+</html>
