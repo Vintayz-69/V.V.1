@@ -1,0 +1,25 @@
+/* Dusk Ridge "join a friend" page. Fonts are self-hosted: nothing loads from other servers. */
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-latin-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+:root { --bg:#faf7f2; --card:#fff; --ink:#1f1a14; --muted:#6b6257; --line:#e7dfd3; --gold:#b7791f; --gold-soft:#fbf1df; --link:#9a5b12; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg:#15120f; --card:#1e1a16; --ink:#eee7dc; --muted:#a89e90; --line:#342d26; --gold:#e3a94a; --gold-soft:#2a2117; --link:#f0bd6a; }
+}
+:root[data-theme="dark"] { --bg:#15120f; --card:#1e1a16; --ink:#eee7dc; --muted:#a89e90; --line:#342d26; --gold:#e3a94a; --gold-soft:#2a2117; --link:#f0bd6a; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 Inter, system-ui, sans-serif; }
+.wrap { max-width:520px; margin:0 auto; padding:48px 16px; text-align:center; }
+img.icon { width:96px; height:96px; border-radius:22px; }
+h1 { font:700 30px/1.2 Cinzel, Georgia, serif; margin:18px 0 6px; }
+p { color:var(--muted); margin:6px 0; }
+.code { display:inline-block; margin:22px 0; padding:14px 26px; border-radius:14px; background:var(--gold-soft); border:1px solid var(--line);
+        font:700 44px/1 Cinzel, Georgia, serif; letter-spacing:.18em; color:var(--gold); }
+/* Dark text on gold: white on gold is below the 4.5:1 contrast guideline. */
+a.btn { display:block; margin:12px 0; padding:16px; border-radius:12px; background:var(--gold); color:#1f1a14; font-weight:700; text-decoration:none; font-size:18px; }
+a.alt { display:block; margin:10px 0; color:var(--link); }
+.note { font-size:14px; margin-top:22px; }
