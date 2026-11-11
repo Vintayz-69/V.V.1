@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-US" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quarterly Estimated Tax Calculator (2026) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/us/quarterly-estimated-tax-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Quarterly estimated tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="profit">Expected 2026 net profit<span class="hint">Freelance income minus expenses</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="profit" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="withholding">Tax withheld elsewhere in 2026<span class="hint">From a W-2 job, for example. Enter 0 if none.</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="withholding" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="priorTax">Your total 2025 tax<span class="hint">Optional: from your 2025 return</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="priorTax" type="text" inputmode="decimal" value="" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount, or leave blank.</span>
+      </div>
+
+      <div class="field">
+        <label for="priorAgi">Your 2025 AGI<span class="hint">Optional: decides the 100% or 110% rule</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="priorAgi" type="text" inputmode="decimal" value="" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount, or leave blank.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Pay each quarter to avoid a penalty</h2>
+      <div class="result-main"><span id="out-quarter">—</span> <small>/ quarter</small></div>
+      <ul class="result-list">
+        <li class="key"><span>To cover your full bill</span><span id="out-full">—</span></li>
+        <li><span>Estimated 2026 federal tax</span><span id="out-owed">—</span></li>
+        <li><span>Safe harbor amount for the year</span><span id="out-safe">—</span></li>
+        <li><span>Based on</span><span id="out-basis">—</span></li>
+      </ul>
+      <p class="result-note">Paying the safe harbor amount avoids the underpayment penalty, but you'll still owe the rest when you file. Paying the full amount means no surprise bill.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your 2026 payment schedule</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Due date</th><th class="num">Minimum (safe harbor)</th><th class="num">Full amount</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+    <p>You don't have to make the January 15, 2027 payment if you file your 2026 return by February 1, 2027 and pay everything you owe with it.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your expected 2026 net profit</strong> and filing status.</li>
+      <li><strong>Add any tax already withheld</strong>, for example from a part-time job.</li>
+      <li><strong>If you filed a 2025 return, add your total 2025 tax and AGI.</strong> Basing payments on last year's tax is often the easiest safe harbor.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">This year's tax     = federal income tax + self-employment tax + Additional Medicare
+Payments required?  = yes if (this year's tax − withholding) is $1,000 or more
+Safe harbor         = the smaller of:
+                        90% of this year's tax, or
+                        100% of your 2025 tax (110% if 2025 AGI was over $150,000,
+                        or $75,000 if married filing separately)
+Quarterly payment   = (safe harbor − withholding) ÷ 4</div>
+
+    <h2>Worked example</h2>
+    <p>Jamie is single and expects $80,000 net profit in 2026, with no other income. Jamie's total 2025 tax was $12,000 and 2025 AGI was under $150,000.</p>
+    <div class="formula">2026 tax (estimate)  = $16,647.47
+90% of 2026 tax      = 14,982.72
+100% of 2025 tax     = 12,000.00   ← smaller, so this is the safe harbor
+Quarterly payment    = 12,000 ÷ 4  = $3,000
+Full quarterly       = 16,647.47 ÷ 4 = $4,161.87</div>
+    <p>Paying <strong>$3,000 each quarter</strong> avoids a penalty; Jamie would then owe about $4,647 more when filing. Without a 2025 return to go on, the safe harbor would be 90% of this year's tax: $3,745.68 a quarter.</p>
+
+    <h2>2026 due dates and the months each payment covers</h2>
+    <p>The four payments aren't evenly spaced, which catches many new freelancers out. The second payment comes only two months after the first.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Payment</th><th>Income earned</th><th>Due date</th></tr></thead>
+        <tbody>
+          <tr><td>1st</td><td>January 1 to March 31, 2026</td><td>April 15, 2026</td></tr>
+          <tr><td>2nd</td><td>April 1 to May 31, 2026</td><td>June 15, 2026</td></tr>
+          <tr><td>3rd</td><td>June 1 to August 31, 2026</td><td>September 15, 2026</td></tr>
+          <tr><td>4th</td><td>September 1 to December 31, 2026</td><td>January 15, 2027</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How the underpayment penalty works</h2>
+    <p>If you pay too little, or pay late, the IRS can charge a penalty. It isn't a fixed fine. The IRS works it out from three things:</p>
+    <ul>
+      <li><strong>How much</strong> you underpaid for each payment period.</li>
+      <li><strong>How long</strong> it stayed unpaid, from the due date until you paid.</li>
+      <li><strong>The IRS underpayment interest rate</strong>, which the IRS publishes every quarter.</li>
+    </ul>
+    <p>Because it grows with time, paying a missed amount as soon as you can keeps it smaller. You normally avoid the penalty if you owe less than $1,000 when you file, or if you paid at least the safe harbor amount this calculator shows. The IRS says the penalty generally can't be waived for "reasonable cause", but it can be removed or reduced in a few cases, such as a casualty or disaster, or if your income came unevenly through the year (using Form 2210, Schedule AI). See the <a href="https://www.irs.gov/payments/underpayment-of-estimated-tax-by-individuals-penalty" rel="noopener">IRS penalty page</a> for the details.</p>
+
+    <h2>How to pay</h2>
+    <ul>
+      <li><strong><a href="https://www.irs.gov/payments/direct-pay" rel="noopener">IRS Direct Pay</a></strong>: pay estimated tax straight from a bank account.</li>
+      <li><strong>Your IRS Online Account</strong>: lets you pay and see your payment history.</li>
+      <li><strong>EFTPS</strong>: the Electronic Federal Tax Payment System.</li>
+      <li><strong>By mail</strong>: with a payment voucher from Form 1040-ES.</li>
+    </ul>
+    <p>Keep a note of each payment's date and amount. You'll need the total when you file your 2026 return.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>State estimated tax, which most states with an income tax also require.</li>
+      <li>The annualized income method for uneven income, and farmers and fishermen's special rules.</li>
+      <li>Credits, itemized deductions and other income. See our <a href="../../../us/freelancer-take-home-pay-calculator/">take-home pay calculator</a> for how the federal estimate is built.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do I have to pay quarterly estimated taxes?</summary>
+        <p>Usually yes, if you expect to owe $1,000 or more when you file after subtracting withholding and credits. Most full-time freelancers do.</p>
+      </details>
+      <details>
+        <summary>What happens if I miss a payment?</summary>
+        <p>The IRS can charge an underpayment penalty, worked out like interest on the amount that was late. Paying as soon as you can reduces it. See "How the underpayment penalty works" above.</p>
+      </details>
+      <details>
+        <summary>My income is uneven. Do I have to pay the same each quarter?</summary>
+        <p>Not always. The IRS has an annualized income method (Form 2210, Schedule AI) for people whose income comes mostly late in the year. It's more work, and this calculator doesn't use it, so an accountant or tax software can help if your income is very uneven.</p>
+      </details>
+      <details>
+        <summary>Do I need to pay if this is my first year freelancing?</summary>
+        <p>Maybe not. The IRS says you don't have to pay estimated tax for this year if all three are true: you had no tax liability for the prior year (your total tax was zero, or you didn't have to file), you were a US citizen or resident alien for the whole year, and your prior tax year covered 12 months. If you did owe tax last year, the safe harbor rules above apply.</p>
+      </details>
+      <details>
+        <summary>Is the self-employment tax included?</summary>
+        <p>Yes. The estimate adds federal income tax, self-employment tax and any Additional Medicare Tax. Our <a href="../../../us/self-employment-tax-calculator/">self-employment tax calculator</a> shows that part on its own.</p>
+      </details>
+      <details>
+        <summary>How do I pay?</summary>
+        <p>Online through IRS Direct Pay or your IRS Online Account, through EFTPS, or by mailing a payment voucher from Form 1040-ES.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/pub/irs-pdf/f1040es.pdf" rel="noopener">2026 Form 1040-ES</a>, <a href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" rel="noopener">IRS estimated taxes</a>, <a href="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf" rel="noopener">Rev. Proc. 2025-32</a>, <a href="https://www.irs.gov/payments/underpayment-of-estimated-tax-by-individuals-penalty" rel="noopener">IRS underpayment penalty</a>, <a href="https://www.irs.gov/payments/direct-pay" rel="noopener">IRS Direct Pay</a>, <a href="https://www.irs.gov/faqs/estimated-tax/individuals/individuals-2" rel="noopener">IRS estimated tax FAQs (payment periods)</a>.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/us/quarterly-estimated-tax-calculator/" rel="noopener">Quarterly Estimated Tax Calculator (2026)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-us.js?v=732f3b07"></script>
+<script src="../../../assets/js/us-tax.js?v=aedbb181"></script>
+<script src="../../../assets/js/tools/us-quarterly-tax.js?v=587c2737"></script>
+</body>
+</html>

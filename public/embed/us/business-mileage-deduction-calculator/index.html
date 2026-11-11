@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en-US" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Mileage Deduction Calculator (2026) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/us/business-mileage-deduction-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Business mileage deduction calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="year">Tax year<span class="hint" id="rate-note">IRS business rate</span></label>
+        <div class="select-wrap">
+          <select id="year">
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="miles1" id="miles1-label">Business miles, January–June 2026</label>
+        <div class="input-wrap"><input id="miles1" type="text" inputmode="decimal" value="5000" autocomplete="off"><span class="affix">miles</span></div>
+        <span class="error-msg">Enter a number of miles, 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="miles2">Business miles, July–December 2026</label>
+        <div class="input-wrap"><input id="miles2" type="text" inputmode="decimal" value="6000" autocomplete="off"><span class="affix">miles</span></div>
+        <span class="error-msg">Enter a number of miles, 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="extra">Business parking and tolls<span class="hint">Deductible on top of the mileage rate</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="extra" type="text" inputmode="decimal" value="200" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="taxRate">Your combined tax rate<span class="hint">Optional, to estimate the saving</span></label>
+        <div class="input-wrap"><input id="taxRate" type="text" inputmode="decimal" value="30" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 60.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your mileage deduction</h2>
+      <div class="result-main"><span id="out-deduction">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Estimated tax saving</span><span id="out-saving">—</span></li>
+        <li><span>Mileage at IRS rate</span><span id="out-mileage">—</span></li>
+        <li><span>Parking and tolls</span><span id="out-extra">—</span></li>
+        <li><span>Business miles</span><span id="out-miles">—</span></li>
+      </ul>
+      <p class="result-note">Keep a mileage log with the date, destination, business purpose and miles of every trip. The IRS can ask to see it.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>2026 IRS business mileage rates</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Period</th><th class="num">Business rate</th></tr></thead>
+        <tbody>
+          <tr><td>January 1 – June 30, 2026</td><td class="num">72.5¢ a mile</td></tr>
+          <tr><td>July 1 – December 31, 2026</td><td class="num">76¢ a mile</td></tr>
+          <tr><td>2025 (whole year)</td><td class="num">70¢ a mile</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The IRS raised the 2026 rate from July 1 because of higher fuel prices, so miles driven in each half of the year use a different rate.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose the tax year.</strong></li>
+      <li><strong>Enter your business miles</strong> for each part of the year. Commuting from home to a regular workplace doesn't count.</li>
+      <li><strong>Add business parking and tolls</strong>, which you can claim on top of the rate.</li>
+      <li><strong>Optionally enter your tax rate</strong> (income tax plus self-employment tax) to see roughly what the deduction saves you.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Mileage deduction = (Jan–Jun miles × 72.5¢) + (Jul–Dec miles × 76¢)
+Total deduction   = mileage deduction + business parking and tolls
+Estimated saving  = total deduction × your combined tax rate</div>
+
+    <h2>Worked example</h2>
+    <p>Morgan, a freelance photographer, drove 5,000 business miles from January to June 2026 and 6,000 from July to December, and paid $200 in business parking and tolls. Morgan's combined tax rate is about 30%.</p>
+    <div class="formula">January–June   = 5,000 × $0.725  = 3,625.00
+July–December  = 6,000 × $0.76   = 4,560.00
+Parking/tolls  =                   200.00
+Deduction      =                 $8,385.00
+Tax saving     = 8,385 × 30%     ≈ $2,515.50</div>
+    <p>Morgan can deduct <strong>$8,385</strong>, saving roughly <strong>$2,515</strong> in tax.</p>
+
+    <h2>Deductions at different mileages in 2026</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Business miles</th><th class="num">Split evenly across the year</th><th class="num">All from July 1</th></tr></thead>
+        <tbody>
+          <tr><td>1,000</td><td class="num">$742.50</td><td class="num">$760.00</td></tr>
+          <tr><td>3,000</td><td class="num">$2,227.50</td><td class="num">$2,280.00</td></tr>
+          <tr><td>5,000</td><td class="num">$3,712.50</td><td class="num">$3,800.00</td></tr>
+          <tr><td>10,000</td><td class="num">$7,425.00</td><td class="num">$7,600.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>"Split evenly" means half the miles at 72.5¢ and half at 76¢. Parking and tolls come on top.</p>
+
+    <h2>What to write down for each trip</h2>
+    <p>IRS Publication 463 says your records for car use should show:</p>
+    <ul>
+      <li>the date you used the car</li>
+      <li>the miles for each business use, and your total miles for the year</li>
+      <li>where you went</li>
+      <li>the business reason for the trip</li>
+    </ul>
+    <p>A notes app or spreadsheet filled in as you go works well. Generally, keep records that support a deduction for 3 years from the date you file the return that claims it.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>The actual expense method (a share of your real car costs and depreciation). You can't switch freely between methods, so check the IRS rules before choosing.</li>
+      <li>Medical, moving and charity mileage rates.</li>
+      <li>Vehicles that don't qualify for the standard rate, such as some fleets of five or more cars used at the same time.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What counts as business miles?</summary>
+        <p>Driving to meet clients, travel between work locations, trips to pick up supplies, and business errands. Regular commuting between your home and a main workplace doesn't count.</p>
+      </details>
+      <details>
+        <summary>Can I claim gas and repairs as well?</summary>
+        <p>Not with the standard mileage rate: it already covers gas, maintenance, insurance and depreciation. You can add business parking fees and tolls.</p>
+      </details>
+      <details>
+        <summary>Why are there two rates for 2026?</summary>
+        <p>The IRS raised the business rate from 72.5 cents to 76 cents a mile starting July 1, 2026 because fuel prices rose. Use the rate for when each trip happened.</p>
+      </details>
+      <details>
+        <summary>How much tax does the deduction save?</summary>
+        <p>Multiply the deduction by your combined income tax and self-employment tax rate on your last dollars of profit. Enter that rate above to see it. A $3,800 deduction at about 30% saves roughly $1,140.</p>
+      </details>
+      <details>
+        <summary>I drive in the UK. Which rates apply?</summary>
+        <p>HMRC sets its own rates in pence per mile. Use our <a href="../../../uk/business-mileage-allowance-calculator/">UK mileage allowance calculator</a>.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.irs.gov/tax-professionals/standard-mileage-rates" rel="noopener">IRS standard mileage rates</a>, <a href="https://www.irs.gov/publications/p463" rel="noopener">IRS Publication 463 (recordkeeping)</a>.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/us/business-mileage-deduction-calculator/" rel="noopener">Business Mileage Deduction Calculator (2026)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-us.js?v=732f3b07"></script>
+<script src="../../../assets/js/us-tax.js?v=aedbb181"></script>
+<script src="../../../assets/js/tools/us-mileage.js?v=cc9da4bd"></script>
+</body>
+</html>

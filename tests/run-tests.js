@@ -3434,6 +3434,29 @@ async function resumePdfTests() {
   check("word search hard places", places(12, 5, FWD.concat([[0, -1], [-1, 0], [-1, -1], [1, -1]])), 640);
 }
 
+// ---------------- Share links ("Copy link to these numbers", common.js)
+// The numbers go after "#" so they never reach a server (LEGAL.md §2). Odd keys, long values
+// and anything that isn't a key=value link are ignored.
+{
+  const doc = { readyState: "complete", getElementById: () => null, querySelector: () => null, querySelectorAll: () => [], addEventListener() {} };
+  const sandbox = { document: doc, navigator: { language: "en-US" }, Intl, setTimeout };
+  sandbox.window = Object.assign(sandbox, { matchMedia: () => ({ matches: false }), innerHeight: 800 });
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(path.join(JS, "js/common.js"), "utf8"), sandbox);
+  const S = sandbox.window.ToolNest;
+  check("share encode", S.encodeShare([["profit", "52000"], ["region", "ruk"]]), "profit=52000&region=ruk");
+  check("share encode escapes", S.encodeShare([["start", "2026-11-05"], ["note", "a&b=c"]]), "start=2026-11-05&note=a%26b%3Dc");
+  check("share decode", JSON.stringify(S.decodeShare("#profit=52000&region=ruk")), '[["profit","52000"],["region","ruk"]]');
+  check("share decode round trip", JSON.stringify(S.decodeShare("#" + S.encodeShare([["note", "a&b=c"]]))), '[["note","a&b=c"]]');
+  check("share decode blank value kept", JSON.stringify(S.decodeShare("#overtimeAfter=&rate=25")), '[["overtimeAfter",""],["rate","25"]]');
+  check("share ignores plain anchors", S.decodeShare("#results"), null);
+  check("share ignores empty", S.decodeShare(""), null);
+  check("share ignores bad keys", JSON.stringify(S.decodeShare("#1x=2&a b=3&<x>=4&ok=5")), '[["ok","5"]]');
+  check("share ignores long values", S.decodeShare("#a=" + "9".repeat(41)), null);
+  check("share ignores broken escapes", JSON.stringify(S.decodeShare("#a=%E0%A4%A&b=2")), '[["b","2"]]');
+  check("share caps pairs at 40", S.decodeShare("#" + Array.from({ length: 50 }, (_, i) => `k${i}=1`).join("&")).length, 40);
+}
+
 hashTests().catch((err) => {
   failed++;
   console.log(`FAIL  hash tests: ${err.message}`);

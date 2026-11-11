@@ -69,6 +69,208 @@
   }
 
   /*
+   * Share links: "Copy link to these numbers" puts the form's numbers after "#" in the page's
+   * address, e.g. /uk/self-employed-tax-calculator/#profit=52000&region=ruk. Browsers never send
+   * the part after "#" to any server, so the numbers only go where the visitor pastes or sends the
+   * link (LEGAL.md §2). Opening such a link fills the form in.
+   * Only number boxes, dates, drop-downs, ticks and options are shared, never typed words (they
+   * could hold a name): a form with a word box, a text area or a box without an id gets no button.
+   */
+  var SHARE_KEY = /^[A-Za-z][A-Za-z0-9_-]{0,39}$/;
+  var SHARE_MAX_VALUE = 40;
+  var SHARE_MAX_PAIRS = 40;
+
+  // [["profit", "52000"], ["region", "ruk"]] → "profit=52000&region=ruk"
+  function encodeShare(pairs) {
+    return pairs.map(function (p) {
+      return encodeURIComponent(p[0]) + "=" + encodeURIComponent(p[1]);
+    }).join("&");
+  }
+
+  // "#profit=52000&region=ruk" → [["profit", "52000"], ["region", "ruk"]]; null if it isn't a share link.
+  // Odd keys, very long values and anything past 40 pairs are ignored.
+  function decodeShare(hash) {
+    var text = String(hash || "").replace(/^#/, "");
+    if (text.indexOf("=") === -1) return null;
+    var pairs = [];
+    text.split("&").forEach(function (part) {
+      var i = part.indexOf("=");
+      if (pairs.length >= SHARE_MAX_PAIRS || i < 1) return;
+      var key;
+      var value;
+      try {
+        key = decodeURIComponent(part.slice(0, i));
+        value = decodeURIComponent(part.slice(i + 1).replace(/\+/g, " "));
+      } catch (e) {
+        return;
+      }
+      if (SHARE_KEY.test(key) && value.length <= SHARE_MAX_VALUE) pairs.push([key, value]);
+    });
+    return pairs.length ? pairs : null;
+  }
+
+  function isNumberBox(el) {
+    return el.type === "number" || (el.type === "text" && /^(decimal|numeric)$/.test(el.getAttribute("inputmode") || ""));
+  }
+
+  function shareKey(el) {
+    return el.type === "radio" ? el.name : el.id;
+  }
+
+  // The form's boxes in page order, or null if the form has anything that mustn't go in a link.
+  function shareFields(form) {
+    var fields = [];
+    var ok = true;
+    Array.prototype.forEach.call(form.elements, function (el) {
+      if (el.tagName === "BUTTON" || el.tagName === "FIELDSET" || el.tagName === "OUTPUT" || /^(button|submit|reset)$/.test(el.type)) return;
+      var allowed = isNumberBox(el) || el.type === "date" || el.type === "checkbox" || el.type === "radio" || el.type === "select-one";
+      if (!allowed || !SHARE_KEY.test(shareKey(el) || "")) ok = false;
+      else fields.push(el);
+    });
+    return ok && fields.length ? fields : null;
+  }
+
+  // Current values of the boxes the visitor can see.
+  function sharePairs(fields) {
+    var pairs = [];
+    fields.forEach(function (el) {
+      if (el.closest("[hidden]")) return;
+      if (el.type === "radio") {
+        if (el.checked) pairs.push([el.name, el.value]);
+      } else if (el.type === "checkbox") {
+        pairs.push([el.id, el.checked ? "1" : "0"]);
+      } else {
+        var value = String(el.value);
+        if (isNumberBox(el)) value = value.replace(/[,\s]/g, "");
+        if (value.length <= SHARE_MAX_VALUE) pairs.push([el.id, value]);
+      }
+    });
+    return pairs;
+  }
+
+  // Fills the form from a link, in page order, so a drop-down that fills in other boxes (such as a
+  // preset) runs first and the link's own numbers then win. Returns false if a value didn't fit.
+  function applyShare(fields, pairs) {
+    var wanted = {};
+    pairs.forEach(function (p) { wanted[p[0]] = p[1]; });
+    var allFit = true;
+    var used = {};
+    fields.forEach(function (el) {
+      var key = shareKey(el);
+      if (!Object.prototype.hasOwnProperty.call(wanted, key)) return;
+      var value = wanted[key];
+      if (el.type === "radio") {
+        if (el.value !== value) return;
+        el.checked = true;
+      } else if (el.type === "checkbox") {
+        el.checked = value === "1";
+      } else if (el.type === "select-one") {
+        var known = Array.prototype.some.call(el.options, function (o) { return o.value === value; });
+        if (!known) return;
+        el.value = value;
+      } else {
+        el.value = value;
+        if (el.value !== value) return; // e.g. a date box given something that isn't a date
+      }
+      used[key] = true;
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    Object.keys(wanted).forEach(function (key) { if (!used[key]) allFit = false; });
+    return allFit;
+  }
+
+  var LINK_ICON = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>';
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+    return Promise.reject(new Error("no clipboard"));
+  }
+
+  function initShare(form) {
+    var fields = shareFields(form);
+    var actions = form.querySelector(".form-actions");
+    if (!fields || !actions) return;
+
+    // On phones the button opens the phone's own share menu (Messages, WhatsApp, email, copy).
+    var phone = !!(navigator.share && window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn btn-sm btn-ghost btn-share";
+    button.id = "share-link";
+    button.innerHTML = LINK_ICON + (phone ? " Share these numbers" : " Copy link to these numbers");
+    var status = document.createElement("p");
+    status.className = "share-status";
+    status.setAttribute("role", "status");
+    var privacy = actions.querySelector(".privacy-note");
+    if (privacy) {
+      actions.insertBefore(button, privacy);
+      actions.insertBefore(status, privacy.nextSibling);
+    } else {
+      actions.appendChild(button);
+      actions.appendChild(status);
+    }
+
+    function say(html) {
+      status.innerHTML = html;
+    }
+
+    function showLink(url) {
+      say('Copy this link: <input class="share-url" type="text" readonly aria-label="Link to these numbers">');
+      var box = status.querySelector("input");
+      box.value = url;
+      box.focus();
+      box.select();
+    }
+
+    button.addEventListener("click", function () {
+      // Inside a calculator shown on another website (/embed/), link to the full page on our site.
+      var canonical = document.body.classList.contains("embed") && document.querySelector('link[rel="canonical"]');
+      var page = canonical ? canonical.href : location.origin + location.pathname;
+      var url = page + "#" + encodeShare(sharePairs(fields));
+      var sent = "Anyone who opens the link sees these numbers. They're in the link itself, not saved by us.";
+      if (phone) {
+        navigator.share({ title: document.title, url: url }).then(function () {
+          say(sent);
+        }, function (e) {
+          if (!e || e.name !== "AbortError") showLink(url);
+        });
+        return;
+      }
+      copyText(url).then(function () {
+        say("<strong>Link copied.</strong> " + sent);
+      }, function () {
+        showLink(url);
+      });
+    });
+
+    var pairs = decodeShare(location.hash);
+    if (!pairs) return;
+    function fill() {
+      var allFit = applyShare(fields, pairs);
+      if (!allFit) say("Some numbers in this link couldn't be filled in, so check the boxes above.");
+      // Once the visitor changes something, take the old numbers out of the address bar,
+      // so copying the address can't share numbers that no longer match the page.
+      function tidy(e) {
+        if (!e.isTrusted) return;
+        form.removeEventListener("input", tidy);
+        form.removeEventListener("change", tidy);
+        if (decodeShare(location.hash) && window.history && history.replaceState) {
+          history.replaceState(null, "", location.pathname + location.search);
+        }
+      }
+      form.addEventListener("input", tidy);
+      form.addEventListener("change", tidy);
+    }
+    // Wait until the tool's own script has finished setting up (some add listeners after this runs).
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", function () { setTimeout(fill, 0); });
+    } else {
+      setTimeout(fill, 0);
+    }
+  }
+
+  /*
    * Wires up a calculator form.
    *   rules:    { inputId: { min, max } } — numeric inputs to validate
    *   defaults: { elementId: value } — restored by the #reset button
@@ -76,6 +278,7 @@
    *   check:    optional (values) => { inputId: "message" } for cross-field problems
    *   render:   (values, currency) => void
    *   onInvalid: optional () => void
+   *   share:    false to leave out the "Copy link to these numbers" button
    * Inputs inside a hidden .field are skipped.
    */
   function setupCalculator(opts) {
@@ -196,6 +399,7 @@
     }
 
     update();
+    if (opts.share !== false && !form.querySelector(".btn-share")) initShare(form);
     return { update: update };
   }
 
@@ -316,7 +520,9 @@
     readNumber: readNumber,
     setText: setText,
     setupCalculator: setupCalculator,
-    tableRows: tableRows
+    tableRows: tableRows,
+    encodeShare: encodeShare,
+    decodeShare: decodeShare
   };
 
   // The header's Calculators and Country menus are <details> elements and work on their own; this also
@@ -431,13 +637,54 @@
     }
   }
 
+  // "Add this calculator to your website": copies the embed code (build.py embed_box).
+  function initEmbedCopy() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy-embed]"), function (button) {
+      var box = button.closest(".embed-box");
+      var code = box.querySelector(".embed-code");
+      var status = box.querySelector(".embed-status");
+      button.addEventListener("click", function () {
+        copyText(code.value).then(function () {
+          status.textContent = "Code copied. Paste it into your page's HTML.";
+        }, function () {
+          code.focus();
+          code.select();
+          status.textContent = "Press Ctrl+C (or Cmd+C) to copy the selected code.";
+        });
+      });
+    });
+  }
+
+  // Inside a calculator shown on another website: tell that page how tall the calculator is, so
+  // its optional resize line (build.py EMBED_RESIZE) can fit the frame. Only a number is sent.
+  function initEmbedResize() {
+    if (!document.body || !document.body.classList.contains("embed") || window.parent === window) return;
+    var last = 0;
+    var frame = 0;
+    function send() {
+      frame = 0;
+      var height = Math.ceil(document.body.getBoundingClientRect().height) + 2;
+      if (height === last) return;
+      last = height;
+      window.parent.postMessage({ toolnestHeight: height }, "*");
+    }
+    function queue() {
+      if (!frame) frame = requestAnimationFrame(send);
+    }
+    if ("ResizeObserver" in window) new ResizeObserver(queue).observe(document.body);
+    window.addEventListener("load", queue);
+    queue();
+  }
+
   function onReady() {
     initThemeSwitch();
-    var yearEl = document.getElementById("year");
+    var yearEl = document.getElementById("footer-year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
     initNavMenus();
     initReveal();
     initTilt();
+    initEmbedCopy();
+    initEmbedResize();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", onReady);

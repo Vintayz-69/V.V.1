@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emergency Fund Calculator for Freelancers | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/freelance/emergency-fund-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Emergency fund calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="personal">Essential personal costs a month<span class="hint">Rent, food, bills, insurance, debt payments</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="personal" type="text" inputmode="decimal" value="3000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="business">Essential business costs a month<span class="hint">Software, phone, insurance you can't pause</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="business" type="text" inputmode="decimal" value="500" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="months">Months of cover you want<span class="hint">Freelancers often aim for 6–12 months</span></label>
+        <div class="input-wrap"><input id="months" type="text" inputmode="decimal" value="6" autocomplete="off"><span class="affix">months</span></div>
+        <span class="error-msg">Enter a number from 1 to 24.</span>
+      </div>
+
+      <div class="field">
+        <label for="saved">Already saved<span class="hint">Cash you could use today</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="saved" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="save">You can save each month</label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="save" type="text" inputmode="decimal" value="800" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your emergency fund target</h2>
+      <div class="result-main"><span id="out-target">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>Time to reach it</span><span id="out-time">—</span></li>
+        <li><span>Still to save</span><span id="out-gap">—</span></li>
+        <li><span>Your savings cover now</span><span id="out-covers">—</span></li>
+        <li><span>Essential costs a month</span><span id="out-monthly">—</span></li>
+      </ul>
+      <p class="result-note">Keep this money somewhere safe and easy to reach, separate from the money you set aside for tax.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How much cover is right for you?</h2>
+    <p>This table uses your numbers above to compare different amounts of cover.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cover</th><th class="num">Target</th><th class="num">Time to reach</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Add up your essential personal costs</strong> for a month: the bills you'd still have to pay if work stopped.</li>
+      <li><strong>Add business costs you can't pause</strong>, such as insurance or software your clients rely on.</li>
+      <li><strong>Choose how many months of cover you want.</strong> Irregular income usually needs more than a salary does.</li>
+      <li><strong>Enter what you've saved and what you can add each month</strong> to see how long it will take.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Monthly essentials  = personal costs + business costs
+Target fund         = monthly essentials × months of cover
+Still to save       = target fund − already saved
+Time to reach it    = still to save ÷ monthly saving (rounded up)
+Cover you have now  = already saved ÷ monthly essentials</div>
+
+    <h2>Worked example</h2>
+    <p>Dana is a freelance photographer. Her essential personal costs are $3,000 a month and her business costs are $500. She wants 6 months of cover, has $5,000 saved and can put away $800 a month.</p>
+    <div class="formula">Monthly essentials  = 3,000 + 500     = 3,500
+Target fund         = 3,500 × 6       = $21,000
+Still to save       = 21,000 − 5,000  = $16,000
+Time to reach it    = 16,000 ÷ 800    = 20 months
+Cover you have now  = 5,000 ÷ 3,500   ≈ 1.4 months</div>
+    <p>Dana needs <strong>$21,000</strong> and will get there in <strong>20 months</strong>. Her $5,000 already covers about six weeks without work.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> don't count money you've set aside for tax as part of your emergency fund. That money already belongs to the tax authority.</p>
+    </div>
+
+    <h2>Dana's options</h2>
+    <p>Dana needs $3,500 a month and already has $5,000 saved:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Months of cover</th><th class="num">Target</th><th class="num">Still to save</th><th class="num">Time to reach it at $800 a month</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Months of cover">3</td><td class="num" data-label="Target">$10,500</td><td class="num" data-label="Still to save">$5,500</td><td class="num" data-label="Time to reach it at $800 a month">7 months</td></tr>
+          <tr><td data-label="Months of cover">6</td><td class="num" data-label="Target">$21,000</td><td class="num" data-label="Still to save">$16,000</td><td class="num" data-label="Time to reach it at $800 a month">20 months</td></tr>
+          <tr><td data-label="Months of cover">9</td><td class="num" data-label="Target">$31,500</td><td class="num" data-label="Still to save">$26,500</td><td class="num" data-label="Time to reach it at $800 a month">34 months</td></tr>
+          <tr><td data-label="Months of cover">12</td><td class="num" data-label="Target">$42,000</td><td class="num" data-label="Still to save">$37,000</td><td class="num" data-label="Time to reach it at $800 a month">47 months</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A common approach is to build towards the smaller target first, then keep going. Three months of cover in 7 months is a lot safer than nothing while working towards 6.</p>
+
+    <h2>What counts as "essentials"</h2>
+    <ul>
+      <li><strong>Personal:</strong> rent or mortgage, utilities, food, insurance, minimum debt payments, transport.</li>
+      <li><strong>Business:</strong> software you can't pause, insurance, phone and internet, accountant fees.</li>
+      <li><strong>Leave out:</strong> eating out, subscriptions you could cancel, holidays. In an emergency, those stop first.</li>
+    </ul>
+    <p>Our <a href="../../../finance/monthly-expenses-calculator/">monthly expenses calculator</a> helps you add up the first two.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Why do freelancers need a bigger emergency fund?</summary>
+        <p>Freelance income goes up and down, clients can pay late or disappear, and there's no sick pay or redundancy pay. A bigger fund lets you ride out quiet months without panic or debt.</p>
+      </details>
+      <details>
+        <summary>Where should I keep my emergency fund?</summary>
+        <p>Somewhere safe that you can reach within a few days, such as an easy-access savings account, kept separate from your everyday account so you're not tempted to spend it. It's not money to invest in anything that can fall in value.</p>
+      </details>
+      <details>
+        <summary>Should I pay off debt or build an emergency fund first?</summary>
+        <p>Many people build a small starter fund of a month or so first, so a surprise bill doesn't create new debt, then focus on expensive debt, then finish the full fund. A financial adviser can help with your situation.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/freelance/emergency-fund-calculator/" rel="noopener">Emergency Fund Calculator for Freelancers</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/emergency-fund.js?v=66158616"></script>
+</body>
+</html>

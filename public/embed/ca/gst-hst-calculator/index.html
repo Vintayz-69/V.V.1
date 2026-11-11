@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-CA" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GST/HST Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/ca/gst-hst-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="GST/HST calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="province">Province or territory</label>
+        <div class="select-wrap">
+          <select id="province">
+            <option value="AB">Alberta</option>
+            <option value="BC">British Columbia</option>
+            <option value="MB">Manitoba</option>
+            <option value="NB">New Brunswick</option>
+            <option value="NL">Newfoundland and Labrador</option>
+            <option value="NT">Northwest Territories</option>
+            <option value="NS">Nova Scotia</option>
+            <option value="NU">Nunavut</option>
+            <option value="ON" selected>Ontario</option>
+            <option value="PE">Prince Edward Island</option>
+            <option value="QC">Quebec</option>
+            <option value="SK">Saskatchewan</option>
+            <option value="YT">Yukon</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="mode">What do you want to do?</label>
+        <div class="select-wrap">
+          <select id="mode">
+            <option value="add">Add tax to a price</option>
+            <option value="remove">Take tax out of a total</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="amount" id="amount-label">Price before tax</label>
+        <div class="input-wrap"><span class="affix">C$</span><input id="amount" type="text" inputmode="decimal" value="1000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="pst">Provincial sales tax<span class="hint" id="pst-hint">If it applies</span></label>
+        <div class="input-wrap"><input id="pst" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 20, or leave blank.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2 id="out-title">Total with tax</h2>
+      <div class="result-main"><span id="out-main">—</span></div>
+      <ul class="result-list">
+        <li><span>Price before tax</span><span id="out-before">—</span></li>
+        <li class="key"><span id="out-gst-label">GST/HST</span><span id="out-gst">—</span></li>
+        <li><span>Provincial sales tax</span><span id="out-pst">—</span></li>
+        <li><span>Total with tax</span><span id="out-after">—</span></li>
+      </ul>
+      <p class="result-note">Rates depend on where the customer is, not where you are. Some goods and services are zero-rated or exempt.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>GST/HST rates by province</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Province or territory</th><th>Tax</th><th class="num">Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Ontario</td><td>HST</td><td class="num">13%</td></tr>
+          <tr><td>Nova Scotia (from April 1, 2025)</td><td>HST</td><td class="num">14%</td></tr>
+          <tr><td>New Brunswick, Newfoundland and Labrador, Prince Edward Island</td><td>HST</td><td class="num">15%</td></tr>
+          <tr><td>Alberta, Northwest Territories, Nunavut, Yukon</td><td>GST</td><td class="num">5%</td></tr>
+          <tr><td>British Columbia</td><td>GST + PST</td><td class="num">5% + 7%</td></tr>
+          <tr><td>Manitoba</td><td>GST + RST</td><td class="num">5% + 7%</td></tr>
+          <tr><td>Saskatchewan</td><td>GST + PST</td><td class="num">5% + 6%</td></tr>
+          <tr><td>Quebec</td><td>GST + QST</td><td class="num">5% + QST (see Revenu Québec)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Choose the province</strong> where the sale is made (usually where your customer is).</li>
+      <li><strong>Choose to add tax to a price</strong> or take it out of a total that already includes tax.</li>
+      <li><strong>Check the provincial sales tax.</strong> It's filled in for B.C., Manitoba and Saskatchewan; set it to 0 if it doesn't apply to what you sell.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Adding tax:    GST/HST = price × rate;  total = price + GST/HST + PST
+Removing tax:  price = total ÷ (1 + GST/HST rate + PST rate)
+               GST/HST = price × rate</div>
+
+    <h2>Worked examples</h2>
+    <div class="formula">Ontario, $1,000 before tax:        HST 13% = $130      Total = $1,130
+B.C., $1,000 before tax:           GST $50 + PST $70  Total = $1,120
+Nova Scotia, $1,140 including tax: price = 1,140 ÷ 1.14 = $1,000   HST = $140
+Alberta, $525 including GST:       price = 525 ÷ 1.05 = $500       GST = $25</div>
+
+    <h2>Ontario HST on common invoice amounts</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Price before tax</th><th class="num">HST (13%)</th><th class="num">Total</th></tr></thead>
+        <tbody>
+          <tr><td>$500</td><td class="num">$65.00</td><td class="num">$565.00</td></tr>
+          <tr><td>$1,000</td><td class="num">$130.00</td><td class="num">$1,130.00</td></tr>
+          <tr><td>$2,500</td><td class="num">$325.00</td><td class="num">$2,825.00</td></tr>
+          <tr><td>$5,000</td><td class="num">$650.00</td><td class="num">$5,650.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>For other provinces, choose the province in the calculator above.</p>
+
+    <h2>A common mistake when taking tax out</h2>
+    <p>To remove tax from a total, divide by 1 plus the rate. Don't subtract the rate from the total, because the tax was worked out on the smaller, before-tax price.</p>
+    <div class="formula">Ontario, $1,130 including 13% HST
+  wrong:  1,130 − 13%   = $983.10
+  right:  1,130 ÷ 1.13  = $1,000.00   (HST = $130)</div>
+
+    <h2>Tips for freelancers' invoices</h2>
+    <ul>
+      <li><strong>Show the tax on its own line,</strong> with the type (GST or HST) and the rate, so your client can see what they're paying.</li>
+      <li><strong>Say whether a quote includes tax.</strong> In Ontario, "$1,000 + HST" is $1,130, while "$1,000 including HST" leaves you $884.96 before tax. The <a href="../../../business/quote-generator/">quote generator</a> and <a href="../../../freelance/invoice-generator/">invoice generator</a> both have a tax box for this.</li>
+      <li><strong>Keep collected tax apart from your income.</strong> GST/HST you charge as a registrant is collected for the CRA, not for you, so don't count it as money you've earned.</li>
+    </ul>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Place-of-supply rules for services sold to customers in other provinces or abroad.</li>
+      <li>Zero-rated and exempt supplies, such as basic groceries and most health care.</li>
+      <li>The QST rate, which you enter yourself from Revenu Québec.</li>
+      <li>Registration rules for charities and public service bodies, which use different thresholds.</li>
+      <li>How much GST/HST you send to the CRA. If you use the Quick Method, our <a href="../../../ca/gst-hst-quick-method-calculator/">Quick Method calculator</a> works it out.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Do I need to register for GST/HST?</summary>
+        <p>Most businesses must register once their taxable sales are more than $30,000 in a single calendar quarter or over four consecutive calendar quarters. Below that you're a "small supplier" and registering is optional. Our <a href="../../../ca/gst-hst-small-supplier-calculator/">small supplier tracker</a> checks your quarters. See the <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/when-register-charge.html" rel="noopener">CRA's registration page</a>.</p>
+      </details>
+      <details>
+        <summary>Which rate do I charge a client in another province?</summary>
+        <p>Usually the rate where your client is. For example, an Alberta freelancer invoicing an Ontario client typically charges 13% HST.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources:</strong> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html" rel="noopener">CRA GST/HST rates</a>, <a href="https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst" rel="noopener">B.C. PST</a>, <a href="https://www.gov.mb.ca/finance/taxation/taxes/retail.html" rel="noopener">Manitoba RST</a>, <a href="https://www.saskatchewan.ca/business/taxes-licensing-and-reporting/provincial-taxes-policies-and-bulletins/provincial-sales-tax" rel="noopener">Saskatchewan PST</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/when-register-charge.html" rel="noopener">CRA: when to register</a>. Registration threshold checked 16 October 2026.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/ca/gst-hst-calculator/" rel="noopener">GST/HST Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-ca.js?v=112e7d99"></script>
+<script src="../../../assets/js/ca-tax.js?v=6bd72091"></script>
+<script src="../../../assets/js/tools/ca-gst-hst.js?v=54485667"></script>
+</body>
+</html>

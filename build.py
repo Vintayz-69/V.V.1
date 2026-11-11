@@ -1438,6 +1438,8 @@ FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme, Making Tax Digital, trading allo
 NEW_TOOLS_DAY = "2026-10-20"  # 8 new tools: pro rata, invoice due date, SSP, maternity pay, stamp duty, CGT, simple interest, net worth
 ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
 SEARCH_DAY = "2026-11-02"  # pages closest to page 1 in Search Console: tables and answers for the searches people made
+SHARE_DAY = "2026-11-05"  # "Copy link to these numbers" on calculators; privacy policy updated
+EMBED_DAY = "2026-11-10"  # calculators other websites can embed (/embed/); privacy policy and terms updated
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
 IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
 TIME_LIBS = ["js/date-common.js"]
@@ -2628,10 +2630,10 @@ PAGES = [
     dict(path="contact/", src="contact.html", updated=CONTENT_DAY, kind="legal",
          title="Contact ToolNest by Vintayz", h1="Contact Us",
          description="Get in touch with ToolNest to report a mistake, suggest a new calculator or ask a question."),
-    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=CONTENT_DAY,
+    dict(path="privacy-policy/", src="privacy-policy.html", kind="legal", updated=EMBED_DAY,
          title="Privacy Policy | ToolNest by Vintayz", h1="Privacy Policy",
          description="How ToolNest handles personal information, cookies and analytics, and your privacy rights in the UK, the US and India."),
-    dict(path="terms/", src="terms.html", kind="legal", updated=CONTENT_DAY,
+    dict(path="terms/", src="terms.html", kind="legal", updated=EMBED_DAY,
          title="Terms of Use | ToolNest by Vintayz", h1="Terms of Use",
          description="The terms that apply when you use the ToolNest website and calculators."),
     dict(path="disclaimer/", src="disclaimer.html", kind="legal", updated=SECTORS_DAY,
@@ -3302,7 +3304,7 @@ def footer(up):
 {groups}
     </div>
     <div class="footer-bottom">
-      <p>© <span id="year">{TODAY[:4]}</span> {OWNER}. ToolNest is part of {OWNER}. All rights reserved.</p>
+      <p>© <span id="footer-year">{TODAY[:4]}</span> {OWNER}. ToolNest is part of {OWNER}. All rights reserved.</p>
       <p>Estimates only. Not tax, legal or financial advice.</p>
     </div>
   </div>
@@ -3741,11 +3743,13 @@ def main_content(page, up, body):
         note = ("<strong>Disclaimer:</strong> results are estimates for planning only and are not tax, legal or "
                 "financial advice. Rules and rates vary by country, state and personal situation. Check with a "
                 "qualified accountant before making decisions.")
+    embed = embed_box(page, up) if embeddable(page, body) else ""
     return f"""{hero}
 <div class="container">
 {body}
   {related(page, up)}
   <div class="content">
+    {embed}
     <div class="disclaimer">
       <p>{note} <a href="{up}disclaimer/">Read the full disclaimer</a>.</p>
     </div>
@@ -3825,6 +3829,7 @@ def render(page):
         verify += '<meta name="robots" content="noindex">\n'
 
     lang, og_loc = page_locale(page)
+    og_url, og_alt = og_card(page)
 
     return f"""<!doctype html>
 <html lang="{lang}">
@@ -3841,10 +3846,10 @@ def render(page):
 <meta property="og:description" content="{page['description']}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:locale" content="{og_loc}">
-<meta property="og:image" content="{DOMAIN}/assets/og-image.png">
+<meta property="og:image" content="{og_url}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="ToolNest by Vintayz: free calculators and tools for freelancers">
+<meta property="og:image:alt" content="{og_alt}">
 <meta name="twitter:card" content="summary_large_image">
 {verify}<link rel="icon" href="{up}favicon.svg" type="image/svg+xml">
 <link rel="preload" href="{up}assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -3867,18 +3872,122 @@ def render(page):
 """
 
 
+# ---------------------------------------------------------------- Embedded calculators
+# Bloggers, accountants and other sites can show a calculator on their own pages with an
+# <iframe>. The calculator is the same page and code, served from /embed/<tool path>/ without our
+# header, footer or articles, and opens links in a new tab. Embed pages are noindex (they'd copy
+# the real pages) and are the only pages other sites may frame (HEADERS). LEGAL.md change log
+# 2026-11-10; privacy policy section 2 and terms section 3 explain them.
+
+EMBED_HEIGHT = 1100  # starting iframe height in px (about the middle of our calculators at 760px wide)
+# Optional line for the host page: the calculator tells it its height (common.js initEmbedResize) and
+# the frame grows or shrinks to fit. It runs on their page and loads nothing from us; without it the
+# calculator scrolls inside the frame.
+EMBED_RESIZE = ('<script>addEventListener("message",function(e){var h=e.data&&e.data.toolnestHeight;'
+                f'if(e.origin!=="{DOMAIN}"||typeof h!=="number"||h<200||h>6000)return;'
+                'document.querySelectorAll("iframe").forEach(function(f){if(f.contentWindow===e.source)f.style.height=h+"px"})})</script>')
+
+
+def embeddable(page, body):
+    return page["kind"] == "tool" and 'id="calc-form"' in body
+
+
+def embed_snippet(page):
+    """The code a website owner pastes: the iframe, plus a visible line saying where it's from."""
+    title = html.escape(html.unescape(page.get("h1", page["title"])), quote=True)
+    src = f"{DOMAIN}/embed/{page['path']}"
+    return (f'<iframe src="{src}" title="{title}" loading="lazy" allow="clipboard-write" '
+            f'style="width:100%;max-width:760px;height:{EMBED_HEIGHT}px;border:1px solid #e2e8f0;border-radius:12px"></iframe>\n'
+            f'<p style="font-size:14px">Calculator by <a href="{DOMAIN}/{page["path"]}">ToolNest</a></p>\n'
+            + EMBED_RESIZE)
+
+
+def embed_box(page, up):
+    """'Add this calculator to your website' on each calculator page (closed until opened)."""
+    code = html.escape(embed_snippet(page))
+    return f"""<details class="embed-box">
+      <summary>{{{{icon:code}}}} Add this calculator to your website</summary>
+      <p>Free for blogs, newsletters and business websites. Paste this code where you want the calculator to appear.
+        It runs in your visitors' browsers, so we never see what they type, and it sets no cookies.
+        Please keep the "Calculator by ToolNest" line. The last line (a short script) lets the frame grow or
+        shrink to fit the calculator; you can leave it out, and the calculator will scroll inside its frame.
+        See our <a href="{up}terms/">terms</a>.</p>
+      <textarea class="embed-code" readonly rows="6" spellcheck="false" aria-label="Code to add this calculator to your website">{code}</textarea>
+      <div class="embed-actions">
+        <button type="button" class="btn btn-sm" data-copy-embed>{{{{icon:code}}}} Copy code</button>
+        <a class="btn btn-sm btn-ghost" href="{up}embed/{page['path']}" target="_blank" rel="noopener">Preview</a>
+        <span class="embed-status" role="status"></span>
+      </div>
+    </details>"""
+
+
+def render_embed(page):
+    path = "embed/" + page["path"]
+    up = "../" * depth_of(path)
+    with open(os.path.join(SRC, page["src"]), encoding="utf-8") as f:
+        body = f.read()
+    # The whole page body is included so the tool's script finds every element it writes to;
+    # style.css shows only the calculator section (.embed-main > .calculator).
+    main_html = expand(body, up, page)
+    if page.get("default_currency"):
+        main_html = apply_currency_defaults(main_html, page["default_currency"], page.get("currency_symbol"))
+    scripts = [f'<script src="{up}{asset("js/common.js")}"></script>']
+    scripts += [f'<script src="{up}{asset(lib)}"></script>' for lib in page.get("libs", [])]
+    if page.get("script"):
+        scripts.append(f'<script src="{up}{asset("js/tools/" + page["script"])}"></script>')
+    title = page.get("h1", page["title"])
+    lang, _ = page_locale(page)
+    checked = data_checked(page)
+    checked_html = f" Official figures checked {human_date(checked)}." if checked else ""
+    full = f"{DOMAIN}/{page['path']}"
+    scripts_html = "\n".join(scripts)
+    return f"""<!doctype html>
+<html lang="{lang}" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title} | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{full}">
+<base target="_blank">
+<link rel="icon" href="{up}favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{up}{asset("css/style.css")}">
+</head>
+<body class="embed">
+<main class="embed-main">
+{main_html}
+</main>
+<footer class="embed-foot">
+  <p><a href="{full}" rel="noopener">{title}</a> by <a href="{DOMAIN}/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.{checked_html}
+    <a href="{DOMAIN}/disclaimer/" rel="noopener">Disclaimer</a> · <a href="{DOMAIN}/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="{DOMAIN}/terms/" rel="noopener">Terms</a></p>
+</footer>
+{scripts_html}
+</body>
+</html>
+"""
+
+
 # ---------------------------------------------------------------- Site files
 
 FAVICON = LOGO.replace(' class="logo-mark"', ' xmlns="http://www.w3.org/2000/svg"').replace(' aria-hidden="true" focusable="false"', "")
 
 # Security headers for Cloudflare Pages. If you add ads, analytics or any outside
 # script, update the Content-Security-Policy too (LEGAL.md §4 and §5).
+# Framing: X-Frame-Options: DENY stops other websites putting our pages in a frame. Only the
+# embedded calculators (/embed/*) drop it, so other sites can show them. (frame-ancestors isn't in the
+# Content-Security-Policy, because Cloudflare can't take it out for one folder; X-Frame-Options can be.)
 HEADERS = """/*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; img-src 'self' data:; style-src 'self'; font-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; img-src 'self' data:; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'
+
+/embed/*
+  ! X-Frame-Options
+  X-Robots-Tag: noindex
 
 /assets/*
   Cache-Control: public, max-age=604800
@@ -3920,6 +4029,21 @@ def llms_txt():
     return "\n".join(lines)
 
 
+OG_DESIGN = "1"  # must match DESIGN in og-images.js
+
+
+def og_card(page):
+    """The page's own social share picture (made by og-images.js), or the general one if it hasn't
+    been made yet or the title has changed since. Returns (url, alt text)."""
+    title = page.get("h1", page["title"])
+    slug = page["path"].strip("/").replace("/", "-")
+    code = hashlib.sha1(f"{OG_DESIGN}|{title}".encode("utf-8")).hexdigest()[:8]
+    name = f"{slug}-{code}.png"
+    if slug and os.path.exists(os.path.join(OUT, "assets", "og", name)):
+        return f"{DOMAIN}/assets/og/{name}", html.escape(html.unescape(title), quote=True)
+    return f"{DOMAIN}/assets/og-image.png", "ToolNest by Vintayz: free calculators and tools for freelancers"
+
+
 def write(rel, text):
     path = os.path.join(OUT, *rel.split("/"))
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -3948,11 +4072,30 @@ def check_meta_lengths():
         raise SystemExit("Shorten these in build.py:\n  " + "\n  ".join(too_long))
 
 
+def check_unique_ids(page, html_text):
+    """Two elements with the same id break scripts: in October the footer's id="year" took the place
+    of the year drop-down on the mileage and Making Tax Digital tools, and they stopped working.
+    Stop the build if a page repeats an id."""
+    ids = re.findall(r'\sid="([^"]+)"', re.sub(r"<script.*?</script>", "", html_text, flags=re.S))
+    repeated = sorted({i for i in ids if ids.count(i) > 1})
+    if repeated:
+        raise SystemExit(f"{page['path']}: these ids are used more than once: {repeated}")
+
+
 def main():
     check_hub_lists()
     check_meta_lengths()
+    embeds = 0
     for page in PAGES:
-        write(page["path"] + "index.html", render(page))
+        html_text = render(page)
+        check_unique_ids(page, html_text)
+        write(page["path"] + "index.html", html_text)
+        with open(os.path.join(SRC, page["src"]), encoding="utf-8") as f:
+            if embeddable(page, f.read()):
+                embed_html = render_embed(page)
+                check_unique_ids({"path": "embed/" + page["path"]}, embed_html)
+                write("embed/" + page["path"] + "index.html", embed_html)
+                embeds += 1
 
     urls = "\n".join(
         f"  <url>\n    <loc>{DOMAIN}/{p['path']}</loc>\n    <lastmod>{p['updated']}</lastmod>\n  </url>"
@@ -3968,7 +4111,7 @@ def main():
     write("favicon.svg", FAVICON + "\n")
     write("_headers", HEADERS)
     write("_redirects", REDIRECTS)
-    print(f"Built {len(PAGES)} pages into public/")
+    print(f"Built {len(PAGES)} pages and {embeds} embedded calculators into public/")
 
 
 if __name__ == "__main__":

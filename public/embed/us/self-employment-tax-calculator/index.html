@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en-US" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Employment Tax Calculator (2026) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/us/self-employment-tax-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Self-employment tax calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="profit">Net profit from self-employment<span class="hint">Your 1099 / Schedule C income minus business expenses, for 2026</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="profit" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="wages">W-2 wages from a job<span class="hint">Enter 0 if you have none</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="wages" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Self-employment tax for 2026</h2>
+      <div class="result-main"><span id="out-total">—</span></div>
+      <ul class="result-list">
+        <li class="key"><span>You can deduct (half)</span><span id="out-half">—</span></li>
+        <li><span>Social Security part (12.4%)</span><span id="out-ss">—</span></li>
+        <li><span>Medicare part (2.9%)</span><span id="out-med">—</span></li>
+        <li><span>Additional Medicare Tax (0.9%)</span><span id="out-addl">—</span></li>
+        <li><span>Net earnings (92.35% of profit)</span><span id="out-net">—</span></li>
+        <li><span>As a share of your profit</span><span id="out-rate">—</span></li>
+      </ul>
+      <p class="result-note">This is on top of federal income tax. Our <a href="../../../us/freelancer-take-home-pay-calculator/">take-home pay calculator</a> adds both together.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Self-employment tax at different profit levels</h2>
+    <p>Including Additional Medicare Tax, using your filing status and wages above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Net profit</th><th class="num">SE + Additional Medicare</th><th class="num">Share of profit</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your net profit</strong>: what clients paid you minus your business expenses.</li>
+      <li><strong>Choose your filing status.</strong> It only affects the Additional Medicare Tax threshold.</li>
+      <li><strong>Add any W-2 wages.</strong> Wages use up part of the Social Security limit first, so you may pay less Social Security tax on your freelance income.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Net earnings           = net profit × 92.35%
+Social Security part   = 12.4% × net earnings, up to $184,500 minus any W-2 wages
+Medicare part          = 2.9% × net earnings (no limit)
+Self-employment tax    = Social Security part + Medicare part
+Deductible half        = self-employment tax ÷ 2
+Additional Medicare    = 0.9% × net earnings above $200,000 (single/HoH),
+                         $250,000 (joint) or $125,000 (separate), less W-2 wages</div>
+    <p>No self-employment tax is due if your net earnings are under $400. The 92.35% step exists because employees don't pay payroll tax on their employer's share, so self-employed people get the same treatment.</p>
+
+    <h2>Worked example</h2>
+    <p>Jamie is a single freelance developer with $80,000 net profit in 2026 and no other job.</p>
+    <div class="formula">Net earnings         = 80,000 × 0.9235       = 73,880
+Social Security part = 73,880 × 12.4%        = 9,161.12
+Medicare part        = 73,880 × 2.9%         = 2,142.52
+Self-employment tax  = 9,161.12 + 2,142.52   = $11,303.64
+Deductible half      = 11,303.64 ÷ 2         = $5,651.82</div>
+    <p>Jamie owes <strong>$11,303.64</strong> in self-employment tax, and can deduct $5,651.82 when working out income tax. If Jamie earned $250,000, Social Security would stop at the $184,500 limit ($22,878), and $277.88 of Additional Medicare Tax would apply on the earnings above $200,000.</p>
+
+    <h2>Three more examples: $40,000, $75,000 and $120,000</h2>
+    <p>Each person is single, has no W-2 job and has the net profit shown for 2026. None of them reaches the $184,500 Social Security limit or the $200,000 Additional Medicare threshold, so the rate is the same 14.13% of profit each time.</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Net profit</th><th class="num">Net earnings (92.35%)</th><th class="num">Social Security (12.4%)</th><th class="num">Medicare (2.9%)</th><th class="num">SE tax</th><th class="num">Deductible half</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Net profit">$40,000</td><td class="num" data-label="Net earnings (92.35%)">$36,940.00</td><td class="num" data-label="Social Security (12.4%)">$4,580.56</td><td class="num" data-label="Medicare (2.9%)">$1,071.26</td><td class="num" data-label="SE tax">$5,651.82</td><td class="num" data-label="Deductible half">$2,825.91</td></tr>
+          <tr><td data-label="Net profit">$75,000</td><td class="num" data-label="Net earnings (92.35%)">$69,262.50</td><td class="num" data-label="Social Security (12.4%)">$8,588.55</td><td class="num" data-label="Medicare (2.9%)">$2,008.61</td><td class="num" data-label="SE tax">$10,597.16</td><td class="num" data-label="Deductible half">$5,298.58</td></tr>
+          <tr><td data-label="Net profit">$120,000</td><td class="num" data-label="Net earnings (92.35%)">$110,820.00</td><td class="num" data-label="Social Security (12.4%)">$13,741.68</td><td class="num" data-label="Medicare (2.9%)">$3,213.78</td><td class="num" data-label="SE tax">$16,955.46</td><td class="num" data-label="Deductible half">$8,477.73</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The 14.13% comes from 15.3% × 92.35%. It only changes when your earnings pass the Social Security limit (the rate on extra profit falls to 2.9%) or the Additional Medicare threshold (it rises by 0.9%). Income tax comes on top: our <a href="../../../us/quarterly-estimated-tax-calculator/">quarterly estimated tax calculator</a> adds both and splits them into four payments.</p>
+
+    <h2>What counts as net profit?</h2>
+    <p>Self-employment tax is worked out from your net profit, usually the bottom line of Schedule C. In plain words:</p>
+    <ul>
+      <li><strong>Start with all your business income.</strong> The IRS says you must report all business income, "including income not reported to you on a Form 1099". Payments by bank transfer, card, app or cash all count. Our <a href="../../../us/1099-threshold-checker/">1099 checker</a> shows which payments will come with a form for 2026 and which won't.</li>
+      <li><strong>Take off your business expenses.</strong> The IRS allows expenses that are both ordinary ("common and accepted in your field of business") and necessary ("helpful and appropriate for your business"). Examples include software, a work laptop and business insurance.</li>
+      <li><strong>Personal costs don't count.</strong> If something is used for both, such as a phone or car, only the business share can be deducted. Our <a href="../../../us/business-mileage-deduction-calculator/">mileage calculator</a> and <a href="../../../us/home-office-deduction-calculator/">home office calculator</a> help with two common ones.</li>
+    </ul>
+    <p>Every legitimate expense lowers your profit, which lowers both your self-employment tax and your income tax. That's why keeping receipts matters.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Federal and state income tax. Use our <a href="../../../us/freelancer-take-home-pay-calculator/">take-home pay calculator</a> for the full picture.</li>
+      <li>Church employee income, farm optional methods and other special cases on Schedule SE.</li>
+      <li>Tax years other than 2026.</li>
+      <li>Running your business as an S corporation, where you pay payroll taxes on a salary instead. Our <a href="../../../us/s-corp-tax-savings-calculator/">S corp calculator</a> compares the two.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is self-employment tax?</summary>
+        <p>It's Social Security and Medicare tax for people who work for themselves. Employees split these taxes with their employer; self-employed people pay both halves, which is why the rate is 15.3% rather than 7.65%.</p>
+      </details>
+      <details>
+        <summary>Do I pay self-employment tax on all my income?</summary>
+        <p>On 92.35% of your net profit. The Social Security part stops once your combined wages and net earnings reach $184,500 for 2026. The Medicare part has no limit.</p>
+      </details>
+      <details>
+        <summary>Can I deduct self-employment tax?</summary>
+        <p>You can deduct half of it (the "employer-equivalent" portion) when working out your adjusted gross income. It reduces your income tax, not the self-employment tax itself.</p>
+      </details>
+      <details>
+        <summary>When do I pay it?</summary>
+        <p>Through quarterly estimated tax payments during the year, and on Schedule SE with your tax return. Our <a href="../../../us/quarterly-estimated-tax-calculator/">quarterly estimated tax calculator</a> works out the payments.</p>
+      </details>
+      <details>
+        <summary>Is self-employment tax the same as income tax?</summary>
+        <p>No. They're two separate taxes on the same profit. Self-employment tax pays for Social Security and Medicare; income tax is worked out from your taxable income using the tax brackets. Most freelancers owe both. See our <a href="../../../us/tax-bracket-calculator/">tax bracket calculator</a> for the income tax side.</p>
+      </details>
+      <details>
+        <summary>Do I pay self-employment tax if my profit is small?</summary>
+        <p>Not if your net earnings (92.35% of profit) are under $400. In that case no self-employment tax is due, though you may still need to report the income for income tax.</p>
+      </details>
+      <details>
+        <summary>I also have a W-2 job. Do I still pay it?</summary>
+        <p>Yes, on your freelance profit. But your W-2 wages count towards the $184,500 Social Security limit first, so if your wages are high you may pay little or no Social Security tax on the freelance part. Enter your wages above to see the effect.</p>
+      </details>
+      <details>
+        <summary>Does this include state tax?</summary>
+        <p>No. Self-employment tax is a federal tax. Many states also have an income tax, which this calculator doesn't include.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" rel="noopener">IRS self-employment tax</a>, <a href="https://www.irs.gov/taxtopics/tc751" rel="noopener">IRS Topic 751 (wage base)</a>, <a href="https://www.irs.gov/pub/irs-pdf/f1040es.pdf" rel="noopener">2026 Form 1040-ES</a>, <a href="https://www.irs.gov/publications/p334" rel="noopener">IRS Publication 334 (business income and expenses)</a>.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/us/self-employment-tax-calculator/" rel="noopener">Self-Employment Tax Calculator (2026)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-us.js?v=732f3b07"></script>
+<script src="../../../assets/js/us-tax.js?v=aedbb181"></script>
+<script src="../../../assets/js/tools/us-self-employment-tax.js?v=6c978191"></script>
+</body>
+</html>

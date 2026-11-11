@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en-CA" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPP and EI Calculator (2026) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/ca/cpp-ei-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="CPP and EI calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="salary">Yearly employment income for 2026<span class="hint">Salary or wages before deductions</span></label>
+        <div class="input-wrap"><span class="affix">C$</span><input id="salary" type="text" inputmode="decimal" value="60000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="periods">How often you're paid</label>
+        <div class="select-wrap">
+          <select id="periods">
+            <option value="52">Weekly (52 pays)</option>
+            <option value="26" selected>Every two weeks (26 pays)</option>
+            <option value="24">Twice a month (24 pays)</option>
+            <option value="12">Monthly (12 pays)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your CPP and EI for 2026</h2>
+      <div class="result-main"><span id="out-employee">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>About the same each pay</span><span id="out-period">—</span></li>
+        <li><span>CPP (base and first additional)</span><span id="out-cpp">—</span></li>
+        <li><span>CPP2 (second additional)</span><span id="out-cpp2">—</span></li>
+        <li><span>EI premiums</span><span id="out-ei">—</span></li>
+        <li><span>Your employer pays on top</span><span id="out-employer">—</span></li>
+        <li><span>Total paid in for you</span><span id="out-total">—</span></li>
+      </ul>
+      <p class="result-note">For employees outside Quebec. Payroll spreads these over the year, so once you reach a maximum, the deductions stop until January.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your yearly salary or wages</strong> for 2026, before any deductions.</li>
+      <li><strong>Choose how often you're paid</strong> to see roughly what comes off each paycheque.</li>
+      <li><strong>Read your CPP, CPP2 and EI</strong>, and what your employer pays for you on top.</li>
+    </ol>
+
+    <h2>How it's calculated (2026)</h2>
+    <div class="formula">CPP    = (income up to $74,600 − $3,500 basic exemption) × 5.95%
+CPP2   = (income between $74,600 and $85,000) × 4%
+EI     = (income up to $68,900) × 1.63%
+Employer pays the same CPP and CPP2, and 1.4 × your EI</div>
+
+    <h2>Worked example</h2>
+    <p>Ravi earns $60,000 in 2026 in Ontario and is paid every two weeks.</p>
+    <div class="formula">CPP    = (60,000 − 3,500) × 5.95%   = 56,500 × 5.95%  = $3,361.75
+CPP2   = $0 (income is below $74,600)
+EI     = 60,000 × 1.63%                                = $978.00
+Total  = 3,361.75 + 978.00                             = $4,339.75 a year
+Each pay = 4,339.75 ÷ 26                               = about $166.91
+
+Employer: 3,361.75 + 978.00 × 1.4 = 3,361.75 + 1,369.20 = $4,730.95</div>
+    <p>About <strong>$166.91</strong> comes off each of Ravi's paycheques for CPP and EI. At $100,000 or more, you'd reach every 2026 maximum: $4,230.45 CPP, $416.00 CPP2 and $1,123.07 EI.</p>
+
+    <h2>CPP and EI at common salaries in 2026</h2>
+    <p>Employee share, outside Quebec, paid every two weeks:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Salary</th><th class="num">CPP</th><th class="num">CPP2</th><th class="num">EI</th><th class="num">Total a year</th><th class="num">Per pay (26 pays)</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Salary">$40,000</td><td class="num" data-label="CPP">$2,171.75</td><td class="num" data-label="CPP2">$0</td><td class="num" data-label="EI">$652.00</td><td class="num" data-label="Total a year">$2,823.75</td><td class="num" data-label="Per pay (26 pays)">$108.61</td></tr>
+          <tr><td data-label="Salary">$50,000</td><td class="num" data-label="CPP">$2,766.75</td><td class="num" data-label="CPP2">$0</td><td class="num" data-label="EI">$815.00</td><td class="num" data-label="Total a year">$3,581.75</td><td class="num" data-label="Per pay (26 pays)">$137.76</td></tr>
+          <tr><td data-label="Salary">$60,000</td><td class="num" data-label="CPP">$3,361.75</td><td class="num" data-label="CPP2">$0</td><td class="num" data-label="EI">$978.00</td><td class="num" data-label="Total a year">$4,339.75</td><td class="num" data-label="Per pay (26 pays)">$166.91</td></tr>
+          <tr><td data-label="Salary">$70,000</td><td class="num" data-label="CPP">$3,956.75</td><td class="num" data-label="CPP2">$0</td><td class="num" data-label="EI">$1,123.07</td><td class="num" data-label="Total a year">$5,079.82</td><td class="num" data-label="Per pay (26 pays)">$195.38</td></tr>
+          <tr><td data-label="Salary">$80,000</td><td class="num" data-label="CPP">$4,230.45</td><td class="num" data-label="CPP2">$216.00</td><td class="num" data-label="EI">$1,123.07</td><td class="num" data-label="Total a year">$5,569.52</td><td class="num" data-label="Per pay (26 pays)">$214.21</td></tr>
+          <tr><td data-label="Salary">$90,000</td><td class="num" data-label="CPP">$4,230.45</td><td class="num" data-label="CPP2">$416.00</td><td class="num" data-label="EI">$1,123.07</td><td class="num" data-label="Total a year">$5,769.52</td><td class="num" data-label="Per pay (26 pays)">$221.90</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>EI stops growing at $68,900 of earnings, CPP at $74,600, and CPP2 at $85,000. Above $85,000, every 2026 maximum has been reached, so no more CPP, CPP2 or EI comes off extra pay that year.</p>
+
+    <h2>What your employer pays on top</h2>
+    <p>Your employer pays the same CPP and CPP2 as you, and 1.4 times your EI. On a $60,000 salary that's $4,730.95 a year that never shows on your paycheque. It's one reason a contract rate has to be higher than the same salary per hour. Our <a href="../../../ca/employee-vs-contractor-calculator/">employee vs contractor calculator</a> builds it in.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Quebec, where employees pay into the Quebec Pension Plan (QPP) and Quebec's own parental insurance, with a different EI rate.</li>
+      <li>Self-employed people, who pay both halves of CPP and usually no EI. Use our <a href="../../../ca/self-employed-tax-calculator/">self-employed tax calculator</a>.</li>
+      <li>Income tax deductions, and how the basic exemption is spread across pay periods by payroll, which can move a few cents between paycheques.</li>
+      <li>Having more than one job in a year: each employer deducts separately, and any overpayment is refunded when you file your return.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is CPP2?</summary>
+        <p>CPP2 is the second additional Canada Pension Plan contribution. It applies only to earnings between the yearly maximum pensionable earnings ($74,600 in 2026) and the higher second ceiling ($85,000 in 2026).</p>
+      </details>
+      <details>
+        <summary>Why did my CPP or EI deductions stop late in the year?</summary>
+        <p>You reached the yearly maximum. Deductions start again in January. Higher earners reach the EI maximum first, because EI stops at $68,900 of insurable earnings.</p>
+      </details>
+      <details>
+        <summary>Do I get CPP and EI back on my tax return?</summary>
+        <p>Not usually, but they lower your income tax: part of your CPP gives you a tax credit and the rest is a deduction, and EI premiums give you a tax credit. If you paid too much, for example from two jobs, the CRA refunds the extra.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (2026):</strong> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/canada-pension-plan-cpp/cpp-contribution-rates-maximums-exemptions.html" rel="noopener">CRA: CPP contribution rates, maximums and exemptions</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/calculating-deductions/making-deductions/second-additional-cpp-contribution-rates-maximums.html" rel="noopener">CRA: CPP2 rates and maximums</a>, <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/employment-insurance-ei/ei-premium-rates-maximums.html" rel="noopener">CRA: EI premium rates and maximums</a>. Figures checked 28 September 2026.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/ca/cpp-ei-calculator/" rel="noopener">CPP and EI Calculator (2026)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-ca.js?v=112e7d99"></script>
+<script src="../../../assets/js/tools/ca-cpp-ei.js?v=71743a83"></script>
+</body>
+</html>

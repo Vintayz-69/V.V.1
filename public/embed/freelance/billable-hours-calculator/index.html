@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Billable Hours Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/freelance/billable-hours-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Billable hours calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="hours">Hours worked per week<span class="hint">All working time, paid or not</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 1 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="weeksOff">Weeks off per year<span class="hint">Vacation, holidays and sick days</span></label>
+        <div class="input-wrap"><input id="weeksOff" type="text" inputmode="decimal" value="6" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter a number from 0 to 51.</span>
+      </div>
+
+      <div class="field">
+        <label for="admin">Admin per week<span class="hint">Invoicing, email, bookkeeping</span></label>
+        <div class="input-wrap"><input id="admin" type="text" inputmode="decimal" value="4" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 0 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="sales">Sales and marketing per week<span class="hint">Proposals, calls, networking</span></label>
+        <div class="input-wrap"><input id="sales" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 0 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="learning">Learning per week<span class="hint">Courses, practice, reading</span></label>
+        <div class="input-wrap"><input id="learning" type="text" inputmode="decimal" value="2" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 0 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="other">Other unpaid time per week<span class="hint">Travel, unpaid revisions, etc.</span></label>
+        <div class="input-wrap"><input id="other" type="text" inputmode="decimal" value="1" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter a number from 0 to 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rate">Your hourly rate<span class="hint">Optional: enter 0 to skip</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="75" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Billable hours per year</h2>
+      <div class="result-main"><span id="out-year">—</span> <small>hours</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Billable percentage</span><span id="out-pct">—</span></li>
+        <li><span>Billable hours per week</span><span id="out-week">—</span></li>
+        <li><span>Unpaid hours per year</span><span id="out-unpaid">—</span></li>
+        <li><span>Yearly revenue at your rate</span><span id="out-revenue">—</span></li>
+        <li><span>Earned per hour worked</span><span id="out-perhour">—</span></li>
+      </ul>
+      <p class="result-note">Use your billable percentage in our hourly rate calculator to find the rate you need to charge.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Where your working week goes</h2>
+    <p>This table uses your numbers above.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Activity</th><th class="num">Hours / week</th><th class="num">Share of week</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your total working hours</strong> per week, including time nobody pays for.</li>
+      <li><strong>Estimate your unpaid tasks</strong>: admin, sales and marketing, learning and anything else.</li>
+      <li><strong>Enter your weeks off.</strong> Freelancers aren't paid for vacation or sick days.</li>
+      <li><strong>Add your hourly rate</strong> to see what your billable hours are worth in a year.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Unpaid hours/week     = admin + sales + learning + other
+Billable hours/week   = hours worked − unpaid hours
+Working weeks         = 52 − weeks off
+Billable hours/year   = billable hours/week × working weeks
+Billable percentage   = billable hours/week ÷ hours worked
+Earned per hour worked = yearly revenue ÷ (hours worked × working weeks)</div>
+
+    <h2>Worked example</h2>
+    <p>Maria is a freelance copywriter. She works 40 hours a week and takes 6 weeks off. Each week she spends 4 hours on admin, 5 on sales and marketing, 2 on learning and 1 on other unpaid tasks. She charges $75 an hour.</p>
+    <div class="formula">Unpaid hours/week    = 4 + 5 + 2 + 1       = 12
+Billable hours/week  = 40 − 12             = 28
+Working weeks        = 52 − 6              = 46
+Billable hours/year  = 28 × 46             = 1,288
+Billable percentage  = 28 ÷ 40             = 70%
+Yearly revenue       = 1,288 × 75          = $96,600</div>
+    <p>Maria bills <strong>1,288 hours</strong> a year, 70% of her working time. Across every hour she works, including unpaid ones, she earns <strong>$52.50</strong>, not $75.</p>
+    <div class="tip">
+      <p><strong>Tip:</strong> track your time for two normal weeks before you trust these numbers. Most people underestimate how long admin and emails take.</p>
+    </div>
+
+    <h2>What each unpaid hour costs</h2>
+    <p>Same 40-hour week, 6 weeks off and $75 an hour as Maria above. Only the unpaid hours change:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Unpaid hours a week</th><th class="num">Billable share</th><th class="num">Billable hours a year</th><th class="num">Revenue at $75</th><th class="num">Earned per hour worked</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Unpaid hours a week">16</td><td class="num" data-label="Billable share">60%</td><td class="num" data-label="Billable hours a year">1,104</td><td class="num" data-label="Revenue at $75">$82,800</td><td class="num" data-label="Earned per hour worked">$45.00</td></tr>
+          <tr><td data-label="Unpaid hours a week">12</td><td class="num" data-label="Billable share">70%</td><td class="num" data-label="Billable hours a year">1,288</td><td class="num" data-label="Revenue at $75">$96,600</td><td class="num" data-label="Earned per hour worked">$52.50</td></tr>
+          <tr><td data-label="Unpaid hours a week">8</td><td class="num" data-label="Billable share">80%</td><td class="num" data-label="Billable hours a year">1,472</td><td class="num" data-label="Revenue at $75">$110,400</td><td class="num" data-label="Earned per hour worked">$60.00</td></tr>
+          <tr><td data-label="Unpaid hours a week">4</td><td class="num" data-label="Billable share">90%</td><td class="num" data-label="Billable hours a year">1,656</td><td class="num" data-label="Revenue at $75">$124,200</td><td class="num" data-label="Earned per hour worked">$67.50</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Every unpaid hour a week costs Maria 46 billable hours a year, or $3,450 at $75. Cutting admin from 4 hours to 2 with templates or software would be worth about $6,900 a year.</p>
+
+    <h2>A simple way to track it</h2>
+    <p>For two typical weeks, note each block of time and mark it billable or not. Then enter the totals above. Our <a href="../../../freelance/timesheet-calculator/">timesheet calculator</a> adds up start and finish times if you log them that way.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a good billable percentage for a freelancer?</summary>
+        <p>There's no official figure: it depends on your work and how you find clients. What matters is that the number you use for pricing is your real one. New freelancers who are still finding clients usually spend more of the week on sales and marketing, so their share is lower.</p>
+      </details>
+      <details>
+        <summary>What counts as billable time?</summary>
+        <p>Any time a client pays for: the work itself, and often meetings and revisions if your contract covers them. Time spent finding clients, invoicing and learning is usually not billable.</p>
+      </details>
+      <details>
+        <summary>How can I raise my billable hours?</summary>
+        <p>Batch admin into one block a week, use templates for proposals and invoices, and look for longer projects or retainers so you spend less time finding new work. Or raise your rate, so each billable hour covers more.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/freelance/billable-hours-calculator/" rel="noopener">Billable Hours Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/billable-hours.js?v=23590688"></script>
+</body>
+</html>

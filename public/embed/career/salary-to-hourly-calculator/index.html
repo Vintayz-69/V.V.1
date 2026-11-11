@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salary to Hourly Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/career/salary-to-hourly-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Salary to hourly calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="salary">Annual Base Salary<span class="hint">Your gross yearly pay before taxes and deductions</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="salary" type="text" inputmode="decimal" value="65000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours Worked Per Week<span class="hint">Full-time is often 40 in the US or 37.5 in the UK</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="40" autocomplete="off"><span class="affix">hrs</span></div>
+        <span class="error-msg">Enter hours from 1 to 168.</span>
+      </div>
+
+      <div class="field">
+        <label for="days">Days Worked Per Week<span class="hint">Usually 5 days</span></label>
+        <div class="input-wrap"><input id="days" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">days</span></div>
+        <span class="error-msg">Enter days from 1 to 7.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="weeks">Paid Weeks Per Year<span class="hint">52 weeks if you receive paid vacation; fewer if unpaid</span></label>
+        <div class="input-wrap"><input id="weeks" type="text" inputmode="decimal" value="52" autocomplete="off"><span class="affix">weeks</span></div>
+        <span class="error-msg">Enter weeks from 1 to 52.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Equivalent pay</h2>
+      <div class="result-main"><span id="out-hourly">—</span> <small>/ hour</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Daily pay</span><span id="out-daily">—</span></li>
+        <li><span>Weekly pay</span><span id="out-weekly">—</span></li>
+        <li class="key"><span>Bi-weekly paycheck</span><span id="out-biweekly">—</span></li>
+        <li><span>Monthly gross pay</span><span id="out-monthly">—</span></li>
+        <li><span>Overtime rate (1.5x)</span><span id="out-overtime">—</span></li>
+        <li><span>Total working hours / year</span><span id="out-hours">—</span></li>
+      </ul>
+      <p class="result-note">Gross pre-tax equivalents based on your exact working schedule.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Common salaries as an hourly wage</h2>
+    <p>This table shows yearly salaries as hourly pay for a full-time job with 52 paid weeks. The middle column uses 40 hours a week (2,080 hours a year), which is common in the US and Canada. The next column uses 37.5 hours a week (1,950 hours a year), which is common in the UK. The numbers work the same in dollars or pounds, and are rounded to the cent or penny.</p>
+    <div class="table-wrap">
+      <table class="tight">
+        <thead><tr><th>Salary</th><th class="num">Hourly, 40 hrs</th><th class="num">Hourly, 37.5 hrs</th><th class="num">Monthly</th></tr></thead>
+        <tbody>
+          <tr><td>25,000</td><td class="num">12.02</td><td class="num">12.82</td><td class="num">2,083.33</td></tr>
+          <tr><td>30,000</td><td class="num">14.42</td><td class="num">15.38</td><td class="num">2,500.00</td></tr>
+          <tr><td>35,000</td><td class="num">16.83</td><td class="num">17.95</td><td class="num">2,916.67</td></tr>
+          <tr><td>40,000</td><td class="num">19.23</td><td class="num">20.51</td><td class="num">3,333.33</td></tr>
+          <tr><td>45,000</td><td class="num">21.63</td><td class="num">23.08</td><td class="num">3,750.00</td></tr>
+          <tr><td>50,000</td><td class="num">24.04</td><td class="num">25.64</td><td class="num">4,166.67</td></tr>
+          <tr><td>55,000</td><td class="num">26.44</td><td class="num">28.21</td><td class="num">4,583.33</td></tr>
+          <tr><td>60,000</td><td class="num">28.85</td><td class="num">30.77</td><td class="num">5,000.00</td></tr>
+          <tr><td>65,000</td><td class="num">31.25</td><td class="num">33.33</td><td class="num">5,416.67</td></tr>
+          <tr><td>70,000</td><td class="num">33.65</td><td class="num">35.90</td><td class="num">5,833.33</td></tr>
+          <tr><td>75,000</td><td class="num">36.06</td><td class="num">38.46</td><td class="num">6,250.00</td></tr>
+          <tr><td>80,000</td><td class="num">38.46</td><td class="num">41.03</td><td class="num">6,666.67</td></tr>
+          <tr><td>90,000</td><td class="num">43.27</td><td class="num">46.15</td><td class="num">7,500.00</td></tr>
+          <tr><td>100,000</td><td class="num">48.08</td><td class="num">51.28</td><td class="num">8,333.33</td></tr>
+          <tr><td>120,000</td><td class="num">57.69</td><td class="num">61.54</td><td class="num">10,000.00</td></tr>
+          <tr><td>150,000</td><td class="num">72.12</td><td class="num">76.92</td><td class="num">12,500.00</td></tr>
+          <tr><td>200,000</td><td class="num">96.15</td><td class="num">102.56</td><td class="num">16,666.67</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Salary not in the table? Type it into the calculator above. A quick check you can do in your head: at 40 hours a week, the hourly rate is a little under half the salary in thousands. For example, 60,000 a year is just under 30 an hour (28.85).</p>
+
+    <h2>Monthly, weekly or bi-weekly pay to hourly</h2>
+    <p>If you know your pay for a month, a week or two weeks instead of a year, turn it into a yearly figure first, then divide by your hours for the year:</p>
+    <ul>
+      <li><strong>Monthly pay:</strong> multiply by 12. 4,000 a month is 48,000 a year, which is <strong>23.08 an hour</strong> at 40 hours a week (48,000 ÷ 2,080).</li>
+      <li><strong>Bi-weekly pay (every two weeks):</strong> multiply by 26. 2,000 every two weeks is 52,000 a year, or <strong>25.00 an hour</strong> at 40 hours a week.</li>
+      <li><strong>Weekly pay:</strong> divide by the hours you work that week. 1,000 for a 40-hour week is <strong>25.00 an hour</strong>.</li>
+    </ul>
+    <p>Going the other way, from an hourly wage to a yearly salary? Use the <a href="../../../freelance/hourly-to-annual-income-calculator/">hourly to annual income calculator</a>. At 40 hours a week and 52 weeks, 20 an hour is 41,600 a year and 25 an hour is 52,000.</p>
+
+    <h2>What is time and a half?</h2>
+    <p>Time and a half means 1.5 times your normal hourly rate. The calculator above shows it as the overtime rate. Some examples:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Normal hourly rate</th><th class="num">Time and a half</th></tr></thead>
+        <tbody>
+          <tr><td>10.00</td><td class="num">15.00</td></tr>
+          <tr><td>15.00</td><td class="num">22.50</td></tr>
+          <tr><td>16.00</td><td class="num">24.00</td></tr>
+          <tr><td>18.00</td><td class="num">27.00</td></tr>
+          <tr><td>18.50</td><td class="num">27.75</td></tr>
+          <tr><td>20.00</td><td class="num">30.00</td></tr>
+          <tr><td>25.00</td><td class="num">37.50</td></tr>
+          <tr><td>30.00</td><td class="num">45.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Whether you get paid overtime, and at what rate, depends on your job and the law where you work. Your contract or employer can tell you. To add up a week of normal and overtime hours, use the <a href="../../../career/overtime-calculator/">overtime calculator</a>.</p>
+
+    <h2>Pay comparison across different working hours</h2>
+    <p>Wondering how your hourly rate changes if you work 35, 37.5, or 45 hours each week on the same salary? Here is the breakdown:</p>
+    <div class="table-wrap">
+      <table class="tight">
+        <thead><tr><th>Schedule</th><th class="num">Annual Hours</th><th class="num">Equivalent Hourly Rate</th><th class="num">Monthly Gross</th></tr></thead>
+        <tbody id="salary-table-body"><tr><td colspan="4">Enter your salary above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to convert salary to an hourly wage</h2>
+    <ol class="steps">
+      <li><strong>Determine your annual hours:</strong> Multiply the hours you work each week by the number of weeks you are paid per year. For a full-time job (40 hours/week, 52 paid weeks), this equals <strong>2,080 hours</strong> per year.</li>
+      <li><strong>Divide your annual salary by annual hours:</strong> This reveals your unadjusted baseline hourly wage.</li>
+      <li><strong>Factor in overtime or extra hours:</strong> If you regularly put in unpaid overtime (e.g. 50 hours/week on a salaried exempt contract), your real hourly compensation drops significantly.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Annual Working Hours  = Paid Weeks/Year × Hours Worked/Week
+Hourly Rate           = Annual Salary ÷ Annual Working Hours
+Weekly Pay            = Hourly Rate × Hours Worked/Week
+Bi-Weekly Pay         = Weekly Pay × 2
+Daily Pay             = Weekly Pay ÷ Days Worked/Week
+Monthly Pay           = Annual Salary ÷ 12
+Overtime Rate (1.5x)  = Hourly Rate × 1.5</div>
+
+    <h2>Worked example</h2>
+    <p>Jordan earns an annual salary of <strong>$65,000.00</strong> in the US, working 40 hours per week across 5 days, with 52 paid weeks (including PTO). Jordan's annual hours are 2,080. Dividing $65,000 by 2,080 yields an equivalent hourly rate of <strong>$31.25 per hour</strong>. Jordan earns $250.00 per day, $1,250.00 per week, and receives a bi-weekly paycheck of $2,500.00 before tax deductions. If eligible for time-and-a-half overtime, the overtime rate is <strong>$46.88/hour</strong>.</p>
+
+    <p><strong>Pay per hour actually worked.</strong> Priya earns £90,000 a year for 37.5 hours a week. She wants her pay for each hour she actually works, so she enters 50 weeks and leaves out the two weeks she takes as holiday. That's 1,875 hours a year, or <strong>£48.00 an hour</strong> and £1,800.00 a week, with £7,500.00 a month before tax.</p>
+
+    <h2>Moving from a salary to freelancing?</h2>
+    <p>Dividing your salary by 2,080 tells you what your job pays per hour. It is <strong>not</strong> the rate to charge as a freelancer. On a salary, your employer pays for things a freelancer has to cover themselves:</p>
+    <ul>
+      <li><strong>Paid time off.</strong> Holidays, public holidays and sick days are paid on a salary. As a freelancer, you earn nothing in those weeks.</li>
+      <li><strong>Hours you can't bill.</strong> Finding clients, writing proposals, invoicing and admin all take time that no one pays for.</li>
+      <li><strong>Costs and benefits.</strong> Equipment, software, insurance and pension or retirement contributions come out of your own pocket.</li>
+      <li><strong>Tax.</strong> Self-employed people often pay tax differently, for example US self-employment tax or UK Class 4 National Insurance.</li>
+    </ul>
+    <p>Because of this, a freelance rate usually needs to be well above your old salary's hourly figure to end up with the same income. Our <a href="../../../freelance/freelance-hourly-rate-calculator/">freelance hourly rate calculator</a> works out a rate from the income you want, and the <a href="../../../us/1099-vs-w2-calculator/">1099 vs W-2 calculator</a> compares a US job offer with contract work.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How many working hours are in a year?</summary>
+        <p>In standard full-time employment (40 hours per week for 52 weeks), there are <strong>2,080 working hours</strong> in a year. At 37.5 hours per week, a common full-time contract in the UK, it's <strong>1,950 hours</strong>.</p>
+      </details>
+      <details>
+        <summary>Does this calculation include taxes?</summary>
+        <p>No. It shows your gross (before-tax) pay. Tax depends on your country and situation. If you are self-employed, our tax calculators estimate what you keep after tax in the <a href="../../../us/">US</a>, <a href="../../../uk/">UK</a>, <a href="../../../ca/">Canada</a> and <a href="../../../au/">Australia</a>.</p>
+      </details>
+      <details>
+        <summary>What if I take unpaid time off?</summary>
+        <p>If you take 2 weeks of unpaid leave, change "Paid Weeks Per Year" to 50. This recalculates your true hourly rate based on the actual hours you spent earning that annual total.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/career/salary-to-hourly-calculator/" rel="noopener">Salary to Hourly Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/js/tools/salary-to-hourly.js?v=00babc93"></script>
+</body>
+</html>

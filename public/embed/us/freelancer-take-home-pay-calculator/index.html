@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en-US" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freelancer Take-Home Pay Calculator (2026) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/us/freelancer-take-home-pay-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=d7ea2c3f">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Freelancer take-home pay calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="profit">Net profit for 2026<span class="hint">Freelance income minus business expenses</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="profit" type="text" inputmode="decimal" value="80000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="stateRate">State income tax rate<span class="hint">Optional flat estimate; 0 if none</span></label>
+        <div class="input-wrap"><input id="stateRate" type="text" inputmode="decimal" value="0" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter a rate from 0 to 15.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your take-home pay</h2>
+      <div class="result-main"><span id="out-take">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Per month</span><span id="out-monthly">—</span></li>
+        <li><span>Total tax</span><span id="out-total">—</span></li>
+        <li><span>Federal income tax</span><span id="out-income">—</span></li>
+        <li><span>Self-employment tax</span><span id="out-se">—</span></li>
+        <li><span>Additional Medicare Tax</span><span id="out-addl">—</span></li>
+        <li><span>State tax (your estimate)</span><span id="out-state">—</span></li>
+        <li><span>Effective tax rate</span><span id="out-rate">—</span></li>
+        <li><span>Federal tax bracket</span><span id="out-bracket">—</span></li>
+      </ul>
+      <p class="result-note" id="qbi-note" hidden>Your income is above the 2026 QBI threshold, so the 20% qualified business income deduction may be reduced or unavailable. We've left it out, so your tax may be overstated. Ask a tax professional.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Take-home pay at different profit levels</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Net profit</th><th class="num">Total tax</th><th class="num">Take-home</th><th class="num">Effective rate</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="4">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your expected net profit</strong> for 2026: income minus business expenses.</li>
+      <li><strong>Choose your filing status.</strong></li>
+      <li><strong>Optionally add a state tax rate.</strong> State rules vary a lot, so this is a simple flat estimate. Check your own state's department of revenue for its rates.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Self-employment tax  = see our self-employment tax calculator
+Adjusted gross income = profit − half of self-employment tax
+Taxable (before QBI) = AGI − standard deduction
+QBI deduction        = 20% × the smaller of (profit − half SE tax) and taxable income
+                       (only below the 2026 threshold)
+Taxable income       = taxable before QBI − QBI deduction
+Federal income tax   = 2026 tax brackets applied to taxable income
+Take-home            = profit − income tax − SE tax − Additional Medicare − state tax</div>
+    <p>2026 standard deduction: $16,100 single or married filing separately, $32,200 married filing jointly, $24,150 head of household.</p>
+
+    <h2>Worked example</h2>
+    <p>Jamie is single with $80,000 net profit and lives in a state with no income tax.</p>
+    <div class="formula">Self-employment tax  = 11,303.64 (half = 5,651.82)
+AGI                  = 80,000 − 5,651.82          = 74,348.18
+Taxable before QBI   = 74,348.18 − 16,100         = 58,248.18
+QBI deduction        = 20% × 58,248.18            = 11,649.64
+Taxable income       = 58,248.18 − 11,649.64      = 46,598.54
+Income tax           = 1,240 + 12% × (46,598.54 − 12,400) = 5,343.83
+Total tax            = 11,303.64 + 5,343.83       = 16,647.47
+Take-home            = 80,000 − 16,647.47         = $63,352.53</div>
+    <p>Jamie keeps <strong>$63,352.53</strong>, about <strong>$5,279 a month</strong>. Total federal tax is 20.8% of profit, even though Jamie is in the 12% bracket, because self-employment tax applies from the first dollar.</p>
+
+    <h2>Take-home pay at other profit levels</h2>
+    <p>Federal tax only (self-employment tax plus income tax), standard deduction, no other income, for 2026:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Net profit</th><th>Filing status</th><th class="num">Total federal tax</th><th class="num">Take-home</th><th class="num">Share of profit</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Net profit">$40,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Total federal tax">$7,426.93</td><td class="num" data-label="Take-home">$32,573.07</td><td class="num" data-label="Share of profit">18.6%</td></tr>
+          <tr><td data-label="Net profit">$60,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Total federal tax">$12,037.20</td><td class="num" data-label="Take-home">$47,962.80</td><td class="num" data-label="Share of profit">20.1%</td></tr>
+          <tr><td data-label="Net profit">$100,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Total federal tax">$22,364.55</td><td class="num" data-label="Take-home">$77,635.45</td><td class="num" data-label="Share of profit">22.4%</td></tr>
+          <tr><td data-label="Net profit">$150,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Total federal tax">$37,607.62</td><td class="num" data-label="Take-home">$112,392.38</td><td class="num" data-label="Share of profit">25.1%</td></tr>
+          <tr><td data-label="Net profit">$100,000</td><td data-label="Filing status">Married filing jointly</td><td class="num" data-label="Total federal tax">$19,464.13</td><td class="num" data-label="Take-home">$80,535.87</td><td class="num" data-label="Share of profit">19.5%</td></tr>
+          <tr><td data-label="Net profit">$150,000</td><td data-label="Filing status">Married filing jointly</td><td class="num" data-label="Total federal tax">$30,989.80</td><td class="num" data-label="Take-home">$119,010.20</td><td class="num" data-label="Share of profit">20.7%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>For married couples filing jointly, the figures assume the freelance profit is the household's only income.</p>
+
+    <h2>Turning the rate into a set-aside habit</h2>
+    <p>Once you know your share, apply it to every payment as it arrives. If your effective rate is about 21% federal and your state adds about 4%, set aside about 25% of each payment:</p>
+    <div class="formula">Client pays you            $2,000
+Set aside for tax (25%)    $500
+Yours to spend             $1,500</div>
+    <p>Keep the set-aside money in a separate savings account, then use it for your <a href="../../../us/quarterly-estimated-tax-calculator/">quarterly estimated tax payments</a>. Re-run this calculator every few months as your income changes.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Other income (W-2 wages, investments), itemized deductions and tax credits such as the Child Tax Credit.</li>
+      <li>The QBI deduction above the 2026 threshold, and the self-employed health insurance and retirement deductions. Our <a href="../../../us/self-employed-health-insurance-deduction-calculator/">health insurance deduction calculator</a> works out that one.</li>
+      <li>Exact state and local taxes. The state figure is a simple flat estimate.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How much should I set aside for taxes as a freelancer?</summary>
+        <p>Use the share of profit this calculator shows, plus your state tax. There's no single right percentage: in the table above it runs from about 19% to 25% federal, depending on profit and filing status. See the set-aside example above.</p>
+      </details>
+      <details>
+        <summary>What is the QBI deduction?</summary>
+        <p>The qualified business income deduction lets many self-employed people deduct up to 20% of their business income. Below the 2026 threshold ($201,750, or $403,500 married filing jointly) the calculation is simple, and this calculator includes it.</p>
+      </details>
+      <details>
+        <summary>Why is my effective rate higher than my tax bracket?</summary>
+        <p>Your bracket is for income tax only. Self-employment tax of about 15.3% is added on top, from your first dollar of profit.</p>
+      </details>
+      <details>
+        <summary>Do business expenses lower my tax?</summary>
+        <p>Yes. Enter your profit after expenses. Each dollar of legitimate expenses lowers both self-employment tax and income tax. Our <a href="../../../us/business-mileage-deduction-calculator/">mileage</a> and <a href="../../../us/home-office-deduction-calculator/">home office</a> calculators cover two common deductions.</p>
+      </details>
+      <details>
+        <summary>How is this different from the W-2 take-home calculator?</summary>
+        <p>Employees pay only half of Social Security and Medicare and have tax withheld from each paycheck. If you're on a salary, use our <a href="../../../career/us-take-home-pay-calculator/">US take-home pay calculator for employees</a>.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" rel="noopener">IRS 2026 inflation adjustments</a>, <a href="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf" rel="noopener">Rev. Proc. 2025-32</a>, <a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" rel="noopener">IRS self-employment tax</a>.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/us/freelancer-take-home-pay-calculator/" rel="noopener">Freelancer Take-Home Pay Calculator (2026)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=6d50125e"></script>
+<script src="../../../assets/data/tax-us.js?v=732f3b07"></script>
+<script src="../../../assets/js/us-tax.js?v=aedbb181"></script>
+<script src="../../../assets/js/tools/us-take-home.js?v=8f20ff80"></script>
+</body>
+</html>

@@ -81,8 +81,8 @@
         ? "Under " + money(r.goodsLimit) + ", so 16.5% applies"
         : money(r.goodsLimit) + " or more: passed");
       var notes = [];
-      if (r.overJoinLimit) notes.push("At this level for a full year, your sales before VAT would be over £150,000, the limit for joining the scheme.");
-      if (r.overLeaveLimit) notes.push("At this level for a full year, your income including VAT would be over £230,000, the point where you must leave the scheme.");
+      if (r.overJoinLimit) notes.push("At this level for a full year, your sales before VAT would be over " + T.formatMoney(D.joinLimit, "GBP", 0) + ", the limit for joining the scheme.");
+      if (r.overLeaveLimit) notes.push("At this level for a full year, your income including VAT would be over " + T.formatMoney(D.leaveLimit, "GBP", 0) + ", the point where you must leave the scheme.");
       var limits = document.getElementById("out-limits");
       limits.textContent = notes.join(" ");
       limits.hidden = !notes.length;
