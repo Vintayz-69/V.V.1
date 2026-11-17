@@ -2413,6 +2413,34 @@ async function hashTests() {
   expectAll("us brackets below deduction", calc({ income: 10000, status: "single", itemized: null }), { taxable: 0, tax: 0, marginal: 0.1, effective: 0 });
   expectAll("us brackets hoh itemized", calc({ income: 300000, status: "hoh", itemized: 30000 }), { taxable: 270000, tax: 61461, marginal: 0.35 });
   expectAll("us brackets top", calc({ income: 1000000, status: "single", itemized: null }), { toNextBracket: null, marginal: 0.37 });
+  check("us brackets years offered", Array.from(calc.years).join(","), "2026,2027");
+  check("us brackets default year", calc({ income: 75000, status: "single", itemized: null }).year, 2026);
+
+  // 2027 (Rev. Proc. 2026-35). Page example: Taylor, single, $75,000, standard deduction $16,600:
+  // taxable 58,400; 12,800 × 10% = 1,280; 39,225 × 12% = 4,707; 6,375 × 22% = 1,402.50; total 7,389.50; 9.85%;
+  // $280.50 less than 2026's $7,670
+  const t27 = calc({ income: 75000, status: "single", itemized: null, year: 2027 });
+  expectAll("us brackets 2027 Taylor", t27, { year: 2027, deduction: 16600, taxable: 58400, tax: 7389.5, marginal: 0.22, effective: 9.85, band: 2 });
+  check("us brackets 2027 Taylor rows", t27.rows.slice(0, 3).map((x) => x.tax).join(","), "1280,4707,1402.5");
+  check("us brackets 2027 vs 2026", r.tax - t27.tax, 280.5);
+  // Standard deduction table on the page: 2027 amounts and the change from 2026
+  for (const [st, d26, d27] of [["single", 16100, 16600], ["mfj", 32200, 33200], ["hoh", 24150, 24925], ["mfs", 16100, 16600]]) {
+    check(`us brackets std deduction 2026 ${st}`, calc({ income: 0, status: st, itemized: null }).deduction, d26);
+    check(`us brackets std deduction 2027 ${st}`, calc({ income: 0, status: st, itemized: null, year: 2027 }).deduction, d27);
+  }
+  // Every 2027 threshold, checked against the IRS's own running totals in Rev. Proc. 2026-35 tables 1 to 4
+  // ("$5,987.00 plus 22% of the excess over $52,025" means the tax at $52,025 taxable income is $5,987.00).
+  const irs2027 = {
+    mfj: [[25600, 2560], [104050, 11974], [218250, 37098], [416650, 84714], [529100, 120698], [793650, 213290.5]],
+    hoh: [[18250, 1825], [69650, 7993], [109100, 16672], [208300, 40480], [264550, 58480], [661350, 197360]],
+    single: [[12800, 1280], [52025, 5987], [109125, 18549], [208325, 42357], [264550, 60349], [661375, 199237.75]],
+    mfs: [[12800, 1280], [52025, 5987], [109125, 18549], [208325, 42357], [264550, 60349], [396825, 106645.25]]
+  };
+  for (const [st, points] of Object.entries(irs2027)) {
+    for (const [taxable, tax] of points) {
+      check(`us brackets 2027 IRS table ${st} at ${taxable}`, calc({ income: taxable, status: st, itemized: 0, year: 2027 }).tax, tax);
+    }
+  }
 }
 
 // ---------------- UK dividend tax (2026 to 2027)

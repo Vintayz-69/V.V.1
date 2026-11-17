@@ -1024,10 +1024,10 @@ TOOLS = {
     ),
     "us-tax-bracket": dict(
         path="us/tax-bracket-calculator/",
-        name="Federal Tax Bracket Calculator (2026)",
+        name="Federal Tax Bracket Calculator (2026 and 2027)",
         card="Tax bracket calculator",
-        short="See which 2026 federal tax bracket you're in, the tax in each bracket, and your marginal and effective rates.",
-        icon="pie", group="us-tax", parent="us", keywords="income tax brackets marginal effective rate federal irs",
+        short="See which 2026 or 2027 federal tax bracket you're in, the tax in each bracket, and your marginal and effective rates.",
+        icon="pie", group="us-tax", parent="us", keywords="income tax brackets 2027 marginal effective rate federal irs standard deduction",
     ),
     "uk-stamp-duty": dict(
         path="uk/stamp-duty-calculator/",
@@ -2394,11 +2394,11 @@ PAGES = [
          intro="Write a clear, polite resignation letter with your last working day, and download it as a PDF or copy it into an email.",
          chips=["{{icon:globe}} US · UK · Canada · Australia"] + RESUME_CHIPS,
          related=["cover-letter", "resume-us", "uk-redundancy"]),
-    dict(tool="us-tax-bracket", src="us-tax-bracket.html", script="us-tax-bracket.js", libs=["data/tax-us.js", "js/us-tax.js"], updated=MONEY_DAY,
-         title="Federal Tax Bracket Calculator 2026 | ToolNest by Vintayz",
-         description="Find your 2026 federal tax bracket, the tax on each slice of your income, and your marginal and effective tax rates, for every filing status.",
-         intro="See which 2026 federal income tax bracket you're in, how much of your income falls in each bracket, and your real (effective) tax rate.",
-         chips=["{{flag:us}} US federal, tax year 2026"] + TOOL_CHIPS,
+    dict(tool="us-tax-bracket", src="us-tax-bracket.html", script="us-tax-bracket.js", libs=["data/tax-us.js", "js/us-tax.js"], updated=NOV_TOOLS_DAY,
+         title="Tax Bracket Calculator 2026 & 2027 | ToolNest by Vintayz",
+         description="Find your 2026 or 2027 federal tax bracket, the tax on each slice of your income, and your marginal and effective rates. Includes the new 2027 brackets.",
+         intro="See which 2026 or 2027 federal income tax bracket you're in, how much of your income falls in each bracket, and your real (effective) tax rate.",
+         chips=["{{flag:us}} US federal, tax years 2026 and 2027"] + TOOL_CHIPS,
          related=["us-salaried-pay", "us-take-home", "us-quarterly-tax"]),
     dict(tool="uk-stamp-duty", src="uk-stamp-duty.html", script="uk-stamp-duty.js", libs=["data/property-tax-uk.js"], updated=NEW_TOOLS_DAY,
          title="Stamp Duty Calculator: England & NI (SDLT) | ToolNest by Vintayz",
@@ -3329,7 +3329,7 @@ def footer(up):
 {groups}
     </div>
     <div class="footer-bottom">
-      <p>© <span id="year">{TODAY[:4]}</span> {OWNER}. ToolNest is part of {OWNER}. All rights reserved.</p>
+      <p>© <span id="footer-year">{TODAY[:4]}</span> {OWNER}. ToolNest is part of {OWNER}. All rights reserved.</p>
       <p>Estimates only. Not tax, legal or financial advice.</p>
     </div>
   </div>
@@ -3974,6 +3974,15 @@ def check_hub_lists():
             raise SystemExit(f"Add these {group} tools to src/pages/{src}: {missing}")
 
 
+def check_unique_ids(page_html, path):
+    """Two elements with the same id break scripts: getElementById finds only the first. (The footer's
+    year once had id="year", which wiped the options of tool dropdowns also called "year".)"""
+    ids = re.findall(r'\sid="([^"]+)"', page_html)
+    dups = sorted({i for i in ids if ids.count(i) > 1})
+    if dups:
+        raise SystemExit(f"Duplicate id on {path}: {dups}")
+
+
 def check_meta_lengths():
     """Google cuts off titles over about 60 characters and descriptions over about 160 in search
     results. Stop the build if a page goes over."""
@@ -3987,7 +3996,9 @@ def main():
     check_hub_lists()
     check_meta_lengths()
     for page in PAGES:
-        write(page["path"] + "index.html", render(page))
+        page_html = render(page)
+        check_unique_ids(page_html, page["path"])
+        write(page["path"] + "index.html", page_html)
 
     listed = [(p["path"], p["updated"]) for p in PAGES if GUIDES_REVIEWED or p.get("kind") != "guide"]
     listed += HAND_MADE_SITEMAP

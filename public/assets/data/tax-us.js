@@ -10,6 +10,13 @@
  *   Mileage: https://www.irs.gov/tax-professionals/standard-mileage-rates
  *   Home office simplified method: https://www.irs.gov/businesses/small-businesses-self-employed/simplified-option-for-home-office-deduction
  *
+ *
+ * nextYear (tax year 2027 brackets and standard deduction only), checked 2026-11-17 against:
+ *   IRS Rev. Proc. 2026-35, section 3.01 (tables 1 to 4) and 3.15(1) — https://www.irs.gov/pub/irs-drop/rp-26-35.pdf
+ *     and https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts
+ *   Used only by the tax bracket calculator, so people can look ahead. Every other tool stays on 2026
+ *   until the January update, when nextYear's figures move up and the rest of 2027 is added.
+ *
  * TO UPDATE (every January, and when the IRS announces mid-year changes): replace the figures below,
  * change `year` and `checked`, then run `node tests/run-tests.js` and fix the examples.
  */
@@ -58,5 +65,19 @@ window.ToolNestTaxUS = {
     2025: [{ from: "2025-01-01", to: "2025-12-31", rate: 0.70 }]
   },
 
-  homeOffice: { simplifiedRatePerSqFt: 5, simplifiedMaxSqFt: 300 }
+  homeOffice: { simplifiedRatePerSqFt: 5, simplifiedMaxSqFt: 300 },
+
+  // Tax year 2027, from IRS Rev. Proc. 2026-35 (published 5 November 2026). Brackets and standard
+  // deduction only; see the note at the top of this file.
+  nextYear: {
+    year: 2027,
+    checked: "2026-11-17",
+    brackets: {
+      single: [[12800, 0.10], [52025, 0.12], [109125, 0.22], [208325, 0.24], [264550, 0.32], [661375, 0.35], [Infinity, 0.37]],
+      mfj: [[25600, 0.10], [104050, 0.12], [218250, 0.22], [416650, 0.24], [529100, 0.32], [793650, 0.35], [Infinity, 0.37]],
+      mfs: [[12800, 0.10], [52025, 0.12], [109125, 0.22], [208325, 0.24], [264550, 0.32], [396825, 0.35], [Infinity, 0.37]],
+      hoh: [[18250, 0.10], [69650, 0.12], [109100, 0.22], [208300, 0.24], [264550, 0.32], [661350, 0.35], [Infinity, 0.37]]
+    },
+    standardDeduction: { single: 16600, mfj: 33200, mfs: 16600, hoh: 24925 }
+  }
 };
