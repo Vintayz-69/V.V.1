@@ -20,6 +20,8 @@ Tax figures come only from official sources (IRS, HMRC, CRA, ATO, GOV.UK) and ea
 - [Income Smoothing Calculator](https://vintayz.com/freelance/income-smoothing-calculator/): Turn irregular freelance income into a steady monthly salary with a safety buffer.
 - [Invoice Due Date Calculator](https://vintayz.com/freelance/invoice-due-date-calculator/): Find the due date for Net 30, Net 60 or EOM terms, the deadline for an early payment discount, and if an invoice is overdue.
 - [Late Payment Interest Calculator](https://vintayz.com/freelance/late-payment-interest-calculator/): Calculate interest and fixed compensation on an overdue invoice, including UK statutory interest.
+- [Milestone Payment Calculator](https://vintayz.com/freelance/milestone-payment-calculator/): Split a project price into a deposit, milestone payments and a final payment that add up exactly.
+- [Per-Word Rate Calculator](https://vintayz.com/freelance/per-word-rate-calculator/): Turn a per-word rate into a fee and a real hourly rate, or find the per-word rate you need for your target.
 - [Project Pricing Calculator](https://vintayz.com/freelance/project-pricing-calculator/): Turn your hours, costs and a safety buffer into a fixed project quote and deposit.
 - [Retirement Savings Calculator](https://vintayz.com/freelance/retirement-savings-calculator/): See what your pension or retirement savings could grow to, and the income they might give you.
 - [Timesheet Calculator](https://vintayz.com/freelance/timesheet-calculator/): Add up a week of start and finish times, less breaks, and see what to bill at your hourly rate.

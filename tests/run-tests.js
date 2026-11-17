@@ -1481,6 +1481,58 @@ function loadResume(country) {
     { rise: 25, breakEvenLoss: 20, hoursToMatch: 48, after: 6000, change: 0 });
 }
 
+// ---------------- Per-word rate (worked by hand, 17 November 2026)
+{
+  const calc = load("per-word-rate");
+  // Alex: 1,500 words at $0.15, 5 hours, $50 target: fee 225; 225 ÷ 5 = 45 an hour; 300 words an hour;
+  // $150 per 1,000 words; $5 below; fee for target 50 × 5 = 250; rate 250 ÷ 1,500 = 0.1667 (shown as $0.167)
+  const alex = calc({ words: 1500, rate: 0.15, hours: 5, target: 50 });
+  expectAll("per-word Alex", alex, { fee: 225, hourly: 45, wordsPerHour: 300, per1000: 150, gap: -5, feeForTarget: 250 });
+  check("per-word Alex rate for target (3 dp)", alex.rateForTarget.toFixed(3), "0.167");
+  // Same post taking 7.5 hours: 225 ÷ 7.5 = 30 an hour (page text and table row)
+  expectAll("per-word Alex 7.5 hours", calc({ words: 1500, rate: 0.15, hours: 7.5, target: null }), { hourly: 30, wordsPerHour: 200 });
+  // What-if table for Alex: 2.5 h → 600 words, $90; 3.75 h → 400 words, $60; 10 h → 150 words, $22.50
+  expectAll("per-word Alex 2.5 hours", calc({ words: 1500, rate: 0.15, hours: 2.5, target: null }), { hourly: 90, wordsPerHour: 600 });
+  expectAll("per-word Alex 3.75 hours", calc({ words: 1500, rate: 0.15, hours: 3.75, target: null }), { hourly: 60, wordsPerHour: 400 });
+  expectAll("per-word Alex 10 hours", calc({ words: 1500, rate: 0.15, hours: 10, target: null }), { hourly: 22.5, wordsPerHour: 150 });
+  // Jo: 2,000 words at £0.10, 8 hours, £40 target: £200; £25 an hour; 250 words an hour; fee 320; rate 0.16
+  expectAll("per-word Jo", calc({ words: 2000, rate: 0.10, hours: 8, target: 40 }),
+    { fee: 200, hourly: 25, wordsPerHour: 250, per1000: 100, gap: -15, feeForTarget: 320, rateForTarget: 0.16 });
+  // Sam: 800 words at A$0.40, 4 hours, A$60 target: A$320; A$80 an hour, A$20 above; rate 60 × 4 ÷ 800 = 0.30
+  expectAll("per-word Sam", calc({ words: 800, rate: 0.40, hours: 4, target: 60 }),
+    { fee: 320, hourly: 80, wordsPerHour: 200, gap: 20, feeForTarget: 240, rateForTarget: 0.3 });
+  // FAQ: $400 for 2,000 words is $0.20 a word (fee ÷ words)
+  check("per-word FAQ 400 for 2,000 words", calc({ words: 2000, rate: 0.20, hours: 1, target: null }).fee, 400);
+  check("per-word no target", calc({ words: 1000, rate: 0.1, hours: 2, target: null }).rateForTarget, undefined);
+}
+
+// ---------------- Milestone payments (worked by hand, 17 November 2026)
+{
+  const calc = load("milestone-payments");
+  const amounts = (r) => Array.from(r.amounts).join(" + ");
+  // Maria: $6,000, 30% deposit, 2 milestones, 20% final: 1,800 + 1,500 + 1,500 + 1,200; 4,200 after deposit
+  const maria = calc({ total: 6000, deposit: 30, milestones: 2, final: 20 });
+  check("milestones Maria schedule", amounts(maria), "1800 + 1500 + 1500 + 1200");
+  expectAll("milestones Maria", maria, { count: 4, deposit: 1800, milestone: 1500, final: 1200, afterDeposit: 4200 });
+  check("milestones Maria paid so far", maria.payments[2].paidSoFar, 4800);
+  check("milestones Maria deposit share", maria.payments[0].percent, 30);
+  // £2,500, 50% deposit, no milestones, 50% on completion: 1,250 + 1,250
+  const half = calc({ total: 2500, deposit: 50, milestones: 0, final: 50 });
+  check("milestones half and half", amounts(half), "1250 + 1250");
+  check("milestones half and half count", half.count, 2);
+  // $1,000, 20% deposit, 3 milestones, no final: 800 ÷ 3 = 266.666…; 266.67 + 266.67, last 266.66; total 1,000.00
+  const uneven = calc({ total: 1000, deposit: 20, milestones: 3, final: 0 });
+  check("milestones uneven schedule", amounts(uneven), "200 + 266.67 + 266.67 + 266.66");
+  check("milestones uneven total exact", uneven.payments[3].paidSoFar, 1000);
+  expectAll("milestones uneven", uneven, { count: 4, final: 0, afterDeposit: 800 });
+  // No deposit: $900, 0%, 3 milestones, 0% final: 300 each
+  const noDeposit = calc({ total: 900, deposit: 0, milestones: 3, final: 0 });
+  check("milestones no deposit", amounts(noDeposit), "300 + 300 + 300");
+  check("milestones no deposit amount", noDeposit.deposit, 0);
+  // $100.01 in 3 equal milestones: 33.34 + 33.34, last 33.33 (adds to 100.01)
+  check("milestones odd cent", amounts(calc({ total: 100.01, deposit: 0, milestones: 3, final: 0 })), "33.34 + 33.34 + 33.33");
+}
+
 // ---------------- Pro rata salary (worked by hand)
 {
   const calc = load("pro-rata-salary");

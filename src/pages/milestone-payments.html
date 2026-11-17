@@ -1,0 +1,146 @@
+  <section class="calculator" aria-label="Milestone payment calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2">
+        <label for="total">Total project price<span class="hint">What the client pays for the whole project, before sales tax</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="total" type="text" inputmode="decimal" value="6000" autocomplete="off"></div>
+        <span class="error-msg">Enter a price above 0.</span>
+      </div>
+
+      <div class="field">
+        <label for="deposit">Deposit before you start<span class="hint">0 for no deposit</span></label>
+        <div class="input-wrap"><input id="deposit" type="text" inputmode="decimal" value="30" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 100%.</span>
+      </div>
+
+      <div class="field">
+        <label for="final">Final payment on completion<span class="hint">0 for no separate final payment</span></label>
+        <div class="input-wrap"><input id="final" type="text" inputmode="decimal" value="20" autocomplete="off"><span class="affix">%</span></div>
+        <span class="error-msg">Enter between 0% and 100%.</span>
+      </div>
+
+      <div class="field span-2">
+        <label for="milestones">Milestone payments in between<span class="hint">The rest of the price is split equally between them</span></label>
+        <div class="input-wrap"><input id="milestones" type="text" inputmode="numeric" value="2" autocomplete="off"><span class="affix">payments</span></div>
+        <span class="error-msg">Enter a whole number from 0 to 12.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset">{{icon:refresh}} Reset to example</button>
+        <span class="privacy-note">{{icon:lock}} Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Your payment plan</h2>
+      <div class="result-main"><span id="out-deposit">—</span> <small>deposit</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Each milestone payment</span><span id="out-milestone">—</span></li>
+        <li class="key"><span>Final payment</span><span id="out-final">—</span></li>
+        <li><span>Number of payments</span><span id="out-count">—</span></li>
+        <li><span>Still to be paid after the deposit</span><span id="out-after">—</span></li>
+      </ul>
+      <p class="result-note">Rounded to the cent. Any leftover cent goes on the last payment, so the total is exact.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your payment schedule</h2>
+    <p>Each payment in order, with the total paid so far:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Payment</th><th class="num">Share</th><th class="num">Amount</th><th class="num">Paid so far</th></tr></thead>
+        <tbody id="schedule-body"><tr><td colspan="4">Enter your numbers above to see your schedule.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Why split a project into payments</h2>
+    <p>On a long project, waiting until the very end to be paid means you fund weeks or months of work yourself. If the client delays, changes direction or cancels, you may have done most of the work with nothing paid. Splitting the price into stages spreads that risk out.</p>
+    <ul>
+      <li><strong>A deposit</strong> is paid before work starts. It shows the client is committed and covers your first stretch of work.</li>
+      <li><strong>Milestone payments</strong> are paid when you reach agreed points, such as a first draft, a design sign-off or a working version.</li>
+      <li><strong>A final payment</strong> is paid when the project is finished and handed over.</li>
+    </ul>
+    <p>Payments in stages also help your cash flow. Money comes in during the project, not only at the end, which makes slow months easier to plan for.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the total price</strong> for the whole project, without sales tax, VAT or GST.</li>
+      <li><strong>Choose a deposit</strong> as a percentage of the total. Enter 0 if there's no deposit.</li>
+      <li><strong>Choose a final payment</strong> to be paid on completion. Enter 0 if the last milestone is the final payment.</li>
+      <li><strong>Enter how many milestone payments</strong> come in between. Whatever isn't covered by the deposit and final payment is split equally between them.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Deposit            = total × deposit %
+Final payment      = total × final %
+Between them       = total − deposit − final payment
+Each milestone     = between them ÷ number of milestones
+
+Each payment is rounded to the cent. The last payment takes
+whatever is left, so all payments add up to the exact total.</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>A website in four stages.</strong> Maria agrees a $6,000 website with a 30% deposit, two milestone payments (after the design and after the build) and 20% on launch.</p>
+    <div class="formula">Deposit            = 6,000 × 30%          = $1,800.00
+Final payment      = 6,000 × 20%          = $1,200.00
+Between them       = 6,000 − 1,800 − 1,200 = $3,000.00
+Each milestone     = 3,000 ÷ 2             = $1,500.00
+
+Schedule: $1,800 + $1,500 + $1,500 + $1,200 = $6,000
+Still to be paid after the deposit = $4,200.00</div>
+    <p><strong>Half now, half on completion.</strong> A £2,500 project with a 50% deposit, no milestones and 50% on completion is two payments of <strong>£1,250.00</strong>.</p>
+    <p><strong>When it doesn't divide evenly.</strong> A $1,000 project with a 20% deposit, three milestone payments and no separate final payment:</p>
+    <div class="formula">Deposit            = 1,000 × 20%          = $200.00
+Between them       = 1,000 − 200          = $800.00
+Each milestone     = 800 ÷ 3              = $266.666…
+
+Milestone 1 = $266.67, Milestone 2 = $266.67, Milestone 3 = $266.66
+Total: 200 + 266.67 + 266.67 + 266.66 = $1,000.00</div>
+    <p>Rounding every payment up to $266.67 would bill the client $1,000.01, so the last payment is one cent less.</p>
+
+    <h2>Tips for setting up milestones</h2>
+    <ul>
+      <li><strong>Tie each payment to something you can show.</strong> "Homepage design approved" is clearer than "halfway through", and both sides know when the payment is due.</li>
+      <li><strong>Write the schedule into your quote or contract</strong>, with the amount, what triggers each payment and the payment terms, such as 14 or 30 days.</li>
+      <li><strong>Decide what happens if the project stops</strong> part-way, for example whether the deposit is refundable and how work done so far is paid.</li>
+      <li><strong>Invoice each payment separately</strong> when it's due, so you can track which ones have been paid.</li>
+      <li><strong>Think about timing as well as amounts.</strong> A long gap between milestones means a long stretch of unpaid work, so more, smaller payments can suit longer projects.</li>
+    </ul>
+    <p>To work out the total price first, use the <a href="{{root}}freelance/project-pricing-calculator/">project pricing calculator</a>. Then put the schedule in a <a href="{{root}}business/quote-generator/">quote</a> and send an <a href="{{root}}freelance/invoice-generator/">invoice</a> for each payment as it falls due. The <a href="{{root}}freelance/invoice-due-date-calculator/">invoice due date calculator</a> shows when each one should be paid.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Sales tax, VAT or GST.</strong> If you charge it, add it to each invoice on top of the amounts shown.</li>
+      <li><strong>Milestones of different sizes.</strong> The payments between the deposit and the final payment are equal. For different sizes, work out each one as a percentage of the total.</li>
+      <li><strong>Dates.</strong> The schedule shows the order of payments, not when each one is due.</li>
+      <li><strong>Legal advice.</strong> Rules about deposits and cancellations can differ by country and by contract. Check your own contract, or ask a professional if you're not sure.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>How big should a deposit be?</summary>
+        <p>There's no fixed rule. Freelancers set deposits to suit the size and length of the project and how much work comes before the first milestone. Whatever you choose, agree it with the client in writing before you start.</p>
+      </details>
+      <details>
+        <summary>Can I use this for a payment plan with no deposit?</summary>
+        <p>Yes. Enter 0 for the deposit, and the whole price is split between the milestone payments and the final payment.</p>
+      </details>
+      <details>
+        <summary>Why are the payments not all exactly the same?</summary>
+        <p>When the price doesn't divide evenly into cents, rounding every payment the same way would make the total a cent or two too high or too low. The last payment is adjusted so the total matches the project price exactly.</p>
+      </details>
+    </div>
+  </div>

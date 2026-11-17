@@ -923,6 +923,20 @@ TOOLS = {
         short="See how much work you could lose after raising your rate and still earn the same.",
         icon="trending", group="pricing", keywords="raise rates price increase lose clients break even new rate",
     ),
+    "per-word-rate": dict(
+        path="freelance/per-word-rate-calculator/",
+        name="Per-Word Rate Calculator",
+        card="Per-word rate calculator",
+        short="Turn a per-word rate into a fee and a real hourly rate, or find the per-word rate you need for your target.",
+        icon="file", group="pricing", keywords="writer translator rate per word price per word freelance writing copywriting cents per word",
+    ),
+    "milestone-payments": dict(
+        path="freelance/milestone-payment-calculator/",
+        name="Milestone Payment Calculator",
+        card="Milestone payment calculator",
+        short="Split a project price into a deposit, milestone payments and a final payment that add up exactly.",
+        icon="calendar", group="income", keywords="deposit upfront payment schedule staged payments milestones project payment plan",
+    ),
     "invoice-due-date": dict(
         path="freelance/invoice-due-date-calculator/",
         name="Invoice Due Date Calculator",
@@ -1437,6 +1451,7 @@ MONEY_DAY = "2026-10-17"  # 10 money pages deepened: more worked examples, offic
 FRS_DAY = "2026-10-27"  # VAT Flat Rate Scheme, Making Tax Digital, trading allowance, 1099 threshold checker
 NEW_TOOLS_DAY = "2026-10-20"  # 8 new tools: pro rata, invoice due date, SSP, maternity pay, stamp duty, CGT, simple interest, net worth
 ORGANIZE_DAY = "2026-10-20"  # menu, homepage and footer focus on money tools; other sections moved to /more-tools/
+NOV_TOOLS_DAY = "2026-11-17"  # per-word rate and milestone payment calculators
 SEARCH_DAY = "2026-11-02"  # pages closest to page 1 in Search Console: tables and answers for the searches people made
 IMAGE_CHIPS = ["{{icon:lock}} Your pictures never leave your device", "{{icon:check}} Free, no sign-up"]
 IMAGE_LIBS = ["js/pdf-common.js", "js/image-common.js"]  # pdf-common.js gives the drop zone, results panel and ZIP
@@ -2301,6 +2316,18 @@ PAGES = [
          intro="See how much work you could lose after raising your rate and still earn the same, and what you'd earn at the new rate.",
          chips=[CURRENCY_CHIP] + TOOL_CHIPS,
          related=["hourly-rate", "effective-hourly-rate", "retainer"]),
+    dict(tool="per-word-rate", src="per-word-rate.html", script="per-word-rate.js", updated=NOV_TOOLS_DAY,
+         title="Per-Word Rate Calculator for Writers | ToolNest by Vintayz",
+         description="Turn a per-word rate into a fee and a real hourly rate, or find the rate per word you need to hit your target hourly rate. In USD, GBP, CAD or AUD.",
+         intro="Turn a per-word rate into a fee and a real hourly rate, or work out the rate per word you need to reach your target.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["effective-hourly-rate", "hourly-rate", "word-counter"]),
+    dict(tool="milestone-payments", src="milestone-payments.html", script="milestone-payments.js", updated=NOV_TOOLS_DAY,
+         title="Milestone Payment Calculator | ToolNest by Vintayz",
+         description="Split a project price into a deposit, milestone payments and a final payment, rounded to the cent so they add up exactly. In USD, GBP, CAD or AUD.",
+         intro="Split a project price into a deposit, payments at each milestone and a final payment, rounded so they add up to the exact total.",
+         chips=[CURRENCY_CHIP] + TOOL_CHIPS,
+         related=["project-pricing", "quote-generator", "invoice-generator"]),
     dict(tool="customer-lifetime-value", src="customer-lifetime-value.html", script="customer-lifetime-value.js", updated=MONEY_DAY,
          title="Customer Lifetime Value (CLV) Calculator | ToolNest by Vintayz",
          description="Calculate customer lifetime value from order value, orders a year, margin and how long customers stay, and compare it with your cost to win them (LTV:CAC).",
@@ -3447,6 +3474,10 @@ NEXT_STEPS = {
                               ("project-pricing", "Price your next project with a time buffer")],
     "rate-increase": [("quote-generator", "Send your new prices in a quote"),
                       ("effective-hourly-rate", "Check your real hourly rate on past projects")],
+    "per-word-rate": [("quote-generator", "Put the price in a quote for your client"),
+                      ("word-counter", "Count the words in your draft")],
+    "milestone-payments": [("quote-generator", "Put this payment plan in a quote"),
+                           ("invoice-generator", "Invoice the deposit or the next milestone")],
     "invoice-due-date": [("invoice-generator", "Make the invoice with these payment terms"),
                          ("late-payment", "Paid late in the UK? Work out statutory interest")],
     "invoice-generator": [("invoice-due-date", "Check when this invoice is due"),
@@ -3886,6 +3917,10 @@ HEADERS = """/*
 
 # Permanent redirects for Cloudflare Pages. Canada and Australia moved to /ca/ and
 # /au/ on 2026-09-29 to match /us/ and /uk/; keep these so old links still work.
+# Pages written by hand straight into public/ (not made by this script) that should still be in the
+# sitemap: (path, date last changed). Update the date when you change the page.
+HAND_MADE_SITEMAP = [("dusk-ridge/", "2026-11-07")]
+
 REDIRECTS = """/canada /ca/ 301
 /canada/ /ca/ 301
 /canada/* /ca/:splat 301
@@ -3954,9 +3989,11 @@ def main():
     for page in PAGES:
         write(page["path"] + "index.html", render(page))
 
+    listed = [(p["path"], p["updated"]) for p in PAGES if GUIDES_REVIEWED or p.get("kind") != "guide"]
+    listed += HAND_MADE_SITEMAP
     urls = "\n".join(
-        f"  <url>\n    <loc>{DOMAIN}/{p['path']}</loc>\n    <lastmod>{p['updated']}</lastmod>\n  </url>"
-        for p in PAGES if GUIDES_REVIEWED or p.get("kind") != "guide")
+        f"  <url>\n    <loc>{DOMAIN}/{path}</loc>\n    <lastmod>{updated}</lastmod>\n  </url>"
+        for path, updated in listed)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n'
           f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n")
