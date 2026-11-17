@@ -1464,7 +1464,7 @@ PAGES = [
          description="Free calculators for freelancers in the US, UK, Canada and Australia. Price your work, plan your income and chase late payments."),
     dict(path="freelance/", src="freelance.html", kind="section", nav="tools",
          title="Freelancer Money Tools and Calculators | ToolNest by Vintayz",
-         description="Free calculators for freelancers: hourly rate, day rate, project pricing, billable hours and late payment interest.",
+         description="Free calculators for freelancers: hourly, day and per-word rates, project pricing, milestone payments, tax set-aside and late payment interest.",
          h1="Freelancer Money Tools",
          intro="Free calculators to help freelancers and self-employed people price their work, plan their income and get paid on time.",
          chips=TOOL_CHIPS + [CURRENCY_CHIP]),
