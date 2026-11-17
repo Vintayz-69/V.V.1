@@ -3443,6 +3443,16 @@ async function resumePdfTests() {
   const rateOn = (d) => R.bankRate.find((b) => b.from <= d).rate;
   check("Bank Rate on 31 Dec 2025", rateOn("2025-12-31"), 3.75);
   check("Bank Rate on 30 Jun 2026", rateOn("2026-06-30"), 3.75);
+  // Raised to 4% on 5 November 2026 (Bank of England, MPC meeting ending 4 November)
+  check("Bank Rate on 4 Nov 2026", rateOn("2026-11-04"), 3.75);
+  check("Bank Rate on 5 Nov 2026", rateOn("2026-11-05"), 4);
+  check("Bank Rate checked up to", R.checkedUpTo, "2026-11-17");
+  // Page: if still 4% on 31 December 2026, the statutory rate from 1 January 2027 is 8% + 4% = 12%
+  check("statutory rate at 4%", R.statutoryAddOn + 4, 12);
+  // Invoices late in 2026 still use the 30 June 2026 rate (11.75%), even when worked out after 5 November
+  check("2026 invoice still uses 30 June rate", lp.bankRateOn(lp.referenceDate("2026-10-01")), 3.75);
+  // Invoices late from 1 January 2027 use 31 December 2026, which isn't checked yet, so the tool asks instead of guessing
+  check("2027 invoice reference date not yet known", lp.bankRateOn(lp.referenceDate("2027-01-15")), null);
 }
 
 // ---------------- Off-topic page deepening, batches 3c–3e (2026-10-17)

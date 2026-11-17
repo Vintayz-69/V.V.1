@@ -17,11 +17,13 @@
  * Bank Rate changes to the top of `bankRate`, and move `checkedUpTo` forward.
  */
 window.ToolNestRatesUK = {
-  // 2026-10-17: Bank Rate still 3.75% after the 17 September 2026 decision (next decision 5 November 2026).
-  checkedUpTo: "2026-10-17",
+  // 2026-11-17: Bank Rate raised from 3.75% to 4% (MPC meeting ending 4 November, published 5 November 2026:
+  // https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026). Next decision 17 December 2026.
+  checkedUpTo: "2026-11-17",
   statutoryAddOn: 8,
   // Bank Rate changes, newest first: { from: date the new rate took effect, rate: % }
   bankRate: [
+    { from: "2026-11-05", rate: 4.0 },
     { from: "2025-12-18", rate: 3.75 },
     { from: "2025-08-07", rate: 4.0 },
     { from: "2025-05-08", rate: 4.25 },
