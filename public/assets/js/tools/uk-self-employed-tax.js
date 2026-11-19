@@ -34,9 +34,10 @@
       T.setText("out-ni", money(r.class4));
       T.setText("out-pa", money(r.personalAllowance, 0));
       T.setText("out-rate", T.formatNumber(r.effectiveRate * 100, 1) + "%");
+      var c2 = UK.data.class2; // figures from data/tax-uk.js, never typed here (LEGAL.md §2)
       class2Note.textContent = r.class2Treated
-        ? "Your profits are over £7,105, so Class 2 National Insurance is treated as paid: you get the State Pension credit without paying it."
-        : "Your profits are under £7,105. You don't have to pay Class 2 National Insurance, but you can pay it voluntarily (£3.65 a week) to protect your State Pension.";
+        ? "Your profits are over " + money(c2.smallProfitsThreshold, 0) + ", so Class 2 National Insurance is treated as paid: you get the State Pension credit without paying it."
+        : "Your profits are under " + money(c2.smallProfitsThreshold, 0) + ". You don't have to pay Class 2 National Insurance, but you can pay it voluntarily (" + money(c2.weeklyRate) + " a week) to protect your State Pension.";
 
       var levels = [20000, 30000, 45000, 60000, 80000, 110000, 150000];
       if (levels.indexOf(v.profit) === -1) levels.push(v.profit);

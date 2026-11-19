@@ -54,7 +54,7 @@
       T.setText("out-each", money(r.eachPayment));
       T.setText("out-balance", money(r.balancingLast));
       T.setText("out-next", r.balancingNext === null ? "Add an estimate" : (r.refundNext ? "Refund of " + money(-r.balancingNext) : money(r.balancingNext)));
-      T.setText("out-status", r.needed ? "Yes" : (r.reason === "bill" ? "No: last bill under £1,000" : "No: over 80% paid at source"));
+      T.setText("out-status", r.needed ? "Yes" : (r.reason === "bill" ? "No: last bill under " + T.formatMoney(P.minimumBill, "GBP", 0) : "No: over " + Math.round(P.collectedAtSourceLimit * 100) + "% paid at source"));
 
       var rows = [
         ["31 January 2027", "Balancing payment for 2025 to 2026 + 1st payment on account", money(r.january)],

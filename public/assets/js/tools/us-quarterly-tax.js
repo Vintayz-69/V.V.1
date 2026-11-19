@@ -68,7 +68,7 @@
       T.setText("out-full", money(r.fullQuarterly));
       T.setText("out-owed", money(r.owed));
       T.setText("out-safe", r.required ? money(r.safePay) : "Not required");
-      T.setText("out-basis", !r.required ? "You'll owe under $1,000" :
+      T.setText("out-basis", !r.required ? "You'll owe under " + T.formatMoney(E.minimumOwed, "USD", 0) :
         (r.usesPriorYear ? r.priorPct + "% of last year's tax" : E.currentYearPct + "% of this year's tax"));
 
       var rows = E.dueDates.map(function (d, i) {

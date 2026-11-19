@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en-US" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Federal Tax Bracket Calculator (2026 and 2027) | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/us/tax-bracket-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=85fe38b9">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Federal tax bracket calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field">
+        <label for="income">Yearly income<span class="hint">Ordinary income, after pre-tax deductions such as a traditional 401(k)</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="income" type="text" inputmode="decimal" value="75000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="field">
+        <label for="taxYear">Tax year<span class="hint">2026 returns are filed in 2027</span></label>
+        <div class="select-wrap">
+          <select id="taxYear">
+            <option value="2026">2026</option>
+            <option value="2027">2027 (looking ahead)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="status">Filing status</label>
+        <div class="select-wrap">
+          <select id="status">
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+            <option value="mfs">Married filing separately</option>
+            <option value="hoh">Head of household</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="dedType">Deduction</label>
+        <div class="select-wrap">
+          <select id="dedType">
+            <option value="standard">Standard deduction</option>
+            <option value="itemized">I'll itemize</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field span-2" hidden>
+        <label for="itemized">Your itemized deductions<span class="hint">From Schedule A</span></label>
+        <div class="input-wrap"><span class="affix">$</span><input id="itemized" type="text" inputmode="decimal" value="20000" autocomplete="off"></div>
+        <span class="error-msg">Enter an amount of 0 or more.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>Estimated federal income tax</h2>
+      <div class="result-main"><span id="out-tax">—</span> <small>/ year</small></div>
+      <ul class="result-list">
+        <li class="key"><span>Your tax bracket (marginal rate)</span><span id="out-marginal">—</span></li>
+        <li class="key"><span>Effective rate on your income</span><span id="out-effective">—</span></li>
+        <li><span>Taxable income</span><span id="out-taxable">—</span></li>
+        <li><span>Deduction used</span><span id="out-deduction">—</span></li>
+        <li><span>Next bracket starts after</span><span id="out-next">—</span></li>
+        <li><span>About the same each month</span><span id="out-monthly">—</span></li>
+      </ul>
+      <p class="result-note">Only the income inside each bracket is taxed at that bracket's rate, so moving into a higher bracket never leaves you with less after federal income tax.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your income in each bracket</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bracket</th><th class="num">Your income in it</th><th class="num">Tax</th></tr></thead>
+        <tbody id="brackets-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+    <p>The highlighted row is your top bracket. The table shows the <span data-tax-year>2026</span> brackets for the filing status you chose.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter your yearly income</strong>, after pre-tax deductions such as a traditional 401(k) or HSA.</li>
+      <li><strong>Choose the tax year.</strong> 2026 is the year you'll file a return for in early 2027. 2027 lets you look ahead at next year's brackets.</li>
+      <li><strong>Choose your filing status.</strong></li>
+      <li><strong>Choose the standard deduction</strong>, or enter your total itemized deductions if they're bigger.</li>
+      <li><strong>Read your tax, your bracket and your effective rate</strong>, and see how much of your income falls in each bracket.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Taxable income  = income − deduction (not below 0)
+Tax             = each slice of taxable income × its bracket's rate, added up
+Marginal rate   = the rate of the highest bracket you reach
+Effective rate  = tax ÷ income × 100</div>
+
+    <h2>Worked example</h2>
+    <p>Taylor is single and earns $75,000 in 2026, taking the standard deduction of $16,100.</p>
+    <div class="formula">Taxable income  = 75,000 − 16,100                  = $58,900
+
+10% on the first $12,400           = 12,400 × 10%  = $1,240
+12% on $12,400 – $50,400           = 38,000 × 12%  = $4,560
+22% on $50,400 – $58,900           =  8,500 × 22%  = $1,870
+Tax                                                 = $7,670
+
+Effective rate  = 7,670 ÷ 75,000                    = 10.23%</div>
+    <p>Taylor is in the <strong>22% bracket</strong>, but only $8,500 is taxed at 22%. The estimated federal income tax is <strong>$7,670</strong>, an effective rate of 10.23%.</p>
+
+    <h2>Federal income tax at common incomes in 2026</h2>
+    <p>Standard deduction, no credits, income already after any pre-tax deductions:</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Income</th><th>Filing status</th><th class="num">Taxable income</th><th class="num">Tax</th><th class="num">Top bracket</th><th class="num">Effective rate</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Income">$40,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Taxable income">$23,900</td><td class="num" data-label="Tax">$2,620</td><td class="num" data-label="Top bracket">12%</td><td class="num" data-label="Effective rate">6.55%</td></tr>
+          <tr><td data-label="Income">$60,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Taxable income">$43,900</td><td class="num" data-label="Tax">$5,020</td><td class="num" data-label="Top bracket">12%</td><td class="num" data-label="Effective rate">8.37%</td></tr>
+          <tr><td data-label="Income">$100,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Taxable income">$83,900</td><td class="num" data-label="Tax">$13,170</td><td class="num" data-label="Top bracket">22%</td><td class="num" data-label="Effective rate">13.17%</td></tr>
+          <tr><td data-label="Income">$150,000</td><td data-label="Filing status">Single</td><td class="num" data-label="Taxable income">$133,900</td><td class="num" data-label="Tax">$24,734</td><td class="num" data-label="Top bracket">24%</td><td class="num" data-label="Effective rate">16.49%</td></tr>
+          <tr><td data-label="Income">$60,000</td><td data-label="Filing status">Married filing jointly</td><td class="num" data-label="Taxable income">$27,800</td><td class="num" data-label="Tax">$2,840</td><td class="num" data-label="Top bracket">12%</td><td class="num" data-label="Effective rate">4.73%</td></tr>
+          <tr><td data-label="Income">$100,000</td><td data-label="Filing status">Married filing jointly</td><td class="num" data-label="Taxable income">$67,800</td><td class="num" data-label="Tax">$7,640</td><td class="num" data-label="Top bracket">12%</td><td class="num" data-label="Effective rate">7.64%</td></tr>
+          <tr><td data-label="Income">$150,000</td><td data-label="Filing status">Married filing jointly</td><td class="num" data-label="Taxable income">$117,800</td><td class="num" data-label="Tax">$15,340</td><td class="num" data-label="Top bracket">22%</td><td class="num" data-label="Effective rate">10.23%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>2027 federal tax brackets</h2>
+    <p>The IRS published the 2027 brackets on 5 November 2026. The rates stay the same (10% to 37%), but each bracket starts at a higher income, so the same income is taxed a little less. These are for income earned in 2027, on the return you file in 2028.</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Rate</th><th>Single</th><th>Married filing jointly</th><th>Head of household</th><th>Married filing separately</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Rate">10%</td><td data-label="Single">$0 – $12,800</td><td data-label="Married filing jointly">$0 – $25,600</td><td data-label="Head of household">$0 – $18,250</td><td data-label="Married filing separately">$0 – $12,800</td></tr>
+          <tr><td data-label="Rate">12%</td><td data-label="Single">$12,800 – $52,025</td><td data-label="Married filing jointly">$25,600 – $104,050</td><td data-label="Head of household">$18,250 – $69,650</td><td data-label="Married filing separately">$12,800 – $52,025</td></tr>
+          <tr><td data-label="Rate">22%</td><td data-label="Single">$52,025 – $109,125</td><td data-label="Married filing jointly">$104,050 – $218,250</td><td data-label="Head of household">$69,650 – $109,100</td><td data-label="Married filing separately">$52,025 – $109,125</td></tr>
+          <tr><td data-label="Rate">24%</td><td data-label="Single">$109,125 – $208,325</td><td data-label="Married filing jointly">$218,250 – $416,650</td><td data-label="Head of household">$109,100 – $208,300</td><td data-label="Married filing separately">$109,125 – $208,325</td></tr>
+          <tr><td data-label="Rate">32%</td><td data-label="Single">$208,325 – $264,550</td><td data-label="Married filing jointly">$416,650 – $529,100</td><td data-label="Head of household">$208,300 – $264,550</td><td data-label="Married filing separately">$208,325 – $264,550</td></tr>
+          <tr><td data-label="Rate">35%</td><td data-label="Single">$264,550 – $661,375</td><td data-label="Married filing jointly">$529,100 – $793,650</td><td data-label="Head of household">$264,550 – $661,350</td><td data-label="Married filing separately">$264,550 – $396,825</td></tr>
+          <tr><td data-label="Rate">37%</td><td data-label="Single">Over $661,375</td><td data-label="Married filing jointly">Over $793,650</td><td data-label="Head of household">Over $661,350</td><td data-label="Married filing separately">Over $396,825</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Amounts are taxable income, after the standard deduction or itemized deductions.</p>
+
+    <h2>Standard deduction: 2026 and 2027</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Filing status</th><th class="num">2026</th><th class="num">2027</th><th class="num">Change</th></tr></thead>
+        <tbody>
+          <tr><td>Single</td><td class="num">$16,100</td><td class="num">$16,600</td><td class="num">+$500</td></tr>
+          <tr><td>Married filing jointly</td><td class="num">$32,200</td><td class="num">$33,200</td><td class="num">+$1,000</td></tr>
+          <tr><td>Head of household</td><td class="num">$24,150</td><td class="num">$24,925</td><td class="num">+$775</td></tr>
+          <tr><td>Married filing separately</td><td class="num">$16,100</td><td class="num">$16,600</td><td class="num">+$500</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>For 2027 the IRS also sets an extra standard deduction of $1,700 for people who are 65 or older or blind ($2,100 if unmarried and not a surviving spouse). This calculator doesn't add it, so enter your total as itemized deductions if it applies to you.</p>
+
+    <h2>Worked example for 2027</h2>
+    <p>If Taylor earns the same $75,000 in 2027, the standard deduction is $16,600.</p>
+    <div class="formula">Taxable income  = 75,000 − 16,600                  = $58,400
+
+10% on the first $12,800           = 12,800 × 10%  = $1,280.00
+12% on $12,800 – $52,025           = 39,225 × 12%  = $4,707.00
+22% on $52,025 – $58,400           =  6,375 × 22%  = $1,402.50
+Tax                                                 = $7,389.50
+
+Effective rate  = 7,389.50 ÷ 75,000                 = 9.85%</div>
+    <p>That's <strong>$280.50 less</strong> than the $7,670 for 2026 on the same income, because the brackets and the standard deduction went up with inflation.</p>
+
+    <h2>What a raise really costs in tax</h2>
+    <p>If Taylor's pay goes from $75,000 to $80,000, the extra $5,000 is all in the 22% bracket, so federal income tax rises by $1,100 (from $7,670 to $8,770). Taylor keeps $3,900 of the raise before payroll and state taxes. Nothing already earned is taxed at a higher rate.</p>
+
+    <h2>What this calculator doesn't cover</h2>
+    <ul>
+      <li>Tax credits (such as the Child Tax Credit), which reduce the tax shown here.</li>
+      <li>Long-term capital gains and qualified dividends, which have their own lower rates.</li>
+      <li>Social Security and Medicare (FICA), self-employment tax, the Alternative Minimum Tax, and state and local income tax.</li>
+      <li>Other deductions, such as the qualified business income deduction for the self-employed.</li>
+    </ul>
+    <p>Self-employed? Our <a href="../../../us/freelancer-take-home-pay-calculator/">freelancer take-home pay calculator</a> adds self-employment tax. On a W-2 salary? Try the <a href="../../../career/us-take-home-pay-calculator/">US take-home pay calculator</a>.</p>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Will a raise push me into a higher bracket and cost me money?</summary>
+        <p>No. Only the part of your income above the bracket's starting point is taxed at the higher rate. Everything below it is taxed exactly as before, so a raise always leaves you with more after federal income tax.</p>
+      </details>
+      <details>
+        <summary>What's the difference between marginal and effective tax rate?</summary>
+        <p>Your marginal rate is the rate on your last (and next) dollar of taxable income. Your effective rate is your total tax divided by your income, which is always lower because the first dollars are taxed at lower rates or not at all.</p>
+      </details>
+      <details>
+        <summary>Should I itemize or take the standard deduction?</summary>
+        <p>Most people take whichever is bigger. Itemized deductions include things like mortgage interest, state and local taxes (up to a limit) and charitable gifts. A tax professional can help if you're not sure.</p>
+      </details>
+    </div>
+
+    <p class="sources"><strong>Sources (tax year 2026):</strong> <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" rel="noopener">IRS: tax inflation adjustments for tax year 2026</a>, <a href="https://www.irs.gov/pub/irs-drop/rp-25-32.pdf" rel="noopener">IRS Rev. Proc. 2025-32</a>. Figures checked 28 September 2026.</p>
+    <p class="sources"><strong>Sources (tax year 2027):</strong> <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts" rel="noopener">IRS: tax inflation adjustments for tax year 2027</a>, <a href="https://www.irs.gov/pub/irs-drop/rp-26-35.pdf" rel="noopener">IRS Rev. Proc. 2026-35</a> (sections 3.01 and 3.15). Figures checked 17 November 2026. The IRS notes that a later change in the law could change them.</p>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/us/tax-bracket-calculator/" rel="noopener">Federal Tax Bracket Calculator (2026 and 2027)</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice. Official figures checked 28 September 2026.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=25d08c52"></script>
+<script src="../../../assets/data/tax-us.js?v=100b5fa7"></script>
+<script src="../../../assets/js/us-tax.js?v=6d9cdbde"></script>
+<script src="../../../assets/js/tools/us-tax-bracket.js?v=c3ea9ce9"></script>
+</body>
+</html>

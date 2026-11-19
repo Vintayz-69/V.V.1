@@ -19,6 +19,7 @@ Before making any change, check the matching section of LEGAL.md. In particular:
 - Calculator formulas live in `public/assets/js/tools/<tool>.js`. Each exposes `window.ToolNestCalc` for the tests.
 - PDF tools share `public/assets/js/pdf-common.js` and are tested in `tests/pdf-tests.js`. Files must never leave the visitor's device. Keep pdf-lib and pdf.js self-hosted in `public/assets/vendor/` with their licences.
 - Run `node tests/run-tests.js` after any change. Every calculator needs at least 3 hand-worked examples in the tests, and every number quoted in a page's worked example must match a test.
+- After changing pages, layout or scripts, also run `node tests/browser-tests.js` (opens every page and embedded calculator in Chrome under the real headers; about 2 minutes, or add a word such as `mileage` to test only matching pages).
 - Every tool follows the page template in README section 5 and the tax-tool checklist in LEGAL.md section 6.
 - The Content-Security-Policy in `build.py` blocks inline scripts, inline `style=""` attributes and outside domains. Put scripts in files and styles in `style.css`.
 - Check every page at phone width (390px) as well as desktop. Most visitors are on phones.

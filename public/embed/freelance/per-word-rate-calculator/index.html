@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Per-Word Rate Calculator | ToolNest</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://vintayz.com/freelance/per-word-rate-calculator/">
+<base target="_blank">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/css/style.css?v=85fe38b9">
+</head>
+<body class="embed">
+<main class="embed-main">
+  <section class="calculator" aria-label="Per-word rate calculator">
+    <form class="calc-form" id="calc-form" novalidate>
+      <div class="field span-2">
+        <label for="currency">Currency</label>
+        <div class="select-wrap">
+          <select id="currency">
+            <option value="USD">US dollar (USD)</option>
+            <option value="GBP">British pound (GBP)</option>
+            <option value="CAD">Canadian dollar (CAD)</option>
+            <option value="AUD">Australian dollar (AUD)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="words">Words in the piece<span class="hint">The word count you're paid for</span></label>
+        <div class="input-wrap"><input id="words" type="text" inputmode="decimal" value="1500" autocomplete="off"><span class="affix">words</span></div>
+        <span class="error-msg">Enter between 1 and 1,000,000 words.</span>
+      </div>
+
+      <div class="field">
+        <label for="rate">Rate per word<span class="hint">For example 0.15 for 15 cents or 15p</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="rate" type="text" inputmode="decimal" value="0.15" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate between 0.001 and 100.</span>
+      </div>
+
+      <div class="field">
+        <label for="hours">Hours the piece takes<span class="hint">Research, writing, edits, calls and admin</span></label>
+        <div class="input-wrap"><input id="hours" type="text" inputmode="decimal" value="5" autocomplete="off"><span class="affix">hours</span></div>
+        <span class="error-msg">Enter between 0.1 and 10,000 hours.</span>
+      </div>
+
+      <div class="field">
+        <label for="target">Your target hourly rate<span class="hint">Optional. Leave empty to skip the comparison.</span></label>
+        <div class="input-wrap"><span class="affix" data-currency-symbol>$</span><input id="target" type="text" inputmode="decimal" value="50" autocomplete="off"></div>
+        <span class="error-msg">Enter a rate above 0, or leave it empty.</span>
+      </div>
+
+      <div class="form-actions span-2">
+        <button type="button" class="btn btn-sm" id="reset"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg> Reset to example</button>
+        <span class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Your numbers stay on your device</span>
+      </div>
+    </form>
+
+    <div class="calc-results" aria-live="polite">
+      <h2>What this piece pays</h2>
+      <div class="result-main"><span id="out-fee">—</span> <small>for the piece</small></div>
+      <ul class="result-list">
+        <li class="key"><span>What you earn per hour</span><span id="out-hourly">—</span></li>
+        <li><span>Words you write per hour</span><span id="out-wph">—</span></li>
+        <li><span>Same rate per 1,000 words</span><span id="out-per1000">—</span></li>
+        <li><span>Compared with your target</span><span id="out-gap">—</span></li>
+        <li class="key"><span>Rate per word for your target</span><span id="out-rate-target">—</span></li>
+        <li><span>Fee for your target</span><span id="out-fee-target">—</span></li>
+      </ul>
+      <p class="result-note">Before income tax and any platform fees. To include fees, use the effective hourly rate calculator.</p>
+    </div>
+  </section>
+
+  <div class="content">
+    <h2>Your hourly rate if the piece takes longer or shorter</h2>
+    <p>The same fee for the same number of words, spread over different numbers of hours:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Hours spent</th><th class="num">Words per hour</th><th class="num">You earn per hour</th></tr></thead>
+        <tbody id="whatif-body"><tr><td colspan="3">Enter your numbers above to see this table.</td></tr></tbody>
+      </table>
+    </div>
+
+    <h2>Why a per-word rate needs an hourly check</h2>
+    <p>A per-word rate is easy to quote and easy for a client to understand: they know the price before you start. But the client pays for words, while you spend hours. Two pieces of the same length can take very different amounts of time. A short article on a topic you know well might take two hours. One that needs interviews, research and two rounds of edits might take a full day for the same fee.</p>
+    <p>That's why it helps to turn every per-word job back into an hourly figure. If you know roughly how many finished words you produce in an hour, including everything around the writing, you can see straight away whether a rate covers your time, and which kinds of work pay you best.</p>
+
+    <h2>How to use this calculator</h2>
+    <ol class="steps">
+      <li><strong>Enter the word count</strong> you're paid for. Usually that's the agreed length of the finished piece.</li>
+      <li><strong>Enter the rate per word</strong> as a decimal. 15 cents is 0.15, 8p is 0.08, and 1.5 cents is 0.015.</li>
+      <li><strong>Enter every hour the piece takes</strong>, not just typing time. Count research, interviews, outlining, editing, calls, emails and invoicing. A time tracker on your last few pieces gives the most honest number.</li>
+      <li><strong>Add your target hourly rate</strong> to see the per-word rate and the fee that would reach it.</li>
+    </ol>
+
+    <h2>How it's calculated</h2>
+    <div class="formula">Fee                    = words × rate per word
+Earned per hour        = fee ÷ hours
+Words per hour         = words ÷ hours
+Rate per 1,000 words   = rate per word × 1,000
+
+Fee for your target    = target hourly rate × hours
+Rate for your target   = fee for your target ÷ words</div>
+
+    <h2>Worked examples</h2>
+    <p><strong>A blog post.</strong> Alex is offered $0.15 a word for a 1,500-word blog post. From past work, Alex knows a post like this takes about 5 hours from research to final edits. Alex's target is $50 an hour.</p>
+    <div class="formula">Fee                   = 1,500 × 0.15        = $225.00
+Earned per hour       = 225 ÷ 5             = $45.00 an hour
+Words per hour        = 1,500 ÷ 5           = 300 words
+Rate per 1,000 words  = 0.15 × 1,000        = $150.00
+
+Compared with target  = 45 − 50             = $5.00 below
+Fee for your target   = 50 × 5              = $250.00
+Rate for your target  = 250 ÷ 1,500         = $0.167 a word</div>
+    <p>Alex could ask for about 17 cents a word, or keep the rate and find ways to finish posts like this faster. If the same post took 7.5 hours, Alex would earn only <strong>$30.00 an hour</strong>.</p>
+    <p><strong>A long guide with research.</strong> Jo is offered £0.10 a word for a 2,000-word guide that needs interviews. It takes 8 hours. Jo's target is £40 an hour.</p>
+    <div class="formula">Fee                   = 2,000 × 0.10        = £200.00
+Earned per hour       = 200 ÷ 8             = £25.00 an hour
+Words per hour        = 2,000 ÷ 8           = 250 words
+Fee for your target   = 40 × 8              = £320.00
+Rate for your target  = 320 ÷ 2,000         = £0.16 a word</div>
+    <p><strong>A short piece on a familiar topic.</strong> Sam writes an 800-word article at A$0.40 a word in 4 hours, with a target of A$60 an hour.</p>
+    <div class="formula">Fee                   = 800 × 0.40          = A$320.00
+Earned per hour       = 320 ÷ 4             = A$80.00 an hour (A$20.00 above target)
+Rate for your target  = 60 × 4 ÷ 800        = A$0.30 a word</div>
+
+    <h2>Things that change how long a piece takes</h2>
+    <ul>
+      <li><strong>Research and interviews.</strong> Finding sources, arranging calls and checking facts can take longer than the writing.</li>
+      <li><strong>Rounds of edits.</strong> Agreeing a number of revision rounds in advance stops one piece from taking twice as long as planned.</li>
+      <li><strong>Briefs and calls.</strong> Unclear briefs lead to rewrites. A short call before you start can save hours later.</li>
+      <li><strong>Extras the client asks for.</strong> Headlines, meta descriptions, social posts, images or uploading to a website are extra work. You can price them separately rather than inside the per-word rate.</li>
+      <li><strong>Word count disputes.</strong> Agree whether you're paid for the word count in the brief or the final count, and what happens if the client cuts the piece.</li>
+    </ul>
+    <p>Translators often price per word too, sometimes per source word and sometimes per target word. The maths here works for both: enter whichever count you're paid for.</p>
+    <p>To work out a target hourly rate from the income you want, use the <a href="../../../freelance/freelance-hourly-rate-calculator/">freelance hourly rate calculator</a>. If a platform or payment provider takes a fee, the <a href="../../../freelance/effective-hourly-rate-calculator/">effective hourly rate calculator</a> includes it.</p>
+
+    <h2>What this calculator doesn't include</h2>
+    <ul>
+      <li><strong>Income tax</strong> and, in some countries, self-employment tax or National Insurance. Results are before tax.</li>
+      <li><strong>Platform and payment fees</strong>, which reduce what you keep from each fee.</li>
+      <li><strong>Sales tax, VAT or GST</strong>, if you charge it. Leave it out of the rate.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What is a good rate per word?</summary>
+        <p>There isn't one number that suits everyone, because the time a piece takes depends on the topic, the research and the client. A practical way to decide is to start from the hourly rate you need, then use this calculator to turn it into a rate per word for the kind of work you do.</p>
+      </details>
+      <details>
+        <summary>How do I convert a per-word rate to a per-page rate?</summary>
+        <p>Multiply the rate per word by the number of words on a page. Page lengths change a lot with font, spacing and layout, so count the words on a sample page from the client rather than guessing.</p>
+      </details>
+      <details>
+        <summary>How do I turn a project fee into a rate per word?</summary>
+        <p>Divide the fee by the number of words. A $400 fee for a 2,000-word piece is $0.20 a word.</p>
+      </details>
+      <details>
+        <summary>Is per word or per hour better?</summary>
+        <p>Each has trade-offs. Per word gives the client a fixed price and rewards you for working faster, but you carry the risk if a piece takes longer. Per hour covers all your time but makes the final price harder for the client to predict. Many writers use per-word or per-project prices and track their hours to check they're still earning enough.</p>
+      </details>
+    </div>
+  </div>
+
+</main>
+<footer class="embed-foot">
+  <p><a href="https://vintayz.com/freelance/per-word-rate-calculator/" rel="noopener">Per-Word Rate Calculator</a> by <a href="https://vintayz.com/" rel="noopener">ToolNest</a> (vintayz.com).
+    Estimates only, not tax, legal or financial advice.
+    <a href="https://vintayz.com/disclaimer/" rel="noopener">Disclaimer</a> · <a href="https://vintayz.com/privacy-policy/" rel="noopener">Privacy</a> ·
+    <a href="https://vintayz.com/terms/" rel="noopener">Terms</a></p>
+</footer>
+<script src="../../../assets/js/common.js?v=25d08c52"></script>
+<script src="../../../assets/js/tools/per-word-rate.js?v=9321ba9e"></script>
+</body>
+</html>
