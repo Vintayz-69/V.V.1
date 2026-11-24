@@ -4143,6 +4143,9 @@ def main():
     if ADSENSE_PUBLISHER_ID:
         pub = ADSENSE_PUBLISHER_ID.replace("ca-", "", 1)
         write("ads.txt", f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n")
+        # app-ads.txt: AdMob reads it for the Dusk Ridge game (Play Store website = vintayz.com/dusk-ridge/).
+        # Same publisher id: AdSense and AdMob share one account.
+        write("app-ads.txt", f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n")
     write(f"{INDEXNOW_KEY}.txt", INDEXNOW_KEY + "\n")
     write("llms.txt", llms_txt())
     write("favicon.svg", FAVICON + "\n")
